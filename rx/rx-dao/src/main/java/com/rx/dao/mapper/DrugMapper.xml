@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rx.dao.DrugMapper" >
+  <resultMap id="BaseResultMap" type="com.rx.entity.Drug" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="wareid" property="wareid" jdbcType="VARCHAR" />
+    <result column="barcode" property="barcode" jdbcType="VARCHAR" />
+    <result column="abc" property="abc" jdbcType="VARCHAR" />
+    <result column="warename" property="warename" jdbcType="VARCHAR" />
+    <result column="waresimname" property="waresimname" jdbcType="VARCHAR" />
+    <result column="warespec" property="warespec" jdbcType="VARCHAR" />
+    <result column="prod_addr" property="prodAddr" jdbcType="VARCHAR" />
+    <result column="producer" property="producer" jdbcType="VARCHAR" />
+    <result column="wareunit" property="wareunit" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="saleprice" property="saleprice" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, wareid, barcode, abc, warename, waresimname, warespec, prod_addr, producer, wareunit, 
+    status, saleprice
+  </sql>
+</mapper>
