@@ -6,8 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.rx.bean.inputrx.RxAPI;
 import com.rx.bean.inputrx.RxProtocolConstant;
-import com.rx.bean.inputrx.RxReqSendPatient;
+import com.rx.bean.inputrx.RxReqDataPatient;
+import com.rx.bean.inputrx.RxReqProtocol;
 import com.rx.bean.inputrx.RxRespProtocol;
 
 
@@ -32,13 +36,26 @@ public class ReceivePatientController {
 	 */
 	@RequestMapping(value = "/api", method = RequestMethod.POST)
 	@ResponseBody		
-	public Object receivePatient(@RequestBody RxReqSendPatient pack) {
+	public Object receivePatient(@RequestBody RxReqProtocol pack) {
 		System.out.println(pack.getFunc());		
-		//System.out.println(pack);
+		//System.out.println(pack);		
 		
+		
+		//注: 此处未对token,version,进行处理.
+		
+		//根据func的值对协议包进行解析
+		//将JSON字符串转换成相应的JAVA对象
+		//重构建议:后面可以采用map方式将msg---->解析器. 采用查表的方式来处理消息数据.
+		if(pack.getFunc().equals(RxAPI.MSG_PATIENT_NMI)){
+			RxReqDataPatient patient = JSON.parseObject(pack.getData(), new TypeReference<RxReqDataPatient>() {});
+			System.out.println(patient.getPatient().getName());
+		}
+			
+		
+		//返回响应包
 		RxRespProtocol resp=new RxRespProtocol(); 
 		resp.setResult(RxProtocolConstant.STATUS_SUCCESS);
-		resp.setVersion("1.0");
+		resp.setVersion(pack.getVersion());
 		
 		return resp;
 	}
