@@ -133,6 +133,7 @@ public class LoginController {
 	
 	/**
 	 * 方法功能：验证用户名和密码
+	 * 		未用
 	 * @param request
 	 * @param loginname
 	 * @param password
@@ -173,6 +174,7 @@ public class LoginController {
 	
 	/**
 	 * 方法功能：创建用户bean
+	 * 		未用
 	 * @param user
 	 * @return
 	 * <hr>
@@ -183,7 +185,7 @@ public class LoginController {
 	 * <p>Date: 2017年5月7日 上午15:25:39</p>
 	 */
 	private UserBean createUserBean(User user){
-		return new UserBean(user.getId(), user.getAuditRemark(), user.getAuditor(), user.getCreatedTime(), user.getDeleted(), user.getDepartment(), user.getEmail(), user.getGrowthValue(), user.getLinkMan(), user.getLinkPhoneNum(), user.getMobile(), user.getNickname(), user.getOldpassword(), user.getParentId(), user.getPassword(), user.getQuickType(), user.getSecurityLevel(), user.getStatus(), user.getType(), user.getUpdateTime(), user.getUsername());
+		return null;//new UserBean(user.getId(), user.getAuditRemark(), user.getAuditor(), user.getCreatedTime(), user.getDeleted(), user.getDepartment(), user.getEmail(), user.getGrowthValue(), user.getLinkMan(), user.getLinkPhoneNum(), user.getMobile(), user.getNickname(), user.getOldpassword(), user.getParentId(), user.getPassword(), user.getQuickType(), user.getSecurityLevel(), user.getStatus(), user.getType(), user.getUpdateTime(), user.getUsername());
 	}
 	
 	/**
