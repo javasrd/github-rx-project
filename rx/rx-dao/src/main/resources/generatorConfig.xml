@@ -9,7 +9,7 @@
 		当加载根类中的 JavaModelGenerator 检查重写的方法时
 		因此，如果你需要加载其他用途的jar包，classPathEntry起不到作用，不能这么写，解决的办法就是将你用的jar包添加到类路径中，在Eclipse等IDE中运行的时候，添加jar包比较容易。当从命令行执行的时候，需要用java -cp xx.jar,xx2.jar xxxMainClass这种方式在-cp后面指定来使用(注意-jar会导致-cp无效)。
 	 -->
-	<classPathEntry	location="D:\Program Files\Repositories\Maven\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar"/>
+	<classPathEntry	location="g:\javadev\Maven\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar"/>
 		
 	<!-- 此处指定生成针对MyBatis3的DAO -->
 	<context id="DB2Tables"	targetRuntime="MyBatis3">
@@ -37,22 +37,22 @@
 			<property name="suppressAllComments" value="true"/>
 		</commentGenerator>
 		<!--数据库链接URL，用户名、密码 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/lm_db" userId="root" password="root">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/doctor_rx_db" userId="root" password="root">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false"/>
 		</javaTypeResolver>
 		<!-- 生成模型的包名和位置-->
-		<javaModelGenerator targetPackage="com.ecp.entity" targetProject="src/main/java">
+		<javaModelGenerator targetPackage="com.rx.entity" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true"/>
 			<property name="trimStrings" value="true"/>
 		</javaModelGenerator>
 		<!-- 生成映射文件的包名和位置-->
-		<sqlMapGenerator targetPackage="com.ecp.dao.mapper" targetProject="src/main/java">
+		<sqlMapGenerator targetPackage="com.rx.dao.mapper" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true"/>
 		</sqlMapGenerator>
 		<!-- 生成DAO的包名和位置-->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ecp.dao" targetProject="src/main/java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.rx.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true"/>
 		</javaClientGenerator>
 		
@@ -368,12 +368,72 @@
 			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table> -->
 		
-		<table tableName="recommend" domainObjectName="Recommend" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		<!-- <table tableName="recommend" domainObjectName="Recommend" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
 		<table tableName="slideshow_setting" domainObjectName="SlideshowSetting" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
-		</table>
+		</table> -->
 		
+		<table tableName="department" domainObjectName="Department" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="diagnosis" domainObjectName="Diagnosis" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="dict_dose_unit" domainObjectName="DictDoseUnit" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="dict_mode" domainObjectName="DictMode" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="dict_times" domainObjectName="DictTimes" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="direction" domainObjectName="Direction" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="doctor" domainObjectName="Doctor" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="doctor_patient" domainObjectName="DoctorPatient" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="drug" domainObjectName="Drug" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="log_receive_patient" domainObjectName="LogReceivePatient" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="log_send_presc" domainObjectName="LogSendPresc" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="log_sync_drug" domainObjectName="LogSyncDrug" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="menu" domainObjectName="Menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="menu_id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="patient" domainObjectName="Patient" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="presc_drug" domainObjectName="PrescDrug" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="prescription" domainObjectName="Prescription" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="role_id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="role_permission" domainObjectName="RolePermission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="role_permission_id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="user_role" domainObjectName="UserRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="user_role_id" sqlStatement="MySql" identity="true"/>
+		</table>
 	</context>
 </generatorConfiguration>
