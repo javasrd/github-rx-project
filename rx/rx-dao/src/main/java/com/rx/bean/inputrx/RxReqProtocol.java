@@ -10,20 +10,34 @@ package com.rx.bean.inputrx;
  *
  */
 public class RxReqProtocol {
-	private RxReqProtocolHead head;  //请求协议头
+	private String version;  //版本号
+	private String token;	//身份令牌
+	private String func;	//action name	
 	private String data;	//数据段
 	
-	public RxReqProtocolHead getHead() {
-		return head;
-	}
-	public void setHead(RxReqProtocolHead head) {
-		this.head = head;
-	}
 	public String getData() {
 		return data;
 	}
 	public void setData(String data) {
 		this.data = data;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public String getFunc() {
+		return func;
+	}
+	public void setFunc(String func) {
+		this.func = func;
 	}
 	
 }
