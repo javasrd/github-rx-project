@@ -6,33 +6,26 @@
       WARNING - @mbggenerated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="audit_remark" jdbcType="VARCHAR" property="auditRemark" />
-    <result column="auditor" jdbcType="VARCHAR" property="auditor" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="deleted" jdbcType="INTEGER" property="deleted" />
     <result column="department" jdbcType="VARCHAR" property="department" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="growth_value" jdbcType="DECIMAL" property="growthValue" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="link_man" jdbcType="VARCHAR" property="linkMan" />
     <result column="link_phone_num" jdbcType="VARCHAR" property="linkPhoneNum" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="oldpassword" jdbcType="VARCHAR" property="oldpassword" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="quick_type" jdbcType="INTEGER" property="quickType" />
-    <result column="security_level" jdbcType="INTEGER" property="securityLevel" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->
-    id, audit_remark, auditor, created_time, deleted, department, email, growth_value, 
-    link_man, link_phone_num, mobile, nickname, oldpassword, parent_id, password, quick_type, 
-    security_level, status, type, update_time, username
+    id, parent_id, username, nickname, password, created_time, department, email, type, 
+    link_man, link_phone_num, mobile, status, deleted, update_time
   </sql>
 </mapper>

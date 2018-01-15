@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+	作者：Hz
+	时间：2018-01-10
+	
+	描述：点击链接发送POST请求后并打开一个新窗口
+	
+	此DEMO采用JQuery发送的ajax请求。
+	
+	测试环境：firefox,chrome,360浏览器,IE8
+-->
+<html>
+
+	<head>
+		<meta charset="UTF-8">		
+		<meta http-equiv="Access-Control-Allow-Origin" content="*">
+		<title></title>
+	</head>
+	
+	<!--   引入jquery 根据情况引入相应版本即可。    -->
+	<script th:src="@{/static/jquery/1.11.3/jquery-1.11.3.js}"></script>	
+
+	<body>		
+		<!-- 用于发起第一次请求：发送医、患数据 -->
+		<a href="javascript:void(0);" class="a_post"  method="post">发起POST请求并打开新窗口</a>
+		
+	</body>
+
+	<script>	
+		/*********************************************			
+			功能描述：打开非医保处方录入窗口
+			
+			注1：第二次发送请求，发送患者ID，并打开窗口
+			注2：在弹窗时，浏览器会阻止弹窗。
+				 可在浏览器中设置允许弹窗的链接。
+		*********************************************/
+		function open_win()
+		{
+			//url2的实际地址由【非医保Rx】给出。在原有需求文档中，并没有此地址信息，需要加入。
+			//patientId为当前患者的ID，需要根据实际情况替换相应的值。
+			
+			url2="http://localhost:8080/rx-web/openwin?patientId=11";   
+			window.open(url2,"_blank");
+			
+			
+		}
+		
+		/**************************
+			功能描述：绑定链接的click事件
+					AJAX方式发送POST请求。
+		**************************/		
+		$(".a_post").on("click", function(event) {
+		
+			//传递医、患等信息的URL，由【非医保Rx】提供，此处仅为测试URL
+			url1="http://localhost:8080/rx-web/api";
+			
+			// 传递的参数 此处仅为示例数据，实际数据按协议	
+			// 模拟生成医,患,诊断信息		
+			
+			// 生成参数对象
+			parms=new Object();
+			parms.version="1.0";
+			parms.token="DHHIS";
+			parms.func="patient_nmi";
+			parms.data={"patient": {
+				"id":"01",
+				"name": "张三",
+				" gender": "男",
+				"old": "75",
+				"cr_no": "123456789"},
+			 "doctor": {
+				"id":"02",
+				"name": "张三"},
+			 "department": {
+				"id":"03",
+				"name": "内科"},
+			 "diagnosis": [
+				{ "id":"001",
+				"disease": "慢性胃炎"},
+				{ "id":"002",
+				"disease": "营养不良"}]};
+			
+			event.preventDefault(); //使a自带的方法失效，即无法调整到href中的URL	
+			
+			//采用AJAX方式发送POST请求
+			$.ajax({
+				type: "POST",
+				url: url1,
+				contentType: "application/json", //指定发送到服务器时参数的格式				
+				dataType: "json",  //指定自服务器接收到的数据格式
+				data: JSON.stringify(parms), //传递的参数,JSON格式。				
+				
+				success: function(result) {
+					//请求正确之后的操作
+					console.log(result);
+					open_win();
+				},
+				
+				/*
+				说明1：在firefox调试模式中，会出现如下错误提示：
+						已拦截跨源请求：同源策略禁止读取位于 http://testwebapi.zhiscity.com/CnpcHospital/MedicalRemainMoney 的远程资源。（原因：CORS 头 'Access-Control-Allow-Origin' 不匹配 'http://testpassport.zhiscity.com'）
+						
+						这个错误由[非医保Rx]在服务器端设置跨域请求即可.
+				
+				说明： 由于以上原因，DEMO实际执行error回调。在实际的环境中会执行 success的回调。
+						此处只是用于演示流程.
+				*/
+				error: function(result) {  
+					//请求失败之后的操作
+					//显示提示信息					
+					//console.log(result);
+					//open_win();
+				}
+			});
+			
+		});
+		
+	</script>
+
+</html>
