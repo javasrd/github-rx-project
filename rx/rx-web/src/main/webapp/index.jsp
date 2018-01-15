@@ -12,6 +12,6 @@
 <title>电子商务平台</title>
 </head>
 <body>
-<% response.sendRedirect("front/home/home"); %>  <!-- 显示主页 -->
+<% response.sendRedirect("test_dh"); %>  <!-- 显示主页 -->
 </body>
 </html>
