@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.rx.dao.PrescriptionMapper" >
-  <resultMap id="BaseResultMap" type="com.rx.entity.Prescription" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rx.dao.PrescriptionMapper">
+  <resultMap id="BaseResultMap" type="com.rx.entity.Prescription">
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="doctor_id" property="doctorId" jdbcType="BIGINT" />
-    <result column="patient_id" property="patientId" jdbcType="BIGINT" />
-    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
-    <result column="rx_no" property="rxNo" jdbcType="VARCHAR" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="doctor_id" jdbcType="BIGINT" property="doctorId" />
+    <result column="patient_id" jdbcType="BIGINT" property="patientId" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="rx_no" jdbcType="VARCHAR" property="rxNo" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->

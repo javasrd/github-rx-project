@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.rx.dao.DirectionMapper" >
-  <resultMap id="BaseResultMap" type="com.rx.entity.Direction" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rx.dao.DirectionMapper">
+  <resultMap id="BaseResultMap" type="com.rx.entity.Direction">
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="presc_drug_id" property="prescDrugId" jdbcType="BIGINT" />
-    <result column="mode" property="mode" jdbcType="VARCHAR" />
-    <result column="times" property="times" jdbcType="VARCHAR" />
-    <result column="dosage" property="dosage" jdbcType="DECIMAL" />
-    <result column="doseunit" property="doseunit" jdbcType="VARCHAR" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="presc_drug_id" jdbcType="BIGINT" property="prescDrugId" />
+    <result column="mode" jdbcType="VARCHAR" property="mode" />
+    <result column="times" jdbcType="VARCHAR" property="times" />
+    <result column="dosage" jdbcType="DECIMAL" property="dosage" />
+    <result column="doseunit" jdbcType="VARCHAR" property="doseunit" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->

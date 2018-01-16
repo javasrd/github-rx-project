@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.rx.dao.DrugMapper" >
-  <resultMap id="BaseResultMap" type="com.rx.entity.Drug" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rx.dao.DrugMapper">
+  <resultMap id="BaseResultMap" type="com.rx.entity.Drug">
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="wareid" property="wareid" jdbcType="VARCHAR" />
-    <result column="barcode" property="barcode" jdbcType="VARCHAR" />
-    <result column="abc" property="abc" jdbcType="VARCHAR" />
-    <result column="warename" property="warename" jdbcType="VARCHAR" />
-    <result column="waresimname" property="waresimname" jdbcType="VARCHAR" />
-    <result column="warespec" property="warespec" jdbcType="VARCHAR" />
-    <result column="prod_addr" property="prodAddr" jdbcType="VARCHAR" />
-    <result column="producer" property="producer" jdbcType="VARCHAR" />
-    <result column="wareunit" property="wareunit" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="saleprice" property="saleprice" jdbcType="DECIMAL" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="wareid" jdbcType="VARCHAR" property="wareid" />
+    <result column="barcode" jdbcType="VARCHAR" property="barcode" />
+    <result column="abc" jdbcType="VARCHAR" property="abc" />
+    <result column="warename" jdbcType="VARCHAR" property="warename" />
+    <result column="waresimname" jdbcType="VARCHAR" property="waresimname" />
+    <result column="warespec" jdbcType="VARCHAR" property="warespec" />
+    <result column="prod_addr" jdbcType="VARCHAR" property="prodAddr" />
+    <result column="producer" jdbcType="VARCHAR" property="producer" />
+    <result column="wareunit" jdbcType="VARCHAR" property="wareunit" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="saleprice" jdbcType="DECIMAL" property="saleprice" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->

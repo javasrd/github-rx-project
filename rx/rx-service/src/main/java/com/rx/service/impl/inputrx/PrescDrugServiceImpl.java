@@ -1,0 +1,50 @@
+package com.rx.service.impl.inputrx;
+
+import java.util.Date;
+
+import org.springframework.stereotype.Service;
+
+import com.rx.dao.PrescDrugMapper;
+import com.rx.entity.PrescDrug;
+import com.rx.service.impl.AbstractBaseService;
+import com.rx.service.inputrx.IPrescDrugService;
+
+@Service
+public class PrescDrugServiceImpl extends AbstractBaseService<PrescDrug, Long> implements IPrescDrugService {
+
+	PrescDrugMapper prescDrugMapper;
+	
+	/**
+	 * @Description: set方式注入
+	 * @param
+	 *     @param mapper   
+	 * @return 
+	 *     void  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月16日-上午10:05:15
+	 */
+	public void setPrescDrugMapper(PrescDrugMapper prescDrugMapper) {
+		this.prescDrugMapper=prescDrugMapper;
+		this.setMapper(prescDrugMapper);
+	}
+
+	@Override
+	public long addPrescDrug(long presc_id, long drug_id) {
+		PrescDrug rec=new PrescDrug();
+		
+		//设定对象属性
+		rec.setCreatedTime(new Date());
+		rec.setPrescId(presc_id);
+		rec.setDrugId(drug_id);		
+		
+		//保存
+		int row=prescDrugMapper.insertSelective(rec);
+		
+		if(row>0)
+			return rec.getId();
+		else
+			return 0;
+	}
+
+}

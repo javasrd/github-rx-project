@@ -21,7 +21,7 @@ public class LogReceivePatient {
     /**
      * 数据发送方IP地址
      */
-    private String ip;
+    private String url;
 
     /**
      * 患者ID. FK( ref patient:id)
@@ -73,19 +73,19 @@ public class LogReceivePatient {
     /**
      * 获取数据发送方IP地址
      *
-     * @return ip - 数据发送方IP地址
+     * @return url - 数据发送方IP地址
      */
-    public String getIp() {
-        return ip;
+    public String getUrl() {
+        return url;
     }
 
     /**
      * 设置数据发送方IP地址
      *
-     * @param ip 数据发送方IP地址
+     * @param url 数据发送方IP地址
      */
-    public void setIp(String ip) {
-        this.ip = ip == null ? null : ip.trim();
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 
     /**
@@ -132,7 +132,7 @@ public class LogReceivePatient {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", createdTime=").append(createdTime);
-        sb.append(", ip=").append(ip);
+        sb.append(", url=").append(url);
         sb.append(", patientId=").append(patientId);
         sb.append(", data=").append(data);
         sb.append("]");
