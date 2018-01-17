@@ -29,18 +29,24 @@ public class DepartmentServiceImpl extends AbstractBaseService<Department, Long>
 
 	@Override
 	public long addDepartment(String old_id, String name) {
-		Department rec=new Department();
-		//设定对象属性
-		rec.setOldId(old_id);
-		rec.setName(name);
 		
-		//查询此部门是否已经存在
+		//(1)查询部门是否已经存在.
+		Department searchRec=new Department();		
+		searchRec.setOldId(old_id);		
+		
+		//查询此部门是否已经存在		
+		Department depart=departmentMapper.selectOne(searchRec);
+		
+		//返回插入记录的ID
 		long returnId=0;  //返回的部门id-在本地系统中的id
-		Department depart=departmentMapper.selectOne(rec);
-		
 		if(depart!=null)  //如果存在
 			returnId= depart.getId();
 		else{  //如果不存在,先插入记录,而后返回id
+			
+			Department rec=new Department();
+			rec.setOldId(old_id);
+			rec.setName(name);
+			
 			int row=departmentMapper.insertSelective(rec);  
 			if(row>0){
 				returnId=rec.getId();

@@ -29,20 +29,35 @@ public class DoctorServiceImpl extends AbstractBaseService<Doctor, Long> impleme
 
 	@Override
 	public long addDoctor(String old_id, String name, long department_id) {
-		Doctor rec=new Doctor();
 		
-		//设定对象属性
-		rec.setOldId(old_id);
-		rec.setName(name);
-		rec.setDepartmentId(department_id);
+		//(1)查询是否已经存在
+		Doctor searchRec=new Doctor();
+		searchRec.setOldId(old_id);
 		
-		//保存
-		int row=doctorMapper.insertSelective(rec);
+		Doctor resultRec=doctorMapper.selectOne(searchRec);
+		if(resultRec!=null){  //如果已经存在
+			return resultRec.getId();
+		}
+		else{  //不存在,插入新的记录
+			Doctor rec=new Doctor();		
+			//设定对象属性
+			rec.setOldId(old_id);
+			rec.setName(name);
+			rec.setDepartmentId(department_id);
+			
+			//保存
+			int row=doctorMapper.insertSelective(rec);
+			
+			if(row>0)
+				return rec.getId();
+			else
+				return 0;
+			
+		}
 		
-		if(row>0)
-			return rec.getId();
-		else
-			return 0;		
+		
+		
+				
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.rx.web.inputrx;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.rx.bean.inputrx.RxAPI;
+import com.rx.bean.inputrx.RxDisease;
 import com.rx.bean.inputrx.RxProtocolConstant;
 import com.rx.bean.inputrx.RxReqDataPatient;
 import com.rx.bean.inputrx.RxReqProtocol;
 import com.rx.bean.inputrx.RxRespProtocol;
+import com.rx.service.inputrx.IDepartmentService;
+import com.rx.service.inputrx.IDiagnosisService;
+import com.rx.service.inputrx.IDoctorPatientService;
+import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.ILogReceivePatientService;
+import com.rx.service.inputrx.IPatientService;
 
 /**
  * @ClassName: ReceivePatientController
@@ -36,6 +45,18 @@ public class ReceivePatientController {
 	
 	@Autowired
 	ILogReceivePatientService logService;  //医,患,诊断数据接收日志服务
+	
+	@Autowired
+	IPatientService patientService;  	   //患者服务
+	@Autowired
+	IDepartmentService departmentService;  //科室服务	
+	@Autowired
+	IDoctorService doctorService;  	   		//医生服务
+	@Autowired
+	IDoctorPatientService doctorPatientService; //医生-患者服务	
+	@Autowired
+	IDiagnosisService diagnosisService;		//诊断服务
+	
 	
 	/**
 	 * @Description: 
@@ -75,17 +96,34 @@ public class ReceivePatientController {
 			//(3.1)第二次解析数据包->医,患,诊断信息对象
 			RxReqDataPatient patient = JSON.parseObject(reqProtocol.getData(), new TypeReference<RxReqDataPatient>() {});
 			System.out.println(patient.getPatient().getName());
-			//(3.2)保存医,患,诊断 数据
-			savePatient(patient);
-			
+			//(3.2)保存医,患,诊断 数据到DB
+			processMsg(patient);			
 		}
 			
 		
 		//(4)返回响应包
+		RxRespProtocol resp=createResponse(RxProtocolConstant.STATUS_SUCCESS,
+											reqProtocol.getVersion());		
+		
+		return resp;
+	}
+	
+	/**
+	 * @Description: 生成响应数据包
+	 * @param
+	 *     @param status	状态
+	 *     @param version	版本号
+	 *     @return   
+	 * @return 
+	 *     RxRespProtocol  响应数据包
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月17日-上午11:04:45
+	 */
+	private RxRespProtocol createResponse(String status,String version){
 		RxRespProtocol resp=new RxRespProtocol(); 
 		resp.setResult(RxProtocolConstant.STATUS_SUCCESS);
-		resp.setVersion(reqProtocol.getVersion());
-		
+		resp.setVersion(version);
 		return resp;
 	}
 	
@@ -106,18 +144,45 @@ public class ReceivePatientController {
 	}
 	
 	/**
-	 * @Description: 保存医,患,诊断等信息
+	 * @Description: 保存患,科室,医,医-患,诊断信息
+	 * 		在保存时存在一定的依赖关系.
 	 * @param
-	 *     @param patient   
+	 *     @param dataSegment   
 	 * @return 
 	 *     void  
 	 * @throws 
 	 * @author Administrator
 	 * @date 2018年1月16日-上午10:40:54
 	 */
-	private void savePatient(RxReqDataPatient patient){
+	private void processMsg(RxReqDataPatient dataSegment){
 		
+		//(1)保存患者
+		long patientId=patientService.addPatient(dataSegment.getPatient().getId(),
+				dataSegment.getPatient().getName(),
+				dataSegment.getPatient().getGender(),
+				dataSegment.getPatient().getOld(),
+				dataSegment.getPatient().getCr_no());
+		//(2)保存科室
+		long departmentId=departmentService.addDepartment(dataSegment.getDepartment().getId(), 
+				dataSegment.getDepartment().getName());
+		
+		//(3)保存医生
+		long doctorId=doctorService.addDoctor(dataSegment.getDoctor().getId(),
+				dataSegment.getDoctor().getName(), departmentId);
+		
+		//(4)保存医生-患者关系
+		doctorPatientService.addDoctorPatient(doctorId, patientId);
+		
+		//(5)保存诊断信息
+		List<RxDisease> diseaseList= dataSegment.getDiagnosis();
+		for(Iterator<RxDisease> itor=diseaseList.iterator();itor.hasNext();){
+			RxDisease disease=itor.next();
+			diagnosisService.addDiagnosis(disease.getId(), doctorId, patientId, disease.getDisease());			
+		}
+			
 	}
+	
+	
 	
     /**
      * @Description: 获取请求方的IP

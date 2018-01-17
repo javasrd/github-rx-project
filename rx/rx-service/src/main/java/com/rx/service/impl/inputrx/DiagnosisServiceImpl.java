@@ -29,21 +29,32 @@ public class DiagnosisServiceImpl extends AbstractBaseService<Diagnosis, Long> i
 
 	@Override
 	public long addDiagnosis(String old_id,long doctor_id,long patient_id,String disease) {
-		Diagnosis rec=new Diagnosis();
+		//查询是否已经存在
+		Diagnosis searchRec=new Diagnosis();
+		searchRec.setOldId(old_id);		
 		
-		//设定对象属性
-		rec.setOldId(old_id);
-		rec.setDoctorId(doctor_id);
-		rec.setPatientId(patient_id);
-		rec.setDisease(disease);
-		
-		//保存
-		int row=diagnosisMapper.insertSelective(rec);
-		
-		if(row>0)
-			return rec.getId();
-		else
-			return 0;		
+		Diagnosis resultRec=diagnosisMapper.selectOne(searchRec);
+		if(resultRec!=null){
+			return resultRec.getId();
+		}
+		else{
+			Diagnosis rec=new Diagnosis();
+			
+			//设定对象属性
+			rec.setOldId(old_id);
+			rec.setDoctorId(doctor_id);
+			rec.setPatientId(patient_id);
+			rec.setDisease(disease);
+			
+			//保存
+			int row=diagnosisMapper.insertSelective(rec);
+			
+			if(row>0)
+				return rec.getId();
+			else
+				return 0;
+		}
+				
 	}
 
 }

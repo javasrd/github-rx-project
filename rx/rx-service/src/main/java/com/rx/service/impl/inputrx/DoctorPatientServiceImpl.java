@@ -30,19 +30,34 @@ public class DoctorPatientServiceImpl extends AbstractBaseService<DoctorPatient,
 
 	@Override
 	public long addDoctorPatient(long doctor_id, long patient_id) {
-		DoctorPatient rec=new DoctorPatient();
 		
-		//设定对象属性
-		rec.setDoctorId(doctor_id);
-		rec.setPatientId(patient_id);
+		//查询关系是否已经存在
+		DoctorPatient searchRec=new DoctorPatient();
+		searchRec.setDoctorId(doctor_id);
+		searchRec.setPatientId(patient_id);
 		
-		//保存
-		int row=doctorPatientMapper.insertSelective(rec);
+		DoctorPatient resultRec=doctorPatientMapper.selectOne(searchRec);
 		
-		if(row>0)
-			return rec.getId();
-		else
-			return 0;
+		if(resultRec!=null){  //如果已经存在
+			return resultRec.getId();
+		}
+		else{  //不存在,插入新的记录
+			
+			DoctorPatient rec=new DoctorPatient();
+			
+			//设定对象属性
+			rec.setDoctorId(doctor_id);
+			rec.setPatientId(patient_id);
+			
+			//保存
+			int row=doctorPatientMapper.insertSelective(rec);
+			
+			if(row>0)
+				return rec.getId();
+			else
+				return 0;			
+		}
+		
 	}
 	
 	
