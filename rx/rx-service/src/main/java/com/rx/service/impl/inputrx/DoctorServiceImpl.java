@@ -1,5 +1,8 @@
 package com.rx.service.impl.inputrx;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.rx.dao.DoctorMapper;
@@ -51,13 +54,16 @@ public class DoctorServiceImpl extends AbstractBaseService<Doctor, Long> impleme
 			if(row>0)
 				return rec.getId();
 			else
-				return 0;
-			
-		}
-		
-		
-		
-				
+				return 0;			
+		}					
 	}
+
+	@Override
+	public List<Map<String,Object>> getDoctorByPatientId(long patient_id) {
+		
+		return doctorMapper.getDoctorByPatientId(patient_id);
+	}
+	
+	
 
 }

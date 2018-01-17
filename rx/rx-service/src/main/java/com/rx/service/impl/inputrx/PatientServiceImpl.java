@@ -60,4 +60,16 @@ public class PatientServiceImpl extends AbstractBaseService<Patient, Long> imple
 				
 	}
 
+	@Override
+	public Patient getPatientByOldId(String old_id) {
+		
+		//查询此患者是否存在
+		Patient searchRec=new Patient();
+		searchRec.setOldId(old_id);	//采用原来的ID号进行查询
+		
+		Patient patient=patientMapper.selectOne(searchRec);
+		return patient;
+		
+	}
+
 }

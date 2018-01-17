@@ -29,5 +29,18 @@ public interface IPatientService extends IBaseService<Patient, Long> {
 	 */
 	public long addPatient(String old_id,String name,String sex,String old,String cr_no);
 	
+	/**
+	 * @Description: 根据东华HIS中患者ID查询此患者
+	 * @param
+	 *     @param old_id 患者在东华HIS中的ID
+	 *     @return   当查询到此患者时,返回对象;否则返回null
+	 * @return 
+	 *     Patient  患者对象
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月17日-下午4:31:02
+	 */
+	
+	public Patient getPatientByOldId(String old_id);
 	
 }

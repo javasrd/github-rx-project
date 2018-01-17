@@ -1,5 +1,7 @@
 package com.rx.service.inputrx;
 
+import java.util.List;
+
 import com.rx.entity.Diagnosis;
 import com.rx.service.IBaseService;
 
@@ -29,5 +31,17 @@ public interface IDiagnosisService extends IBaseService<Diagnosis, Long> {
 	 */
 	public long addDiagnosis(String old_id,long doctor_id,long patient_id,String disease);
 	
-	
+	/**
+	 * @Description: 以患者ID及医生ID查询诊断结果列表
+	 * @param
+	 *     @param patient_id
+	 *     @param doctor_id
+	 *     @return   
+	 * @return 
+	 *     long  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月17日-下午5:45:52
+	 */
+	public List<Diagnosis> getDiagnosisByPatientAndDoctor(long patient_id,long doctor_id);
 }

@@ -44,8 +44,7 @@ public class ReceivePatientController {
 	
 	
 	@Autowired
-	ILogReceivePatientService logService;  //医,患,诊断数据接收日志服务
-	
+	ILogReceivePatientService logService;  //医,患,诊断数据接收日志服务	
 	@Autowired
 	IPatientService patientService;  	   //患者服务
 	@Autowired

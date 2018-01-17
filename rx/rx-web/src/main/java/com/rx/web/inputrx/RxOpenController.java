@@ -1,18 +1,34 @@
 package com.rx.web.inputrx;
 
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.rx.bean.inputrx.RxDisease;
+import com.rx.entity.Department;
+import com.rx.entity.Diagnosis;
+import com.rx.entity.Patient;
+import com.rx.service.inputrx.IDepartmentService;
+import com.rx.service.inputrx.IDiagnosisService;
+import com.rx.service.inputrx.IDoctorPatientService;
+import com.rx.service.inputrx.IDoctorService;
+import com.rx.service.inputrx.ILogReceivePatientService;
+import com.rx.service.inputrx.IPatientService;
 
 
 /**
- * 打开处方录入窗口控制器
- *
+ * @ClassName: RxOpenController
+ * @Description: 打开处方录入窗口控制器
+ * @author Administrator
+ * @date 2018年1月17日-下午4:17:47
+ * @version 1.0.0
  */
 @Controller
 /*@RequestMapping("/")*/
@@ -22,15 +38,89 @@ public class RxOpenController {
 	final String RESPONSE_JSP = "jsps/";
 
 	
+	@Autowired
+	ILogReceivePatientService logService;  //日志服务:医,患,诊断数据	
+	@Autowired
+	IPatientService patientService;  	   //患者服务
+	@Autowired
+	IDepartmentService departmentService;  //科室服务	
+	@Autowired
+	IDoctorService doctorService;  	   		//医生服务
+	@Autowired
+	IDoctorPatientService doctorPatientService; //医生-患者服务	
+	@Autowired
+	IDiagnosisService diagnosisService;		//诊断服务
+	
 	/**
-	 * @Description 打开医生处方录入界面,对外接口 
-	 * @return 医生开处方视图(rxwin)
+	 * @Description 
+	 * @return 
+	 */
+	/**
+	 * @Description: 打开医生处方录入界面,对外接口 
+	 * @param
+	 *     @param patientId 患者在东华系统中的ID
+	 *     @param model 用来传送医,患,科室,诊断信息.
+	 *     @return   开处方视图
+	 * @return 
+	 *     String  医生开处方视图(hospital.html)
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月17日-下午4:17:38
 	 */
 	@RequestMapping(value = "/openwin")
-	public String openWin(@RequestParam String patientId) {
-		System.out.println("patientId:"+patientId);
+	public String openWin(@RequestParam String patientId,Model model) {
+		
+		//System.out.println("patientId:"+patientId);
+		
+		getPatientDiagInfo(patientId,model);  //获取患者及诊断信息
+		
 		return RESPONSE_THYMELEAF + "hospital";
 	}
+	
+	/**
+	 * @Description: 根据原患者ID获取患者及诊断信息
+	 * @param
+	 *     @param patientId 患者在东华系统中的ID
+	 *     @param model   	用来传送医,患,科室,诊断信息.
+	 * @return 
+	 *     void  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月17日-下午5:59:11
+	 */
+	private void getPatientDiagInfo(String patientId,Model model){
+		//根据患者ID查询如下数据.		
+		//(1)患者
+		Patient patient=patientService.getPatientByOldId(patientId);
+		
+		//(2)医生
+		List<Map<String, Object>> doctorList=doctorService.getDoctorByPatientId(patient.getId());		
+		
+		//(3)科室
+		long departmentId=(long)doctorList.get(0).get("department_id");
+		Department department=departmentService.selectByPrimaryKey(departmentId);
+		
+		//(4)诊断结果列表
+		long patientLocalId=patient.getId();
+		long doctorLocalId=(long)doctorList.get(0).get("id");
+		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patientLocalId,doctorLocalId);
+		/*StringBuilder diagnosisNames=new StringBuilder("");
+		int count=0;
+		for(Iterator<Diagnosis> itor=diagnosisList.iterator();itor.hasNext();){			
+			Diagnosis disease=itor.next();
+			count=count+1;
+			diagnosisNames.append(count+":"+disease.getDisease()+";");			
+		}*/
+		
+		//加入model
+		model.addAttribute("patient", patient);
+		model.addAttribute("doctor", doctorList.get(0));
+		model.addAttribute("department",department);
+		model.addAttribute("diagnosisList", diagnosisList);
+		
+		model.addAttribute("diagnosisDate", new Date());
+	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

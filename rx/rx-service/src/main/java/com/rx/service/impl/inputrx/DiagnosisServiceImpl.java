@@ -1,5 +1,7 @@
 package com.rx.service.impl.inputrx;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.rx.dao.DiagnosisMapper;
@@ -53,8 +55,15 @@ public class DiagnosisServiceImpl extends AbstractBaseService<Diagnosis, Long> i
 				return rec.getId();
 			else
 				return 0;
-		}
-				
+		}				
+	}
+
+	@Override
+	public List<Diagnosis> getDiagnosisByPatientAndDoctor(long patient_id, long doctor_id) {
+		Diagnosis searchRec=new Diagnosis();
+		searchRec.setPatientId(patient_id);
+		searchRec.setDoctorId(doctor_id);
+		return diagnosisMapper.select(searchRec);
 	}
 
 }

@@ -16,4 +16,11 @@
     -->
     id, old_id, name, department_id
   </sql>
+  
+  <select id="getDoctorByPatientId" resultType="map">	
+	SELECT d.* from doctor AS d LEFT JOIN doctor_patient AS dp ON(d.id=dp.doctor_id) 
+	WHERE dp.patient_id=#{patient_id};
+  </select>
+  
+  
 </mapper>
