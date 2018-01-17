@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <div th:include="/thymeleaf/common/_head2::headx('处方录入')"	th:remove="tag"></div>
+    <!-- <title>11</title> -->
+
+    <!-- Bootstrap -->
+    <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <link th:href="@{/static/css/hospital/hospital.css}" rel="stylesheet">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+      <script src="pie/pie.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="row">
+        <div class="col-xs-6"></div>
+      </div>
+      <div class="container-fluid">
+        <div class="basic_info clearfix">
+          <h2>基本信息
+            <img th:src="@{/static/images/avatar.jpg}" alt="avatar">
+            <span></span>
+          </h2>
+          <div id="basicForm" class="basic_form">
+            <div class="row basic_top">
+              <div class="col-xs-6">
+                <div>门诊号码<span>001</span></div>
+              </div>
+              <div class="col-xs-6">
+                <p class="time pull-right">就诊时间：<span>2018-12-26 23:56:58</span></p>
+              </div>
+            </div>
+            <div class="basic_bottom">
+              <div class="info_container">
+                <p class="info_title">姓名</p>
+                <p class="info_content">321456</p>
+              </div>
+              <div class="info_container">
+                <p class="info_title">性别</p>
+                <p class="info_content">男</p>
+                <span></span>
+              </div>
+              <div class="info_container">
+                <p class="info_title">年龄</p>
+                <p class="info_content">20</p>
+                <span></span>
+              </div>
+              <div class="info_container">
+                <p class="info_title">费别</p>
+                <p class="info_content">自费</p>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="card_container diagnosis">
+        <h3>疾病诊断</h3>
+        <div>
+          <p>XXXXXXX</p>
+        </div>
+      </div>
+      <div class="drug_container">
+        <div class="card_container diagnosis_msg">
+          <h3>商品录入</h3>
+          <div>
+            <div class="form-inline">
+                <div class="form-group form-group-sm">
+                  <label class="control-label">名称：</label>
+                  <input type="text" class="form-control" onfocus="Common.showDropdownTable($(this))" onblur="Common.hideDropdownTable()">
+                  <input type="text" class="form-control">
+                </div>
+                <div class="form-group form-group-sm">
+                  <label class="control-label">用法：</label>
+                  <input type="text" class="form-control" onfocus="Common.showDropdownTable($(this))" onblur="Common.hideDropdownTable()">
+                </div>
+                <div class="form-group form-group-sm">
+                  <label class="control-label">频次：</label>
+                  <input type="text" class="form-control" onfocus="Common.showDropdownTable($(this))" onblur="Common.hideDropdownTable()">
+                </div>
+                <div class="form-group form-group-sm">
+                  <label class="control-label">数量：</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="table-head">
+          <table class="table table-default">
+            <thead>
+              <tr>
+                <th>商品码</th>
+                <th>商品名</th>
+                <th>规格</th>
+                <th>用法</th>
+                <th>频次</th>
+                <th class="input_width">单次用量</th>
+                <th class="input_width">剂量单位</th>
+                <th class="input_width">用药天数</th>
+                <th class="input_width">单位</th>
+                <th class="small_width">单价</th>
+                <th class="small_width">数量</th>
+                <th class="small_width">金额</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="table-responsive">
+          <div id="drugForm" class="table-body">
+            <table class="table table-striped table-bordered table-default">
+              <tbody>
+                <tr>
+                  <td>asdfasj骄傲送帝国军哦i就嘎asdfasj骄傲送帝国军哦i就嘎</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width"></td>
+                  <td class="small_width"></td>
+                  <td class="small_width"></td>
+                  <td class="small_width"></td>
+                </tr>
+                <tr>
+                  <td>asdfasj骄傲送帝国军哦i就嘎asdfasj骄傲送帝国军哦i就嘎</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width"></td>
+                  <td class="small_width"></td>
+                  <td class="small_width"></td>
+                  <td class="small_width"></td>
+                </tr>
+                <tr>
+                  <td>asdfasj骄傲送帝国军哦i就嘎asdfasj骄傲送帝国军哦i就嘎</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width input_td"><input class="form-control input-sm"></td>
+                  <td class="input_width"></td>
+                  <td class="small_width"></td>
+                  <td class="small_width"></td>
+                  <td class="small_width"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="menu_container clearfix">
+        <div class="left_btn pull-left">
+          <button class="btn btn-success">保存套组</button>
+          <button class="btn btn-success">使用套组</button>
+          <button class="btn btn-success">清屏</button>
+          <button class="btn btn-success">删除行</button>
+          <button class="btn btn-success">保存</button>
+          <button class="btn btn-success">预览处方</button>
+        </div>
+        <div class="right_btn pull-right">
+          <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>确定</button>
+          <button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>退出</button>
+        </div>
+      </div>
+    </div>
+    
+    <script th:src="@{/static/js/hospital/hospital.js}"></script>
+    
+  </body>
+</html>

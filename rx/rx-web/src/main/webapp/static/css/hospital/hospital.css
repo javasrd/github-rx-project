@@ -1,0 +1,295 @@
+/*
+ * 2018-1-15
+ */
+
+
+/* 修正bootstrap样式 */
+.container-fluid{
+	min-width: 1170px;
+}
+.form-inline .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+  .form-inline .form-control-static {
+    display: inline-block;
+  }
+  .form-inline .input-group {
+    display: inline-table;
+    vertical-align: middle;
+  }
+  .form-inline .input-group .input-group-addon,
+  .form-inline .input-group .input-group-btn,
+  .form-inline .input-group .form-control {
+    width: auto;
+  }
+  .form-inline .input-group > .form-control {
+    width: 100%;
+  }
+  .form-inline .control-label {
+    margin-bottom: 0;
+    vertical-align: middle;
+    max-width: none;
+  }
+  .form-inline .radio,
+  .form-inline .checkbox {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .form-inline .radio label,
+  .form-inline .checkbox label {
+    padding-left: 0;
+  }
+ .form-inline .radio input[type="radio"],
+ .form-inline .checkbox input[type="checkbox"] {
+   position: relative;
+   margin-left: 0;
+ }
+ .form-inline .has-feedback .form-control-feedback {
+   top: 0;
+ }
+ .btn{
+ 	behavior: url(PIE/PIE.htc);
+ }
+/* 修正bootstrap样式 end*/
+
+.table-default {
+    table-layout: fixed
+}
+
+.table-default th,
+.table-default td {
+    padding: 5px 10px;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+table td{
+  cursor: default;
+  vertical-align: middle !important;
+}
+
+
+html{
+	height: 100%;
+}
+body{
+	background-color: #f0f2f5;
+	height: 100%;
+	overflow: auto;
+}
+.navbar{
+	background: #fff;
+	height: 100px;
+	border: none;
+	margin-bottom: 8px;
+}
+.navbar>.row{
+	position: absolute;
+	bottom: 0;
+	left: 15px;
+	right: 15px;
+	top: 0;
+	z-index: 9
+}
+.navbar>.row>div{
+	height: 100%;
+	background-color: #06b2b6;
+}
+.basic_info{
+	position: relative;
+	z-index: 10;
+}
+.basic_info h2{
+	float: left;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 100px;
+	margin: 0;
+	position: relative;
+	padding-right: 120px;
+	width: 200px
+}
+.basic_info h2 span{
+	position: absolute;
+	right: 0;
+	top:0;
+	bottom:0;
+	width: 0px;
+	height: 0;
+	border: 50px solid;
+	border-color: transparent #fff #fff transparent;
+	z-index: 11;
+}
+.basic_info h2 img{
+	position: absolute;
+	right: 20px;
+	top:20px;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	behavior: url(PIE/PIE.htc);
+	z-index: 12;
+}
+.basic_info .basic_form{
+	float: left;
+	padding: 15px;
+	height: 100px;
+	background-color: #fff;
+}
+.basic_info .basic_top{
+	border-bottom: 2px solid #f0f2f5;
+	float: left;
+	font-size: 18px;
+	width: 100%;
+	color: #505050;
+}
+.basic_info .basic_top div>span{
+	font-size: 16px;
+	padding-left: 20px;
+}
+.basic_info .basic_top .time{
+	font-size: 14px;
+	color: #8a8a8a;
+	margin-bottom: 8px;
+}
+.basic_info .basic_bottom{
+
+}
+.basic_info .basic_bottom .info_container{
+	color: #505050;
+	display: inline-block;
+	margin-top: 15px;
+	padding-left: 36px;
+	position: relative;
+}
+.basic_info .basic_bottom .info_container>p{
+	display: inline-block;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+.basic_info .basic_bottom .info_container>p.info_content{
+	font-weight: normal;
+	padding-left: 15px;
+}
+.basic_info .basic_bottom .info_container>span{
+	position: absolute;
+	left: 18px;
+	top:2px;
+	bottom: 2px;
+	width: 1px;
+	background-color: #f0f2f5;
+}
+.card_container{
+	padding: 15px 20px;
+	background-color: #fff;
+	margin-bottom: 8px;
+	padding-left: 10px;
+}
+.card_container h3{
+	border-left: 4px solid #06b2b6;
+	font-size: 18px;
+	margin-top: 0;
+	padding-left: 10px;
+	font-weight: bold;
+}
+.card_container p{
+	margin-bottom: 0;
+}
+.diagnosis_msg .form-group{
+	position: relative;
+}
+.diagnosis_msg .form-group label{
+	max-width: none;
+}
+.diagnosis_msg .dropdown-table{
+	background-color: #fff;
+	position: absolute;
+	left: 45px;
+	top: 38px;
+	width: 500px;
+	max-height: 240px;
+	overflow: auto;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 4px 1px grey;
+	behavior: url(PIE/PIE.htc);
+}
+.diagnosis_msg input{
+	border: none;
+	background-color: #efefef;
+}
+.diagnosis_msg input:focus{
+	background-color: #e5e5e5;
+}
+.drug_container .card_container{
+	margin-bottom: 0;
+}
+.table-head table{
+	margin-bottom: 0
+}
+.table-head table th{
+	background-color: #eee;
+}
+.table-body{
+	border: 1px solid #ccc;
+	margin-bottom: 20px;
+	min-height: 300px;
+	overflow: auto;
+}
+.table-body table{
+	margin: -1px;
+}
+.table-responsive table tr.odd{
+	background-color: #fff;
+}
+.table-responsive table tr.even{
+	background-color: #f9f9f9;
+}
+.table-responsive table td{
+	height: 60px;
+}
+.table-responsive table td.input_td{
+	padding: 4px;
+}
+.table-responsive table td input{
+	border: none;
+	background-color: transparent;
+	height: 40px;
+	font-size: 16px;
+	padding: 10px 8px;
+	outline: none;
+	box-shadow: none;
+}
+table th.input_width,table td.input_width{
+	width: 80px;
+}
+table th.small_width,table td.small_width{
+	width: 100px;
+}
+
+.menu_container button{
+	width: 100px;
+	margin-bottom: 20px;
+}
+.menu_container .left_btn .btn-success{
+	background-color: #06b2b6;
+}
+.menu_container .right_btn .btn-success{
+	background-color: #49986c;
+}
+.menu_container .btn-danger{
+	background-color: #eb6877;
+}
+.menu_container .right_btn button>span{
+	margin-right: 8px;
+}

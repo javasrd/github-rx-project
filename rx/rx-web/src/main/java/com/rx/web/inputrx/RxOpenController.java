@@ -29,7 +29,7 @@ public class RxOpenController {
 	@RequestMapping(value = "/openwin")
 	public String openWin(@RequestParam String patientId) {
 		System.out.println("patientId:"+patientId);
-		return RESPONSE_THYMELEAF + "rxwin";
+		return RESPONSE_THYMELEAF + "hospital";
 	}
 	
 	public static void main(String[] args) {
