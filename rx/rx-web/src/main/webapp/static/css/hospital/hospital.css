@@ -57,7 +57,7 @@
    top: 0;
  }
  .btn{
- 	behavior: url(PIE/PIE.htc);
+ 	behavior: url("./static/css/hospital/PIE.htc");  
  }
 /* 修正bootstrap样式 end*/
 
@@ -138,7 +138,7 @@ body{
 	width: 60px;
 	height: 60px;
 	border-radius: 50%;
-	behavior: url(PIE/PIE.htc);
+	behavior: url("./static/css/hospital/PIE.htc");  
 	z-index: 12;
 }
 .basic_info .basic_form{
@@ -209,9 +209,6 @@ body{
 .diagnosis_msg .form-group{
 	position: relative;
 }
-.diagnosis_msg .form-group label{
-	max-width: none;
-}
 .diagnosis_msg .dropdown-table{
 	background-color: #fff;
 	position: absolute;
@@ -222,7 +219,7 @@ body{
 	overflow: auto;
 	border: 1px solid #ccc;
 	box-shadow: 0 0 4px 1px grey;
-	behavior: url(PIE/PIE.htc);
+	behavior: url("./static/css/hospital/PIE.htc");  
 }
 .diagnosis_msg input{
 	border: none;
@@ -275,6 +272,17 @@ table th.input_width,table td.input_width{
 }
 table th.small_width,table td.small_width{
 	width: 100px;
+}
+.table-body .dropdown-unit{
+	background-color: #fff;
+	display: none;
+	position: absolute;
+	width: 300px;
+	max-height: 240px;
+	overflow: auto;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 4px 1px grey;
+	behavior: url("./static/css/hospital/PIE.htc");  
 }
 
 .menu_container button{

@@ -40,5 +40,15 @@ var Common = {
 	addStripedStyle : function () {
 		$("#drugForm tr").filter(":odd").addClass("odd");
 		$("#drugForm tr").filter(":even").addClass("even");
+	},
+
+	showDropdownUnit : function (that) {
+		var top = $(that).offset().top + 55;
+		var left = $(that).offset().left;
+		$('.dropdown-unit').css({"top":top,"left":left}).show();
+	},
+
+	hideDropdownUnit : function () {
+		$('.dropdown-unit').hide();
 	}
 }

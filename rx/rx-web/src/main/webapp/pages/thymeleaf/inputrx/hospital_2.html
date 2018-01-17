@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <meta charset="utf-8">    
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <div th:include="/thymeleaf/common/_head2::headx('处方录入')"	th:remove="tag"></div>
-    <!-- <title>11</title> -->
+    <title>11</title>
 
     <!-- Bootstrap -->
-    <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="iconfont/iconfont.css" rel="stylesheet">
 
-    <link th:href="@{/static/css/hospital/hospital.css}" rel="stylesheet">
+    <link href="hospital.css" rel="stylesheet">
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-    
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="hospital.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script th:src="@{/static/js/html5shiv/3.7.3/html5shiv.min.js}"></script>
-      <script th:src="@{/static/js/respond.js/1.4.2/respond.min.js}"></script>
-      <script th:src="@{/static/pie/pie.js}"></script>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -37,39 +35,31 @@
       <div class="container-fluid">
         <div class="basic_info clearfix">
           <h2>基本信息
-            <img th:src="@{/static/images/avatar.jpg}" alt="avatar">
+            <img src="avatar.jpg" alt="avatar">
             <span></span>
           </h2>
           <div id="basicForm" class="basic_form">
             <div class="row basic_top">
               <div class="col-xs-6">
-                <div>科室	<span th:text="${department.name}" style="padding-right: 50px;">001</span>
-                	医生<span th:text="${doctor.name}"></span>          	
-                </div>
-                
+                <div>门诊号码<span>001</span></div>
               </div>
-              <div class="col-xs-6">              	
-                <p class="time pull-right">就诊时间：<span th:text="${#calendars.format(diagnosisDate,'yyyy-MM-dd HH:MM:SS')}">2018-12-26 23:56:58</span></p>
+              <div class="col-xs-6">
+                <p class="time pull-right">就诊时间：<span>2018-12-26 23:56:58</span></p>
               </div>
             </div>
             <div class="basic_bottom">
               <div class="info_container">
                 <p class="info_title">姓名</p>
-                <p class="info_content"><span th:text="${patient.name}">张三</span></p>
+                <p class="info_content">321456</p>
               </div>
               <div class="info_container">
                 <p class="info_title">性别</p>
-                <p class="info_content">
-                				<span th:switch="${patient.sex}" th:remove="tag"> 
-                					<span th:case='1' th:remove="tag"><span	>男 </span></span>
-                					<span th:case='2' th:remove="tag"><span	>女 </span></span>                					
-								</span>
-				</p>
+                <p class="info_content">男</p>
                 <span></span>
               </div>
               <div class="info_container">
                 <p class="info_title">年龄</p>
-                <p class="info_content"><span th:text="${patient.old}">20</span></p>
+                <p class="info_content">20</p>
                 <span></span>
               </div>
               <div class="info_container">
@@ -86,11 +76,7 @@
       <div class="card_container diagnosis">
         <h3>疾病诊断</h3>
         <div>
-          <p style="padding-left:50px;">
-          	<span th:each="diagnosis,iterStat:${diagnosisList}">
-          		<span th:text="${iterStat.count}+':'+${diagnosis.disease}+';'" style="padding-right:20px">诊断结果</span>
-          	</span>          	
-          </p>
+          <p>XXXXXXX</p>
         </div>
       </div>
       <div class="drug_container">
@@ -222,8 +208,5 @@
         </div>
       </div>
     </div>
-    
-    <script th:src="@{/static/js/hospital/hospital.js}"></script>
-    
   </body>
 </html>

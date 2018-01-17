@@ -17,8 +17,10 @@
 		<title></title>
 	</head>
 	
+	
 	<!--   引入jquery 根据情况引入相应版本即可。    -->
-	<script th:src="@{/static/jquery/1.11.3/jquery-1.11.3.js}"></script>	
+	<script type="@{/static/js/json2/json2.js}"></script>
+	<script th:src="@{/static/jquery/1.11.3/jquery-1.11.3.js}"></script>	      	
 
 	<body>		
 		<!-- 用于发起第一次请求：发送医、患数据 -->
@@ -39,7 +41,7 @@
 			//url2的实际地址由【非医保Rx】给出。在原有需求文档中，并没有此地址信息，需要加入。
 			//patientId为当前患者的ID，需要根据实际情况替换相应的值。
 			
-			url2="http://localhost:8080/rx-web/openwin?patientId=11";   
+			url2="http://localhost:8080/rx-web/openwin?patientId=01";   
 			window.open(url2,"_blank");
 			
 			
@@ -82,6 +84,10 @@
 			
 			event.preventDefault(); //使a自带的方法失效，即无法调整到href中的URL	
 			
+			 if(typeof JSON == 'undefined'){
+                 $('head').append($("<script type='text/javascript' src='page/duty/Scripts/json2.js'>"));
+			 }
+			
 			//采用AJAX方式发送POST请求
 			$.ajax({
 				type: "POST",
@@ -116,5 +122,7 @@
 		});
 		
 	</script>
+	
+	
 
 </html>
