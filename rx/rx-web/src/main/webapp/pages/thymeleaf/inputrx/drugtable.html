@@ -19,15 +19,16 @@
 					</tr>
 				</thead>
 				<tbody>				 
-					<tr th:each="drug,iterStat:${drugList}" class="drug-item" 
-						th:attr="drug-id=${drug.id},
-								 drug-name=${drug.warename}">
-						<td th:text="${drug.wareid}"></td>
-						<td th:text="${drug.warename}"></td>
-						<td th:text="${drug.warespec}"></td>
-						<td th:text="${drug.saleprice}"></td>						
-						<td th:text="${drug.wareunit}"></td>
-						<td th:text="${drug.abc}"></td>
+					<tr th:each="drug,iterStat:${drugList}" 
+						class="drug-item" 
+						th:attr="drug-id=${drug.id}" >
+						
+						<td th:text="${drug.wareid}" th:attr="id='wareid-'+${drug.id}"></td>
+						<td th:text="${drug.warename}" th:attr="id='warename-'+${drug.id}"></td>
+						<td th:text="${drug.warespec}" th:attr="id='warespec-'+${drug.id}"></td>
+						<td th:text="${drug.saleprice}" th:attr="id='saleprice-'+${drug.id}"></td>						
+						<td th:text="${drug.wareunit}" th:attr="id='wareunit-'+${drug.id}"></td>
+						<td th:text="${drug.abc}" ></td>
 					</tr>
 					
 					<tr th:remove="all">
@@ -50,6 +51,9 @@
 			</table>
 		</div>
 	</div>
+	
+	<script th:src="@{/static/js/hospital/drugtable.js}" type="text/javascript"></script>
+	
 </body>
 
 
