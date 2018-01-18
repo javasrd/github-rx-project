@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>药品目录列表</title>
+</head>
+<body>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>商品码</th>
+						<th>商品名</th>
+						<th>规格</th>
+						<th>单价</th>
+						<td>单位</td>
+						<td>助记码</td>
+					</tr>
+				</thead>
+				<tbody>				 
+					<tr th:each="drug,iterStat:${drugList}">
+						<td th:text="drug.wareid"></td>
+						<td th:text="drug.warename"></td>
+						<td th:text="drug.warespec"></td>
+						<td th:text="drug.saleprice"></td>						
+						<td th:text="drug.wareunit"></td>
+						<td th:text="drug.abc"></td>
+					</tr>
+					
+					<tr th:remove="all">
+						<td>123</td>
+						<td>感冒清</td>
+						<td>1.0g*20片</td>
+						<td>12.5</td>
+						<td>盒</td>
+						<td>glq</td>
+					</tr>
+					<tr th:remove="all">
+						<td>123</td>
+						<td>感冒清</td>
+						<td>1.0g*20片</td>
+						<td>12.5</td>
+						<td>盒</td>
+						<td>glq</td>
+					</tr>					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
