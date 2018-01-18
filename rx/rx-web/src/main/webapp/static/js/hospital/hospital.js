@@ -47,7 +47,7 @@ var Common = {
 
 	showDropdownUnit : function (that) {
 		var top = $(that).offset().top + 55;
-		var left = $(that).offset().left;
+		var left = $(that).offset().left;		
 		$('.dropdown-unit').css({"top":top,"left":left}).show();
 	},
 

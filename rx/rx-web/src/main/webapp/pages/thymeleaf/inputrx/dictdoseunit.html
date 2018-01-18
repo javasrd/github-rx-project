@@ -16,8 +16,8 @@
 					</tr>
 				</thead>
 				<tbody>				 
-					<tr th:each="doseunit,iterStat:${doseUnitList}" class="dict-doseunit" 
-						th:attr="doseunit-id=${mode.id}" >
+					<tr th:each="doseunit,iterStat:${doseUnitList}" class="doseunit-item" 
+						th:attr="doseunit-id=${doseunit.id}" >
 												
 						<td th:text="${iterStat.count}"></td>
 						<td th:text="${doseunit.name}" th:attr="id='doseunitname-'+${doseunit.id}"></td>
