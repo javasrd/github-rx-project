@@ -100,8 +100,8 @@
             <div class="form-inline">
                 <div class="form-group form-group-sm">
                   <label class="control-label">名称：</label>
-                  <input type="text" class="form-control" onfocus="Common.showDropdownTable($(this))" onblur="Common.hideDropdownTable()">
-                  <input type="text" class="form-control">
+                  <input type="text" id="abc" class="form-control" onfocus="Common.showDropdownTable($(this))" onblur="Common.hideDropdownTable()">
+                  <input type="text" id="warename" class="form-control">
                 </div>
                 <div class="form-group form-group-sm">
                   <label class="control-label">用法：</label>
@@ -138,8 +138,8 @@
             </thead>
           </table>
         </div>
-        <div class="table-responsive">
-          <div id="drugForm" class="table-body" onscroll="Common.hideDropdownUnit()">
+        <div class="table-responsive" >
+          <div id="drugForm" class="table-body" onscroll="Common.hideDropdownUnit()" >
             <div class="dropdown-unit">
               <table>
                 <thead>
@@ -160,8 +160,8 @@
             </div>
             <table class="table table-striped table-bordered table-default">
               <tbody>
-                <tr>
-                  <td>asdfasj骄傲送帝国军哦i就嘎asdfasj骄傲送帝国军哦i就嘎</td>
+                <tr th:remove="all">
+                  <td>此处存放药品名称</td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -173,35 +173,7 @@
                   <td class="small_width"></td>
                   <td class="small_width"></td>
                   <td class="small_width"></td>
-                </tr>
-                <tr>
-                  <td>asdfasj骄傲送帝国军哦i就嘎asdfasj骄傲送帝国军哦i就嘎</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="input_width input_td"><input class="form-control input-sm"></td>
-                  <td class="input_width input_td"><input class="form-control input-sm" onfocus="Common.showDropdownUnit(this)" onblur="Common.hideDropdownUnit()"></td>
-                  <td class="input_width input_td"><input class="form-control input-sm"></td>
-                  <td class="input_width"></td>
-                  <td class="small_width"></td>
-                  <td class="small_width"></td>
-                  <td class="small_width"></td>
-                </tr>
-                <tr>
-                  <td>asdfasj骄傲送帝国军哦i就嘎asdfasj骄傲送帝国军哦i就嘎</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="input_width input_td"><input class="form-control input-sm"></td>
-                  <td class="input_width input_td"><input class="form-control input-sm" onfocus="Common.showDropdownUnit(this)" onblur="Common.hideDropdownUnit()"></td>
-                  <td class="input_width input_td"><input class="form-control input-sm"></td>
-                  <td class="input_width"></td>
-                  <td class="small_width"></td>
-                  <td class="small_width"></td>
-                  <td class="small_width"></td>
-                </tr>
+                </tr>                                
               </tbody>
             </table>
           </div>
@@ -224,6 +196,34 @@
     </div>
     
     <script th:src="@{/static/js/hospital/hospital.js}"></script>
+    <script type="text/javascript">
+    
+	    /* 加载药品列表 */
+		function loadDrugTable() {
+			var url = "/drug/drugtable";
+			var parms = null;
+			var callbackFunc = loadDrugTableSuccess; // 加载完毕后 显示数量及金额
+			var containerId = ".dropdown-table";	
+			loadPage(containerId, url, parms, callbackFunc);
+		}
+    
+    	$(function(){
+    		
+    		
+    		
+    		/******************************
+    			绑定事件
+    		*******************************/
+    		$("#abc").on("change",function(){
+    			$(".dropdown-table").load	
+    		});
+    		
+    	});
+    	
+    	
+    	
+    	
+    </script>
     
   </body>
 </html>

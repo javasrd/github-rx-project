@@ -25,4 +25,17 @@
     id, wareid, barcode, abc, warename, waresimname, warespec, prod_addr, producer, wareunit, 
     status, saleprice
   </sql>
+  
+  <select id="getDrugByAbc" resultType="BaseResultMap">
+  	
+		SELECT 
+			* 
+		FROM 
+			drug d		 
+		WHERE 
+			d.status=1 AND
+			d.abc LIKE CONCAT('%',#{abc},'%')
+		
+	</select>
+  
 </mapper>

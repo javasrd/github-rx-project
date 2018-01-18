@@ -1,5 +1,7 @@
 package com.rx.service.impl.inputrx;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.rx.dao.DoctorMapper;
@@ -38,6 +40,11 @@ public class DrugServiceImpl extends AbstractBaseService<Drug, Long> implements 
 			return rec.getId();
 		else
 			return 0;	
+	}
+
+	@Override
+	public List<Drug> getDrugByAbc(String abc) {
+		return drugMapper.getDrugByAbc(abc);		
 	}
 
 }

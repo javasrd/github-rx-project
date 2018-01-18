@@ -77,6 +77,20 @@ public class RxOpenController {
 		return RESPONSE_THYMELEAF + "hospital";
 	}
 	
+	@RequestMapping(value = "/drug/drugtable")
+	public String drugTable(String abc,Model model) {
+		
+		System.out.println("助记码:"+abc);
+		
+		getDrugTable(abc,model);  //获取药品目录
+		
+		return RESPONSE_THYMELEAF + "hospital";
+	}
+	
+	private void getDrugTable(String abc,Model model){
+		
+	}
+	
 	/**
 	 * @Description: 根据原患者ID获取患者及诊断信息
 	 * @param
@@ -120,6 +134,7 @@ public class RxOpenController {
 		
 		model.addAttribute("diagnosisDate", new Date());
 	}
+	
 	
 	
 	public static void main(String[] args) {
