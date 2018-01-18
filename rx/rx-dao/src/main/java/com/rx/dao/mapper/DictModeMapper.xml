@@ -15,4 +15,16 @@
     -->
     id, code, name
   </sql>
+  
+  <select id="getModeByAbc" resultMap="BaseResultMap">  	
+		SELECT 
+			* 
+		FROM 
+			dict_mode as m		 
+		WHERE			
+			m.code LIKE CONCAT('%',#{abc},'%')
+		
+	</select>
+  
+  
 </mapper>

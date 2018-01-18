@@ -1,5 +1,7 @@
 package com.rx.service.impl.inputrx;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.rx.dao.DictDoseUnitMapper;
@@ -26,6 +28,11 @@ public class DictDoseUnitServiceImpl extends AbstractBaseService<DictDoseUnit, L
 	public void setDictDoseUnitMapper(DictDoseUnitMapper dictDoseUnitMapper) {
 		this.dictDoseUnitMapper=dictDoseUnitMapper;
 		this.setMapper(dictDoseUnitMapper);
+	}
+
+	@Override
+	public List<DictDoseUnit> getDoseUnitByAbc(String abc) {
+		return dictDoseUnitMapper.getDoseUnitByAbc(abc);
 	}
 
 }

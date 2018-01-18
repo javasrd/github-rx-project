@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>给药方式数据字典列表</title>
+</head>
+<body>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>名称</th>
+						<th>助记码</th>						
+					</tr>
+				</thead>
+				<tbody>				 
+					<tr th:each="mode,iterStat:${modeList}" class="mode-item" 
+						th:attr="mode-id=${mode.id}" >
+												
+						<td th:text="${iterStat.count}"></td>
+						<td th:text="${mode.name}" th:attr="id='modename-'+${mode.id}"></td>
+						<td th:text="${mode.code}" th:attr="id='modecode-'+${mode.id}"></td>
+						
+					</tr>
+					
+					<tr th:remove="all">
+						<td>1</td>
+						<td>口服</td>
+						<td>助记码</td>
+					</tr>
+					<tr th:remove="all">
+						<td>2</td>
+						<td>口服</td>
+						<td>助记码</td>
+					</tr>
+															
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<script th:src="@{/static/js/hospital/dictmode.js}" type="text/javascript"></script>
+	
+</body>
+
+
+
+</html>

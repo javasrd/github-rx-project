@@ -15,4 +15,15 @@
     -->
     id, code, name
   </sql>
+  
+  <select id="getDoseUnitByAbc" resultMap="BaseResultMap">  	
+		SELECT 
+			* 
+		FROM 
+			dict_dose_unit dn		 
+		WHERE			
+			dn.code LIKE CONCAT('%',#{abc},'%')
+  </select>
+  
+  
 </mapper>

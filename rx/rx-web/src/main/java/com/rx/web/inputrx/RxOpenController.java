@@ -12,10 +12,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
+import com.rx.entity.DictDoseUnit;
+import com.rx.entity.DictMode;
+import com.rx.entity.DictTimes;
 import com.rx.entity.Drug;
 import com.rx.entity.Patient;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
+import com.rx.service.inputrx.IDictDoseUnitService;
+import com.rx.service.inputrx.IDictModeService;
+import com.rx.service.inputrx.IDictTimesService;
 import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.IDrugService;
@@ -52,6 +58,15 @@ public class RxOpenController {
 	IDiagnosisService diagnosisService;		//诊断服务
 	@Autowired
 	IDrugService drugService;  //药品服务
+	@Autowired
+	IDictModeService dictModeService;  //给药方式
+	@Autowired
+	IDictTimesService dictTimesService;  //给药次数
+	@Autowired
+	IDictDoseUnitService dictDoseUnitService;  //给药模式
+	
+	
+	
 	
 	/**
 	 * @Description 
@@ -91,15 +106,66 @@ public class RxOpenController {
 	 * @author Administrator
 	 * @date 2018年1月18日-下午3:58:51
 	 */
-	@RequestMapping(value = "/drug/drugtable")
+	@RequestMapping(value = "/drug/category")
 	public String drugTable(String abc,Model model) {
 		
 		System.out.println("助记码:"+abc);
 		
 		getDrugTable(abc,model);  //获取药品目录
 		
-		return RESPONSE_THYMELEAF + "drugtable";
+		return RESPONSE_THYMELEAF + "drugcategory";
 	}
+	
+	@RequestMapping(value = "/drug/mode")
+	public String drugMode(String abc,Model model) {
+		
+		System.out.println("助记码:"+abc);
+		
+		getDrugMode(abc,model);  //获取药品目录
+		
+		return RESPONSE_THYMELEAF + "dictmode";
+	}
+	
+	private void getDrugMode(String abc,Model model){
+		List<DictMode> modeList=dictModeService.getModeByAbc(abc);
+		model.addAttribute("modeList", modeList);		
+	}
+	
+	
+	@RequestMapping(value = "/drug/times")
+	public String drugTimes(String abc,Model model) {
+		
+		System.out.println("助记码:"+abc);
+		
+		getDrugTimes(abc,model);  //获取药品目录
+		
+		return RESPONSE_THYMELEAF + "dicttimes";
+	}
+	
+	private void getDrugTimes(String abc,Model model){
+		List<DictTimes> timesList=dictTimesService.getTimesByAbc(abc);
+		model.addAttribute("timesList", timesList);
+	}
+	
+	
+	@RequestMapping(value = "/drug/doseunit")
+	public String drugDoseUnit(String abc,Model model) {
+		
+		System.out.println("助记码:"+abc);
+		
+		getDoseUnit(abc,model);  //获取药品目录
+		
+		return RESPONSE_THYMELEAF + "dictdoseunit";
+	}
+	
+	private void getDoseUnit(String abc,Model model){
+		List<DictDoseUnit> doseUnitList=dictDoseUnitService.getDoseUnitByAbc(abc);
+		model.addAttribute("doseUnitList", doseUnitList);
+	}
+	
+	
+	
+	
 	
 	/**
 	 * @Description: 通过助记码模糊查询药品目录

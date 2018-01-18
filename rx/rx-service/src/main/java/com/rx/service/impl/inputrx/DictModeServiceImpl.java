@@ -1,5 +1,7 @@
 package com.rx.service.impl.inputrx;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.rx.dao.DictModeMapper;
@@ -25,6 +27,11 @@ public class DictModeServiceImpl extends AbstractBaseService<DictMode, Long> imp
 	public void setDictModeMapper(DictModeMapper dictModeMapper) {
 		this.dictModeMapper=dictModeMapper;
 		this.setMapper(dictModeMapper);
+	}
+
+	@Override
+	public List<DictMode> getModeByAbc(String abc) {
+		return dictModeMapper.getModeByAbc(abc);
 	}
 
 }

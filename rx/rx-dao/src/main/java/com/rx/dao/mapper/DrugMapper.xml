@@ -31,7 +31,7 @@
 		SELECT 
 			* 
 		FROM 
-			drug d		 
+			drug as d		 
 		WHERE 
 			d.status=1 AND
 			d.abc LIKE CONCAT('%',#{abc},'%')

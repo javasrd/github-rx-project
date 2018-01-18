@@ -1,5 +1,7 @@
 package com.rx.service.inputrx;
 
+import java.util.List;
+
 import com.rx.entity.DictTimes;
 import com.rx.service.IBaseService;
 
@@ -11,5 +13,5 @@ import com.rx.service.IBaseService;
  * @version 1.0.0
  */
 public interface IDictTimesService extends IBaseService<DictTimes, Long> {
-	
+	public List<DictTimes> getTimesByAbc(String abc);
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>给药方式数据字典列表</title>
+</head>
+<body>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>名称</th>
+						<th>助记码</th>						
+					</tr>
+				</thead>
+				<tbody>				 
+					<tr th:each="doseunit,iterStat:${doseUnitList}" class="dict-doseunit" 
+						th:attr="doseunit-id=${mode.id}" >
+												
+						<td th:text="${iterStat.count}"></td>
+						<td th:text="${doseunit.name}" th:attr="id='doseunitname-'+${doseunit.id}"></td>
+						<td th:text="${doseunit.code}" th:attr="id='doseunitcode-'+${doseunit.id}"></td>
+						
+					</tr>
+					
+					<tr th:remove="all">
+						<td>1</td>
+						<td>粒</td>
+						<td>li</td>
+					</tr>
+					<tr th:remove="all">
+						<td>2</td>
+						<td>mg</td>
+						<td>mg</td>
+					</tr>
+															
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<script th:src="@{/static/js/hospital/dictdoseunit.js}" type="text/javascript"></script>
+	
+</body>
+
+
+
+</html>

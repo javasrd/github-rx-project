@@ -1,5 +1,7 @@
 package com.rx.service.inputrx;
 
+import java.util.List;
+
 import com.rx.entity.DictDoseUnit;
 import com.rx.service.IBaseService;
 
@@ -11,5 +13,5 @@ import com.rx.service.IBaseService;
  * @version 1.0.0
  */
 public interface IDictDoseUnitService extends IBaseService<DictDoseUnit, Long> {
-	
+	public List<DictDoseUnit> getDoseUnitByAbc(String abc);
 }

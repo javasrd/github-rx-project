@@ -14,15 +14,7 @@ $(function(){
 	$(".drug-item").on("dblclick", function() {		
 		
 		//用于根据ID查询当前药品的属性值.
-		var drugId=$(this).attr("drug-id");
-		
-		/*<td th:text="${drug.wareid}" th:attr="id='wareid-'+${drug.id}"></td>
-		<td th:text="${drug.warename}" th:attr="id='warename-'+${drug.id}"></td>
-		<td th:text="${drug.warespec}" th:attr="id='warespec-'+${drug.id}"></td>
-		<td th:text="${drug.saleprice}" th:attr="id='saleprice-'+${drug.id}"></td>						
-		<td th:text="${drug.wareunit}" th:attr="id='wareunit-'+${drug.id}"></td>
-		<td th:text="${drug.abc}" ></td>*/
-		
+		var drugId=$(this).attr("drug-id");		
 		
 		g_currDrug.id=drugId;
 		g_currDrug.wareid=$("#wareid-"+drugId).text();
@@ -31,10 +23,12 @@ $(function(){
 		g_currDrug.saleprice=$("#saleprice-"+drugId).text();
 		g_currDrug.wareunit=$("#wareunit-"+drugId).text();
 		
-		
+		//设置药品名称文本框
 		$("#warename").val($("#warename-"+drugId).text());
-		alert($("#warename-"+drugId).text());
 		
+		//当选择一个药品后
+		Common.hideDropdownTable();  //关闭选择下拉框
+		$("#drugmode").focus();      //给药方式文本框获取焦点		
 		
 		
 	});
