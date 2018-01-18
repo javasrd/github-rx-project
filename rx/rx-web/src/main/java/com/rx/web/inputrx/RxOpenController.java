@@ -1,7 +1,6 @@
 package com.rx.web.inputrx;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,14 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.rx.bean.inputrx.RxDisease;
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
+import com.rx.entity.Drug;
 import com.rx.entity.Patient;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
 import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
+import com.rx.service.inputrx.IDrugService;
 import com.rx.service.inputrx.ILogReceivePatientService;
 import com.rx.service.inputrx.IPatientService;
 
@@ -50,6 +50,8 @@ public class RxOpenController {
 	IDoctorPatientService doctorPatientService; //医生-患者服务	
 	@Autowired
 	IDiagnosisService diagnosisService;		//诊断服务
+	@Autowired
+	IDrugService drugService;  //药品服务
 	
 	/**
 	 * @Description 
@@ -77,6 +79,18 @@ public class RxOpenController {
 		return RESPONSE_THYMELEAF + "hospital";
 	}
 	
+	/**
+	 * @Description: TODO
+	 * @param
+	 *     @param abc
+	 *     @param model
+	 *     @return   
+	 * @return 
+	 *     String  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月18日-下午3:58:51
+	 */
 	@RequestMapping(value = "/drug/drugtable")
 	public String drugTable(String abc,Model model) {
 		
@@ -84,11 +98,23 @@ public class RxOpenController {
 		
 		getDrugTable(abc,model);  //获取药品目录
 		
-		return RESPONSE_THYMELEAF + "hospital";
+		return RESPONSE_THYMELEAF + "drugtable";
 	}
 	
+	/**
+	 * @Description: 通过助记码模糊查询药品目录
+	 * @param
+	 *     @param abc  助记码
+	 *     @param model 数据传递对象  
+	 * @return 
+	 *     void  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月18日-下午3:53:41
+	 */
 	private void getDrugTable(String abc,Model model){
-		
+		List<Drug> drugList=drugService.getDrugByAbc(abc);
+		model.addAttribute("drugList", drugList);
 	}
 	
 	/**

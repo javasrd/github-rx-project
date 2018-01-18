@@ -26,7 +26,7 @@
     status, saleprice
   </sql>
   
-  <select id="getDrugByAbc" resultType="BaseResultMap">
+  <select id="getDrugByAbc" resultMap="BaseResultMap">
   	
 		SELECT 
 			* 

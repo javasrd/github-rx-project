@@ -19,13 +19,15 @@
 					</tr>
 				</thead>
 				<tbody>				 
-					<tr th:each="drug,iterStat:${drugList}">
-						<td th:text="drug.wareid"></td>
-						<td th:text="drug.warename"></td>
-						<td th:text="drug.warespec"></td>
-						<td th:text="drug.saleprice"></td>						
-						<td th:text="drug.wareunit"></td>
-						<td th:text="drug.abc"></td>
+					<tr th:each="drug,iterStat:${drugList}" class="drug-item" 
+						th:attr="drug-id=${drug.id},
+								 drug-name=${drug.warename}">
+						<td th:text="${drug.wareid}"></td>
+						<td th:text="${drug.warename}"></td>
+						<td th:text="${drug.warespec}"></td>
+						<td th:text="${drug.saleprice}"></td>						
+						<td th:text="${drug.wareunit}"></td>
+						<td th:text="${drug.abc}"></td>
 					</tr>
 					
 					<tr th:remove="all">
@@ -49,4 +51,7 @@
 		</div>
 	</div>
 </body>
+
+
+
 </html>

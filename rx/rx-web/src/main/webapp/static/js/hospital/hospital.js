@@ -30,6 +30,9 @@ var Common = {
 
 		var addNode = '<div class="dropdown-table"><table class="table table-condensed table-hover">'+
                       '<thead><tr></tr></thead><tbody><tr></tr></tbody></table></div>';
+		
+		/*var addNode = '<div class="dropdown-table"></div>';*/	
+		
         that.parent().append(addNode);
 	},
 	
