@@ -100,6 +100,8 @@ function addDrugIntoTable(){
 				g_currDrug.wareunit=$("#wareunit-"+drugId).text();
 	 */
 	
+	if(g_currDrug==null) reutrn;
+	
 	var drugItem=
 		'<tr th:remove="all">'+
 			'<td>'+g_currDrug.wareid+'</td>'+
@@ -107,21 +109,59 @@ function addDrugIntoTable(){
 	        '<td>'+g_currDrug.warespec+'</td>'+
 	        '<td>' +$("#drugmode").val()+'</td>'+
 	        '<td>' +$("#drugtimes").val()+'</td>'+
-	        '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
-	        '<td class="input_width input_td"><input class="form-control input-sm dose-unit" onfocus="resetCounter1($(this))" id=' +'drug-doseunit-'+g_currDrug.id+   '></td>'+        
-	        '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
+	        '<td class="input_width input_td"><input class="form-control input-sm dosage" id="drug-dosage-' +g_currDrug.id+'"'+ ' bind-id="'+g_currDrug.id+'"'+ '></td>'+
+	        '<td class="input_width input_td"><input class="form-control input-sm dose-unit" onfocus="resetCounter1($(this))" id="drug-doseunit-'+g_currDrug.id+'"' +' bind-id="'+g_currDrug.id+'"'+ '></td>'+        
+	        '<td class="input_width input_td"><input class="form-control input-sm days" id="drug-days-' +g_currDrug.id+ '"'+' bind-id="'+g_currDrug.id+'"'+'></td>'+
 	        '<td class="input_width">'+g_currDrug.wareunit+'</td>'+
 	        '<td class="input_width">'+g_currDrug.saleprice+'</td>'+
 	        '<td class="input_width">'+$("#quantity").val()+'</td>'+
 	        '<td class="small_width">'+$("#quantity").val()*g_currDrug.saleprice+ '</td>'+
         '</tr>';
 	
-	$("#drug-items").append(drugItem);
+	$("#drug-items").append(drugItem);  //加入显示列表中.
 	
-	isIE();
+	//收集用药书指导及数量  加入到全局列表中
+	g_currDrug.drugmode=$("#drugmode").val();    //给药方式
+	g_currDrug.drugtimes=$("#drugtimes").val();  //给药次数
+	g_currDrug.dosage=$("#drug-dosage-"+g_currDrug.id).val();  		//单次剂量
+	g_currDrug.doseunit=$("#drug-doseunit-"+g_currDrug.id).val();  	//剂量单位
+	g_currDrug.days=$("#drug-days-"+g_currDrug.id).val();  			//用药天数
 	
-	//绑定事input事件.
+	var newDrug=new Object();
+	jQuery.each(g_currDrug, function(i, val) {
+	    newDrug.i=val;
+	});	
+	g_prescDrugList.push(newDrug);  
+	g_currDrug=null;  //加入后置当前药品为空
+	
+	isIE();	
+	
+	bindEventForDosage();
+	bindEventForDoseunit();	
+	bindEventForDays();
+}
+
+/**
+ * 动态绑定input事件(剂量单位). 
+ * @returns
+ */
+function bindEventForDoseunit(){
 	$(".dose-unit").on("input", function() {
+		
+		/*--------------------------
+		用户输入
+			(1)可能是助记码
+			(2)真正的doseunit
+		--------------------------*/
+		
+		//(1)输入是doseunit情况		
+		var drugId=$(this).attr("data-id"); //取得当前编辑的药品ID		
+		var index=searchDrugById(drugId);  //自g_prescDrugList查询,并置doseunit
+		if(index>=0){
+			g_prescDrugList[index].doseunit=$(this).val();			
+		}		
+		
+		//(2)输入是助记码情况
 		var abc = $(this).val(); // 助记码		
 		if(counter==0){ //如果是首次调用时.
 			Common.showDropdownUnit($(this));
@@ -129,9 +169,56 @@ function addDrugIntoTable(){
 		}		
 		loadDrugDoseUnit(abc);
 	});
-	
-	
 }
+
+/**
+ * 动态绑定单次用量的input事件 
+ * @returns
+ */
+function bindEventForDosage(){
+	$(".dosage").on("input", function() {
+		
+		var drugId=$(this).attr("data-id");  //取得当前编辑的药品ID		
+		var index=searchDrugById(drugId); //自g_prescDrugList查询,并置dosage
+		if(index>=0){
+			g_prescDrugList[index].dosage=$(this).val();			
+		}		
+		
+	});
+}
+
+/**
+ * 动态绑定用药天数的input事件 
+ * @returns
+ */
+function bindEventForDays(){
+	$(".days").on("input", function() {
+		
+		var drugId=$(this).attr("data-id"); //取得当前编辑的药品ID
+		//自g_prescDrugList查询,并置days属性
+		var index=searchDrugById(drugId);
+		if(index>=0){
+			g_prescDrugList[index].days=$(this).val();			
+		}
+				
+	});
+}
+
+/*****************************************
+ * 根据药品ID在处方药品列表中查找
+ * @param drugId  药品ID
+ * @returns 如果查询到则返回索引(自0开始);否则返回-1
+ ****************************************/
+
+function searchDrugById(drugId){
+	for(var i=0;i<g_prescDrugList.length;i++){
+		if(g_prescDrugList[i].id==drugId){
+			return i;
+		}
+	}
+	return -1;
+}
+
 
 /*************************************
   	IE浏览器兼容性
@@ -154,20 +241,42 @@ function isIE() {
 }
 
 
+/**
+ * 重置标志为未打开状态
+ * @param that
+ * @returns void
+ */
+
 function resetCounter(that){
 	counter=0;
 }
+function setCounter(){
+	counter=1;
+}
+function getCounter(){
+	return counter;
+}
 
-var g_edit_doseunit_id;
+
+/**
+ * 重置标志为未打开状态,并取得当前所编辑的"剂量单位"文本框id.
+ * @param that
+ * @returns void
+ */
 function resetCounter1(that){
 	g_edit_doseunit_id=$(that).attr("id");	
 	counter=0;
 }
 
+/***************************************************
+ * 全局变量
+ **************************************************/
+var counter=0; //下拉框是否已经打开标志,用于防止多次打开关闭(闪烁)  0:尚未打开; 1:已经打开.
+var g_edit_doseunit_id;  //当前正在编辑的"剂量单位" id
+
 /*******************************************************************************
  * 页面加载时自动执行此函数
  ******************************************************************************/
-var counter=0; //标志,用于防止多次打开关闭(闪烁)
 $(function() {
 
 	isIE();
@@ -177,9 +286,9 @@ $(function() {
 	 **************************************************************************/
 	$("#abc").on("input", function() {
 		var abc = $(this).val(); // 助记码		
-		if(counter==0){ //如果是首次调用时.
-			Common.showDropdownTable($(this))
-			counter=1;
+		if(getCounter()==0){ //如果是首次调用时.
+			Common.showDropdownTable($(this))			
+			setCounter();
 		}
 		
 		loadDrugTable(abc);
@@ -190,9 +299,9 @@ $(function() {
 	 **************************************************************************/
 	$("#drugmode").on("input", function() {
 		var abc = $(this).val(); // 助记码		
-		if(counter==0){ //如果是首次调用时.
+		if(getCounter()==0){ //如果是首次调用时.
 			Common.showDropdownTable($(this))
-			counter=1;
+			setCounter();			
 		}		
 		loadDrugMode(abc);
 	});
@@ -202,9 +311,9 @@ $(function() {
 	 **************************************************************************/
 	$("#drugtimes").on("input", function() {
 		var abc = $(this).val(); // 助记码		
-		if(counter==0){ //如果是首次调用时.
-			Common.showDropdownTable($(this))
-			counter=1;
+		if(getCounter()==0){ //如果是首次调用时.
+			Common.showDropdownTable($(this))			
+			setCounter();
 		}		
 		loadDrugTimes(abc);
 	});
@@ -214,9 +323,9 @@ $(function() {
 	 **************************************************************************/
 	$(".dose-unit").on("input", function() {
 		var abc = $(this).val(); // 助记码		
-		if(counter==0){ //如果是首次调用时.
-			Common.showDropdownUnit($(this))
-			counter=1;
+		if(getCounter()==0){ //如果是首次调用时.
+			Common.showDropdownUnit($(this))			
+			setCounter();
 		}		
 		loadDrugDoseUnit(abc);
 	});

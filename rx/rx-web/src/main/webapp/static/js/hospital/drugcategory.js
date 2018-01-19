@@ -2,8 +2,8 @@
 /***************************************************************************
 	全局变量
 ***************************************************************************/
-var g_drugList=new Array();  //用户选择的药品列表.
-var g_currDrug=new Object(); //用户选择的当前药品
+var g_prescDrugList=new Array();  //当前处方药品列表.
+var g_currDrug=null; //医生选择的当前药品
 
 $(function(){
 	
@@ -16,6 +16,7 @@ $(function(){
 		//用于根据ID查询当前药品的属性值.
 		var drugId=$(this).attr("drug-id");		
 		
+		g_currDrug=new Object();
 		g_currDrug.id=drugId;
 		g_currDrug.wareid=$("#wareid-"+drugId).text();
 		g_currDrug.warename=$("#warename-"+drugId).text();
