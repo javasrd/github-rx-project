@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
 import com.rx.entity.DictDoseUnit;
@@ -178,9 +182,32 @@ public class RxOpenController {
 	 */
 	@RequestMapping(value = "prescription/save")
 	@ResponseBody
-	public String savaPrescription(@RequestBody String presc){
-		System.out.println(presc);
-		return "presc_no";
+	public Object savaPrescription(@RequestBody String jsonPresc){
+		System.out.println(jsonPresc);
+		
+		JSONArray drugArray=JSON.parseArray(jsonPresc);		
+		for(int i=0;i<drugArray.size();i++){
+			JSONObject drug= drugArray.getJSONObject(i);
+			
+			long drugId=drug.getLongValue("id");	//ID		
+			int dosage=drug.getIntValue("dosage");	//每次剂量
+			String mode=drug.getString("drugmode"); //给药方式
+			int quantity=drug.getIntValue("quantity");//数量
+			int days=drug.getIntValue("days");		  //服药天数	
+			String doseUnit=drug.getString("doseunit"); //服药剂量单位
+			String times=drug.getString("drugtimes");  //给药次数
+			long patientId=drug.getLongValue("patientid"); //患者ID
+			long doctorId=drug.getLongValue("doctorid");   //医生ID
+		}
+		
+		String prescNo="";
+		
+		//保存处方数据
+		
+		//返回处方编号		
+		Map<String, Object> result=RequestResultUtil.getResultAddSuccess();		
+		result.put(RequestResultUtil.RESULT_MSG, prescNo);		
+		return result;
 	}
 	
 	

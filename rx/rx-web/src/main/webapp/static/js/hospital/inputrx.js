@@ -123,9 +123,13 @@ function addDrugIntoTable(){
 	//收集用药书指导及数量  加入到全局列表中
 	g_currDrug.drugmode=$("#drugmode").val();    //给药方式
 	g_currDrug.drugtimes=$("#drugtimes").val();  //给药次数
+	g_currDrug.quantity=$("#quantity").val();    //数量
 	g_currDrug.dosage=$("#drug-dosage-"+g_currDrug.id).val();  		//单次剂量
 	g_currDrug.doseunit=$("#drug-doseunit-"+g_currDrug.id).val();  	//剂量单位
 	g_currDrug.days=$("#drug-days-"+g_currDrug.id).val();  			//用药天数
+	g_currDrug.patientid=$("#patient").attr("bind-id");			    //患者ID
+	g_currDrug.doctorid=$("#doctor").attr("bind-id");			    //医生ID
+	
 	
 	//将药品加入到药品列表
 	/*var newDrug=new Object();
@@ -276,7 +280,20 @@ function savePrescription(){
 		contentType: "application/json", //指定发送到服务器时参数的格式				
 		dataType: "json",  //指定自服务器接收到的数据格式
 		data: JSON.stringify(parms), //传递的参数,JSON格式。		
-		success: function(result) {  //请求正确之后的操作			
+		success: function(res) {  //请求正确之后的操作
+			if (res != null) {
+				//console.log(res);
+				//var obj = $.parseJSON(res);
+				if (res.result_code == "success") {					
+					//util.message(obj.result_msg);
+					util.message("保存成功");
+					var prescNo=res.result_msg; //处方编号
+					//TODO 后续业务处理
+					
+				} else {
+					util.message(obj.result_err_msg);
+				}
+			}
 		},
 		error: function(result) {  //请求失败之后的操作  
 			

@@ -44,7 +44,7 @@
             <div class="row basic_top">
               <div class="col-xs-6">
                 <div>科室	<span th:text="${department.name}" style="padding-right: 50px;">001</span>
-                	医生<span th:text="${doctor.name}"></span>          	
+                	医生<span th:text="${doctor.name}" id="doctor" th:attr="bind-id=${doctor.id}"></span>          	
                 </div>
                 
               </div>
@@ -55,7 +55,7 @@
             <div class="basic_bottom">
               <div class="info_container">
                 <p class="info_title">姓名</p>
-                <p class="info_content"><span th:text="${patient.name}">张三</span></p>
+                <p class="info_content"><span th:text="${patient.name}" id="patient"  th:attr="bind-id=${patient.id}"   >张三</span></p>
               </div>
               <div class="info_container">
                 <p class="info_title">性别</p>
