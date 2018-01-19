@@ -82,11 +82,7 @@
 				{ "id":"002",
 				"disease": "营养不良"}]};
 			
-			event.preventDefault(); //使a自带的方法失效，即无法调整到href中的URL	
-			
-			 if(typeof JSON == 'undefined'){
-                 $('head').append($("<script type='text/javascript' src='page/duty/Scripts/json2.js'>"));
-			 }
+			event.preventDefault(); //使a自带的方法失效，即无法调整到href中的URL		
 			
 			//采用AJAX方式发送POST请求
 			$.ajax({

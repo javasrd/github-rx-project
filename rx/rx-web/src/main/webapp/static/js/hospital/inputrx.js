@@ -127,11 +127,12 @@ function addDrugIntoTable(){
 	g_currDrug.doseunit=$("#drug-doseunit-"+g_currDrug.id).val();  	//剂量单位
 	g_currDrug.days=$("#drug-days-"+g_currDrug.id).val();  			//用药天数
 	
-	var newDrug=new Object();
+	//将药品加入到药品列表
+	/*var newDrug=new Object();
 	jQuery.each(g_currDrug, function(i, val) {
 	    newDrug.i=val;
-	});	
-	g_prescDrugList.push(newDrug);  
+	});	*/
+	g_prescDrugList.push(g_currDrug);	
 	g_currDrug=null;  //加入后置当前药品为空
 	
 	isIE();	
@@ -155,7 +156,7 @@ function bindEventForDoseunit(){
 		--------------------------*/
 		
 		//(1)输入是doseunit情况		
-		var drugId=$(this).attr("data-id"); //取得当前编辑的药品ID		
+		var drugId=$(this).attr("bind-id"); //取得当前编辑的药品ID		
 		var index=searchDrugById(drugId);  //自g_prescDrugList查询,并置doseunit
 		if(index>=0){
 			g_prescDrugList[index].doseunit=$(this).val();			
@@ -178,9 +179,11 @@ function bindEventForDoseunit(){
 function bindEventForDosage(){
 	$(".dosage").on("input", function() {
 		
-		var drugId=$(this).attr("data-id");  //取得当前编辑的药品ID		
+		var drugId=$(this).attr("bind-id");  //取得当前编辑的药品ID	
+		//alert("drugId:"+drugId);
 		var index=searchDrugById(drugId); //自g_prescDrugList查询,并置dosage
 		if(index>=0){
+			//alert("dosage:"+$(this).val());
 			g_prescDrugList[index].dosage=$(this).val();			
 		}		
 		
@@ -194,7 +197,7 @@ function bindEventForDosage(){
 function bindEventForDays(){
 	$(".days").on("input", function() {
 		
-		var drugId=$(this).attr("data-id"); //取得当前编辑的药品ID
+		var drugId=$(this).attr("bind-id"); //取得当前编辑的药品ID
 		//自g_prescDrugList查询,并置days属性
 		var index=searchDrugById(drugId);
 		if(index>=0){
@@ -257,6 +260,30 @@ function getCounter(){
 	return counter;
 }
 
+/****************************************
+ * 保存处方
+ * @returns
+ ***************************************/
+function savePrescription(){
+	url=BASE_CONTEXT_PATH+"/prescription/save";	
+	
+	var parms=g_prescDrugList;
+	//alert("array length:"+parms.length);
+	//采用AJAX方式发送POST请求
+	$.ajax({
+		type: "POST",
+		url: url,
+		contentType: "application/json", //指定发送到服务器时参数的格式				
+		dataType: "json",  //指定自服务器接收到的数据格式
+		data: JSON.stringify(parms), //传递的参数,JSON格式。		
+		success: function(result) {  //请求正确之后的操作			
+		},
+		error: function(result) {  //请求失败之后的操作  
+			
+		}
+	});
+}
+
 
 /**
  * 重置标志为未打开状态,并取得当前所编辑的"剂量单位"文本框id.
@@ -269,10 +296,12 @@ function resetCounter1(that){
 }
 
 /***************************************************
- * 全局变量
+ * 						全局变量
  **************************************************/
-var counter=0; //下拉框是否已经打开标志,用于防止多次打开关闭(闪烁)  0:尚未打开; 1:已经打开.
-var g_edit_doseunit_id;  //当前正在编辑的"剂量单位" id
+var counter=0; 					  //下拉框是否已经打开标志,用于防止多次打开关闭(闪烁)  0:尚未打开; 1:已经打开.
+var g_edit_doseunit_id;  		  //当前正在编辑的"剂量单位" id
+var g_prescDrugList=new Array();  //当前处方药品列表.
+var g_currDrug=null; 			  //医生选择的当前药品
 
 /*******************************************************************************
  * 页面加载时自动执行此函数
@@ -340,5 +369,12 @@ $(function() {
         }
 	});
 	
+	//
+	/***************************************************************************
+	 * 绑定事件-保存按钮
+	 **************************************************************************/
+	$("#btn-save-prescription").on("click", function(event) {
+		savePrescription();  //保存处方
+	});
 
 });

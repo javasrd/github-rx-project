@@ -7,8 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
@@ -163,8 +165,23 @@ public class RxOpenController {
 		model.addAttribute("doseUnitList", doseUnitList);
 	}
 	
-	
-	
+	/**
+	 * @Description: 保存处方
+	 * @param
+	 *     @param presc 处方
+	 *     @return      处方编号
+	 * @return 
+	 *     String  		处方编号
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月19日-下午2:11:49
+	 */
+	@RequestMapping(value = "prescription/save")
+	@ResponseBody
+	public String savaPrescription(@RequestBody String presc){
+		System.out.println(presc);
+		return "presc_no";
+	}
 	
 	
 	/**
