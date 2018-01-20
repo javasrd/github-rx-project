@@ -285,8 +285,9 @@ function savePrescription(){
 				//console.log(res);
 				//var obj = $.parseJSON(res);
 				if (res.result_code == "success") {					
-					//util.message(obj.result_msg);
-					util.message("保存成功");
+					//util.message(obj.result_msg,"","info");
+					//util.message("保存成功","","info");
+					alert(res.result_msg);
 					var prescNo=res.result_msg; //处方编号
 					//TODO 后续业务处理
 					
