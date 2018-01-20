@@ -7,10 +7,12 @@
 	}
 }
 .print_area{
+  font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"Î¢ÈíÑÅºÚ";
   width: 945px;
   height: 655px;
   padding: 20px;
 }
+
 .print_area>h1{
   font-size: 30px;
   margin-top: 0;

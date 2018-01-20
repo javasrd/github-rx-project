@@ -62,8 +62,8 @@ function loadDrugDoseUnit(abc) {
 function loadPrintTemplate() {
 	/*$("#btn-print-preview").trigger("click");
 	return;*/
+	//loadCss();
 	
-	//$.ajax({cache: false}) ;
 	var url = "/presc/printtemplate";
 	var parms = {};
 	var callbackFunc =printPreview;
@@ -75,8 +75,18 @@ function printPreview(){
 	//(1)生成条形码.
 	generateBarcode();	
 	//(2)触发打印预览.
-	$("#btn-print-preview").trigger("click");
+	$("#btn-print-preview").trigger("click");	
+	//(3)加载原来的css
+	//loadCss();
 	
+}
+
+function loadCss(){
+	var url = "/presc/loadcss";
+	var parms = null;
+	var callbackFunc =null;
+	var containerId = "#loadcss";	
+	loadPage(containerId, url, parms, callbackFunc);
 }
 
 

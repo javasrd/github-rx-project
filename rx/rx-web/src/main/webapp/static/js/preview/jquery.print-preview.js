@@ -155,6 +155,8 @@
     		$(document).unbind("keydown.printPreview.mask");
     		mask.unbind("click.printPreview.mask");
     		$(window).unbind("resize.printPreview.mask");
+    		//added by jch
+    		loadCss();
 	    },
 	    
     	/* -- Mask Functions --*/

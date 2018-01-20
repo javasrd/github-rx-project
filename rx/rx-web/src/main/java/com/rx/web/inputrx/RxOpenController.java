@@ -191,6 +191,12 @@ public class RxOpenController {
 		return RESPONSE_THYMELEAF + "printtemplate";
 	}
 	
+	@RequestMapping(value = "/presc/loadcss")
+	public String loadCss() {
+		System.out.println("load css");
+		return RESPONSE_THYMELEAF + "loadcss";
+	}
+	
 	/**
 	 * @Description: 保存处方
 	 * @param

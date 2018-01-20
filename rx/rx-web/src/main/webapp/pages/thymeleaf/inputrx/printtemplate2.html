@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-  <meta charset="utf-8">  
+  <meta charset="utf-8">
+  
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="renderer" content="webkit">
@@ -10,10 +12,10 @@
   <!-- <div th:include="/thymeleaf/common/head3::headx('print prescription')"	th:remove="tag"></div> -->
   <!-- Bootstrap -->
   <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">  
-  <link href="iconfont/iconfont.css" rel="stylesheet"> -->  
-  <link th:href="@{/static/bootstrap/3.3.5/css/bootstrap.min.css}"	rel="stylesheet" />
-  
-  <link th:href="@{/static/css/printtemplate/printtemplate.css}" rel="stylesheet">  
+  <link href="iconfont/iconfont.css" rel="stylesheet"> -->
+  <link th:href="@{/static/bootstrap/3.3.5/css/bootstrap.min.css}"	rel="stylesheet" />  
+
+  <link th:href="@{/static/css/printtemplate/printtemplate.css}" rel="stylesheet">
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
@@ -39,7 +41,7 @@
           <p>取药科室<span>门诊西药房</span></p>
           <p>科别<span>门诊耳鼻喉科</span></p>
           <p>2018年12月28日</p>
-          <p><span>病历号</span><div id="barcodeTarget" class="barcodeTarget" style="display:inline"></div></p>
+          <p>病历号<spann><div id="barcodeTarget" class="barcodeTarget" style="position:inline"></div></span></p>
         </div>
         <div class="patient_info">
           <p>姓名<span>张三李四</span></p>
@@ -50,8 +52,7 @@
       <div class="qrcode"></div>
     </div>
     <div class="content">
-      <!-- <table class="table table-bordered"> -->
-      <table class="table table-bordered" >
+      <table class="table table-bordered">
         <tbody>
           <tr>
             <td class="first_td">

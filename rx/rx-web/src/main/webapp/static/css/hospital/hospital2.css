@@ -83,8 +83,7 @@ table td{
 html{
 	height: 100%;
 }
-body{	
-	font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";
+body{
 	background-color: #f0f2f5;
 	height: 100%;
 	overflow: auto;
