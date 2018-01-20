@@ -40,4 +40,13 @@ public class StaticConstants {
 	public static String SLIDESHOW_MANAGE_PAGE = "back/jsp/slideshow/slideshow";//轮播图管理页面
 	public static String SLIDESHOW_MANAGE_TABLE_PAGE = "back/jsp/slideshow/slideshow_table";//轮播图管理列表页面
 	
+	public static String DICT_TIMES_MANAGE_PAGE = "back/jsp/times/times_manage";//用药次数管理页面
+	public static String DICT_TIMES_MANAGE_TABLE_PAGE = "back/jsp/times/times_table";//用药次数管理列表页面
+	
+	public static String DICT_MODE_MANAGE_PAGE = "back/jsp/mode/mode_manage";//用药方式管理页面
+	public static String DICT_MODE_MANAGE_TABLE_PAGE = "back/jsp/mode/mode_table";//用药方式管理列表页面
+	
+	public static String DICT_DOSE_UNIT_MANAGE_PAGE = "back/jsp/doseunit/dose_unit_manage";//用药剂量单位管理页面
+	public static String DICT_DOSE_UNIT_MANAGE_TABLE_PAGE = "back/jsp/doseunit/dose_unit_table";//用药剂量单位管理列表页面
+	
 }
