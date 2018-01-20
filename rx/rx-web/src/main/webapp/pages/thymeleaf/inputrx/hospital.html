@@ -23,6 +23,8 @@
 	<link th:href="@{/static/css/hospital/hospital.css}" rel="stylesheet">
 	
 	<link rel="stylesheet" th:href="@{/static/css/alert/alert.css}">
+	
+	<link th:href="@{/static/css/printtemplate/printtemplate.css}" rel="stylesheet">
     
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -198,6 +200,7 @@
           <button class="btn btn-success" id="btn-print">打印</button>
           <button class="btn btn-success">删除行</button>
           <button class="btn btn-success" id="btn-save-prescription">保存</button>
+          <button class="btn btn-success hide" id="btn-print-preview">打印预览</button>
           <button class="btn btn-success" id="btn-preview">预览处方</button>
         </div>
         <div class="right_btn pull-right">
@@ -206,119 +209,14 @@
         </div>
       </div>
       
-      <!-- //style="display:none" -->
-      <div id="printarea" class="hide" >
-        234234234324    
-      	<span style="color:red;">汉字系统</span>
-      	32324523452
-      	汉字
-      	<span>
-      	<img alt="" th:src="@{/static/images/avatar.jpg}">
-      	adfasdfasdfasdfasdfd
-      	asdfasdfasdfasfd
-      	asdfasdfasdf
-      	asdfasdf</span>
-      	<div>
-      		hello printer; 
-      		<div id="barcodeTarget" class="barcodeTarget"></div>
-      	</div> 
-      	<table class="table" style="border:1px solid #F00;">
-				<thead >
-					<tr>
-						<th style="width:100px;">
-							编号
-						</th>
-						<th>
-							产品
-						</th>
-						<th>
-							交付时间
-						</th>
-						<th>
-							状态
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							1
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							01/04/2012
-						</td>
-						<td>
-							Default
-						</td>
-					</tr>
-					<tr class="success">
-						<td>
-							1
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							01/04/2012
-						</td>
-						<td>
-							Approved
-						</td>
-					</tr>
-					<tr class="error">
-						<td>
-							2
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							02/04/2012
-						</td>
-						<td>
-							Declined
-						</td>
-					</tr>
-					<tr class="warning">
-						<td>
-							3
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							03/04/2012
-						</td>
-						<td>
-							Pending
-						</td>
-					</tr>
-					<tr class="info">
-						<td>
-							4
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							04/04/2012
-						</td>
-						<td>
-							Call in to confirm
-						</td>
-					</tr>
-				</tbody>
-			</table>     	  
-      	<br>    	
+      <!-- //style="display:none" 预览打印处方 -->
+      <!-- <iframe id="printarea" class="hide" style="width:100%;">              
+      </iframe> -->
+      <div id="printarea" class="hide">              
       </div>
       
     </div>
-    
-    
-    
+        
     <!-- <script src="https://cdn.bootcss.com/jquery-tools/1.2.7/jquery.tools.min.js"></script> -->
     
     <!-- 打印预览 -->
@@ -326,14 +224,14 @@
     <script th:src="@{/static/js/preview/jquery.print-preview.js}" type="text/javascript" ></script>
 	<!-- 打印 -->
     <script th:src="@{/static/js/jprint/jQuery.print.js}" type="text/javascript" ></script>
-	
-    <!-- 条形码  -->
-    <script th:src="@{/static/js/jquerybarcode/2.0.3/jquery-barcode.js}" type="text/javascript" ></script>
     
+    <!-- 条形码  -->
+    <script th:src="@{/static/js/jquerybarcode/2.0.3/jquery-barcode.js}" type="text/javascript" ></script>    
     
     <!-- <script th:src='@{/static/js/SyntaxHighlighter/shCore.js}'></script>
 	<script th:src='@{/static/js/SyntaxHighlighter/makeSy.js}'></script>
     <script th:src="@{/static/js/alert/alert-api.js}"></script> -->
+    
     <script th:src="@{/static/js/alert/alert.js}"></script>
     
     <!-- IE浏览器兼容性 JSON对象 -->
@@ -342,12 +240,7 @@
     <script th:src="@{/static/js/hospital/hospital.js}" type="text/javascript"></script>
     <script th:src="@{/static/js/hospital/inputrx.js}" type="text/javascript"></script>
     
-    <script type="text/javascript">
-    	/* var M=new Object();
-    	M.dialog1 = jqueryAlert({
-    		'content' : message,
-    		'closeTime' : closeTime,
-    	}); */
+    <script type="text/javascript">    	
     </script>
     
     

@@ -1,0 +1,65 @@
+@media print {
+	@page{
+		size: b5 landscape;
+	}
+	.print_area{
+		padding: 0 !important;
+	}
+}
+.print_area{
+  width: 945px;
+  height: 655px;
+  padding: 20px;
+}
+.print_area>h1{
+  font-size: 30px;
+  margin-top: 0;
+  text-align: center;
+}
+.print_area .info{
+  margin-bottom: 10px;
+}
+.left_info>div>p{
+  display: inline-block;
+  margin-bottom: 0;
+}
+.left_info>div.department_info>p{
+  width: 33%
+}
+.left_info>div.patient_info>p{
+  width: 20%
+}
+.left_info>div>p>span{
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+.content .table{
+	height: 430px;
+	margin-bottom: 10px;
+}
+.content .table .first_td{
+	width: 200px;
+}
+.content .table .last_td>p{
+	font-weight: bold;
+	margin-bottom: 0;
+	font-size: 18px;
+	font-family: Georgia;
+}
+.content .table .last_td li>span{
+	display: block;
+	padding-left: 28px;
+}
+.warning>div>p{
+	display: inline-block;
+	width: 33%;
+}
+.warning>div>ul{
+	padding: 0;
+}
+.warning>div>ul>li{
+	float: left;
+	padding-right: 30px;
+	list-style: none;
+}

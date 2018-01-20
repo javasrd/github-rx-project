@@ -42,7 +42,7 @@ function loadDrugTimes(abc) {
 	loadPage(containerId, url, parms, callbackFunc);
 }
 
-//
+
 /*******************************************************************************
  * 加载剂量单位
  ******************************************************************************/
@@ -54,6 +54,29 @@ function loadDrugDoseUnit(abc) {
 	var callbackFunc =null;
 	var containerId = ".dropdown-unit";
 	loadPage(containerId, url, parms, callbackFunc);
+}
+
+/*******************************************************************************
+ * 加载打印模板,加载成功后,触发打印预览
+ ******************************************************************************/
+function loadPrintTemplate() {
+	/*$("#btn-print-preview").trigger("click");
+	return;*/
+	
+	//$.ajax({cache: false}) ;
+	var url = "/presc/printtemplate";
+	var parms = {};
+	var callbackFunc =printPreview;
+	var containerId = "#printarea";
+	loadPage(containerId, url, parms, callbackFunc);
+}
+//加载打印模板成功后-回调函数
+function printPreview(){
+	//(1)生成条形码.
+	generateBarcode();	
+	//(2)触发打印预览.
+	$("#btn-print-preview").trigger("click");
+	
 }
 
 
@@ -443,9 +466,9 @@ $(function() {
 	/*************************************************************************
 	 * 绑定事件-预览按钮
 	 *************************************************************************/
-	$('#btn-preview').printPreview();  //处方预览
+	$('#btn-print-preview').printPreview();  //处方预览与btn-print-preview click绑定
 	$("#btn-preview").on("click", function(event) {
-		
+		loadPrintTemplate();  //加载打印模板
 	});
 	
 
@@ -453,7 +476,7 @@ $(function() {
 	 * 绑定事件-预览按钮
 	 **************************************************************************/	
 	$("#btn-print").on("click", function(event) {
-		//$("#printarea").print();
+		//$("#printarea").print();  //功能同下.
 		$.print("#printarea");
 	});
 

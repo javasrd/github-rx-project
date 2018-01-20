@@ -170,6 +170,28 @@ public class RxOpenController {
 	}
 	
 	/**
+	 * @Description: 加载处方打印模板
+	 * @param
+	 *     @param parms 处方信息
+	 *     @param model	数据传递对象
+	 *     @return   
+	 * @return 
+	 *     String  打印模板视图
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月20日-下午10:44:29
+	 */
+	@RequestMapping(value = "/presc/printtemplate")
+	public String loadPrintTemplate(String parms,Model model) {
+		
+		System.out.println("参数:"+parms);
+		
+		//TODO 将参数与模板结合
+		
+		return RESPONSE_THYMELEAF + "printtemplate";
+	}
+	
+	/**
 	 * @Description: 保存处方
 	 * @param
 	 *     @param presc 处方

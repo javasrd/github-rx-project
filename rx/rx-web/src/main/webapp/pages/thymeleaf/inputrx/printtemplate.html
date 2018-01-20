@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <title>print prescription</title>
+  <!-- <div th:include="/thymeleaf/common/head3::headx('print prescription')"	th:remove="tag"></div> -->
+  <!-- Bootstrap -->
+  <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">  
+  <link href="iconfont/iconfont.css" rel="stylesheet"> -->
+  <link th:href="@{/static/bootstrap/3.3.5/css/bootstrap.min.css}"	rel="stylesheet" />  
+
+
+  <link th:href="@{/static/css/printtemplate/printtemplate.css}" rel="stylesheet">
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>      
+      <!-- <script th:src="@{/static/js/html5shiv/3.7.3/html5shiv.min.js}"></script>
+      <script th:src="@{/static/js/respond.js/1.4.2/respond.min.js}"></script> -->
+    <![endif]-->
+</head>
+
+<body>
+  <div class="print_area">
+    <h1>中国石油天然气集团公司中心医院处方笺</h1>
+    <div class="info">
+      <div class="left_info">
+        <div class="department_info">
+          <p>处方编号<span>1234567890</span></p>
+          <p>登记号<span>1234567890</span></p>
+          <p>取药科室<span>门诊西药房</span></p>
+          <p>科别<span>门诊耳鼻喉科</span></p>
+          <p>2018年12月28日</p>
+          <p>病历号<spann><div id="barcodeTarget" class="barcodeTarget" style="position:inline"></div></span></p>
+        </div>
+        <div class="patient_info">
+          <p>姓名<span>张三李四</span></p>
+          <p>性别<span>女</span></p>
+          <p>年龄<span>28</span></p>
+        </div>
+      </div>
+      <div class="qrcode"></div>
+    </div>
+    <div class="content">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td class="first_td">
+              <p>临床诊断</p>
+              <ol>
+                <li>慢性中耳炎</li>
+              </ol>
+            </td>
+            <td class="last_td">
+              <p>Rp：</p>
+              <ol>
+                <li>XXX胶囊<span>用法：<span class="usage"></span></span></li>
+              </ol></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warning">
+      <div>
+        <p>药费<span>1000.00元</span></p>
+        <p>审核/调配签名（签章）：</p>
+        <p>核对/发药签名（签章）：</p>
+      </div>
+      <div>
+        <ul class="clearfix">
+          <li>药师提示：</li>
+          <li>1. 请遵医嘱服药；</li>
+          <li>2. 请在窗口点清药品</li>
+          <li>3. 处方当日有效</li>
+          <li>4. 发出药品不予退换</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  $(function(){
+    var hkey_root,hkey_path,hkey_key ; 
+    hkey_root="HKEY_CURRENT_USER";
+    hkey_path="\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";   
+      
+    // 设置页眉页脚为空  
+    function PageSetup_Null(){  
+    try{  
+     var RegWsh = new ActiveXObject("WScript.Shell") ;  
+     hkey_key="header" ;  
+     RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"") ;  
+     hkey_key="footer" ;  
+     RegWsh.RegWrite(hkey_root+hkey_path+hkey_key,"") ;  
+     }  
+    catch(e){}  
+    }
+    }); 
+</script>
+</html>
