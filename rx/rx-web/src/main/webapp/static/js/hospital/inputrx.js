@@ -136,7 +136,8 @@ function addDrugIntoTable(){
 	jQuery.each(g_currDrug, function(i, val) {
 	    newDrug.i=val;
 	});	*/
-	g_prescDrugList.push(g_currDrug);	
+	var newDrug=g_currDrug;
+	g_prescDrugList.push(newDrug);	
 	g_currDrug=null;  //加入后置当前药品为空
 	
 	isIE();	
@@ -145,6 +146,33 @@ function addDrugIntoTable(){
 	bindEventForDoseunit();	
 	bindEventForDays();
 }
+
+/**
+ * 生成二维码
+ * TODO 此函数需要参数化.
+ * @returns
+ */
+function generateBarcode(){
+    var value = "1234567890";
+    var btype = "ean8";
+    var renderer = "css";      
+	
+    var settings = {
+      output:renderer,
+      bgColor: "#FFFFFF",
+      color: "#000000",
+      barWidth: "1",
+      barHeight: "50",          
+      moduleSize: "0",
+      posX: "0",
+      posY: "0",
+      addQuietZone: "0"
+    };
+    
+     $("#barcodeTarget").html("").show();
+     $("#barcodeTarget").barcode(value, btype, settings);
+    
+  }
 
 /**
  * 动态绑定input事件(剂量单位). 
@@ -285,9 +313,10 @@ function savePrescription(){
 				//console.log(res);
 				//var obj = $.parseJSON(res);
 				if (res.result_code == "success") {					
-					//util.message(obj.result_msg,"","info");
-					//util.message("保存成功","","info");
-					alert(res.result_msg);
+					//util.message(obj.result_msg,"","info");					
+					// 判断是否已存在，如果已存在则直接显示
+					alert("保存成功",2000);
+					
 					var prescNo=res.result_msg; //处方编号
 					//TODO 后续业务处理
 					
@@ -300,6 +329,19 @@ function savePrescription(){
 			
 		}
 	});
+}
+
+var M=new Object();
+function alert(message,closeTime){	
+	// 判断是否已存在，如果已存在则直接显示
+	if(M.dialog1){
+		return M.dialog1.show();
+	}
+	M.dialog1 = jqueryAlert({
+		'content' : message,
+		'closeTime' : closeTime,
+	});
+	
 }
 
 
@@ -392,7 +434,39 @@ $(function() {
 	 * 绑定事件-保存按钮
 	 **************************************************************************/
 	$("#btn-save-prescription").on("click", function(event) {
+		generateBarcode();   //生成条形码
 		savePrescription();  //保存处方
 	});
+	
+	
+	
+	/*************************************************************************
+	 * 绑定事件-预览按钮
+	 *************************************************************************/
+	$('#btn-preview').printPreview();  //处方预览
+	$("#btn-preview").on("click", function(event) {
+		
+	});
+	
+
+	/***************************************************************************
+	 * 绑定事件-预览按钮
+	 **************************************************************************/	
+	$("#btn-print").on("click", function(event) {
+		//$("#printarea").print();
+		$.print("#printarea");
+	});
+
+	
+	
+	// Add keybinding (not recommended for production use)
+    $(document).bind('keydown', function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 80 && !$('#print-modal').length) {
+            $.printPreview.loadPrintPreview();
+            return false;
+        }            
+    });
+	
 
 });
