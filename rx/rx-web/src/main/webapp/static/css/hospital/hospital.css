@@ -87,14 +87,13 @@
 html{
 	height: 100%;
 }
-body{	
-	font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";	
+body{		
 	height: 100%;
 	overflow: auto;
 }
 
 .hospital{
-	/* height:100%; */	
+	font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";	
 	background-color: #f0f2f5;
 }
 
