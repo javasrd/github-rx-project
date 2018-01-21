@@ -135,7 +135,9 @@
             $('a', print_controls).bind('click', function(e) {
                 e.preventDefault();
                 if ($(this).hasClass('print')) {
-                	$.print("#printarea");
+                	//$.print("#printarea");
+                	$(window.frames["print-frame"].document).find(".print_area").print();
+
                 	//window.print(); 
                 }
                 else { $.printPreview.distroyPrintPreview(); }

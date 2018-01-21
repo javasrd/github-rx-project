@@ -74,7 +74,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-table td{
+.drug_container table td{
   cursor: default;
   vertical-align: middle !important;
 }
