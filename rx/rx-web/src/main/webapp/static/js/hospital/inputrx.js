@@ -136,7 +136,7 @@ function addDrugIntoTable(){
 	if(g_currDrug==null) reutrn;
 	
 	var drugItem=
-		'<tr th:remove="all">'+
+		'<tr>'+
 			'<td>'+g_currDrug.wareid+'</td>'+
 	        '<td>'+g_currDrug.warename+'</td>'+
 	        '<td>'+g_currDrug.warespec+'</td>'+
@@ -146,8 +146,8 @@ function addDrugIntoTable(){
 	        '<td class="input_width input_td"><input class="form-control input-sm dose-unit" onfocus="resetCounter1($(this))" id="drug-doseunit-'+g_currDrug.id+'"' +' bind-id="'+g_currDrug.id+'"'+ '></td>'+        
 	        '<td class="input_width input_td"><input class="form-control input-sm days" id="drug-days-' +g_currDrug.id+ '"'+' bind-id="'+g_currDrug.id+'"'+'></td>'+
 	        '<td class="input_width">'+g_currDrug.wareunit+'</td>'+
-	        '<td class="input_width">'+g_currDrug.saleprice+'</td>'+
-	        '<td class="input_width">'+$("#quantity").val()+'</td>'+
+	        '<td class="small_width">'+g_currDrug.saleprice+'</td>'+
+	        '<td class="small_width">'+$("#quantity").val()+'</td>'+
 	        '<td class="small_width">'+$("#quantity").val()*g_currDrug.saleprice+ '</td>'+
         '</tr>';
 	

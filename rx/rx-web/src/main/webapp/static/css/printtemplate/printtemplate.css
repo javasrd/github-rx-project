@@ -7,15 +7,15 @@
 	}
 }
 
-/* body{zoom:0.5;} *//* IEÏÂ¿ÉÒÔÊ¹ÓÃ */
-/* body{transform: scale(0.5);} *//* ÆäËû¸ß¼¶ä¯ÀÀÆ÷¿ÉÒÔÊ¹ÓÃ */
+/* body{zoom:0.5;} *//* IEä¸‹å¯ä»¥ä½¿ç”¨ */
+/* body{transform: scale(0.5);} *//* å…¶ä»–é«˜çº§æµè§ˆå™¨å¯ä»¥ä½¿ç”¨ */
 
 
 
 .print_area{
   /* zoom:0.5;	
 	transform: scale(0.5); */
-  font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"Î¢ÈíÑÅºÚ";
+  font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"å¾®è½¯é›…é»‘";
   width: 100%;
   height: 400px;
   padding: 0px;

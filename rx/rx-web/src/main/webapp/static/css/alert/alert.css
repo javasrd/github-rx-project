@@ -1,10 +1,10 @@
-ï»¿*{
+/* *{
   margin:0;
   padding:0;
-}
-body{
-  font-family: "å¾®è½¯é›…é»‘"
-}
+} */
+/* body{
+  font-family: "Î¢ÈíÑÅºÚ"
+} */
 .alert-modal{
   left:0;
   top:0;
@@ -173,7 +173,7 @@ body{
    }
 }
 
-/*æ˜¾ç¤ºåŠ¨ç”»*/
+/*ÏÔÊ¾¶¯»­*/
 
 
 .animated.infinite {

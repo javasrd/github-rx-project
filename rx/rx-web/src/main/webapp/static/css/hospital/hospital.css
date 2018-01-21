@@ -1,12 +1,15 @@
 /*
  * 2018-1-15
  */
+ 
 
-
-/* 修正bootstrap样式 */
-.container-fluid{
+/* 修正bootstrap样式 */ 
+ /*注:修正时加入选择条件 */
+ 
+ .container-fluid{
 	min-width: 1170px;
 }
+
 .form-inline .form-group {
     display: inline-block;
     margin-bottom: 0;
@@ -59,14 +62,14 @@
  .btn{
  	behavior: url("./static/css/hospital/PIE.htc");  
  }
-/* 修正bootstrap样式 end*/
 
-.table-default {
+
+.drug_container .table-default {
     table-layout: fixed
 }
 
-.table-default th,
-.table-default td {
+.drug_container .table-default th,
+.drug_container .table-default td {
     padding: 5px 10px;
     line-height: 20px;
     text-align: center;
@@ -79,16 +82,22 @@
   vertical-align: middle !important;
 }
 
+/* 修正bootstrap样式 end*/
 
 html{
 	height: 100%;
 }
 body{	
-	font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";
-	background-color: #f0f2f5;
+	font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";	
 	height: 100%;
 	overflow: auto;
 }
+
+.hospital{
+	/* height:100%; */	
+	background-color: #f0f2f5;
+}
+
 .navbar{
 	background: #fff;
 	height: 100px;

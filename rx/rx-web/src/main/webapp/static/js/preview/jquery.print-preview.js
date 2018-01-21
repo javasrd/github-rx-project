@@ -158,7 +158,7 @@
     		mask.unbind("click.printPreview.mask");
     		$(window).unbind("resize.printPreview.mask");
     		//added by jch
-    		loadCss();
+    		//loadCss();
 	    },
 	    
     	/* -- Mask Functions --*/

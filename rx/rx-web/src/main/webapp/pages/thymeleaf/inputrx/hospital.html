@@ -17,12 +17,12 @@
     
     <!-- <link rel="stylesheet" th:href="@{/static/css/preview/960.css}" type="text/css" media="screen">
     <link rel="stylesheet" th:href="@{/static/css/preview/screen.css}" type="text/css" media="screen" /> -->
-    <link rel="stylesheet" th:href="@{/static/css/preview/print.css}" type="text/css" media="print" />
+    <!-- <link rel="stylesheet" th:href="@{/static/css/preview/print.css}" type="text/css" media="print" /> -->
     <link rel="stylesheet" th:href="@{/static/css/preview/print-preview.css}" type="text/css" media="screen">
         
 	<link th:href="@{/static/css/hospital/hospital.css}" rel="stylesheet">
 	
-	<!-- <link rel="stylesheet" th:href="@{/static/css/alert/alert.css}"> -->
+	<link rel="stylesheet" th:href="@{/static/css/alert/alert.css}">
 	    
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -41,6 +41,7 @@
 
   </head>
   <body>
+  	<div class="hospital">  
     <nav class="navbar navbar-default">
       <div class="row">
         <div class="col-xs-6"></div>
@@ -170,8 +171,7 @@
               </table>
             </div>
             <table class="table table-striped table-bordered table-default">
-              <tbody id="drug-items">
-              
+              <tbody id="drug-items">              
                 <tr th:remove="all">
                   <td>此处存放药品名称12313123</td>
                   <td></td>
@@ -213,6 +213,9 @@
       
     </div>
     
+    </div>
+    
+    
     <!-- 用于加载打印模板 -->
     <div id="printarea" class="hide"></div>  <!-- 此处不可以是iframe,否则会出现js无权限问题  -->
     <div id="loadcss" class="hide"></div>
@@ -245,6 +248,7 @@
     
     <script type="text/javascript">    	
     </script>
+    
     
     
   </body>
