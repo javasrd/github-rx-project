@@ -6,15 +6,23 @@
 		padding: 0 !important;
 	}
 }
+
+/* body{zoom:0.5;} *//* IE下可以使用 */
+/* body{transform: scale(0.5);} *//* 其他高级浏览器可以使用 */
+
+
+
 .print_area{
+  /* zoom:0.5;	
+	transform: scale(0.5); */
   font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";
-  width: 945px;
-  height: 655px;
-  padding: 20px;
+  width: 100%;
+  height: 400px;
+  padding: 0px;
 }
 
 .print_area>h1{
-  font-size: 30px;
+  font-size: 25px;
   margin-top: 0;
   text-align: center;
 }
@@ -25,8 +33,8 @@
   display: inline-block;
   margin-bottom: 0;
 }
-.left_info>div.department_info>p{
-  width: 33%
+.left_info>div.department_info>p{  
+  width: 30%;  
 }
 .left_info>div.patient_info>p{
   width: 20%
