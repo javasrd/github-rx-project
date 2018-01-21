@@ -310,3 +310,8 @@ table th.small_width,table td.small_width{
 .menu_container .right_btn button>span{
 	margin-right: 8px;
 }
+
+#drug-items tr:hover{
+	background-color:#CCFFCC;
+}
+

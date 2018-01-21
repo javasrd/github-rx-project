@@ -133,10 +133,10 @@ function addDrugIntoTable(){
 				g_currDrug.wareunit=$("#wareunit-"+drugId).text();
 	 */
 	
-	if(g_currDrug==null) reutrn;
+	if(g_currDrug==null) return false;
 	
 	var drugItem=
-		'<tr>'+
+		'<tr ondblclick="delSelectedDrug(this)" bind-id='+ '"'+g_currDrug.id+'"'+ '>'+
 			'<td>'+g_currDrug.wareid+'</td>'+
 	        '<td>'+g_currDrug.warename+'</td>'+
 	        '<td>'+g_currDrug.warespec+'</td>'+
@@ -170,21 +170,169 @@ function addDrugIntoTable(){
 	    newDrug.i=val;
 	});	*/
 	var newDrug=g_currDrug;
-	g_prescDrugList.push(newDrug);	
+	g_prescDrugList.push(newDrug);  //加入列表中
+	
+	clearInputBox();  //清除输入框
+	setFocus("#drug-dosage-"+g_currDrug.id);
+	
 	g_currDrug=null;  //加入后置当前药品为空
 	
 	isIE();	
 	
 	bindEventForDosage();
 	bindEventForDoseunit();	
-	bindEventForDays();
+	bindEventForDays();	
 }
 
 /**
- * 生成二维码
- * TODO 此函数需要参数化.
+ * 清除最上面的输入框
  * @returns
  */
+function clearInputBox(){
+	$("#abc").val("");
+	$("#warename").val("");
+	$("#drugmode").val("");
+	$("#drugtimes").val("");
+	$("#quantity").val("");
+}
+
+/**
+ * 设置焦点
+ * @param id  DOM对象ID
+ * @returns
+ */
+function setFocus(id){
+	$(id).focus();
+}
+
+/**
+ * 删除当前药品,用于处理在药品上双击的事件.
+ * @param that 在处方药品列表所选药品
+ * @returns
+ */
+function delSelectedDrug(that){	
+	showConfirmWindow(that);
+	/*deleteDrug(that);
+	deleteDrugRow(that);*/
+}
+
+//自g_prescDrugList列表中删除
+function deleteDrug(that){
+	var drugId=$(that).attr("bind-id");
+	//根据药品ID在列表中查询.
+	var index=searchDrugById(drugId);
+	if(index>=0){
+		removeFromDrugList(index);
+	}
+}
+
+//删除table中的相应row.
+function deleteDrugRow(that){
+	$(that).remove();
+}
+
+var M1=new Object();
+function showConfirmWindow(that){
+	// 判断是否已存在，如果已存在则直接显示
+	if(M1.dialog3){
+	    return M1.dialog3.show();
+	}
+	M1.dialog3 = jqueryAlert({
+	    'title'   : '提示',
+	    'content' : '    确认删除当前选定的药品?    ',
+	    'modal'   : true,
+	    'buttons' :{
+	        '确定' : function(){
+	        	deleteDrug(that);
+	        	deleteDrugRow(that);
+	        	M1.dialog3.close();
+	        	M1.dialog3=null;
+	        },
+	        '取消' : function(){
+	        	M1.dialog3.close();
+	        	M1.dialog3=null;
+	        }
+	    }
+	});
+	
+}
+
+
+//TODO, 后续采用面象对象的方式开发JS
+/***********************************************
+  药品列表处理方法
+ **********************************************/
+
+/**
+ * 删除指定索引处的对象
+ * @param index  索引号
+ * @returns void
+ */
+function removeFromDrugList(index){
+	if(index<0  || index>=g_prescDrugList.length) {return false;}
+	g_prescDrugList.splice(index, 1);
+}
+
+/**
+ * 获取指定索引的对象
+ * @param index 索引号
+ * @returns 如果索引处的对象存在,则返回;  否则返回null;
+ */
+function getDrugFromDrugList(index){
+	if(index<0  || index>=g_prescDrugList.length) {return null;}
+	else return  g_prescDrugList[index];
+}
+
+/**
+ * 将对象加入到列表中
+ * @param drug  Drug对象  
+ * @returns void
+ */
+function addDrugToDrugList(drug){
+	g_prescDrugList.push(drug);
+}
+
+/**
+ * 根据药品ID在处方药品列表中查找
+ * @param drugId  药品ID
+ * @returns 如果查询到则返回索引(自0开始);否则返回-1
+ */
+
+function searchDrugById(drugId){
+	for(var i=0;i<g_prescDrugList.length;i++){
+		if(g_prescDrugList[i].id==drugId){
+			return i;
+		}
+	}
+	return -1;
+}
+
+
+
+/*******************************************
+ * 定义数组的索引与删除
+ ******************************************/
+Array.prototype.indexOf = function(val) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] == val)
+			return i;
+	}
+	return -1;
+};
+
+Array.prototype.remove = function(val) {
+	var index = this.indexOf(val);
+	if (index > -1) {
+		this.splice(index, 1);
+	}
+};
+
+
+/****************************************
+ * 生成二维码
+ * TODO 此函数需要参数化.
+ * @returns void
+ ***************************************/
 function generateBarcode(){
     var value = "1234567890";
     var btype = "ean8";
@@ -272,20 +420,7 @@ function bindEventForDays(){
 	});
 }
 
-/*****************************************
- * 根据药品ID在处方药品列表中查找
- * @param drugId  药品ID
- * @returns 如果查询到则返回索引(自0开始);否则返回-1
- ****************************************/
 
-function searchDrugById(drugId){
-	for(var i=0;i<g_prescDrugList.length;i++){
-		if(g_prescDrugList[i].id==drugId){
-			return i;
-		}
-	}
-	return -1;
-}
 
 
 /*************************************
@@ -412,8 +547,8 @@ $(function() {
 			Common.showDropdownTable($(this))			
 			setCounter();
 		}
-		
 		loadDrugTable(abc);
+		
 	});
 	
 	/***************************************************************************
