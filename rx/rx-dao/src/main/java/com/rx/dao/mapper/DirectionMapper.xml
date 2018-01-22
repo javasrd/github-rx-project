@@ -11,11 +11,12 @@
     <result column="times" jdbcType="VARCHAR" property="times" />
     <result column="dosage" jdbcType="DECIMAL" property="dosage" />
     <result column="doseunit" jdbcType="VARCHAR" property="doseunit" />
+    <result column="days" jdbcType="INTEGER" property="days" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->
-    id, presc_drug_id, mode, times, dosage, doseunit
+    id, presc_drug_id, mode, times, dosage, doseunit, days
   </sql>
 </mapper>

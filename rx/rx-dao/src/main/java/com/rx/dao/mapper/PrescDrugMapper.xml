@@ -8,12 +8,23 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="presc_id" jdbcType="BIGINT" property="prescId" />
     <result column="drug_id" jdbcType="BIGINT" property="drugId" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="wareid" jdbcType="VARCHAR" property="wareid" />
+    <result column="barcode" jdbcType="VARCHAR" property="barcode" />
+    <result column="warename" jdbcType="VARCHAR" property="warename" />
+    <result column="waresimname" jdbcType="VARCHAR" property="waresimname" />
+    <result column="warespec" jdbcType="VARCHAR" property="warespec" />
+    <result column="prod_addr" jdbcType="VARCHAR" property="prodAddr" />
+    <result column="producer" jdbcType="VARCHAR" property="producer" />
+    <result column="wareunit" jdbcType="VARCHAR" property="wareunit" />
+    <result column="saleprice" jdbcType="DECIMAL" property="saleprice" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->
-    id, presc_id, drug_id, created_time
+    id, presc_id, drug_id, quantity, wareid, barcode, warename, waresimname, warespec, 
+    prod_addr, producer, wareunit, saleprice, created_time
   </sql>
 </mapper>

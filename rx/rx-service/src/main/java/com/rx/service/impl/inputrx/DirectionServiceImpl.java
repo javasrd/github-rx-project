@@ -30,7 +30,7 @@ public class DirectionServiceImpl extends AbstractBaseService<Direction, Long> i
 	}
 
 	@Override
-	public long addDirection(long presc_drug_id, String mode, String times, BigDecimal dosage, String doseunit) {
+	public long addDirection(long presc_drug_id, String mode, String times, BigDecimal dosage, String doseunit,int days) {
 		Direction rec=new Direction();
 		
 		//设定对象属性
@@ -39,6 +39,7 @@ public class DirectionServiceImpl extends AbstractBaseService<Direction, Long> i
 		rec.setTimes(times);
 		rec.setDosage(dosage);
 		rec.setDoseunit(doseunit);
+		rec.setDays(days);
 		
 		
 		//保存

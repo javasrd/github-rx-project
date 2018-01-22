@@ -1,5 +1,6 @@
 package com.rx.web.inputrx;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,11 +29,14 @@ import com.rx.service.inputrx.IDiagnosisService;
 import com.rx.service.inputrx.IDictDoseUnitService;
 import com.rx.service.inputrx.IDictModeService;
 import com.rx.service.inputrx.IDictTimesService;
+import com.rx.service.inputrx.IDirectionService;
 import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.IDrugService;
 import com.rx.service.inputrx.ILogReceivePatientService;
 import com.rx.service.inputrx.IPatientService;
+import com.rx.service.inputrx.IPrescDrugService;
+import com.rx.service.inputrx.IPrescriptionService;
 
 
 /**
@@ -70,6 +74,15 @@ public class RxOpenController {
 	IDictTimesService dictTimesService;  //给药次数
 	@Autowired
 	IDictDoseUnitService dictDoseUnitService;  //给药模式
+	
+	@Autowired
+	IPrescriptionService prescriptionService; //处方服务		
+	@Autowired
+	IPrescDrugService prescDrugService;  //处方药品
+	@Autowired
+	IDirectionService directionService;  //用药指导
+	
+	
 	
 	
 	
@@ -197,6 +210,8 @@ public class RxOpenController {
 		return RESPONSE_THYMELEAF + "loadcss";
 	}
 	
+	static int presc_no=0;
+	
 	/**
 	 * @Description: 保存处方
 	 * @param
@@ -213,28 +228,38 @@ public class RxOpenController {
 	public Object savaPrescription(@RequestBody String jsonPresc){
 		System.out.println(jsonPresc);
 		
+		
+		String rx_no="";  //处方编号
+		
 		JSONArray drugArray=JSON.parseArray(jsonPresc);		
 		for(int i=0;i<drugArray.size();i++){
-			JSONObject drug= drugArray.getJSONObject(i);
+			JSONObject jsonDrug= drugArray.getJSONObject(i);
 			
-			long drugId=drug.getLongValue("id");	//ID		
-			int dosage=drug.getIntValue("dosage");	//每次剂量
-			String mode=drug.getString("drugmode"); //给药方式
-			int quantity=drug.getIntValue("quantity");//数量
-			int days=drug.getIntValue("days");		  //服药天数	
-			String doseUnit=drug.getString("doseunit"); //服药剂量单位
-			String times=drug.getString("drugtimes");  //给药次数
-			long patientId=drug.getLongValue("patientid"); //患者ID
-			long doctorId=drug.getLongValue("doctorid");   //医生ID
+			long drugId=jsonDrug.getLongValue("id");	//ID		
+			BigDecimal dosage=jsonDrug.getBigDecimal("dosage");	//每次剂量
+			
+			String mode=jsonDrug.getString("drugmode"); //给药方式
+			int quantity=jsonDrug.getIntValue("quantity");//数量
+			int days=jsonDrug.getIntValue("days");		  //服药天数	
+			String doseUnit=jsonDrug.getString("doseunit"); //服药剂量单位
+			String times=jsonDrug.getString("drugtimes");  //给药次数
+			long patientId=jsonDrug.getLongValue("patientid"); //患者ID
+			long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID			
+					
+			//(1)保存处方数据
+			presc_no=presc_no+1;
+			rx_no="20180123_"+presc_no;
+			long prescId=prescriptionService.addPrescription(patientId, doctorId, rx_no);
+			//(2)保存处方药品
+			Drug drug=drugService.selectByPrimaryKey(drugId);  //读取药品信息
+			long prescDrugId=prescDrugService.addPrescDrug(prescId, drug,quantity);
+			//(3)保存处方指导
+			directionService.addDirection(prescDrugId, mode, times, dosage, doseUnit,days);
 		}
-		
-		String prescNo="";
-		
-		//保存处方数据
-		
+				
 		//返回处方编号		
 		Map<String, Object> result=RequestResultUtil.getResultAddSuccess();		
-		result.put(RequestResultUtil.RESULT_MSG, prescNo);		
+		result.put(RequestResultUtil.RESULT_MSG, rx_no);		
 		return result;
 	}
 	
