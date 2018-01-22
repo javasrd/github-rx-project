@@ -172,13 +172,12 @@ function addDrugIntoTable(){
 	var newDrug=g_currDrug;
 	g_prescDrugList.push(newDrug);  //加入列表中	
 	
-	/*isIE1("#drug-dosage-"+g_currDrug.id);
-	isIE1("#drug-doseunit-"+g_currDrug.id);
-	isIE1("#drug-days-"+g_currDrug.id);
 	
+	//动态绑定input事件
 	bindEventForDosage("#drug-dosage-"+g_currDrug.id);
 	bindEventForDoseunit("#drug-doseunit-"+g_currDrug.id);	
-	bindEventForDays("#drug-days-"+g_currDrug.id);*/	
+	bindEventForDays("#drug-days-"+g_currDrug.id);
+	
 	
 	
 	clearInputValue();  //清除输入框
@@ -186,29 +185,57 @@ function addDrugIntoTable(){
 	
 	
 	g_currDrug=null;  //加入后置当前药品为空
+	
+	Common.addStripedStyle();
 }
 
+/**
+ * 清除输入框
+ * @returns
+ */
 function clearInputValue(){
-	clearInputBox("#abc","");
-	//isIE1("#abc");
+	clearInputBox_abc();
+	clearInputBox_drugmode();
+	clearInputBox_drugtimes();
 	
-	/*clearInputBox("#warename","");
-	clearInputBox("#drugmode","");
-	clearInputBox("#drugtimes","");
-	clearInputBox("#quantity","");*/
+	$("#warename").val("");	
+	$("#quantity").val("");
 }	
 
 /**
- * 清除最上面的输入框
+ * 清除药品助词码输入框
  * @returns
  */
-function clearInputBox(selector,value){
-	$(selector).attr("disabled",true);  //避免触发propertychanged事件
-	$(selector).val("");	
-	//document.getElementById("abc").value="";
-	$(selector).attr("disabled",false);
-	
+function clearInputBox_abc(){
+	$("#abc").attr("disabled",true);  //屏蔽在对输入赋值时触发input event;
+	$('#abc').val("HelloWorld").replaceWith('<input id="abc" type="text" class="form-control" onfocus="resetCounter($(this))" value="" />');//替换input
+	bindIEEvent("input","#abc",handler_input_abc);
+	$("abc").attr("disabled",false);	
 }
+
+/**
+ * 清除给药方式输入框
+ * @returns
+ */
+function clearInputBox_drugmode(){
+	$("#drugmode").attr("disabled",true);  //屏蔽在对输入赋值时触发input event;
+	$('#drugmode').val("HelloWorld").replaceWith('<input id="drugmode" type="text" class="form-control" onfocus="resetCounter($(this))" value="" />');//替换input
+	bindIEEvent("input","#drugmode",handler_input_mode);
+	$("drugmode").attr("disabled",false);	
+}
+
+/**
+ * 清除给药次数输入框
+ * @returns
+ */
+function clearInputBox_drugtimes(){
+	$("#drugtimes").attr("disabled",true);  //屏蔽在对输入赋值时触发input event;
+	$('#drugtimes').val("HelloWorld").replaceWith('<input id="drugtimes" type="text" class="form-control" onfocus="resetCounter($(this))" value="" />');//替换input
+	bindIEEvent("input","#drugtimes",handler_input_times);
+	$("drugtimes").attr("disabled",false);	
+}
+
+
 
 /**
  * 设置焦点
@@ -373,30 +400,8 @@ function generateBarcode(){
  * 动态绑定input事件(剂量单位). 
  * @returns
  */
-function bindEventForDoseunit(selector){
-	$(selector).on("input", function() {
-		
-		/*--------------------------
-		用户输入
-			(1)可能是助记码
-			(2)真正的doseunit
-		--------------------------*/
-		
-		//(1)输入是doseunit情况		
-		var drugId=$(this).attr("bind-id"); //取得当前编辑的药品ID		
-		var index=searchDrugById(drugId);  //自g_prescDrugList查询,并置doseunit
-		if(index>=0){
-			g_prescDrugList[index].doseunit=$(this).val();			
-		}		
-		
-		//(2)输入是助记码情况
-		var abc = $(this).val(); // 助记码		
-		if(counter==0){ //如果是首次调用时.
-			Common.showDropdownUnit($(this));
-			counter=1;			
-		}		
-		loadDrugDoseUnit(abc);
-	});
+function bindEventForDoseunit(selector){	
+	bindIEEvent("input",selector, handler_input_doseunit);	
 }
 
 /**
@@ -404,17 +409,7 @@ function bindEventForDoseunit(selector){
  * @returns
  */
 function bindEventForDosage(selector){
-	$(selector).on("input", function() {
-		
-		var drugId=$(this).attr("bind-id");  //取得当前编辑的药品ID	
-		//alert("drugId:"+drugId);
-		var index=searchDrugById(drugId); //自g_prescDrugList查询,并置dosage
-		if(index>=0){
-			//alert("dosage:"+$(this).val());
-			g_prescDrugList[index].dosage=$(this).val();			
-		}		
-		
-	});
+	bindIEEvent("input",selector, handler_input_dosage);
 }
 
 /**
@@ -422,23 +417,16 @@ function bindEventForDosage(selector){
  * @returns
  */
 function bindEventForDays(selector){
-	$(selector).on("input", function() {
-		
-		var drugId=$(this).attr("bind-id"); //取得当前编辑的药品ID
-		//自g_prescDrugList查询,并置days属性
-		var index=searchDrugById(drugId);
-		if(index>=0){
-			g_prescDrugList[index].days=$(this).val();			
-		}
-				
-	});
+	bindIEEvent("input",selector, handler_input_days);
 }
+
+
 
 
 /*************************************
   	IE浏览器兼容性
  ************************************/
-var disabled=false;
+
 function isIE1(selector) {
 	// for ie
 	if ($.browser.msie) {
@@ -449,38 +437,24 @@ function isIE1(selector) {
 			if (this.attachEvent) {				
 				this.attachEvent(
 						'onpropertychange', 
-						function(e) {
-							//alert("e.propertyName:"+e.propertyName);
+						function(e) {							
 							if (e.propertyName != 'value')	{
-								alert("e.propertyName:"+e.propertyName);
 								return;							
 							}
 							if(e.propertyName=='value' && !$(that).attr("disabled")){
-								//alert("triggered!");
 								$(that).trigger('input');
 							}
-							
 						});
 			}
 		})
 	}
 }
 
-/*var TriggerInputFlag={
-		
-}*/
-
-
-//获取触发标志
-function getTriggerInputFlag(){
-	return g_trigger_input_flag;
-}
-//设置触发标志
-function setTriggerInputFlag(trigger_flag){
-	g_trigger_input_flag=trigger_flag;
-}
-
-
+/**************************************** 
+ * 采用onpropertychange事件来模拟input事件
+ * 用于IE兼容性的函数
+ * @returns
+ ****************************************/
 function isIE() {
 	// for ie
 	if (document.all) {
@@ -540,7 +514,7 @@ function savePrescription(){
 				if (res.result_code == "success") {					
 					//util.message(obj.result_msg,"","info");					
 					// 判断是否已存在，如果已存在则直接显示
-					alert("保存成功",2000);
+					alert("保存成功",500);
 					
 					var prescNo=res.result_msg; //处方编号
 					//TODO 后续业务处理
@@ -580,6 +554,128 @@ function resetCounter1(that){
 	counter=0;
 }
 
+/************************************************
+ * 事件处理函数
+ ***********************************************/
+function handler_input_abc(){
+	var abc = $(this).val(); // 助记码		
+	if(getCounter()==0){ //如果是首次调用时.
+		Common.showDropdownTable($(this))			
+		setCounter();
+	}
+	loadDrugTable(abc);
+}
+
+/**
+ * 给药方式输入框 input事件处理函数
+ * @returns
+ */
+function handler_input_mode(){
+	var abc = $(this).val(); // 助记码		
+	if(getCounter()==0){ //如果是首次调用时.
+		Common.showDropdownTable($(this))
+		setCounter();			
+	}		
+	loadDrugMode(abc);
+}
+
+/**
+ * 给药次数输入框 input事件处理函数
+ * @returns
+ */
+function handler_input_times() {
+	var abc = $(this).val(); // 助记码		
+	if(getCounter()==0){ //如果是首次调用时.
+		Common.showDropdownTable($(this))			
+		setCounter();
+	}		
+	loadDrugTimes(abc);
+}
+
+/**
+ * 剂量单位输入框 input事件处理函数
+ * @returns
+ */
+function handler_input_doseunit(){
+	
+	/*--------------------------
+	用户输入
+		(1)可能是助记码
+		(2)真正的doseunit
+	--------------------------*/
+	//alert("doseunit");
+	//(1)输入是doseunit情况		
+	var drugId=$(this).attr("bind-id"); //取得当前编辑的药品ID		
+	var index=searchDrugById(drugId);  //自g_prescDrugList查询,并置doseunit
+	if(index>=0){
+		g_prescDrugList[index].doseunit=$(this).val();			
+	}		
+	
+	//(2)输入是助记码情况
+	var abc = $(this).val(); // 助记码		
+	if(counter==0){ //如果是首次调用时.
+		Common.showDropdownUnit($(this));
+		counter=1;			
+	}		
+	loadDrugDoseUnit(abc);
+}
+
+/**
+ * 剂量输入框 input 事件处理函数
+ * @returns
+ */
+function handler_input_dosage(){	
+	var drugId=$(this).attr("bind-id");  //取得当前编辑的药品ID	
+	//alert("drugId:"+drugId);
+	var index=searchDrugById(drugId); //自g_prescDrugList查询,并置dosage
+	if(index>=0){
+		//alert("dosage:"+$(this).val());
+		g_prescDrugList[index].dosage=$(this).val();			
+	}		
+}
+
+/**
+ * 用药天数 input 事件处理函数
+ * @returns
+ */
+function handler_input_days() {	
+	var drugId=$(this).attr("bind-id"); //取得当前编辑的药品ID
+	//自g_prescDrugList查询,并置days属性
+	var index=searchDrugById(drugId);
+	if(index>=0){
+		g_prescDrugList[index].days=$(this).val();			
+	}
+}
+
+
+/**********************************************
+ * 事件绑定 
+ *********************************************/
+/**
+ * 绑定IE propertychange event，用于模拟input事件。
+ * @param eventName
+ * @param selector
+ * @param handler
+ * @returns
+ */
+function bindIEEvent(eventName,selector,handler){
+	isIE1(selector);
+	$(selector).on(eventName,handler);
+}
+
+
+/**
+ * 绑定其它非input事件
+ * @param eventName
+ * @param selector
+ * @param handler
+ * @returns
+ */
+function bindEvent(eventName,selector,handler){
+	$(selector).on(eventName,handler);
+}
+
+
 /***************************************************
  * 						全局变量
  **************************************************/
@@ -587,22 +683,19 @@ var counter=0; 					  //下拉框是否已经打开标志,用于防止多次打�
 var g_edit_doseunit_id;  		  //当前正在编辑的"剂量单位" id
 var g_prescDrugList=new Array();  //当前处方药品列表.
 var g_currDrug=null; 			  //医生选择的当前药品
-var g_trigger_input_flag=false;   //是否触发input事件标志
 /*******************************************************************************
  * 页面加载时自动执行此函数
  ******************************************************************************/
 $(function() {
 	
-	//setTriggerInputFlag(true);
-	
-	isIE1("#abc");
-	//isIE1("#drugmode");
-	//isIE1("#drugtimes");	
+	bindIEEvent("input","#abc",handler_input_abc);
+	bindIEEvent("input","#drugmode",handler_input_mode);
+	bindIEEvent("input","#drugtimes",handler_input_times);
 
 	/***************************************************************************
 	 * 绑定事件
 	 **************************************************************************/
-	$("#abc").on("input", function() {
+	/*$("#abc").on("input", function() {
 		var abc = $(this).val(); // 助记码		
 		if(getCounter()==0){ //如果是首次调用时.
 			Common.showDropdownTable($(this))			
@@ -610,31 +703,31 @@ $(function() {
 		}
 		loadDrugTable(abc);
 		
-	});
+	});*/
 	
 	/***************************************************************************
 	 * 绑定事件
 	 **************************************************************************/
-	$("#drugmode").on("input", function() {
+	/*$("#drugmode").on("input", function() {
 		var abc = $(this).val(); // 助记码		
 		if(getCounter()==0){ //如果是首次调用时.
 			Common.showDropdownTable($(this))
 			setCounter();			
 		}		
 		loadDrugMode(abc);
-	});
+	});*/
 	
 	/***************************************************************************
 	 * 绑定事件
 	 **************************************************************************/
-	$("#drugtimes").on("input", function() {
+	/*$("#drugtimes").on("input", function() {
 		var abc = $(this).val(); // 助记码		
 		if(getCounter()==0){ //如果是首次调用时.
 			Common.showDropdownTable($(this))			
 			setCounter();
 		}		
 		loadDrugTimes(abc);
-	});
+	});*/
 	
 	/***************************************************************************
 	 * 绑定事件
