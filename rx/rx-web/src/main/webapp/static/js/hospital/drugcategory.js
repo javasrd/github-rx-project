@@ -26,7 +26,8 @@ $(function(){
 		
 		//当选择一个药品后
 		Common.hideDropdownTable();  //关闭选择下拉框
-		$("#drugmode").focus();      //给药方式文本框获取焦点		
+		$("#drugmode").focus();      //给药方式文本框获取焦点
+		resetCounter();
 		
 		
 	});

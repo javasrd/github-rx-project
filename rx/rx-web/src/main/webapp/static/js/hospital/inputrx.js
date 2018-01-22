@@ -190,6 +190,7 @@ function addDrugIntoTable(){
 
 function clearInputValue(){
 	clearInputBox("#abc","");
+	//isIE1("#abc");
 	
 	/*clearInputBox("#warename","");
 	clearInputBox("#drugmode","");
@@ -203,9 +204,10 @@ function clearInputValue(){
  */
 function clearInputBox(selector,value){
 	$(selector).attr("disabled",true);  //避免触发propertychanged事件
-	$(selector).val("");
+	$(selector).val("");	
+	//document.getElementById("abc").value="";
 	$(selector).attr("disabled",false);
-	//isIE1(selector);
+	
 }
 
 /**
@@ -433,24 +435,31 @@ function bindEventForDays(selector){
 }
 
 
-
-
 /*************************************
   	IE浏览器兼容性
  ************************************/
+var disabled=false;
 function isIE1(selector) {
 	// for ie
-	if (document.all) {
+	if ($.browser.msie) {
+	/*if (document.all) {*/
 		$(selector).each(function() {
 			var that = this;
 
 			if (this.attachEvent) {				
 				this.attachEvent(
 						'onpropertychange', 
-						function(e) {							
-							if (e.propertyName != 'value')	return;
-							alert("triggered!");
-							$(that).trigger('input');
+						function(e) {
+							//alert("e.propertyName:"+e.propertyName);
+							if (e.propertyName != 'value')	{
+								alert("e.propertyName:"+e.propertyName);
+								return;							
+							}
+							if(e.propertyName=='value' && !$(that).attr("disabled")){
+								//alert("triggered!");
+								$(that).trigger('input');
+							}
+							
 						});
 			}
 		})
