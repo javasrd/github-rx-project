@@ -170,30 +170,42 @@ function addDrugIntoTable(){
 	    newDrug.i=val;
 	});	*/
 	var newDrug=g_currDrug;
-	g_prescDrugList.push(newDrug);  //加入列表中
+	g_prescDrugList.push(newDrug);  //加入列表中	
 	
-	clearInputBox();  //清除输入框
+	/*isIE1("#drug-dosage-"+g_currDrug.id);
+	isIE1("#drug-doseunit-"+g_currDrug.id);
+	isIE1("#drug-days-"+g_currDrug.id);
+	
+	bindEventForDosage("#drug-dosage-"+g_currDrug.id);
+	bindEventForDoseunit("#drug-doseunit-"+g_currDrug.id);	
+	bindEventForDays("#drug-days-"+g_currDrug.id);*/	
+	
+	
+	clearInputValue();  //清除输入框
 	setFocus("#drug-dosage-"+g_currDrug.id);
 	
+	
 	g_currDrug=null;  //加入后置当前药品为空
-	
-	isIE();	
-	
-	bindEventForDosage();
-	bindEventForDoseunit();	
-	bindEventForDays();	
 }
+
+function clearInputValue(){
+	clearInputBox("#abc","");
+	
+	/*clearInputBox("#warename","");
+	clearInputBox("#drugmode","");
+	clearInputBox("#drugtimes","");
+	clearInputBox("#quantity","");*/
+}	
 
 /**
  * 清除最上面的输入框
  * @returns
  */
-function clearInputBox(){
-	$("#abc").val("");
-	$("#warename").val("");
-	$("#drugmode").val("");
-	$("#drugtimes").val("");
-	$("#quantity").val("");
+function clearInputBox(selector,value){
+	$(selector).attr("disabled",true);  //避免触发propertychanged事件
+	$(selector).val("");
+	$(selector).attr("disabled",false);
+	//isIE1(selector);
 }
 
 /**
@@ -359,8 +371,8 @@ function generateBarcode(){
  * 动态绑定input事件(剂量单位). 
  * @returns
  */
-function bindEventForDoseunit(){
-	$(".dose-unit").on("input", function() {
+function bindEventForDoseunit(selector){
+	$(selector).on("input", function() {
 		
 		/*--------------------------
 		用户输入
@@ -389,8 +401,8 @@ function bindEventForDoseunit(){
  * 动态绑定单次用量的input事件 
  * @returns
  */
-function bindEventForDosage(){
-	$(".dosage").on("input", function() {
+function bindEventForDosage(selector){
+	$(selector).on("input", function() {
 		
 		var drugId=$(this).attr("bind-id");  //取得当前编辑的药品ID	
 		//alert("drugId:"+drugId);
@@ -407,8 +419,8 @@ function bindEventForDosage(){
  * 动态绑定用药天数的input事件 
  * @returns
  */
-function bindEventForDays(){
-	$(".days").on("input", function() {
+function bindEventForDays(selector){
+	$(selector).on("input", function() {
 		
 		var drugId=$(this).attr("bind-id"); //取得当前编辑的药品ID
 		//自g_prescDrugList查询,并置days属性
@@ -426,22 +438,58 @@ function bindEventForDays(){
 /*************************************
   	IE浏览器兼容性
  ************************************/
+function isIE1(selector) {
+	// for ie
+	if (document.all) {
+		$(selector).each(function() {
+			var that = this;
+
+			if (this.attachEvent) {				
+				this.attachEvent(
+						'onpropertychange', 
+						function(e) {							
+							if (e.propertyName != 'value')	return;
+							alert("triggered!");
+							$(that).trigger('input');
+						});
+			}
+		})
+	}
+}
+
+/*var TriggerInputFlag={
+		
+}*/
+
+
+//获取触发标志
+function getTriggerInputFlag(){
+	return g_trigger_input_flag;
+}
+//设置触发标志
+function setTriggerInputFlag(trigger_flag){
+	g_trigger_input_flag=trigger_flag;
+}
+
+
 function isIE() {
 	// for ie
 	if (document.all) {
 		$('input[type="text"]').each(function() {
 			var that = this;
 
-			if (this.attachEvent) {
-				this.attachEvent('onpropertychange', function(e) {
-					if (e.propertyName != 'value')
-						return;
-					$(that).trigger('input');
-				});
+			if (this.attachEvent) {				
+				this.attachEvent(
+						'onpropertychange', 
+						function(e) {							
+							if (e.propertyName != 'value')	return;							
+							$(that).trigger('input');
+						});
 			}
 		})
 	}
 }
+
 
 
 /**
@@ -530,13 +578,17 @@ var counter=0; 					  //下拉框是否已经打开标志,用于防止多次打�
 var g_edit_doseunit_id;  		  //当前正在编辑的"剂量单位" id
 var g_prescDrugList=new Array();  //当前处方药品列表.
 var g_currDrug=null; 			  //医生选择的当前药品
-
+var g_trigger_input_flag=false;   //是否触发input事件标志
 /*******************************************************************************
  * 页面加载时自动执行此函数
  ******************************************************************************/
 $(function() {
-
-	isIE();
+	
+	//setTriggerInputFlag(true);
+	
+	isIE1("#abc");
+	//isIE1("#drugmode");
+	//isIE1("#drugtimes");	
 
 	/***************************************************************************
 	 * 绑定事件
@@ -578,14 +630,14 @@ $(function() {
 	/***************************************************************************
 	 * 绑定事件
 	 **************************************************************************/
-	$(".dose-unit").on("input", function() {
+	/*$(".dose-unit").on("input", function() {
 		var abc = $(this).val(); // 助记码		
 		if(getCounter()==0){ //如果是首次调用时.
 			Common.showDropdownUnit($(this))			
 			setCounter();
 		}		
 		loadDrugDoseUnit(abc);
-	});
+	});*/
 	
 	
 	/***************************************************************************
@@ -594,6 +646,7 @@ $(function() {
 	$("#quantity").on("keydown", function(event) {
 		if (event.keyCode == "13") {//keyCode=13是回车键			
             addDrugIntoTable();  //将选择的药品加入列表中.
+            return false;
         }
 	});
 	

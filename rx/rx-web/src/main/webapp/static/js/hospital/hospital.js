@@ -46,8 +46,17 @@ var Common = {
 	},
 
 	showDropdownUnit : function (that) {
-		var top = $(that).offset().top + 55;
-		var left = $(that).offset().left;		
+		var topx=0;
+		var leftx=0;
+		
+		/*if ($.browser.msie){		
+		}*/
+			
+		topx=$(that).offset().top;
+		leftx=$(that).offset().left;		
+		
+		var top = topx + 55;
+		var left = leftx;		
 		$('.dropdown-unit').css({"top":top,"left":left}).show();
 	},
 

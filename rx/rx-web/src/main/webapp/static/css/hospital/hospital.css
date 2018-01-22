@@ -60,7 +60,8 @@
    top: 0;
  }
  .btn{
- 	behavior: url("../../../static/css/hospital/PIE.htc"); /* css相对于html的位置 */  
+ 	behavior: url("../../../static/css/hospital/PIE.htc"); /* css相对于html的位置 */
+ 	/* behavior: url("./static/css/hospital/PIE.htc"); */  
  }
 
 
@@ -147,7 +148,8 @@ body{
 	width: 60px;
 	height: 60px;
 	border-radius: 50%;
-	behavior: url("../../../static/css/hospital/PIE.htc"); /* css相对于html的位置 */  
+	/* behavior: url("../../../static/css/hospital/PIE.htc"); */ /* css相对于html的位置 */
+	behavior: url("./static/css/hospital/PIE.htc");  
 	z-index: 12;
 }
 .basic_info .basic_form{
@@ -228,7 +230,8 @@ body{
 	overflow: auto;
 	border: 1px solid #ccc;
 	box-shadow: 0 0 4px 1px grey;
-	behavior: url("../../../static/css/hospital/PIE.htc"); /* css相对于html的位置 */  
+	/* behavior: url("../../../static/css/hospital/PIE.htc"); */ /* css相对于html的位置 */
+	behavior: url("./static/css/hospital/PIE.htc");  
 }
 .diagnosis_msg input{
 	border: none;
@@ -291,7 +294,8 @@ table th.small_width,table td.small_width{
 	overflow: auto;
 	border: 1px solid #ccc;
 	box-shadow: 0 0 4px 1px grey;
-	behavior: url("../../../static/css/hospital/PIE.htc"); /* css相对于html的位置 */  
+	/* behavior: url("../../../static/css/hospital/PIE.htc"); */ /* css相对于html的位置 */
+	behavior: url("./static/css/hospital/PIE.htc");    
 }
 
 .menu_container button{
