@@ -182,21 +182,22 @@ function addDrugIntoTable() {
 	 */
 	var newDrug = g_currDrug;
 	g_prescDrugList.push(newDrug); // 加入列表中
+	
+	
 
 	// 动态绑定input事件
 	bindEventForDosage("#drug-dosage-" + g_currDrug.id);
-	bindEvent("keydown", "#drug-dosage-" + g_currDrug.id,
-			handler_keydown_dosage);
+	bindEvent("keydown", "#drug-dosage-" + g_currDrug.id,handler_keydown_dosage);
 
 	bindEventForDoseunit("#drug-doseunit-" + g_currDrug.id);
-	bindEvent("keydown", "#drug-doseunit-" + g_currDrug.id,
-			handler_keydown_doseunit);
+	bindEvent("keydown", "#drug-doseunit-" + g_currDrug.id,	handler_keydown_doseunit);
+	//bindEvent("blur", "#drug-doseunit-" + g_currDrug.id, handler_blur_doseunit);
 
 	bindEventForDays("#drug-days-" + g_currDrug.id);
 	bindEvent("keydown", "#drug-days-" + g_currDrug.id, handler_keydown_days);
 
 	clearInputValue(); // 清除输入框
-	setFocus("#drug-dosage-" + g_currDrug.id);
+	setFocus("#drug-dosage-" + g_currDrug.id); //下一个输入框获取焦点
 
 	g_currDrug = null; // 加入后置当前药品为空
 
@@ -231,6 +232,8 @@ function clearInputBox_abc() {
 	bindIEEvent("input", "#abc", handler_input_abc);
 	$("abc").attr("disabled", false);
 	bindEvent("keydown", "#abc", handler_keydown_abc);
+	//bindEvent("blur", "#abc", handler_blur_abc);
+	
 }
 
 /**
@@ -247,6 +250,8 @@ function clearInputBox_drugmode() {
 	bindIEEvent("input", "#drugmode", handler_input_mode);
 	$("drugmode").attr("disabled", false);
 	bindEvent("keydown", "#drugmode", handler_keydown_mode);
+	//bindEvent("blur", "#drugmode", handler_blur_mode);
+	
 }
 
 /**
@@ -263,6 +268,7 @@ function clearInputBox_drugtimes() {
 	bindIEEvent("input", "#drugtimes", handler_input_times);
 	$("drugtimes").attr("disabled", false);
 	bindEvent("keydown", "#drugtimes", handler_keydown_times);
+	//bindEvent("blur", "#drugtimes", handler_blur_times);
 }
 
 /**
@@ -581,6 +587,10 @@ function getInputDoseUnitId(that){
 /*******************************************************************************
  * 事件处理函数
  ******************************************************************************/
+
+/**--------------------------
+ * input event
+ --------------------------*/
 function handler_input_abc() {
 	var abc = $(this).val(); // 助记码
 	if (getDrugWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
@@ -588,35 +598,6 @@ function handler_input_abc() {
 		setDrugWindowStatus(WINDOW_OPENED);
 	}
 	loadDrugTable(abc);
-}
-
-/**
- * 用于处理药品助记码框中ESC按键
- * 
- * @param ev
- *            事件对象
- * @returns
- */
-function handler_keydown_abc(ev) {
-	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
-	if (oEvent.keyCode == 27) // Esc键的keyCode是27
-	{
-		if (getDrugWindowStatus() == WINDOW_OPENED) {
-			Common.hideDropdownTable(); // 关闭选择下拉框
-			$("#abc").focus(); // 给药方式文本框获取焦点
-			setDrugWindowStatus(WINDOW_CLOSED);
-		}
-
-	}
-	// 用户按下了回车键
-	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
-	if (oEvent.keyCode == 13) {
-		//alert(getDrugWindowStatus());
-		if (getDrugWindowStatus() == WINDOW_OPENED) {
-			choiceTheFirstDrug();
-		}
-	}
-
 }
 
 /**
@@ -703,6 +684,9 @@ function handler_input_days() {
 	}
 }
 
+/**--------------------------
+ * keydown event
+ --------------------------*/
 /**
  * 数量 keydown 事件处理函数
  */
@@ -714,6 +698,37 @@ function handler_keydown_quantity(event) {
 }
 
 /**
+ * 用于处理药品助记码框中ESC按键
+ * 
+ * @param ev
+ *            事件对象
+ * @returns
+ */
+function handler_keydown_abc(ev) {
+	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
+	if (oEvent.keyCode == 27) // Esc键的keyCode是27
+	{
+		if (getDrugWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownTable(); // 关闭选择下拉框
+			$("#abc").focus(); // 给药方式文本框获取焦点
+			setDrugWindowStatus(WINDOW_CLOSED);
+		}
+		return false;
+
+	}
+	// 用户按下了回车键
+	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
+	if (oEvent.keyCode == 13) {
+		//alert(getDrugWindowStatus());
+		if (getDrugWindowStatus() == WINDOW_OPENED) {
+			choiceTheFirstDrug();
+		}
+		return false;
+	}
+
+}
+
+/**
  * 给药方式
  * 
  * @param ev
@@ -721,7 +736,7 @@ function handler_keydown_quantity(event) {
  */
 function handler_keydown_mode(ev) {
 	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
-	alert("keydown mode");
+	//alert("keydown mode");
 	if (oEvent.keyCode == 27) // Esc键的keyCode是27
 	{
 		if (getModeWindowStatus() == WINDOW_OPENED) {
@@ -729,17 +744,19 @@ function handler_keydown_mode(ev) {
 			$(this).focus();
 			setModeWindowStatus(WINDOW_CLOSED);
 		}
+		return false;
 
 	}
 	// 用户按下了回车键
 	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
-		alert("ModeWindowStatus:"+getModeWindowStatus());
+		//alert("ModeWindowStatus:"+getModeWindowStatus());
 		if (getModeWindowStatus() == WINDOW_OPENED) {
 			choiceTheFirstMode();
 		} else {
 			$("#drugtimes").focus(); // "给药次数"文本框获取焦点
 		}
+		return false;
 	}
 }
 
@@ -751,7 +768,7 @@ function handler_keydown_mode(ev) {
  */
 function handler_keydown_times(ev) {
 	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
-	alert("keydown times");
+	//alert("keydown times");
 	if (oEvent.keyCode == 27) // Esc键的keyCode是27
 	{
 		if (getTimesWindowStatus() == WINDOW_OPENED) {
@@ -759,17 +776,19 @@ function handler_keydown_times(ev) {
 			$(this).focus();
 			setTimesWindowStatus(WINDOW_CLOSED);
 		}
+		return false
 
 	}
 	// 用户按下了回车键
 	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
-		alert("TimesWindowStatus"+getTimesWindowStatus());
+		//alert("TimesWindowStatus"+getTimesWindowStatus());
 		if (getTimesWindowStatus() == WINDOW_OPENED) {
 			choiceTheFirstTimes();
 		} else {
 			$("#quantity").focus(); // "数量"文本框获取焦点
 		}
+		return false;
 	}
 }
 
@@ -781,7 +800,7 @@ function handler_keydown_times(ev) {
  */
 function handler_keydown_doseunit(ev) {
 	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
-	alert("keydown doseunit");
+	//alert("keydown doseunit");
 	if (oEvent.keyCode == 27) // Esc键的keyCode是27
 	{
 		if (getDoseUnitWindowStatus() == WINDOW_OPENED) {
@@ -789,18 +808,21 @@ function handler_keydown_doseunit(ev) {
 			$(this).focus();
 			setDoseUnitWindowStatus(WINDOW_CLOSED);
 		}
+		return false;
 	}
 	// 用户按下了回车键
 	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
-		alert("DoseUnitWindowStatus"+getDoseUnitWindowStatus());
+		//alert("DoseUnitWindowStatus"+getDoseUnitWindowStatus());
 		if (getDoseUnitWindowStatus() == WINDOW_OPENED) {
 			choiceTheFirstDoseUnit();			
 		} else {
 			var bindid=$(this).attr("bind-id");
 			$("#drug-days-"+bindid).focus(); // "天数"文本框获取焦点
 		}
+		return false;
 	}
+	
 }
 
 /**
@@ -824,9 +846,46 @@ function handler_keydown_days(event) {
 	}
 }
 
-/*******************************************************************************
+/**---------------------------------
+ * blur event
+ ---------------------------------*/
+/**
+ * 药品助词码  blur event
+ * @returns
+ */
+
+function handler_blur_abc(){
+	if(getDrugWindowStatus()==WINDOW_OPENED){
+		Common.hideDropdownTable();  //关闭选择下拉框		
+		setDrugWindowStatus(WINDOW_CLOSED);
+	}
+}
+
+function handler_blur_mode(){
+	if(getModeWindowStatus()==WINDOW_OPENED){
+		Common.hideDropdownTable();  //关闭选择下拉框		
+		setModeWindowStatus(WINDOW_CLOSED);
+	}
+}
+
+function handler_blur_times(){
+	if(getTimesWindowStatus()==WINDOW_OPENED){
+		Common.hideDropdownTable();  //关闭选择下拉框		
+		setTimesWindowStatus(WINDOW_CLOSED);
+	}
+}
+
+function handler_blur_doseunit(){
+	if(getDoseUnitWindowStatus()==WINDOW_OPENED){
+		Common.hideDropdownUnit();  //关闭选择下拉框		
+		setDoseUnitWindowStatus(WINDOW_CLOSED);
+	}
+}
+
+
+/**********************************************************
  * 事件绑定
- ******************************************************************************/
+ **********************************************************/
 /**
  * 绑定IE propertychange event，用于模拟input事件。
  * 
@@ -914,6 +973,10 @@ $(function() {
 	bindEvent("keydown", "#drugtimes", handler_keydown_times);
 
 	bindEvent("keydown", "#quantity", handler_keydown_quantity);
+	
+	//bindEvent("blur", "#abc", handler_blur_abc);
+	//bindEvent("blur", "#drugmode", handler_blur_mode);
+	//bindEvent("blur", "#drugtimes", handler_blur_times);
 
 	//
 	/***************************************************************************
