@@ -65,7 +65,7 @@ function loadPrintTemplate() {
 	//loadCss();
 	
 	var url = "/presc/printtemplate";
-	var parms = {};
+	var parms = {jsonPresc:JSON.stringify(g_prescDrugList)};
 	var callbackFunc =printPreview;
 	var containerId = "#printarea";
 	loadPage(containerId, url, parms, callbackFunc);

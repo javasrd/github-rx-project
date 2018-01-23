@@ -35,18 +35,22 @@
       <div class="left_info">
         <div class="department_info">
           <p>处方编号<span>1234567890</span></p>
-          <p>登记号<span>1234567890</span></p>
+          <p>登记号<span th:text="${patient.crNo}">1234567890</span></p>
           <p>取药科室<span>门诊西药房</span></p>
-          <p>科别<span>门诊耳鼻喉科</span></p>
-          <p>2018年12月28日</p>
+          <p>科别<span th:text="${department.name}">门诊耳鼻喉科</span></p>
+          <p><span th:text="${#calendars.format(diagnosisDate,'yyyy-MM-dd')}">2018年12月28日</span></p>
           <p>病历号</p>
           <div id="barcodeTarget" class="barcodeTarget" style="display: inline; float:right; margin-right:10px; margin-top:-15px; height:50px; width:300px;" ></div>         
           
         </div>
         <div class="patient_info">
-          <p>姓名<span>张三李四</span></p>
-          <p>性别<span>女</span></p>
-          <p>年龄<span>28</span></p>
+          <p>姓名<span th:text="${patient.name}">张三</span></p>
+          <p>性别<span th:switch="${patient.sex}" th:remove="tag"> 
+                	<span th:case='1' th:remove="tag"><span	>男 </span></span>
+                	<span th:case='2' th:remove="tag"><span	>女 </span></span>                					
+				</span>
+		  </p>
+          <p>年龄<span th:text="${patient.old}+'岁'">28</span></p>
         </div>
       </div>
       <div class="qrcode"></div>
@@ -59,13 +63,19 @@
             <td class="first_td">
               <p>临床诊断</p>
               <ol>
-                <li>慢性中耳炎</li>
+                <li th:remove="all">慢性中耳炎</li>                
+                <li th:each="diagnosis,iterStat:${diagnosisList}">
+                	<span th:text="${diagnosis.disease}" th:remove="tag"></span>
+                </li>
               </ol>
             </td>
             <td class="last_td">
               <p>Rp：</p>
               <ol>
-                <li>XXX胶囊<span>用法：<span class="usage"></span></span></li>
+                <li th:remove="all">XXX胶囊<span>用法：<span class="usage"></span></span></li>
+                <li th:each="drug,iterStat:${drugList}">
+                	<span th:text="${drug.warename}" th:remove="tag"></span>
+                	<span>用法：<span class="usage" th:text="${drug.usermethod}"></span></span></li>
               </ol></td>
           </tr>
         </tbody>
@@ -73,7 +83,7 @@
     </div>
     <div class="warning">
       <div>
-        <p>药费<span>1000.00元</span></p>
+        <p>药费<span th:text="${sum}">1000.00元</span></p>
         <p>审核/调配签名（签章）：</p>
         <p>核对/发药签名（签章）：</p>
       </div>

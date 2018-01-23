@@ -1,7 +1,9 @@
 package com.rx.web.inputrx;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ import com.rx.entity.Diagnosis;
 import com.rx.entity.DictDoseUnit;
 import com.rx.entity.DictMode;
 import com.rx.entity.DictTimes;
+import com.rx.entity.Doctor;
 import com.rx.entity.Drug;
 import com.rx.entity.Patient;
 import com.rx.service.inputrx.IDepartmentService;
@@ -195,11 +198,64 @@ public class RxOpenController {
 	 * @date 2018年1月20日-下午10:44:29
 	 */
 	@RequestMapping(value = "/presc/printtemplate")
-	public String loadPrintTemplate(String parms,Model model) {
+	public String loadPrintTemplate(String jsonPresc,Model model) {		
+		System.out.println("参数:"+jsonPresc);
 		
-		System.out.println("参数:"+parms);
+		long patient_id=0;
+		long doctor_id=0;
+		BigDecimal sum=new BigDecimal(0);
 		
-		//TODO 将参数与模板结合
+		//（1）解析参数
+		List<Map<String,String>> drugList= new ArrayList<Map<String,String>>();
+		JSONArray drugArray=JSON.parseArray(jsonPresc);		
+		for(int i=0;i<drugArray.size();i++){
+			JSONObject jsonDrug= drugArray.getJSONObject(i);
+			
+			long drugId=jsonDrug.getLongValue("id");	//ID		
+			BigDecimal dosage=jsonDrug.getBigDecimal("dosage");	//每次剂量
+			
+			String mode=jsonDrug.getString("drugmode"); //给药方式
+			int quantity=jsonDrug.getIntValue("quantity");//数量
+			int days=jsonDrug.getIntValue("days");		  //服药天数	
+			String doseUnit=jsonDrug.getString("doseunit"); //服药剂量单位
+			String times=jsonDrug.getString("drugtimes");  //给药次数
+			long patientId=jsonDrug.getLongValue("patientid"); //患者ID
+			long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID
+			
+			doctor_id=doctorId;
+			patient_id=patientId;
+			
+			Map<String,String> drugMap=new HashMap<String,String>();  
+			//药品名称
+			drugMap.put("warename", jsonDrug.getString("warename")+
+						"["+jsonDrug.getString("warespec")+ "]"+" X "+
+						jsonDrug.getString("quantity")+"("+	jsonDrug.getString("wareunit")+")");
+			//用法
+			BigDecimal subSum=jsonDrug.getBigDecimal("quantity").multiply(jsonDrug.getBigDecimal("saleprice"));
+			drugMap.put("usermethod",jsonDrug.getString("dosage")+doseUnit+"   "+
+						mode+"    "+
+						times+ "   "+
+						jsonDrug.getBigDecimal("quantity").multiply(jsonDrug.getBigDecimal("saleprice"))						
+					);			
+			drugList.add(drugMap);
+			
+			sum=sum.add(subSum);
+		}
+		
+		Patient patient=patientService.selectByPrimaryKey(patient_id);
+		Doctor doctor=doctorService.selectByPrimaryKey(doctor_id);
+		Department department=departmentService.selectByPrimaryKey(doctor.getDepartmentId());
+		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patient_id, doctor_id);
+		
+		model.addAttribute("diagnosisDate", new Date());		
+		model.addAttribute("patient", patient);
+		model.addAttribute("doctor", doctor);
+		model.addAttribute("department", department);
+		model.addAttribute("diagnosisList", diagnosisList);
+		model.addAttribute("drugList", drugList);
+		model.addAttribute("sum", sum);
+		
+		
 		
 		return RESPONSE_THYMELEAF + "printtemplate";
 	}
