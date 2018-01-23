@@ -19,15 +19,15 @@
 					</tr>
 				</thead>
 				<tbody>				 
-					<tr th:each="drug,iterStat:${drugList}" 
+					<tr th:each="drug,iterStat:${drugCategory}" 
 						class="drug-item" 
 						th:attr="drug-id=${drug.id}" >
 						
-						<td th:text="${drug.wareid}" th:attr="id='wareid-'+${drug.id}"></td>
-						<td th:text="${drug.warename}" th:attr="id='warename-'+${drug.id}"></td>
-						<td th:text="${drug.warespec}" th:attr="id='warespec-'+${drug.id}"></td>
+						<td th:text="${drug.wareid}" 	th:attr="id='wareid-'+${drug.id}"></td>
+						<td th:text="${drug.warename}" 	th:attr="id='warename-'+${drug.id}"></td>
+						<td th:text="${drug.warespec}" 	th:attr="id='warespec-'+${drug.id}"></td>
 						<td th:text="${drug.saleprice}" th:attr="id='saleprice-'+${drug.id}"></td>						
-						<td th:text="${drug.wareunit}" th:attr="id='wareunit-'+${drug.id}"></td>
+						<td th:text="${drug.wareunit}" 	th:attr="id='wareunit-'+${drug.id}"></td>
 						<td th:text="${drug.abc}" ></td>
 					</tr>
 					

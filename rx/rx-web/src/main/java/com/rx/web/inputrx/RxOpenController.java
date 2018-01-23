@@ -331,9 +331,9 @@ public class RxOpenController {
 	 * @author Administrator
 	 * @date 2018年1月18日-下午3:53:41
 	 */
-	private void getDrugTable(String abc,Model model){
-		List<Drug> drugList=drugService.getDrugByAbc(abc);
-		model.addAttribute("drugList", drugList);
+	private void getDrugTable(String abc,Model model){		
+		List<Map<String,Object>> drugList=drugService.getDrugByAbc(abc);
+		model.addAttribute("drugCategory", drugList);
 	}
 	
 	/**

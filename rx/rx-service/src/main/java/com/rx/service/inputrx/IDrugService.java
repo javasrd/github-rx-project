@@ -1,6 +1,7 @@
 package com.rx.service.inputrx;
 
 import java.util.List;
+import java.util.Map;
 
 import com.rx.entity.Drug;
 import com.rx.service.IBaseService;
@@ -39,5 +40,5 @@ public interface IDrugService extends IBaseService<Drug, Long> {
 	 * @author Administrator
 	 * @date 2018年1月18日-上午8:31:46
 	 */
-	public List<Drug> getDrugByAbc(String abc);
+	public List<Map<String,Object>> getDrugByAbc(String abc);
 }

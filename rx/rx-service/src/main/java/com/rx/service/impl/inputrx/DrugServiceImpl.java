@@ -1,12 +1,11 @@
 package com.rx.service.impl.inputrx;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.rx.dao.DoctorMapper;
 import com.rx.dao.DrugMapper;
-import com.rx.entity.Doctor;
 import com.rx.entity.Drug;
 import com.rx.service.impl.AbstractBaseService;
 import com.rx.service.inputrx.IDrugService;
@@ -43,7 +42,7 @@ public class DrugServiceImpl extends AbstractBaseService<Drug, Long> implements 
 	}
 
 	@Override
-	public List<Drug> getDrugByAbc(String abc) {
+	public List<Map<String,Object>> getDrugByAbc(String abc) {
 		return drugMapper.getDrugByAbc(abc);		
 	}
 
