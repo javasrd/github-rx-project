@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.JSONObject;
 import com.rx.bean.inputrx.RxAPI;
 import com.rx.bean.inputrx.RxProtocolConstant;
-import com.rx.bean.inputrx.RxReqProtocol;
 import com.rx.bean.inputrx.RxRespProtocol;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
@@ -69,27 +68,28 @@ public class ReceivePrescriptionController {
 	 */
 	@RequestMapping(value = "/prescapi", method = RequestMethod.POST)
 	@ResponseBody		
-	public Object receivePrescription(@RequestBody String pack,HttpServletRequest request) {
+	public Object receivePrescription(String pack,HttpServletRequest request) {
 		//@RequestBody RxReqProtocol pack
 		
-		System.out.println("模拟海典接收处方数据---接收到的数据包为:"+pack);
+		System.out.println("海典接收处方数据为:"+pack);
 		
 		//(1)记录日志		
 		
 		//(2)第一次解析数据包
-		RxReqProtocol reqProtocol = JSON.parseObject(pack, new TypeReference<RxReqProtocol>() {}); 		
+		
+		//JSONObject reqProtocol= JSON.parseObject(pack); 		
 		
 		//TODO 注: 此处未对token,version,进行处理.
 		
 		//(3)根据func的值对协议包中DATA进行解析		
-		if(reqProtocol.getFunc().equals(RxAPI.MSG_PATIENT_NMI)){
+		//if(reqProtocol.getString("func").equals(RxAPI.MSG_PATIENT_NMI)){
 			
 			//第二次数据解析.
 			//RxReqDataPatient patient = JSON.parseObject(reqProtocol.getData(), new TypeReference<RxReqDataPatient>() {});
 			
 			//根据业务规则进行处理.
-			System.out.println("进行业务处理......");
-		}
+			//System.out.println("进行业务处理......");
+		//}
 		
 		//(4)返回响应包
 		RxRespProtocol resp=createResponse(RxProtocolConstant.STATUS_SUCCESS,"v1.0");		

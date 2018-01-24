@@ -26,6 +26,7 @@ import com.rx.bean.inputrx.RxDrug;
 import com.rx.bean.inputrx.RxPatient;
 import com.rx.bean.inputrx.RxReqSendPrescription;
 import com.rx.bean.inputrx.RxReqSendPrescriptionData;
+import com.rx.common.util.HttpClientUtil;
 import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
@@ -225,16 +226,16 @@ public class RxOpenController {
 		for(int i=0;i<drugArray.size();i++){
 			JSONObject jsonDrug= drugArray.getJSONObject(i);
 			
-			long drugId=jsonDrug.getLongValue("id");	//ID		
-			BigDecimal dosage=jsonDrug.getBigDecimal("dosage");	//每次剂量
+			//long drugId=jsonDrug.getLongValue("id");	//ID		
+			//BigDecimal dosage=jsonDrug.getBigDecimal("dosage");	//每次剂量
 			
 			String mode=jsonDrug.getString("drugmode"); //给药方式
-			int quantity=jsonDrug.getIntValue("quantity");//数量
-			int days=jsonDrug.getIntValue("days");		  //服药天数	
+			//int quantity=jsonDrug.getIntValue("quantity");//数量
+			//int days=jsonDrug.getIntValue("days");		  //服药天数	
 			String doseUnit=jsonDrug.getString("doseunit"); //服药剂量单位
 			String times=jsonDrug.getString("drugtimes");  //给药次数
-			long patientId=jsonDrug.getLongValue("patientid"); //患者ID
-			long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID
+			//long patientId=jsonDrug.getLongValue("patientid"); //患者ID
+			//long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID
 			
 			//doctor_id=doctorId;
 			//patient_id=patientId;
@@ -304,9 +305,9 @@ public class RxOpenController {
 		
 		//(1)第一次解析
 		JSONObject parm=JSON.parseObject(presc);
-		long patient_id=parm.getLongValue("patientId");
+		/*long patient_id=parm.getLongValue("patientId");
 		long doctor_id=parm.getLongValue("doctorId");
-		long department_id=parm.getLongValue("departmentId");
+		long department_id=parm.getLongValue("departmentId");*/
 		
 		//（1）第二次解析,处方中药品		
 		JSONArray drugArray=JSON.parseArray(parm.getString("prescDrugs"));		
@@ -357,7 +358,7 @@ public class RxOpenController {
 		System.out.println(presc);
 		
 		
-		String rx_no="";  //处方编号
+		//String rx_no="";  //处方编号
 		
 		//(1)第一次解析
 		JSONObject parm=JSON.parseObject(presc);
@@ -419,16 +420,16 @@ public class RxOpenController {
 		for(int i=0;i<drugArray.size();i++){
 			JSONObject jsonDrug= drugArray.getJSONObject(i);
 			
-			long drugId=jsonDrug.getLongValue("id");	//ID		
-			BigDecimal dosage=jsonDrug.getBigDecimal("dosage");	//每次剂量
+			//long drugId=jsonDrug.getLongValue("id");	//ID		
+			//BigDecimal dosage=jsonDrug.getBigDecimal("dosage");	//每次剂量
 			
-			String mode=jsonDrug.getString("drugmode"); //给药方式
-			int quantity=jsonDrug.getIntValue("quantity");//数量
-			int days=jsonDrug.getIntValue("days");		  //服药天数	
-			String doseUnit=jsonDrug.getString("doseunit"); //服药剂量单位
-			String times=jsonDrug.getString("drugtimes");  //给药次数
-			long patientId=jsonDrug.getLongValue("patientid"); //患者ID
-			long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID			
+			//String mode=jsonDrug.getString("drugmode"); //给药方式
+			//int quantity=jsonDrug.getIntValue("quantity");//数量
+			//int days=jsonDrug.getIntValue("days");		  //服药天数	
+			//String doseUnit=jsonDrug.getString("doseunit"); //服药剂量单位
+			//String times=jsonDrug.getString("drugtimes");  //给药次数
+			//long patientId=jsonDrug.getLongValue("patientid"); //患者ID
+			//long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID			
 					
 			RxDrug drug=new RxDrug();
 			Drug drugCate=drugService.selectByPrimaryKey(jsonDrug.getLong("id"));
@@ -440,9 +441,15 @@ public class RxOpenController {
 			drugList.add(drug);
 		}
 		
-		String jsonPack=JSON.toJSON(protocol).toString();
+		String jsonPack=JSON.toJSON(protocol).toString();  //生成需要发送的数据包
 		System.out.println("------发送到海典:--------"+jsonPack);
+		Map<String,String> parms=new HashMap<String,String>();
+		parms.put("pack", jsonPack);
 		//向其它的服务器发送请求.				
+		//将数据包包记录日志.
+		String result=HttpClientUtil.doPost("http://localhost:8080/rx-web/prescapi", parms);
+		System.out.println("模拟发送处方------返回结果:"+result);
+		
 		
 	}
 	
