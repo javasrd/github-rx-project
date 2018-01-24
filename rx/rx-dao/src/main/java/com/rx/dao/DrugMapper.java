@@ -9,15 +9,13 @@ import tk.mybatis.mapper.common.Mapper;
 
 public interface DrugMapper extends Mapper<Drug> {
 
-	public List<Map<String,Object>> getDrugByAbc(String abc);
-
 	/**
 	 * 根据助记码查询药品信息
 	 * 
 	 * @param abc
 	 * @return
 	 */
-	public List<Drug> getDrugByAbc1(String abc);
+	public List<Map<String,Object>> getDrugByAbc(String abc);
 	
 	/**
 	 * 删除表
