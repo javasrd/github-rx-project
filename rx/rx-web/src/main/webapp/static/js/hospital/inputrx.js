@@ -999,9 +999,12 @@ function handler_keydown_dosage(event) {
 
 function handler_keydown_days(event) {
 	if (event.keyCode == "13") {// keyCode=13是回车键
-		
-		if($.trim($(this).val())==""){
+		var val=$.trim($(this).val());
+		if (val==""){
 			alert("用药天数为空!",500);
+		}
+		else if(!isInteger(val)){
+			alert("用药天数不是整形!!",500);
 		}
 		else{
 			setFocus("#abc");

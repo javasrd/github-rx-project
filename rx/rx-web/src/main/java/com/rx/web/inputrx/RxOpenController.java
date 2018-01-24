@@ -24,6 +24,7 @@ import com.rx.bean.inputrx.RxDisease;
 import com.rx.bean.inputrx.RxDoctor;
 import com.rx.bean.inputrx.RxDrug;
 import com.rx.bean.inputrx.RxPatient;
+import com.rx.bean.inputrx.RxProtocolConstant;
 import com.rx.bean.inputrx.RxReqSendPrescription;
 import com.rx.bean.inputrx.RxReqSendPrescriptionData;
 import com.rx.common.util.HttpClientUtil;
@@ -36,6 +37,7 @@ import com.rx.entity.DictTimes;
 import com.rx.entity.Doctor;
 import com.rx.entity.Drug;
 import com.rx.entity.Patient;
+import com.rx.service.impl.inputrx.LogSendPrescServiceImpl;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
 import com.rx.service.inputrx.IDictDoseUnitService;
@@ -46,6 +48,7 @@ import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.IDrugService;
 import com.rx.service.inputrx.ILogReceivePatientService;
+import com.rx.service.inputrx.ILogSendPrescService;
 import com.rx.service.inputrx.IPatientService;
 import com.rx.service.inputrx.IPrescDrugService;
 import com.rx.service.inputrx.IPrescriptionService;
@@ -93,7 +96,8 @@ public class RxOpenController {
 	IPrescDrugService prescDrugService;  //处方药品
 	@Autowired
 	IDirectionService directionService;  //用药指导
-	
+	@Autowired
+	ILogSendPrescService logSendPrescService;
 	
 	
 	
@@ -441,15 +445,17 @@ public class RxOpenController {
 			drugList.add(drug);
 		}
 		
-		String jsonPack=JSON.toJSON(protocol).toString();  //生成需要发送的数据包
+		String jsonPack=JSON.toJSON(protocol).toString();  //生成需要发送的数据包		
 		System.out.println("------发送到海典:--------"+jsonPack);
 		Map<String,String> parms=new HashMap<String,String>();
-		parms.put("pack", jsonPack);
-		//向其它的服务器发送请求.				
-		//将数据包包记录日志.
+		parms.put("pack", jsonPack);						
+		//TODO (1)将数据包包记录日志.
+		//TODO (1)发送数据的状态常量需要定义; (2)将请求置于线程中进行处理.需要进一步的设计		
+		logSendPrescService.addLog("http://localhost:8080/", jsonPack, 1);  //记录日志,将日志的ID号传送给线程处理.
+		
+		//(2)向其它的服务器发送请求.
 		String result=HttpClientUtil.doPost("http://localhost:8080/rx-web/prescapi", parms);
 		System.out.println("模拟发送处方------返回结果:"+result);
-		
 		
 	}
 	
