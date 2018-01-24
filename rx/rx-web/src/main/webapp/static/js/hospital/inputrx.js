@@ -64,9 +64,14 @@ function loadPrintTemplate() {
 	 */
 	// loadCss();
 	var url = "/presc/printtemplate";
-	var parms = {
-		jsonPresc : JSON.stringify(g_prescDrugList)
-	};
+	
+	var parmObj=new Object();
+	parmObj.patientId=$("#patient").attr("bind-id");
+	parmObj.doctorId=$("#doctor").attr("bind-id");
+	parmObj.departmentId=$("#department").attr("bind-id");
+	parmObj.prescDrugs=g_prescDrugList;
+	
+	var parms = {jsonPresc:JSON.stringify(parmObj)};	
 	var callbackFunc = printPreview;
 	var containerId = "#printarea";
 	loadPage(containerId, url, parms, callbackFunc);
@@ -195,8 +200,6 @@ function addDrugIntoTable() {
 	 */
 	var newDrug = g_currDrug;
 	g_prescDrugList.push(newDrug); // 加入列表中
-	
-	
 
 	// 动态绑定input事件
 	bindEventForDosage("#drug-dosage-" + g_currDrug.id);
@@ -325,6 +328,11 @@ function deleteDrugRow(that) {
 }
 
 var M1 = new Object();
+/**
+ * 双击删除行 确认对话框
+ * @param that
+ * @returns
+ */
 function showConfirmWindow(that) {
 	// 判断是否已存在，如果已存在则直接显示
 	if (M1.dialog3) {
@@ -347,13 +355,45 @@ function showConfirmWindow(that) {
 			}
 		}
 	});
-
 }
 
+function showConfirmWindow_cleartable(that) {
+	// 判断是否已存在，如果已存在则直接显示
+	if (M1.dialog3) {
+		return M1.dialog3.show();
+	}
+	M1.dialog3 = jqueryAlert({
+		'title' : '提示',
+		'content' : '    确认清除处方药品列表?    ',
+		'modal' : true,
+		'buttons' : {
+			'确定' : function() {
+				removeAllDrugList();				
+				clearDrugTable(that);				
+				M1.dialog3.close();
+				M1.dialog3 = null;
+			},
+			'取消' : function() {
+				M1.dialog3.close();
+				M1.dialog3 = null;
+			}
+		}
+	});
+}
+
+/**
+ * 清除药品 table中的 row
+ * @returns
+ */
+function clearDrugTable(){
+	$("#drug-items").empty();
+}
+
+
 // TODO, 后续采用面象对象的方式开发JS
-/*******************************************************************************
+/*******************************************
  * 药品列表处理方法
- ******************************************************************************/
+ *******************************************/
 
 /**
  * 删除指定索引处的对象
@@ -367,6 +407,14 @@ function removeFromDrugList(index) {
 		return false;
 	}
 	g_prescDrugList.splice(index, 1);
+}
+
+/**
+ * 清除药品列表 List
+ * @returns
+ */
+function removeAllDrugList(){
+	g_prescDrugList=ary = []; // 赋值为一个空数组以达到清空原数组
 }
 
 /**
@@ -409,6 +457,10 @@ function searchDrugById(drugId) {
 		}
 	}
 	return -1;
+}
+
+function getDrugList(){
+	return g_rescDrugList;
 }
 
 /*******************************************************************************
@@ -925,15 +977,27 @@ function handler_keydown_doseunit(ev) {
  */
 function handler_keydown_dosage(event) {
 	if (event.keyCode == "13") {// keyCode=13是回车键 模拟按tab键
-		var id = $(this).attr("bind-id");
-		$("#drug-doseunit-" + id).focus();
+		var id = $(this).attr("bind-id");		
+		if($.trim($(this).val())==""){
+			alert("单次用量为空!",500);
+		}
+		else{
+			$("#drug-doseunit-" + id).focus();
+		}
+		
 		return false;
 	}
 }
 
 function handler_keydown_days(event) {
 	if (event.keyCode == "13") {// keyCode=13是回车键
-		$("#abc").focus();
+		
+		if($.trim($(this).val())==""){
+			alert("用药天数为空!",500);
+		}
+		else{
+			setFocus("#abc");
+		}
 		return false;
 	}
 }
@@ -972,6 +1036,19 @@ function handler_blur_doseunit(){
 		Common.hideDropdownUnit();  //关闭选择下拉框		
 		setDoseUnitWindowStatus(WINDOW_CLOSED);
 	}
+}
+
+/**-----------------------------------
+ * click event handler
+ -----------------------------------*/
+
+/**
+ * 清屏处理函数
+ * @returns
+ */
+function handler_click_btn_cleartable(){
+	//(1)显示确认对话框
+	showConfirmWindow_cleartable();
 }
 
 
@@ -1066,6 +1143,8 @@ $(function() {
 
 	bindEvent("keydown", "#quantity", handler_keydown_quantity);
 	
+	bindEvent("click", "#btn-clear-presc-table", handler_click_btn_cleartable);
+	
 	//bindEvent("blur", "#abc", handler_blur_abc);
 	//bindEvent("blur", "#drugmode", handler_blur_mode);
 	//bindEvent("blur", "#drugtimes", handler_blur_times);
@@ -1074,9 +1153,10 @@ $(function() {
 	/***************************************************************************
 	 * 绑定事件-保存按钮
 	 **************************************************************************/
-	$("#btn-save-prescription").on("click", function(event) {
-		generateBarcode(); // 生成条形码
+	$("#btn-save-prescription").on("click", function(event) {		
+		$(this).attr("disabled",true);  //防止重复提交
 		savePrescription(); // 保存处方
+		$(this).attr("enabled",false);  
 	});
 
 	/***************************************************************************

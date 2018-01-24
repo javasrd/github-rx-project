@@ -62,7 +62,7 @@
           <div id="basicForm" class="basic_form">
             <div class="row basic_top">
               <div class="col-xs-6">
-                <div>科室	<span th:text="${department.name}" style="padding-right: 50px;">001</span>
+                <div>科室	<span th:text="${department.name}" id="department" th:attr="bind-id=${department.id}"  style="padding-right: 50px;">001</span>
                 	医生<span th:text="${doctor.name}" id="doctor" th:attr="bind-id=${doctor.id}"></span>          	
                 </div>
                 
@@ -201,10 +201,11 @@
       <div class="menu_container clearfix">
         <div class="left_btn pull-left" id="toolsbar">
           <button class="btn btn-success">保存套组</button>
-          <button class="btn btn-success">使用套组</button>
-          <button class="btn btn-success" id="btn-print">打印</button>
+          <button class="btn btn-success">使用套组</button>          
+          <button class="btn btn-success" id="btn-clear-presc-table">清屏</button>
           <button class="btn btn-success">删除行</button>
-          <button class="btn btn-success" id="btn-save-prescription">保存</button>
+          <button class="btn btn-success" id="btn-print">打印</button>
+          <button class="btn btn-success" id="btn-save-prescription">保存</button>          
           <button class="btn btn-success hide" id="btn-print-preview">打印预览</button>
           <button class="btn btn-success" id="btn-preview">预览处方</button>
         </div>

@@ -203,11 +203,17 @@ public class RxOpenController {
 		
 		long patient_id=0;
 		long doctor_id=0;
+		long department_id=0;
 		BigDecimal sum=new BigDecimal(0);
+		
+		JSONObject parm=JSON.parseObject(jsonPresc);
+		patient_id=parm.getLongValue("patientId");
+		doctor_id=parm.getLongValue("doctorId");
+		department_id=parm.getLongValue("departmentId");
 		
 		//（1）解析参数
 		List<Map<String,String>> drugList= new ArrayList<Map<String,String>>();
-		JSONArray drugArray=JSON.parseArray(jsonPresc);		
+		JSONArray drugArray=JSON.parseArray(parm.getString("prescDrugs"));		
 		for(int i=0;i<drugArray.size();i++){
 			JSONObject jsonDrug= drugArray.getJSONObject(i);
 			
@@ -222,8 +228,8 @@ public class RxOpenController {
 			long patientId=jsonDrug.getLongValue("patientid"); //患者ID
 			long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID
 			
-			doctor_id=doctorId;
-			patient_id=patientId;
+			//doctor_id=doctorId;
+			//patient_id=patientId;
 			
 			Map<String,String> drugMap=new HashMap<String,String>();  
 			//药品名称
@@ -244,7 +250,10 @@ public class RxOpenController {
 		
 		Patient patient=patientService.selectByPrimaryKey(patient_id);
 		Doctor doctor=doctorService.selectByPrimaryKey(doctor_id);
-		Department department=departmentService.selectByPrimaryKey(doctor.getDepartmentId());
+		if(doctor!=null){
+			department_id=doctor.getDepartmentId();
+		}
+		Department department=departmentService.selectByPrimaryKey(department_id);
 		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patient_id, doctor_id);
 		
 		model.addAttribute("diagnosisDate", new Date());		
@@ -254,8 +263,6 @@ public class RxOpenController {
 		model.addAttribute("diagnosisList", diagnosisList);
 		model.addAttribute("drugList", drugList);
 		model.addAttribute("sum", sum);
-		
-		
 		
 		return RESPONSE_THYMELEAF + "printtemplate";
 	}
