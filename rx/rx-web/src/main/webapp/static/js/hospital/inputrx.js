@@ -119,9 +119,7 @@ function addDrugIntoTable() {
 	 * g_currDrug.wareunit=$("#wareunit-"+drugId).text();
 	 */
 
-	if (g_currDrug == null)
-		return false;
-
+	//getInputDoseUnitId(this)
 	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'
 			+ g_currDrug.id
 			+ '"'
@@ -279,7 +277,7 @@ function clearInputBox_drugtimes() {
  * @returns
  */
 function setFocus(id) {
-	$(id).focus();
+	$(id)[0].focus();
 }
 
 /**
@@ -651,7 +649,7 @@ function handler_input_doseunit() {
 	// (2)输入是助记码情况
 	var abc = $(this).val(); // 助记码
 	if (getDoseUnitWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
-		Common.showDropdownUnit($(this));
+		Common.showDropdownUnit(this);
 		setDoseUnitWindowStatus(WINDOW_OPENED);
 	}
 	loadDrugDoseUnit(abc);
@@ -692,10 +690,74 @@ function handler_input_days() {
  */
 function handler_keydown_quantity(event) {
 	if (event.keyCode == "13") {// keyCode=13是回车键
-		addDrugIntoTable(); // 将选择的药品加入列表中.
+		
+		var validObj=validAddDrug();
+		if(validObj.valid==true){
+			addDrugIntoTable(); // 将选择的药品加入列表中.
+		}
+		else{
+			alert(validObj.errorMsg,2000);
+		}
+				
 		return false;
 	}
 }
+
+/**
+ * 在加入药品时的有效性验证
+ * @returns
+ *  返回有效性验证对象
+ *  	var err=new Object;
+			errorMsg string;
+			valid  boolean; 
+ * 	如果验证通过返回true;否则返回false;
+ */
+function validAddDrug(){
+	var err=new Object;
+	err.errorMsg="";
+	err.valid=true;
+	
+	if(g_currDrug==null){
+		err.valid=false;
+		err.errorMsg=err.errorMsg+"未选择药品"+ ";";		
+	}
+	if($.trim($("#drugmode").val())==""){
+		err.valid=false;
+		err.errorMsg=err.errorMsg+"未选择用法"+ ";";
+	}
+	if($.trim($("#drugtimes").val())==""){
+		err.valid=false;
+		err.errorMsg=err.errorMsg+"未选择频次"+ ";";
+	}
+	if($.trim($("#quantity").val())==""){
+		err.valid=false;
+		err.errorMsg=err.errorMsg+"数量为空"+ ";";
+	}
+	else{
+		//判定是否为整数
+		if(!isInteger($("#quantity").val())){
+			err.valid=false;
+			err.errorMsg=err.errorMsg+"数量不是整形数字"+ ";";
+		}
+	}	
+	
+	return err;
+}
+
+/**
+ * 判定是否为整数
+ * @param value
+ * @returns
+ */
+function isInteger(value)
+{
+	var re = /^[1-9]+[0-9]*]*$/;	
+	if (!re.test(value))
+		return false;
+	else
+		return true;
+}
+
 
 /**
  * 用于处理药品助记码框中ESC按键
@@ -719,9 +781,15 @@ function handler_keydown_abc(ev) {
 	// 用户按下了回车键
 	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
-		//alert(getDrugWindowStatus());
 		if (getDrugWindowStatus() == WINDOW_OPENED) {
-			choiceTheFirstDrug();
+			choiceTheFirstDrug();			
+		}
+		else{
+			if(g_currDrug==null){
+				alert("未选择药品",500);
+				//setFocus("#abc");
+			}
+				
 		}
 		return false;
 	}
@@ -736,7 +804,6 @@ function handler_keydown_abc(ev) {
  */
 function handler_keydown_mode(ev) {
 	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
-	//alert("keydown mode");
 	if (oEvent.keyCode == 27) // Esc键的keyCode是27
 	{
 		if (getModeWindowStatus() == WINDOW_OPENED) {
@@ -750,11 +817,15 @@ function handler_keydown_mode(ev) {
 	// 用户按下了回车键
 	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
-		//alert("ModeWindowStatus:"+getModeWindowStatus());
 		if (getModeWindowStatus() == WINDOW_OPENED) {
 			choiceTheFirstMode();
 		} else {
-			$("#drugtimes").focus(); // "给药次数"文本框获取焦点
+			if($.trim($("#drugmode").val())==""){
+				alert("未录入药品用法",500);
+				//setFocus("#drugmode");
+			}								
+			//$("#drugtimes").focus(); // "给药次数"文本框获取焦点
+			
 		}
 		return false;
 	}
@@ -768,7 +839,6 @@ function handler_keydown_mode(ev) {
  */
 function handler_keydown_times(ev) {
 	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
-	//alert("keydown times");
 	if (oEvent.keyCode == 27) // Esc键的keyCode是27
 	{
 		if (getTimesWindowStatus() == WINDOW_OPENED) {
@@ -780,13 +850,17 @@ function handler_keydown_times(ev) {
 
 	}
 	// 用户按下了回车键
-	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
+	// 当MODE下拉列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
 		//alert("TimesWindowStatus"+getTimesWindowStatus());
 		if (getTimesWindowStatus() == WINDOW_OPENED) {
 			choiceTheFirstTimes();
 		} else {
-			$("#quantity").focus(); // "数量"文本框获取焦点
+			if($.trim($("#drugtimes").val())==""){
+				alert("未录入频次",500);
+				//setFocus("#drugtimes");
+			}
+			//$("#quantity").focus(); // "数量"文本框获取焦点
 		}
 		return false;
 	}
@@ -800,25 +874,28 @@ function handler_keydown_times(ev) {
  */
 function handler_keydown_doseunit(ev) {
 	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
-	//alert("keydown doseunit");
 	if (oEvent.keyCode == 27) // Esc键的keyCode是27
 	{
+		alert("esc:"+getDoseUnitWindowStatus());
 		if (getDoseUnitWindowStatus() == WINDOW_OPENED) {
-			Common.hideDropdownTable(); // 关闭选择下拉框
+			Common.hideDropdownUnit(); // 关闭选择下拉框
 			$(this).focus();
 			setDoseUnitWindowStatus(WINDOW_CLOSED);
 		}
 		return false;
 	}
 	// 用户按下了回车键
-	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
+	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
-		//alert("DoseUnitWindowStatus"+getDoseUnitWindowStatus());
 		if (getDoseUnitWindowStatus() == WINDOW_OPENED) {
 			choiceTheFirstDoseUnit();			
 		} else {
 			var bindid=$(this).attr("bind-id");
-			$("#drug-days-"+bindid).focus(); // "天数"文本框获取焦点
+			if($.trim($(this).val())==""){
+				alert("未录入剂量单位!",500);
+				//setFocus("#drugtimes");
+			}
+			//$("#drug-days-"+bindid).focus(); // "天数"文本框获取焦点
 		}
 		return false;
 	}

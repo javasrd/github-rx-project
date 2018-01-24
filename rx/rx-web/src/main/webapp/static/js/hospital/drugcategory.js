@@ -18,6 +18,18 @@ function handler_dblclick_drugcategory(){
  * @returns void
  */
 function process_curr_drug(drugId){
+	
+	//有效性验证
+	//在处方列表中查询此药品是否已经存在
+	var idx=searchDrugById(drugId);
+	if(idx>=0){
+		//（1）提示而后让用户重新输入
+		alert("此药品已经存在！",500);
+		$("#abc")[0].focus();  //药品助记框获得焦点
+		return false;
+	}
+	
+	
 	g_currDrug=new Object();
 	g_currDrug.id=drugId;
 	g_currDrug.wareid=$("#wareid-"+drugId).text();
@@ -26,8 +38,8 @@ function process_curr_drug(drugId){
 	g_currDrug.saleprice=$("#saleprice-"+drugId).text();
 	g_currDrug.wareunit=$("#wareunit-"+drugId).text();
 	
-	//设置药品名称文本框
-	$("#warename").val($("#warename-"+drugId).text());
+	//设置药品名称文本框	 
+	$("#warename").val($("#warename-"+drugId).text());	
 	
 	//当选择一个药品后	
 	Common.hideDropdownTable();  //关闭选择下拉框
@@ -45,6 +57,9 @@ function choiceTheFirstDrug(){
 		var first=$(".drug-item").eq(0);
 		var drugId=first.attr("drug-id");
 		process_curr_drug(drugId);
+	}
+	else{
+		alert("未选择药品!");
 	}
 }
 

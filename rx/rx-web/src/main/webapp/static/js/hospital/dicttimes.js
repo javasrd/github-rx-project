@@ -19,9 +19,11 @@ function handler_dblclick_times(){
  */
 function process_curr_times(timesId){		
 	//设置文本框内容
+	$("#drugtimes").attr("disabled",true);
 	$("#drugtimes").val($("#timesname-"+timesId).text());
+	$("#drugtimes").attr("disabled",false);
 	
-	//当选择一个药品后
+	//当选择一个用药次数后
 	Common.hideDropdownTable();  //关闭选择下拉框
 	$("#quantity").focus();     //"数量"文本框获取焦点
 	setTimesWindowStatus(WINDOW_CLOSED);
@@ -39,6 +41,18 @@ function choiceTheFirstTimes(){
 		currNode=$(selector).eq(0);
 		var timesId=currNode.attr("times-id");
 		process_curr_times(timesId);
+	}
+	else{
+		if($.trim($("#drugtimes").val())!=""){
+			//当输入一个用药次数后
+			Common.hideDropdownTable();  //关闭选择下拉框
+			$("#quantity").focus();     //"数量"文本框获取焦点
+			setTimesWindowStatus(WINDOW_CLOSED);			
+		}
+		else{
+			alert("未录入频次!",500);
+		}
+			
 	}
 }
 
