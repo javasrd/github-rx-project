@@ -25,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.alibaba.fastjson.JSON;
+import com.rx.entity.Drug;
 import com.rx.entity.User;
 
 /**
@@ -105,8 +106,8 @@ public class ReadExcel {
     private static Map<String, Object> parseExcelInfoXlsx(XSSFWorkbook xssfWorkbook){
     	Map<String, Object> respMap = new HashMap<String, Object>();
         
-        User customer = null;
-        List<User> customerList = new ArrayList<User>();
+        Drug drug = null;
+        List<Drug> drugList = new ArrayList<Drug>();
         
         int sheetSize = xssfWorkbook.getNumberOfSheets();
         log.info("Excel sheet num : "+sheetSize);
@@ -123,30 +124,32 @@ public class ReadExcel {
                 XSSFRow xssfRow = xssfSheet.getRow(rowNum);
                 if (xssfRow != null) {
                 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                	
+                	//xssfRow.getLastCellNum();
                 	try {
-                		customer = new User();
-                		String customerName = getValue(xssfRow.getCell(0));//客户姓名
-                		int customerType = Double.valueOf(getValue(xssfRow.getCell(1))).intValue();//客户性质（1：企业；2：个人）
-                		String mobile = getValue(xssfRow.getCell(2));//手机号
-                		/*String loginName = getValue(xssfRow.getCell(3));//客户登录账号
-                		String createTimeStr = getValue(xssfRow.getCell(4));//创建时间
-                		log.info("createTimeStr:"+createTimeStr);
-                		Date createTime = null;
-                		if(StringUtils.isBlank(createTimeStr)){
-                			createTime = new Date();
-                		}else{
-                			createTime = sdf.parse(createTimeStr);
-                		}*/
-                    	/*customer.setCusName(customerName);//客户姓名
-                    	customer.setCusType(customerType);//客户性质（1：企业；2：个人）
-                    	customer.setMobile(mobile);//手机号
-                    	//customer.setLoginName(loginName);//客户登录账号
-                    	customer.setCreateTime(new Date());//创建时间
-                    	customer.setUpdateTime(new Date());//更新时间
-                    	*/
-                		customer.setUsername(customerName);                		
-                    	customerList.add(customer);
+                		drug = new Drug();
+                		String wareid = getValue(xssfRow.getCell(0));//商品ID
+                		String barcode = getValue(xssfRow.getCell(1));//条形码
+                		String abc = getValue(xssfRow.getCell(2));//助记码
+                		String warename = getValue(xssfRow.getCell(3));//药品名称
+                		String waresimname = getValue(xssfRow.getCell(4));//通用名
+                		String warespec = getValue(xssfRow.getCell(5));//规格
+                		String prodAddr = getValue(xssfRow.getCell(6));//产地
+                		String producer = getValue(xssfRow.getCell(7));//生产厂家
+                		String wareunit = getValue(xssfRow.getCell(8));//单位
+                		String status = getValue(xssfRow.getCell(9));//在售/停售状态  1：在售； 2：停售
+                		String saleprice = getValue(xssfRow.getCell(10));//售价
+                		drug.setWareid(wareid);
+                		drug.setBarcode(barcode);
+                		drug.setAbc(abc);
+                		drug.setWarename(warename);
+                		drug.setWaresimname(waresimname);
+                		drug.setWarespec(warespec);
+                		drug.setWareunit(wareunit);
+                		drug.setProdAddr(prodAddr);
+                		drug.setProducer(producer);
+                		drug.setStatus((byte)Integer.valueOf(status).intValue());
+                		drug.setSaleprice(new BigDecimal(saleprice));
+                    	drugList.add(drug);
                     	
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -160,8 +163,8 @@ public class ReadExcel {
         }
         respMap.put("result_code", "success");
         respMap.put("result_msg", "解析入住信息excel文件成功");
-        log.info("customerList: "+JSON.toJSONString(customerList));
-        respMap.put("customerList", JSON.toJSONString(customerList));
+        log.info("drugList: "+JSON.toJSONString(drugList));
+        respMap.put("drugList", JSON.toJSONString(drugList));
         return respMap;
     }
     
@@ -205,8 +208,8 @@ public class ReadExcel {
     private static Map<String, Object> parseExcelInfoXls(HSSFWorkbook hssfWorkbook){
     	Map<String, Object> respMap = new HashMap<String, Object>();
         
-        User customer = null;
-        List<User> customerList = new ArrayList<User>();
+    	Drug drug = null;
+        List<Drug> drugList = new ArrayList<Drug>();
         
         int sheetSize = hssfWorkbook.getNumberOfSheets();
         log.info("Excel sheet num : "+sheetSize);
@@ -225,36 +228,30 @@ public class ReadExcel {
                 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 	
                 	try {
-                		customer = new User();
-                		String customerName = getValue(hssfRow.getCell(0));//客户姓名
-                		int customerType=2;
-                		if(hssfRow.getCell(1)!=null){
-                			customerType = Double.valueOf(getValue(hssfRow.getCell(1))).intValue();//客户性质（1：企业；2：个人）
-                		}
-                		String mobile="";
-                		if(hssfRow.getCell(2)!=null){
-                			mobile = getValue(hssfRow.getCell(2));//手机号
-                		}
-                		
-                		/*String loginName = getValue(hssfRow.getCell(3));//客户登录账号
-                		String createTimeStr = getValue(hssfRow.getCell(4));//创建时间
-                		log.info("createTimeStr:"+createTimeStr);
-                		Date createTime = null;
-                		if(StringUtils.isBlank(createTimeStr)){
-                			createTime = new Date();
-                		}else{
-                			createTime = sdf.parse(createTimeStr);
-                		}*/
-                    	/*customer.setCusName(customerName);//客户姓名
-                    	customer.setCusType(customerType);//客户性质（1：企业；2：个人）
-                    	customer.setMobile(mobile);//手机号
-                    	//customer.setLoginName(loginName);//客户登录账号
-                    	customer.setCreateTime(new Date());//创建时间
-                    	customer.setUpdateTime(new Date());//更新时间
-                    	 */
-                	
-                		customer.setUsername(customerName);
-                		customerList.add(customer);
+                		drug = new Drug();
+                		String wareid = getValue(hssfRow.getCell(0));//商品ID
+                		String barcode = getValue(hssfRow.getCell(1));//条形码
+                		String abc = getValue(hssfRow.getCell(2));//助记码
+                		String warename = getValue(hssfRow.getCell(3));//药品名称
+                		String waresimname = getValue(hssfRow.getCell(4));//通用名
+                		String warespec = getValue(hssfRow.getCell(5));//规格
+                		String prodAddr = getValue(hssfRow.getCell(6));//产地
+                		String producer = getValue(hssfRow.getCell(7));//生产厂家
+                		String wareunit = getValue(hssfRow.getCell(8));//单位
+                		String status = getValue(hssfRow.getCell(9));//在售/停售状态  1：在售； 2：停售
+                		String saleprice = getValue(hssfRow.getCell(10));//售价
+                		drug.setWareid(wareid);
+                		drug.setBarcode(barcode);
+                		drug.setAbc(abc);
+                		drug.setWarename(warename);
+                		drug.setWaresimname(waresimname);
+                		drug.setWarespec(warespec);
+                		drug.setWareunit(wareunit);
+                		drug.setProdAddr(prodAddr);
+                		drug.setProducer(producer);
+                		drug.setStatus((byte)Integer.valueOf(status).intValue());
+                		drug.setSaleprice(new BigDecimal(saleprice));
+                    	drugList.add(drug);
                     	
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -268,8 +265,8 @@ public class ReadExcel {
         }
         respMap.put("result_code", "success");
         respMap.put("result_msg", "解析入住信息excel文件成功");
-        log.info("customerList: "+JSON.toJSONString(customerList));
-        respMap.put("customerList", JSON.toJSONString(customerList));
+        log.info("drugList: "+JSON.toJSONString(drugList));
+        respMap.put("drugList", JSON.toJSONString(drugList));
         return respMap;
     }
     
@@ -319,6 +316,12 @@ public class ReadExcel {
             		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             		return String.valueOf(sdf.format(hssfCell.getDateCellValue()));
             	}
+            	/*String temp = String.valueOf(hssfCell.getStringCellValue());
+            	if(temp.indexOf(".")>0){
+            		return new BigDecimal(hssfCell.getNumericCellValue()).toPlainString();
+            	}else{
+            		return Integer.valueOf(temp);
+            	}*/
             	return new BigDecimal(hssfCell.getNumericCellValue()).toPlainString();
             } else {
                 return String.valueOf(hssfCell.getStringCellValue());
