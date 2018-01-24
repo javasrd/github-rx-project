@@ -49,4 +49,7 @@ public class StaticConstants {
 	public static String DICT_DOSE_UNIT_MANAGE_PAGE = "back/jsp/doseunit/dose_unit_manage";//用药剂量单位管理页面
 	public static String DICT_DOSE_UNIT_MANAGE_TABLE_PAGE = "back/jsp/doseunit/dose_unit_table";//用药剂量单位管理列表页面
 	
+	public static String DRUG_MANAGE_PAGE = "back/jsp/drug/drug_manage";//药品信息维护页面
+	public static String DRUG_MANAGE_TABLE_PAGE = "back/jsp/drug/drug_table";//药品信息维护列表页面
+	
 }

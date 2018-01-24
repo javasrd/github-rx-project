@@ -51,6 +51,9 @@
 				/back/getValidateCode = anon
 				/back/getOperationValidateCode = anon
 				
+				<!-- 模拟【海典ERP】服务接口，测试用，线上应删除 -->
+				/api/demo = anon
+				
 				<!-- 请求 logout地址，shiro去清除session-->
 				/logout = logout
 				
