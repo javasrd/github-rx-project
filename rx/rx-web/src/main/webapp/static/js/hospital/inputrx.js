@@ -71,7 +71,7 @@ function loadPrintTemplate() {
 	parmObj.departmentId=$("#department").attr("bind-id");
 	parmObj.prescDrugs=g_prescDrugList;
 	
-	var parms = {jsonPresc:JSON.stringify(parmObj)};	
+	var parms = {jsonPresc:JSON.stringify(parmObj)}; //参数jsonPresc的格式为json	
 	var callbackFunc = printPreview;
 	var containerId = "#printarea";
 	loadPage(containerId, url, parms, callbackFunc);
@@ -592,7 +592,13 @@ function isIE() {
 function savePrescription() {
 	url = BASE_CONTEXT_PATH + "/prescription/save";
 
-	var parms = g_prescDrugList;
+	var parmObj=new Object();
+	parmObj.patientId=$("#patient").attr("bind-id");
+	parmObj.doctorId=$("#doctor").attr("bind-id");
+	parmObj.departmentId=$("#department").attr("bind-id");
+	parmObj.prescDrugs=g_prescDrugList;
+	
+	//var parms = g_prescDrugList;
 	// alert("array length:"+parms.length);
 	// 采用AJAX方式发送POST请求
 	$.ajax({
@@ -600,26 +606,28 @@ function savePrescription() {
 		url : url,
 		contentType : "application/json", // 指定发送到服务器时参数的格式
 		dataType : "json", // 指定自服务器接收到的数据格式
-		data : JSON.stringify(parms), // 传递的参数,JSON格式。
+		data : JSON.stringify(parmObj), // 传递的参数,JSON格式。
 		success : function(res) { // 请求正确之后的操作
 			if (res != null) {
 				// console.log(res);
 				// var obj = $.parseJSON(res);
 				if (res.result_code == "success") {
 					// util.message(obj.result_msg,"","info");
-					// 判断是否已存在，如果已存在则直接显示
-					alert("保存成功", 500);
-
+					
 					var prescNo = res.result_msg; // 处方编号
 					// TODO 后续业务处理
+					alert("保存成功,生成处方:"+prescNo, 2000);
 
 				} else {
 					util.message(obj.result_err_msg);
 				}
+				$("#btn-save-prescription").attr("disabled",false);
+				
 			}
 		},
 		error : function(result) { // 请求失败之后的操作
-
+			alert("保存失败,请联系系统管理员!", 5000);
+			$("#btn-save-prescription").attr("disabled",false);
 		}
 	});
 }
@@ -1156,7 +1164,7 @@ $(function() {
 	$("#btn-save-prescription").on("click", function(event) {		
 		$(this).attr("disabled",true);  //防止重复提交
 		savePrescription(); // 保存处方
-		$(this).attr("enabled",false);  
+		  
 	});
 
 	/***************************************************************************

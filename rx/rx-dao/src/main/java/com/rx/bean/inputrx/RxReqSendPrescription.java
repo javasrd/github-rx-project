@@ -5,14 +5,18 @@ package com.rx.bean.inputrx;
  * @author Administrator
  *
  */
-public class RxReqSendPatient {
+public class RxReqSendPrescription {
 	private String version;  //版本号
 	private String token;	//身份令牌
 	private String func;	//action name
 	
-	private RxReqSendPatientData data;
+	private RxReqSendPrescriptionData data;
 	
 
+	public RxReqSendPrescription() {
+		super();
+		data=new RxReqSendPrescriptionData();
+	}
 	public String getVersion() {
 		return version;
 	}
@@ -31,12 +35,11 @@ public class RxReqSendPatient {
 	public void setFunc(String func) {
 		this.func = func;
 	}
-	public RxReqSendPatientData getData() {
+	public RxReqSendPrescriptionData getData() {
 		return data;
 	}
-	public void setData(RxReqSendPatientData data) {
+	public void setData(RxReqSendPrescriptionData data) {
 		this.data = data;
 	}
-	
-	
+			
 }

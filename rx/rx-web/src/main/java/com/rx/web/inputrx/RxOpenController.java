@@ -18,6 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.rx.bean.inputrx.RxAPI;
+import com.rx.bean.inputrx.RxDepartment;
+import com.rx.bean.inputrx.RxDisease;
+import com.rx.bean.inputrx.RxDoctor;
+import com.rx.bean.inputrx.RxDrug;
+import com.rx.bean.inputrx.RxPatient;
+import com.rx.bean.inputrx.RxReqSendPrescription;
+import com.rx.bean.inputrx.RxReqSendPrescriptionData;
 import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
@@ -188,7 +196,7 @@ public class RxOpenController {
 	/**
 	 * @Description: 加载处方打印模板
 	 * @param
-	 *     @param parms 处方信息
+	 *     @param jsonPresc 处方信息(注:此参数名称需要与发送请求的参数据名称相同.)
 	 *     @param model	数据传递对象
 	 *     @return   
 	 * @return 
@@ -278,7 +286,7 @@ public class RxOpenController {
 	/**
 	 * @Description: 保存处方
 	 * @param
-	 *     @param presc 处方
+	 *     @param presc 处方(参数的名称可以任意)
 	 *     @return      处方编号
 	 * @return 
 	 *     String  		处方编号
@@ -288,13 +296,20 @@ public class RxOpenController {
 	 */
 	@RequestMapping(value = "prescription/save")
 	@ResponseBody
-	public Object savaPrescription(@RequestBody String jsonPresc){
-		System.out.println(jsonPresc);
+	public Object savaPrescription(@RequestBody String presc){
+		System.out.println(presc);
 		
 		
 		String rx_no="";  //处方编号
 		
-		JSONArray drugArray=JSON.parseArray(jsonPresc);		
+		//(1)第一次解析
+		JSONObject parm=JSON.parseObject(presc);
+		long patient_id=parm.getLongValue("patientId");
+		long doctor_id=parm.getLongValue("doctorId");
+		long department_id=parm.getLongValue("departmentId");
+		
+		//（1）第二次解析,处方中药品		
+		JSONArray drugArray=JSON.parseArray(parm.getString("prescDrugs"));		
 		for(int i=0;i<drugArray.size();i++){
 			JSONObject jsonDrug= drugArray.getJSONObject(i);
 			
@@ -319,11 +334,116 @@ public class RxOpenController {
 			//(3)保存处方指导
 			directionService.addDirection(prescDrugId, mode, times, dosage, doseUnit,days);
 		}
+		
+		sendPrecriptionToDispensary(presc);
 				
 		//返回处方编号		
 		Map<String, Object> result=RequestResultUtil.getResultAddSuccess();		
 		result.put(RequestResultUtil.RESULT_MSG, rx_no);		
 		return result;
+	}
+	
+	/**
+	 * @Description: 将处方推送给药房.
+	 * @param
+	 *     @param presc  json处方
+	 * @return 
+	 *     void  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月24日-下午6:17:14
+	 */
+	private void sendPrecriptionToDispensary(String presc){
+		System.out.println(presc);
+		
+		
+		String rx_no="";  //处方编号
+		
+		//(1)第一次解析
+		JSONObject parm=JSON.parseObject(presc);
+		long patient_id=parm.getLongValue("patientId");
+		long doctor_id=parm.getLongValue("doctorId");
+		long department_id=parm.getLongValue("departmentId");
+		
+		//（2）第二次解析,处方中药品		
+		JSONArray drugArray=JSON.parseArray(parm.getString("prescDrugs"));
+		
+		//(3)生成需要发送的数据包.
+		RxReqSendPrescription protocol=new RxReqSendPrescription();
+		RxReqSendPrescriptionData data=protocol.getData();
+		protocol.setVersion("1.0");
+		protocol.setToken("HDERP");
+		protocol.setFunc(RxAPI.MSG_PRESC_PATIENT_NMI);
+		
+		
+		data.setDepartment(new RxDepartment());
+		data.setDiagnosis(new ArrayList<RxDisease>());
+		data.setPatient(new RxPatient());
+		data.setDoctor(new RxDoctor());
+		
+		
+		//(4)生成数据段
+		Patient patient=patientService.selectByPrimaryKey(patient_id);
+		Doctor doctor=doctorService.selectByPrimaryKey(doctor_id);
+		Department department=departmentService.selectByPrimaryKey(department_id);
+		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patient_id, doctor_id);
+		
+		
+		//患者信息
+		data.getPatient().setCr_no(patient.getCrNo());
+		data.getPatient().setGender(patient.getSex()==1 ? "男":"女");
+		data.getPatient().setOld(patient.getOld().toString());
+		data.getPatient().setId(patient.getOldId());
+		//医生信息
+		data.getDoctor().setId(doctor.getOldId());
+		data.getDoctor().setName(doctor.getName());
+		//部门信息
+		data.getDepartment().setId(department.getOldId());
+		data.getDepartment().setName(department.getName());
+		
+		List<RxDisease> diseaseList= data.getDiagnosis();
+		
+		//诊断信息
+		for(int i=0;i<diagnosisList.size();i++){
+			Diagnosis diagnosis=diagnosisList.get(i);
+			
+			RxDisease rxDisease=new RxDisease();			
+			rxDisease.setId(diagnosis.getOldId());
+			rxDisease.setDisease(diagnosis.getDisease());
+			
+			diseaseList.add(rxDisease);
+		}
+		
+		//药品信息
+		List<RxDrug> drugList=data.getPrescription();
+		for(int i=0;i<drugArray.size();i++){
+			JSONObject jsonDrug= drugArray.getJSONObject(i);
+			
+			long drugId=jsonDrug.getLongValue("id");	//ID		
+			BigDecimal dosage=jsonDrug.getBigDecimal("dosage");	//每次剂量
+			
+			String mode=jsonDrug.getString("drugmode"); //给药方式
+			int quantity=jsonDrug.getIntValue("quantity");//数量
+			int days=jsonDrug.getIntValue("days");		  //服药天数	
+			String doseUnit=jsonDrug.getString("doseunit"); //服药剂量单位
+			String times=jsonDrug.getString("drugtimes");  //给药次数
+			long patientId=jsonDrug.getLongValue("patientid"); //患者ID
+			long doctorId=jsonDrug.getLongValue("doctorid");   //医生ID			
+					
+			RxDrug drug=new RxDrug();
+			Drug drugCate=drugService.selectByPrimaryKey(jsonDrug.getLong("id"));
+			drug.setId(drugCate.getWareid());  
+			drug.setDrug_code(drugCate.getBarcode());
+			drug.setDrug_name(jsonDrug.getString("warename"));
+			drug.setQuantity(jsonDrug.getString("quantity"));
+			
+			drugList.add(drug);
+		}
+		
+		String jsonPack=JSON.toJSON(protocol).toString();
+		System.out.println("------发送到海典:--------"+jsonPack);
+		//向其它的服务器发送请求.				
+		
 	}
 	
 	

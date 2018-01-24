@@ -17,7 +17,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.rx.bean.inputrx.RxAPI;
 import com.rx.bean.inputrx.RxDisease;
 import com.rx.bean.inputrx.RxProtocolConstant;
-import com.rx.bean.inputrx.RxReqDataPatient;
+import com.rx.bean.inputrx.RxReqSendPatientData;
 import com.rx.bean.inputrx.RxReqProtocol;
 import com.rx.bean.inputrx.RxRespProtocol;
 import com.rx.service.inputrx.IDepartmentService;
@@ -93,7 +93,7 @@ public class ReceivePatientController {
 		if(reqProtocol.getFunc().equals(RxAPI.MSG_PATIENT_NMI)){
 			
 			//(3.1)第二次解析数据包->医,患,诊断信息对象
-			RxReqDataPatient patient = JSON.parseObject(reqProtocol.getData(), new TypeReference<RxReqDataPatient>() {});
+			RxReqSendPatientData patient = JSON.parseObject(reqProtocol.getData(), new TypeReference<RxReqSendPatientData>() {});
 			System.out.println(patient.getPatient().getName());
 			//(3.2)保存医,患,诊断 数据到DB
 			processMsg(patient);			
@@ -153,7 +153,7 @@ public class ReceivePatientController {
 	 * @author Administrator
 	 * @date 2018年1月16日-上午10:40:54
 	 */
-	private void processMsg(RxReqDataPatient dataSegment){
+	private void processMsg(RxReqSendPatientData dataSegment){
 		
 		//(1)保存患者
 		long patientId=patientService.addPatient(dataSegment.getPatient().getId(),

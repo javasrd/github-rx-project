@@ -7,7 +7,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public class RxReqDataPatient {
+public class RxReqSendPatientData {
 	
 	private RxPatient patient;  //患者对象
 	private RxDoctor  doctor;    //医生对象
