@@ -160,9 +160,24 @@ function addDrugIntoTable() {
 			+ '</td>' + '<td class="small_width">' + $("#quantity").val()
 			+ '</td>' + '<td class="small_width">' + $("#quantity").val()
 			* g_currDrug.saleprice + '</td>' + '</tr>';
+	
+	var drugItem_test='<tr>'+
+        '<td>此处存放药品名称12313123</td>'+
+        '<td></td>'+
+        '<td></td>'+
+        '<td></td>'+
+        '<td></td>'+
+        '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
+        '<td class="input_width input_td"><input class="form-control input-sm" onfocus="Common.showDropdownUnit(this)" onblur="Common.hideDropdownUnit()"></td>'+
+        '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
+        '<td class="input_width"></td>'+
+        '<td class="small_width"></td>'+
+        '<td class="small_width"></td>'+
+        '<td class="small_width"></td>'+
+      '</tr> ';
 
-	$("#drug-items").append(drugItem); // 加入显示列表中.
-
+	$("#drug-items").append(drugItem); // 加入显示列表中.	
+	
 	// 收集用药书指导及数量 加入到全局列表中
 	g_currDrug.drugmode = $("#drugmode").val(); // 给药方式
 	g_currDrug.drugtimes = $("#drugtimes").val(); // 给药次数
@@ -737,7 +752,7 @@ function validAddDrug(){
 		//判定是否为整数
 		if(!isInteger($("#quantity").val())){
 			err.valid=false;
-			err.errorMsg=err.errorMsg+"数量不是整形数字"+ ";";
+			err.errorMsg=err.errorMsg+"数量不是整型数字"+ ";";
 		}
 	}	
 	

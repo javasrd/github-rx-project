@@ -2,6 +2,8 @@
  * 2018-1-15
  */
 
+var yScroll = 0;
+
 $(function(){
 
 	Common.setBasicWidth();
@@ -12,7 +14,25 @@ $(function(){
 	  Common.setBasicWidth();
 	  Common.setFormHeight();
 	});
+	
+	
+	$(window).scroll(function getPageScroll() {
+	    if (self.pageYOffset) {
+	        yScroll = self.pageYOffset;
+	        //xScroll = self.pageXOffset; 
+	    } else if (document.documentElement && document.documentElement.scrollTop) {
+	        yScroll = document.documentElement.scrollTop;
+	    } else if (document.body) {
+	        yScroll = document.body.scrollTop;
+	    }
+	    //arrayPageScroll = new Array('',yScroll)        
+	    return yScroll;
+	});
+	
+	
 });
+
+
 
 var Common = {
 	setBasicWidth : function () {
@@ -45,8 +65,8 @@ var Common = {
 		$("#drugForm tr").filter(":even").addClass("even");
 	},
 
-	showDropdownUnit : function (that) {
-		var top = $(that).offset().top + 55;
+	showDropdownUnit : function (that) {		
+		var top = $(that).offset().top+55+yScroll;		
 		var left = $(that).offset().left;
 		$('.dropdown-unit').css({"top":top,"left":left}).show();
 	},

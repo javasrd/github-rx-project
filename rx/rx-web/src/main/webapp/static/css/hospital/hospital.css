@@ -253,7 +253,7 @@ body{
 	border: 1px solid #ccc;
 	margin-bottom: 20px;
 	min-height: 300px;
-	overflow: auto;
+	overflow: auto;	
 }
 .table-body table{
 	margin: -1px;
@@ -293,7 +293,7 @@ table th.small_width,table td.small_width{
 .table-body .dropdown-unit{
 	background-color: #fff;
 	display: none;
-	position: absolute;
+	position: absolute;	
 	width: 300px;
 	max-height: 240px;
 	overflow: auto;
