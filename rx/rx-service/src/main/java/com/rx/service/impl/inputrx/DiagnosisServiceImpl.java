@@ -31,9 +31,11 @@ public class DiagnosisServiceImpl extends AbstractBaseService<Diagnosis, Long> i
 
 	@Override
 	public long addDiagnosis(String old_id,long doctor_id,long patient_id,String disease) {
-		//查询是否已经存在
+		//查询是否已经存在(采用患者ID,医生id,疾病名称联合查询)d
 		Diagnosis searchRec=new Diagnosis();
-		searchRec.setOldId(old_id);		
+		searchRec.setDoctorId(doctor_id);
+		searchRec.setPatientId(patient_id);
+		searchRec.setDisease(disease);
 		
 		Diagnosis resultRec=diagnosisMapper.selectOne(searchRec);
 		if(resultRec!=null){

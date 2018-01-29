@@ -39,6 +39,7 @@ public class LogSendPrescServiceImpl extends AbstractBaseService<LogSendPresc, L
 		rec.setUrl(url);
 		rec.setData(data);
 		rec.setStatus(status);  //默认为失败状态,发送成功后将状态置为成功.
+		//rec.setPrescId(prescId);		
 		
 		
 		//保存

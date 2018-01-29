@@ -11,11 +11,12 @@
     <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="old" jdbcType="INTEGER" property="old" />
     <result column="cr_no" jdbcType="VARCHAR" property="crNo" />
+    <result column="rn" jdbcType="VARCHAR" property="rn" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->
-    id, old_id, name, sex, old, cr_no
+    id, old_id, name, sex, old, cr_no, rn
   </sql>
 </mapper>

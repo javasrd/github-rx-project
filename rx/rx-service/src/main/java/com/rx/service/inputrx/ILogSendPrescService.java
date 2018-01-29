@@ -18,6 +18,7 @@ public interface ILogSendPrescService extends IBaseService<LogSendPresc, Long> {
 	 *     @param url  接收方地址
 	 *     @param data 药品数据包
 	 *     @param status 发送状态。1:成功；2：失败；3：连接失败
+	 *     @param prescId 处方id 
 	 *     @return   
 	 * @return 
 	 *     long  插入记录主键

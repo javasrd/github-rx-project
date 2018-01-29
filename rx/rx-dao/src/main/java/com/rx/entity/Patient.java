@@ -11,7 +11,7 @@ public class Patient {
     private Long id;
 
     /**
-     * 自东华传送过来的原患者ID
+     * 自东华传送过来的原患者ID(就诊号)
      */
     @Column(name = "old_id")
     private String oldId;
@@ -38,6 +38,11 @@ public class Patient {
     private String crNo;
 
     /**
+     * 登记号
+     */
+    private String rn;
+
+    /**
      * 获取自增主键
      *
      * @return id - 自增主键
@@ -56,18 +61,18 @@ public class Patient {
     }
 
     /**
-     * 获取自东华传送过来的原患者ID
+     * 获取自东华传送过来的原患者ID(就诊号)
      *
-     * @return old_id - 自东华传送过来的原患者ID
+     * @return old_id - 自东华传送过来的原患者ID(就诊号)
      */
     public String getOldId() {
         return oldId;
     }
 
     /**
-     * 设置自东华传送过来的原患者ID
+     * 设置自东华传送过来的原患者ID(就诊号)
      *
-     * @param oldId 自东华传送过来的原患者ID
+     * @param oldId 自东华传送过来的原患者ID(就诊号)
      */
     public void setOldId(String oldId) {
         this.oldId = oldId == null ? null : oldId.trim();
@@ -145,6 +150,24 @@ public class Patient {
         this.crNo = crNo == null ? null : crNo.trim();
     }
 
+    /**
+     * 获取登记号
+     *
+     * @return rn - 登记号
+     */
+    public String getRn() {
+        return rn;
+    }
+
+    /**
+     * 设置登记号
+     *
+     * @param rn 登记号
+     */
+    public void setRn(String rn) {
+        this.rn = rn == null ? null : rn.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -157,6 +180,7 @@ public class Patient {
         sb.append(", sex=").append(sex);
         sb.append(", old=").append(old);
         sb.append(", crNo=").append(crNo);
+        sb.append(", rn=").append(rn);
         sb.append("]");
         return sb.toString();
     }

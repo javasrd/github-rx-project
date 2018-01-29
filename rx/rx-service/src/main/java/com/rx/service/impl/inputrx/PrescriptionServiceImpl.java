@@ -1,7 +1,9 @@
 package com.rx.service.impl.inputrx;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.rx.dao.PrescriptionMapper;
@@ -49,6 +51,37 @@ public class PrescriptionServiceImpl extends AbstractBaseService<Prescription, L
 			return rec.getId();
 		else
 			return 0;
+	}
+
+
+	@Override
+	public String createPrescriptionNo() {
+		final String CONTRACT_PREFIX="O";  //处方前缀
+		final int SERIAL_LENGTH=5;  //序号格式化后长度
+		//获取当前时间,生成查询条件
+		Date currentTime=new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		String dateString = formatter.format(currentTime);		
+		String cond=CONTRACT_PREFIX+dateString; 
+		
+		String prescNo="";  //新生成的处方号
+		
+		//获取处方中指定日期最大处方号
+		String maxContractNo=prescriptionMapper.getMaxPrescriptionNo(cond);
+		if(StringUtils.isNotBlank(maxContractNo)){			
+			String oldSerialStr=maxContractNo.substring(
+									maxContractNo.length()-SERIAL_LENGTH, 
+									maxContractNo.length());
+			int newSerial=Integer.parseInt(oldSerialStr)+1;	  //新的序列号		
+			
+			String newSerialStr = String.format("%0"+SERIAL_LENGTH+"d", newSerial);
+			prescNo=cond+ newSerialStr; 
+		}
+		else{
+			prescNo=cond+"00001";
+		}
+		
+		return prescNo;		
 	}
 
 }

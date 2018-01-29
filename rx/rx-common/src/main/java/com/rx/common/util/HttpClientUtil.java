@@ -112,23 +112,24 @@ public class HttpClientUtil {
 		try {
 			// 创建Http Post请求
 			HttpPost httpPost = new HttpPost(url);
-			httpPost.setHeader("ContentType", "application/x-www-form-urlencoded");
+			httpPost.setHeader("ContentType", ContentType.APPLICATION_FORM_URLENCODED.toString());
 			// 创建参数列表
 			if (param != null) {
 				List<NameValuePair> paramList = new ArrayList<NameValuePair>();
 				for (String key : param.keySet()) {
+					System.out.println(param.get(key));
 					paramList.add(new BasicNameValuePair(key, param.get(key)));
 				}
 				// 模拟表单
-				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList);
-				entity.setContentType("application/x-www-form-urlencoded");
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList,"UTF-8");  //一定要加上编码,否则有中文时会出现乱码
+				entity.setContentType(ContentType.APPLICATION_FORM_URLENCODED.toString());
 				httpPost.setEntity(entity);
 			}
 			// 执行http请求
 			response = httpClient.execute(httpPost);
 			System.out.println("HTTP请求返回状态码："+response.getStatusLine().getStatusCode());
 			log.info("HTTP请求返回状态码："+response.getStatusLine().getStatusCode());
-			resultString = EntityUtils.toString(response.getEntity(), "utf-8");
+			resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
 			log.info("HTTP请求返回结果："+resultString);
 			System.out.println(new Date() + " 请求结果：" + resultString);
 			return resultString;
@@ -164,7 +165,7 @@ public class HttpClientUtil {
 		try {
 			// 创建Http Post请求
 			HttpPost httpPost = new HttpPost(url);
-			httpPost.setHeader("ContentType", "application/x-www-form-urlencoded");
+			httpPost.setHeader("ContentType",  ContentType.APPLICATION_FORM_URLENCODED.toString());
 			// 创建参数列表
 			if (StringUtils.isNotEmpty(param)) {
 				StringEntity se = new StringEntity(param, ContentType.APPLICATION_FORM_URLENCODED);
@@ -187,5 +188,51 @@ public class HttpClientUtil {
 
 		return resultString;
 	}
-		
+	
+	/**
+	 * @Description: 以POST方式发送请求,参数格式为JSON
+	 * @param
+	 *     @param url	
+	 *     @param param
+	 *     @return   
+	 * @return 
+	 *     String  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月29日-下午9:43:25
+	 */
+	public static String doPostJson(String url, String param) {
+		// 创建Httpclient对象
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+
+		CloseableHttpResponse response = null;
+		String resultString = "";
+		try {
+			// 创建Http Post请求
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setHeader("ContentType", ContentType.APPLICATION_JSON.toString());
+			// 创建参数列表
+			if (StringUtils.isNotEmpty(param)) {
+				StringEntity se = new StringEntity(param, ContentType.APPLICATION_JSON);
+				httpPost.setEntity(se);
+			}
+			// 执行http请求
+			response = httpClient.execute(httpPost);
+			resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+			System.out.println("请求结果：" + resultString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				response.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return resultString;
+	}
+	
+	
 }

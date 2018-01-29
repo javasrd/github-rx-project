@@ -68,28 +68,10 @@ public class ReceivePrescriptionController {
 	 */
 	@RequestMapping(value = "/prescapi", method = RequestMethod.POST)
 	@ResponseBody		
-	public Object receivePrescription(String pack,HttpServletRequest request) {
+	public Object receivePrescription(@RequestBody String pack,HttpServletRequest request) {
 		//@RequestBody RxReqProtocol pack
 		
 		System.out.println("海典接收处方数据为:"+pack);
-		
-		//(1)记录日志		
-		
-		//(2)第一次解析数据包
-		
-		//JSONObject reqProtocol= JSON.parseObject(pack); 		
-		
-		//TODO 注: 此处未对token,version,进行处理.
-		
-		//(3)根据func的值对协议包中DATA进行解析		
-		//if(reqProtocol.getString("func").equals(RxAPI.MSG_PATIENT_NMI)){
-			
-			//第二次数据解析.
-			//RxReqDataPatient patient = JSON.parseObject(reqProtocol.getData(), new TypeReference<RxReqDataPatient>() {});
-			
-			//根据业务规则进行处理.
-			//System.out.println("进行业务处理......");
-		//}
 		
 		//(4)返回响应包
 		RxRespProtocol resp=createResponse(RxProtocolConstant.STATUS_SUCCESS,"v1.0");		
@@ -112,6 +94,7 @@ public class ReceivePrescriptionController {
 	private RxRespProtocol createResponse(String status,String version){
 		RxRespProtocol resp=new RxRespProtocol(); 
 		resp.setResult(RxProtocolConstant.STATUS_SUCCESS);
+		resp.setMsg("接收正确!");
 		resp.setVersion(version);
 		return resp;
 	}

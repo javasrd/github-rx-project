@@ -17,4 +17,11 @@
     -->
     id, doctor_id, patient_id, created_time, rx_no
   </sql>
+  
+  <select id="getMaxPrescriptionNo" resultType="string">
+		SELECT max(rx_no) rxNo from prescription WHERE rx_no like
+		CONCAT('%',#{dateCond},'%' )
+  </select>
+  
+  
 </mapper>

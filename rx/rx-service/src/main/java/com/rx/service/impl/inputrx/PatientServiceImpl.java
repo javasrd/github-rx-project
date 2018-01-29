@@ -28,11 +28,11 @@ public class PatientServiceImpl extends AbstractBaseService<Patient, Long> imple
 	}
 
 	@Override
-	public long addPatient(String old_id, String name, String sex, String old, String cr_no) {
+	public long addPatient(String old_id, String name, String sex, String old, String cr_no,String rn) {
 		
 		//查询此患者是否已经存在
 		Patient searchRec=new Patient();
-		searchRec.setOldId(old_id);	//采用原来的ID号进行查询
+		searchRec.setOldId(old_id);	//采用原来的ID号进行查询(就诊号)
 		
 		Patient patient=patientMapper.selectOne(searchRec);
 		if(patient!=null){   //患者已经存在
@@ -49,6 +49,7 @@ public class PatientServiceImpl extends AbstractBaseService<Patient, Long> imple
 				rec.setSex((byte)2);
 			rec.setOld(Integer.parseInt(old));
 			rec.setCrNo(cr_no);
+			rec.setRn(rn);			
 			
 			//保存
 			int row=patientMapper.insertSelective(rec);

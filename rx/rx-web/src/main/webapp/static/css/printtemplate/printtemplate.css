@@ -7,14 +7,10 @@
 	}
 }
 
-/* body{zoom:0.5;} *//* IE下可以使用 */
-/* body{transform: scale(0.5);} *//* 其他高级浏览器可以使用 */
-
-
 
 .print_area{
   /* zoom:0.5;	
-	transform: scale(0.5); */
+  transform: scale(0.5); */
   font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";
   width: 100%;
   height: 400px;
@@ -63,13 +59,13 @@
 }
 .warning>div>p{
 	display: inline-block;
-	width: 33%;
+	width: 31%;
 }
 .warning>div>ul{
 	padding: 0;
 }
 .warning>div>ul>li{
 	float: left;
-	padding-right: 30px;
+	padding-right: 10px;
 	list-style: none;
 }

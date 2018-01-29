@@ -18,7 +18,7 @@ public interface IDiagnosisService extends IBaseService<Diagnosis, Long> {
 	/**
 	 * @Description: 增加诊断记录
 	 * @param
-	 *     @param old_id  在东华系统中的ID
+	 *     @param old_id  在东华系统中的ID  此参数不再使用,默认值为0
 	 *     @param doctor_id  医生ID(本系统中)
 	 *     @param patient_id 患者ID(本系统中)
 	 *     @param disease	  疾病名称

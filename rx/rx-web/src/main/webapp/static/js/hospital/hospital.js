@@ -65,8 +65,13 @@ var Common = {
 		$("#drugForm tr").filter(":even").addClass("even");
 	},
 
-	showDropdownUnit : function (that) {		
-		var top = $(that).offset().top+55+yScroll;		
+	//modified by jch 2018/01/25
+	//解决浏览器兼容性问题.
+	showDropdownUnit : function (that) {
+		var top = $(that).offset().top+55;
+		if ($.browser.msie) {
+			top = $(that).offset().top+55+yScroll;
+		}
 		var left = $(that).offset().left;
 		$('.dropdown-unit').css({"top":top,"left":left}).show();
 	},

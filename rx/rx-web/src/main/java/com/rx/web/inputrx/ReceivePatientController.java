@@ -1,31 +1,23 @@
 package com.rx.web.inputrx;
 
-import java.util.Iterator;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.rx.bean.inputrx.RxAPI;
-import com.rx.bean.inputrx.RxDisease;
-import com.rx.bean.inputrx.RxProtocolConstant;
-import com.rx.bean.inputrx.RxReqSendPatientData;
-import com.rx.bean.inputrx.RxReqProtocol;
-import com.rx.bean.inputrx.RxRespProtocol;
+import com.rx.bean.inputrx.RxPatientParams;
+import com.rx.bean.inputrx.RxRespProtocolDH;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
 import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.ILogReceivePatientService;
 import com.rx.service.inputrx.IPatientService;
+
+import freemarker.template.utility.StringUtil;
 
 /**
  * @ClassName: ReceivePatientController
@@ -71,9 +63,9 @@ public class ReceivePatientController {
 	 * @author Administrator
 	 * @date 2018年1月16日-上午10:27:19
 	 */
-	@RequestMapping(value = "/api", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/api_old", method = RequestMethod.POST)
 	@ResponseBody		
-	public Object receivePatient(@RequestBody String pack,HttpServletRequest request) {
+	public Object receivePatient_old(@RequestBody String pack,HttpServletRequest request) {
 		//@RequestBody RxReqProtocol pack
 		//System.out.println(pack.getFunc());
 		
@@ -105,7 +97,52 @@ public class ReceivePatientController {
 											reqProtocol.getVersion());		
 		
 		return resp;
+	}*/
+	
+	/**
+	 * @Description: 对外接口(供东华调用)
+	 * 				自东华获取医,患,诊断信息数据 .
+	 * @param
+	 *     @param patient  用于接收东华发送医,患,诊断信息等数据
+	 *     @param request
+	 *     @return   
+	 * @return 
+	 *     Object  响应包 JSON格式
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月29日-下午2:49:47
+	 */
+	@RequestMapping(value = "/api")
+	@ResponseBody		
+	public Object receivePatient(RxPatientParams patient,HttpServletRequest request) {
+		//@RequestBody RxReqProtocol pack
+		System.out.println(patient.getPatient_id());		
+		
+		try{
+			//(1)记录日志		
+			String remoteURL=getIpAddr(request);
+			String pack=JSON.toJSONString(patient);
+			System.out.println(pack);
+			writeLog(remoteURL,pack);			
+					
+			//(2)保存医,患,诊断 数据到DB
+			processMsg(patient);			
+			
+			//(3)返回响应包		
+			RxRespProtocolDH resp=createResponseDH("true","1","接收成功",patient.getPatient_id());		
+			
+			return resp;			
+		}
+		catch (Exception e){
+			RxRespProtocolDH resp=createResponseDH("fale","0",e.getMessage(),patient.getPatient_id());
+			return resp;
+		}
+		
 	}
+	
+	
+	
+	
 	
 	/**
 	 * @Description: 生成响应数据包
@@ -119,10 +156,33 @@ public class ReceivePatientController {
 	 * @author Administrator
 	 * @date 2018年1月17日-上午11:04:45
 	 */
-	private RxRespProtocol createResponse(String status,String version){
+	/*private RxRespProtocol createResponse(String status,String version){
 		RxRespProtocol resp=new RxRespProtocol(); 
 		resp.setResult(RxProtocolConstant.STATUS_SUCCESS);
 		resp.setVersion(version);
+		return resp;
+	}*/
+	
+	/**
+	 * @Description: 生成响应数据包.(在接收到东华所发送患者数据后).
+	 * @param
+	 *     @param isSuccess
+	 *     @param code
+	 *     @param message
+	 *     @param patientId
+	 *     @return   
+	 * @return 
+	 *     RxRespProtocolDH  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月29日-上午11:34:39
+	 */
+	private RxRespProtocolDH createResponseDH(String isSuccess,String code,String message,String patientId ){
+		RxRespProtocolDH resp=new RxRespProtocolDH();		
+		resp.setIsSuccess(isSuccess);
+		resp.setCode(code);
+		resp.setMessage(message);
+		resp.setPatientId(patientId);
 		return resp;
 	}
 	
@@ -153,7 +213,7 @@ public class ReceivePatientController {
 	 * @author Administrator
 	 * @date 2018年1月16日-上午10:40:54
 	 */
-	private void processMsg(RxReqSendPatientData dataSegment){
+	/*private void processMsg(RxReqSendPatientData dataSegment){
 		
 		//(1)保存患者
 		long patientId=patientService.addPatient(dataSegment.getPatient().getId(),
@@ -177,6 +237,51 @@ public class ReceivePatientController {
 		for(Iterator<RxDisease> itor=diseaseList.iterator();itor.hasNext();){
 			RxDisease disease=itor.next();
 			diagnosisService.addDiagnosis(disease.getId(), doctorId, patientId, disease.getDisease());			
+		}
+			
+	}*/
+	
+	/**
+	 * @Description: 保存患,科室,医,医-患,诊断信息
+	 * 		在保存时存在一定的依赖关系.
+	 * @param
+	 *     @param dataSegment   
+	 * @return 
+	 *     void  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年1月16日-上午10:40:54
+	 */
+	private void processMsg(RxPatientParams patient){
+		
+		//(1)保存患者
+		long patientId=patientService.addPatient(
+				patient.getPatient_id(),
+				patient.getPatient_name(),
+				patient.getPatient_gender(),
+				patient.getPatient_old(),
+				patient.getPatient_cr_no(),
+				patient.getPatient_rn());
+		//(2)保存科室
+		long departmentId=departmentService.addDepartment(
+				patient.getDepatment_id(),
+				patient.getDepartment_name());
+		
+		//(3)保存医生
+		long doctorId=doctorService.addDoctor(
+				patient.getDoctor_id(),
+				patient.getDoctor_name(),
+				departmentId);
+		
+		//(4)保存医生-患者关系
+		doctorPatientService.addDoctorPatient(doctorId, patientId);
+		
+		//(5)保存诊断信息
+		
+		String[] diseaseArr=StringUtil.split(patient.getDiagnosis_result(), ',');
+		for(int i=0;i<diseaseArr.length;i++){
+			String disease=diseaseArr[i];
+			diagnosisService.addDiagnosis("0", doctorId, patientId, disease);
 		}
 			
 	}
