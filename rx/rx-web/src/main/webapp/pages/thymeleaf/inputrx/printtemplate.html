@@ -38,7 +38,7 @@
           <p>登记号<span th:text="${patient.crNo}">1234567890</span></p>
           <p>取药科室<span>门诊西药房</span></p>
           <p>科别<span th:text="${department.name}">门诊耳鼻喉科</span></p>
-          <p><span th:text="${#calendars.format(diagnosisDate,'yyyy-MM-dd')}">2018年12月28日</span></p>
+          <p><span th:text="${#calendars.format(diagnosisDate,'yyyy年MM月dd日')}">2018年12月28日</span></p>
           <p>病历号</p>
           <div id="barcodeTarget" class="barcodeTarget" style="display: inline; float:right; margin-right:10px; margin-top:-15px; height:50px; width:300px;" ></div>         
           
@@ -83,7 +83,7 @@
     </div>
     <div class="warning">
       <div>
-        <p>药费<span th:text="${sum}">1000.00元</span></p>
+        <p>药费:<span th:text="${sum}">1000.00元</span>元</p>
         <p>审核/调配签名（签章）：</p>
         <p>核对/发药签名（签章）：</p>
       </div>
