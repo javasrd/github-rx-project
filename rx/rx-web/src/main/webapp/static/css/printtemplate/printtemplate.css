@@ -2,13 +2,13 @@
 	@page{
 		size: b5 landscape;
 	}
-	.print_area{
+	.print_area_rx{
 		padding: 0 !important;
 	}
 }
 
 
-.print_area{
+.print_area_rx{
   /* zoom:0.5;	
   transform: scale(0.5); */
   font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";
@@ -17,12 +17,17 @@
   padding: 0px;
 }
 
-.print_area>h1{
+.print_area_rx>h1{
   font-size: 25px;
   margin-top: 0;
   text-align: center;
 }
-.print_area .info{
+.print_area_rx .num_barcode{
+  display: inline-block;
+  width: 200px;
+  height: 50px;
+}
+.print_area_rx .info{
   margin-bottom: 10px;
 }
 .left_info>div>p{
@@ -40,32 +45,41 @@
   font-weight: bold;
 }
 
+
+.print_area_rx .content{
+  position: relative;
+}
 .content .table{
-	height: 360px;
-	margin-bottom: 10px;
+  height: 360px;
+  margin-bottom: 10px;
 }
 .content .table .first_td{
-	width: 200px;
+  width: 200px;
 }
 .content .table .last_td>p{
-	font-weight: bold;
-	margin-bottom: 0;
-	font-size: 18px;
-	font-family: Georgia;
+  font-weight: bold;
+  margin-bottom: 0;
+  font-size: 18px;
+  font-family: Georgia;
 }
 .content .table .last_td li>span{
-	display: block;
-	padding-left: 28px;
+  display: block;
+  padding-left: 28px;
+}
+.content .signature{
+  position: absolute;
+  bottom: 0;
+  right: 15px;
 }
 .warning>div>p{
-	display: inline-block;
-	width: 31%;
+  display: inline-block;
+  width: 31%;
 }
 .warning>div>ul{
-	padding: 0;
+  padding: 0;
 }
 .warning>div>ul>li{
-	float: left;
-	padding-right: 10px;
-	list-style: none;
+  float: left;
+  padding-right: 10px;
+  list-style: none;
 }

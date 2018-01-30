@@ -263,15 +263,19 @@ public class RxOpenController {
 		
 		Patient patient=patientService.selectByPrimaryKey(patient_id);
 		Doctor doctor=doctorService.selectByPrimaryKey(doctor_id);
+		
+		HashMap<String,String> doctorMap=new HashMap<String,String>();
 		if(doctor!=null){
 			department_id=doctor.getDepartmentId();
+			doctorMap.put("name", doctor.getName());
 		}
 		Department department=departmentService.selectByPrimaryKey(department_id);
 		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patient_id, doctor_id);
 		
+		
 		model.addAttribute("diagnosisDate", new Date());		
 		model.addAttribute("patient", patient);
-		model.addAttribute("doctor", doctor);
+		model.addAttribute("doctor", doctorMap);
 		model.addAttribute("department", department);
 		model.addAttribute("diagnosisList", diagnosisList);
 		model.addAttribute("drugList", drugList);

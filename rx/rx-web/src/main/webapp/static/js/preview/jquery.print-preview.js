@@ -123,7 +123,7 @@
             
             //added by jch 
             var topx = $.printPreview.sizeTop();
-            var topx=0;
+            //var topx=0;
             print_modal
                 .css(css)
                 .animate({ top:$(window).scrollTop()+topx}, 400, 'linear', function() {

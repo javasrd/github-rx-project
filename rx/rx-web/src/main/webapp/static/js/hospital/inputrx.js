@@ -80,6 +80,7 @@ function loadPrintTemplate() {
 function printPreview() {
 	// (1)生成条形码.
 	generateBarcode();
+	
 	// (2)触发打印预览.
 	$("#btn-print-preview").trigger("click");
 	// (3)加载原来的css
@@ -505,6 +506,9 @@ function generateBarcode() {
 
 	$("#barcodeTarget").html("").show();
 	$("#barcodeTarget").barcode(value, btype, settings);
+	
+	$("#barcode-pn").html("").show();
+	$("#barcode-pn").barcode(value, btype, settings);
 
 }
 
@@ -1175,8 +1179,8 @@ $(function() {
 	 **************************************************************************/
 	$('#btn-print-preview').printPreview(); // 处方预览与btn-print-preview click绑定
 	$("#btn-preview").on("click", function(event) {
-		//loadPrintTemplate(); // 加载打印模板
-		$("#btn-print-preview").trigger("click");
+		loadPrintTemplate(); // 加载打印模板
+		//$("#btn-print-preview").trigger("click");
 	});
 
 	/***************************************************************************
