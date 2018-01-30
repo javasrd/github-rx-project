@@ -347,7 +347,8 @@ public class RxOpenController {
 		
 		//如果生成处方,则发送到海典ERP中.
 		if(!presc_no.equals("")){
-			sendPrecriptionToDispensary(presc,presc_no,prescId);  
+			sendPrecriptionToDispensary(presc,presc_no,prescId);
+			//sendPrecriptionToDispensary(presc,"",prescId);
 		}		
 				
 		//返回处方编号		
@@ -457,6 +458,7 @@ public class RxOpenController {
 		//TODO (1)将数据包包记录日志.
 		//TODO (1)发送数据的状态常量需要定义; (2)将请求置于线程中进行处理.需要进一步的设计
 		String url="http://localhost:8080/rx-web/prescapi";
+		//String url="http://222.222.66.25:8093/nmi";		
 		long logId=logSendPrescService.addLog(url, jsonPack, 1);  //记录日志,将日志的ID号传送给线程处理.
 		
 		//(2)向其它的服务器发送请求.
