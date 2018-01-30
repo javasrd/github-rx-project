@@ -1175,7 +1175,8 @@ $(function() {
 	 **************************************************************************/
 	$('#btn-print-preview').printPreview(); // 处方预览与btn-print-preview click绑定
 	$("#btn-preview").on("click", function(event) {
-		loadPrintTemplate(); // 加载打印模板
+		//loadPrintTemplate(); // 加载打印模板
+		$("#btn-print-preview").trigger("click");
 	});
 
 	/***************************************************************************
