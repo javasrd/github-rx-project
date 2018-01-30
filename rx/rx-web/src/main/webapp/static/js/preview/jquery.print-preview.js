@@ -30,8 +30,8 @@
             // Declare DOM objects
             print_modal = $('<div id="print-modal"></div>');
             print_controls = $('<div id="print-modal-controls">' + 
-                                    '<a href="#" class="print" title="打印">打印</a>' +
-                                    '<a href="#" class="close" title="关闭打印预览">关闭</a>').hide();
+                                    '<a href="#" class="print" title="打印"></a>' +
+                                    '<a href="#" class="closex" title="关闭打印预览"></a>').hide();
             var print_frame = $('<iframe id="print-modal-content" scrolling="no" border="0" frameborder="0" name="print-frame" />');
 
             // Raise print preview window from the dead, zooooooombies
@@ -122,7 +122,8 @@
                 }
             
             //added by jch 
-            var topx = $.printPreview.sizeTop();  
+            var topx = $.printPreview.sizeTop();
+            var topx=0;
             print_modal
                 .css(css)
                 .animate({ top:$(window).scrollTop()+topx}, 400, 'linear', function() {
