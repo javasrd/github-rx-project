@@ -73,6 +73,8 @@
             </div>
             <div class="basic_bottom">
               <div class="info_container">
+              	<!--用于保存病历号  -->
+              	<span id="patient-crno" name="patient-crno" style=" display:none" th:text="${patient.crNo}">病历号</span>  
                 <p class="info_title">姓名</p>
                 <p class="info_content"><span th:text="${patient.name}" id="patient"  th:attr="bind-id=${patient.id}"   >张三</span></p>
               </div>
@@ -114,6 +116,7 @@
       </div>
       <div class="drug_container">
         <div class="card_container diagnosis_msg">
+          <input type="hidden" id="presc-no" name="presc-no" th:value="${prescNo}" >  <!--用于保存处方号  -->
           <h3>商品录入</h3>
           <div>
             <div class="form-inline">
@@ -225,7 +228,10 @@
     
     
     <!-- 用于加载打印模板 -->
-    <div id="printarea" class="hide"></div>  <!-- 此处不可以是iframe,否则会出现js无权限问题  -->
+    <div id="printarea" class="hide">
+    	<div id="printarea1" class="clearfix"></div> <!-- 正方 -->
+    	<div id="printarea2" class="clearfix"></div> <!-- 副方 -->
+    </div>  <!-- 此处不可以是iframe,否则会出现js无权限问题  -->
     <div id="loadcss" class="hide"></div>
         
     <!-- <script src="https://cdn.bootcss.com/jquery-tools/1.2.7/jquery.tools.min.js"></script> -->

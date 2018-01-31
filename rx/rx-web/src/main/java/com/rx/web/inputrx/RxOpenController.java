@@ -223,6 +223,19 @@ public class RxOpenController {
 		patient_id=parm.getLongValue("patientId");
 		doctor_id=parm.getLongValue("doctorId");
 		department_id=parm.getLongValue("departmentId");
+		int type=parm.getInteger("type");
+		String prescType="";
+		if(type==1){
+			prescType="正方";			
+		}
+		else{
+			prescType="副方";
+		}
+		String prescNo=parm.getString("prescNo");
+		
+		
+		
+			
 		
 		//（1）解析参数
 		List<Map<String,String>> drugList= new ArrayList<Map<String,String>>();
@@ -273,6 +286,8 @@ public class RxOpenController {
 		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patient_id, doctor_id);
 		
 		
+		model.addAttribute("prescType", prescType);
+		model.addAttribute("prescNo",prescNo);
 		model.addAttribute("diagnosisDate", new Date());		
 		model.addAttribute("patient", patient);
 		model.addAttribute("doctor", doctorMap);
@@ -280,6 +295,7 @@ public class RxOpenController {
 		model.addAttribute("diagnosisList", diagnosisList);
 		model.addAttribute("drugList", drugList);
 		model.addAttribute("sum", sum);
+		
 		
 		return RESPONSE_THYMELEAF + "printtemplate";
 	}

@@ -137,7 +137,7 @@
                 e.preventDefault();
                 if ($(this).hasClass('print')) {
                 	//$.print("#printarea");
-                	$(window.frames["print-frame"].document).find(".print_area").print();
+                	$(window.frames["print-frame"].document).find("body").print();
 
                 	//window.print(); 
                 }

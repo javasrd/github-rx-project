@@ -11,9 +11,9 @@
   <!-- Bootstrap -->
   <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">  
   <link href="iconfont/iconfont.css" rel="stylesheet"> -->  
-  <link th:href="@{/static/bootstrap/3.3.5/css/bootstrap.min.css}"	rel="stylesheet"  media="screen"/>
+  <link th:href="@{/static/bootstrap/3.3.5/css/bootstrap.min.css}"	rel="stylesheet"  media="all"/>
   
-  <link th:href="@{/static/css/printtemplate/printtemplate.css}" rel="stylesheet" media="screen">  
+  <link th:href="@{/static/css/printtemplate/printtemplate.css}" rel="stylesheet" media="all">  
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <!-- <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script> -->
@@ -30,22 +30,22 @@
 
 <body>
   <div class="print_area_rx">
-    <div class="title_top text-right">【正方】</div>
+    <div class="title_top text-right">【 <span th:text="${prescType}">正方</span> 】</div>
     <h1>中国石油天然气集团公司中心医院处方笺</h1>
     <div class="title_bottom">
-      <div class="num_barcode"><span>处方编号</span><div id="barcode-pn" style="display: inline; float:left; margin-left:50px; margin-top:-25px; height:50px; width:300px;"></div></div>
+      <div class="num_barcode"><span>处方编号:</span><div id="barcode-pn" class="barcode-pn" style="display: inline; float:left; margin-left:50px; margin-top:-25px; height:50px; width:300px;"></div></div>
       <span class="pull-right">【自费】</span>
     </div>
     <div class="info">
       <div class="left_info">
         <div class="department_info">
-          <p>处方编号<span>1234567890</span></p>
+          <p>处方编号<span th:text="${prescNo}">O2018010100001</span></p>
           <p>登记号<span th:text="${patient.crNo}">1234567890</span></p>
           <p>取药科室<span>门诊西药房</span></p>
           <p>科别<span th:text="${department.name}">门诊耳鼻喉科</span></p>
           <p><span th:text="${#calendars.format(diagnosisDate,'yyyy年MM月dd日')}">2018年12月28日</span></p>
           <p>病历号</p>
-          <div id="barcodeTarget" class="barcodeTarget" style="display: inline; float:right; margin-right:10px; margin-top:-15px; height:50px; width:300px;" ></div>         
+          <div id="barcode-crno" class="barcode-crno" style="display: inline; float:right; margin-right:10px; margin-top:-15px; height:50px; width:300px;" ></div>         
           
         </div>
         <div class="patient_info">
