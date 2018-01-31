@@ -898,10 +898,10 @@ function validAddDrug(){
 		err.errorMsg=err.errorMsg+"数量为空"+ ";";
 	}
 	else{
-		//判定是否为整数
-		if(!isInteger($("#quantity").val())){
+		//判定是否为正整数
+		if(!isUnsignedInteger($("#quantity").val())){
 			err.valid=false;
-			err.errorMsg=err.errorMsg+"数量不是整型数字"+ ";";
+			err.errorMsg=err.errorMsg+"数量不是正整数"+ ";";
 		}
 	}	
 	
@@ -909,19 +909,25 @@ function validAddDrug(){
 }
 
 /**
- * 判定是否为整数
- * @param value
+ * 检查是否为正整数
+ * @param a
  * @returns
  */
-function isInteger(value)
-{
-	var re = /^[1-9]+[0-9]*]*$/;	
-	if (!re.test(value))
-		return false;
-	else
-		return true;
-}
+function  isUnsignedInteger(a)
+ {
+     var reg=/^[1-9]\d*$/;
+     return reg.test(a);
+ }
 
+/**
+ * 检查是否为正数
+ * @param a
+ * @returns
+ */
+function isPositiveNumber(a){
+	var reg=/^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
+	return reg.test(a);
+}
 
 /**
  * 用于处理药品助记码框中ESC按键
@@ -1074,10 +1080,14 @@ function handler_keydown_doseunit(ev) {
  */
 function handler_keydown_dosage(event) {
 	if (event.keyCode == "13") {// keyCode=13是回车键 模拟按tab键
-		var id = $(this).attr("bind-id");		
-		if($.trim($(this).val())==""){
+		var id = $(this).attr("bind-id");
+		var val=$.trim($(this).val());
+		if(val==""){
 			alert("单次用量为空!",500);
 		}
+		else if(!isPositiveNumber(val)){
+			alert("单次用量需为正数!",500);
+		}			
 		else{
 			$("#drug-doseunit-" + id).focus();
 		}
@@ -1092,8 +1102,8 @@ function handler_keydown_days(event) {
 		if (val==""){
 			alert("用药天数为空!",500);
 		}
-		else if(!isInteger(val)){
-			alert("用药天数不是整形!!",500);
+		else if(!isUnsignedInteger(val)){
+			alert("用药天数不是正整数!!",500);
 		}
 		else{
 			setFocus("#abc");
