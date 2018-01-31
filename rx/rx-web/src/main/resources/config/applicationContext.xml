@@ -88,5 +88,8 @@
 	
 	<!-- 扫描service -->
 	<context:component-scan base-package="com.rx.service" />
-
+	
+	<!-- 应用程序监控器 -->
+    <bean id="springStartListener" class="com.rx.service.queuerx.MyApplicationListener"></bean>
+	<bean id="dBThread" class="com.rx.service.queuerx.DBThread"></bean>
 </beans>
