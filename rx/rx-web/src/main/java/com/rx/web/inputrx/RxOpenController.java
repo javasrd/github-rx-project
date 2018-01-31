@@ -19,12 +19,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.rx.bean.inputrx.RxAPI;
-import com.rx.bean.inputrx.RxDepartment;
 import com.rx.bean.inputrx.RxDisease;
-import com.rx.bean.inputrx.RxDoctor;
 import com.rx.bean.inputrx.RxDrug;
-import com.rx.bean.inputrx.RxPatient;
-import com.rx.bean.inputrx.RxProtocolConstant;
 import com.rx.bean.inputrx.RxReqSendPrescription;
 import com.rx.bean.inputrx.RxReqSendPrescriptionData;
 import com.rx.common.util.HttpClientUtil;
@@ -34,16 +30,17 @@ import com.rx.entity.Diagnosis;
 import com.rx.entity.DictDoseUnit;
 import com.rx.entity.DictMode;
 import com.rx.entity.DictTimes;
+import com.rx.entity.Dispensary;
 import com.rx.entity.Doctor;
 import com.rx.entity.Drug;
 import com.rx.entity.Patient;
-import com.rx.service.impl.inputrx.LogSendPrescServiceImpl;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
 import com.rx.service.inputrx.IDictDoseUnitService;
 import com.rx.service.inputrx.IDictModeService;
 import com.rx.service.inputrx.IDictTimesService;
 import com.rx.service.inputrx.IDirectionService;
+import com.rx.service.inputrx.IDispensaryService;
 import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.IDrugService;
@@ -98,6 +95,8 @@ public class RxOpenController {
 	IDirectionService directionService;  //用药指导
 	@Autowired
 	ILogSendPrescService logSendPrescService;
+	@Autowired
+	IDispensaryService dispensaryService;
 	
 	
 	
@@ -233,7 +232,8 @@ public class RxOpenController {
 		}
 		String prescNo=parm.getString("prescNo");
 		
-		
+		//读取药房信息
+		List<Dispensary> dispList=dispensaryService.selectAll();
 		
 			
 		
@@ -288,6 +288,7 @@ public class RxOpenController {
 		
 		model.addAttribute("prescType", prescType);
 		model.addAttribute("prescNo",prescNo);
+		model.addAttribute("dispensary", dispList.get(0));
 		model.addAttribute("diagnosisDate", new Date());		
 		model.addAttribute("patient", patient);
 		model.addAttribute("doctor", doctorMap);
