@@ -174,7 +174,8 @@ public class HttpClientUtil {
 			// 执行http请求
 			response = httpClient.execute(httpPost);
 			resultString = EntityUtils.toString(response.getEntity(), "utf-8");
-			System.out.println("请求结果：" + resultString);
+			//System.out.println("请求结果：" + resultString);
+			log.info("请求结果：" + resultString);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -219,7 +220,8 @@ public class HttpClientUtil {
 			// 执行http请求
 			response = httpClient.execute(httpPost);
 			resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
-			System.out.println("请求结果：" + resultString);
+			//System.out.println("请求结果：" + resultString);
+			log.info("请求结果：" + resultString);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

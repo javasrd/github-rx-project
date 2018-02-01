@@ -75,7 +75,7 @@ public class DBThread implements Runnable {
     	String pack=createPrescPackage(msg.getPresc(),msg.getPrescNo(),msg.getPrescId());
     	
     	//(2)记录日志(将数据包包记录日志). 0:初始状态;1:成功; 2:失败; 3:网络连接失败		
-		String url="http://localhost:8080/rx-web/prescapi1";
+		String url="http://localhost:8080/rx-web/prescapi";
 		//String url="http://222.222.66.25:8093/nmi";		
 		long logId=logSendPrescService.addLog(url, pack, 0);  //记录日志,将日志的ID号传送给线程处理.
 		
@@ -125,9 +125,9 @@ public class DBThread implements Runnable {
 					log.info("请求发送处方时发生网络错误! 1000ms后重新发送请求......");
 					Thread.sleep(1000);
 					counter++;
-					if(counter==3){						
-						updateLogStatus(logId,3);  //列新日志状态
+					if(counter==3){
 						log.info("重试三次后仍没有发送成功,更新处方发送日志......");
+						updateLogStatus(logId,3);  //列新日志状态
 					}
 				}
 			}
@@ -234,7 +234,7 @@ public class DBThread implements Runnable {
 		}
 		
 		String jsonPack=JSON.toJSON(protocol).toString();  //生成需要发送的数据包		
-		System.out.println("------发送到海典:--------"+jsonPack);
+		log.info("------发送到海典:--------"+jsonPack);
 		return jsonPack;
 	}
 	
