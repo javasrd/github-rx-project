@@ -21,6 +21,7 @@ import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
 import com.rx.entity.Doctor;
 import com.rx.entity.Drug;
+import com.rx.entity.LogSendPresc;
 import com.rx.entity.Patient;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
@@ -60,10 +61,7 @@ public class DBThread implements Runnable {
 	@Autowired
 	IDispensaryService dispensaryService;  //药房
 	@Autowired
-	ThreadPoolManager tpm;  //线程池
-    
-        
-    
+	ThreadPoolManager tpm;  //线程池    
     
     @Override
     public void run() {
@@ -76,14 +74,13 @@ public class DBThread implements Runnable {
     	//(1)生成数据包
     	String pack=createPrescPackage(msg.getPresc(),msg.getPrescNo(),msg.getPrescId());
     	
-    	//(2)记录日志(将数据包包记录日志).
-		//0:初始状态;1:成功; 2:失败; 3:网络连接失败
-		String url="http://localhost:8080/rx-web/prescapi";
+    	//(2)记录日志(将数据包包记录日志). 0:初始状态;1:成功; 2:失败; 3:网络连接失败		
+		String url="http://localhost:8080/rx-web/prescapi1";
 		//String url="http://222.222.66.25:8093/nmi";		
 		long logId=logSendPrescService.addLog(url, pack, 0);  //记录日志,将日志的ID号传送给线程处理.
 		
     	//(3)发送数据包
-		sendPrecriptionToDispensary(url,pack);
+		sendPrecriptionToDispensary(url,pack,logId);
     	
         log.info("insert->" + msg);
     }
@@ -99,12 +96,48 @@ public class DBThread implements Runnable {
 	 * @author Administrator
 	 * @date 2018年2月1日-上午1:59:53
 	 */
-	private void sendPrecriptionToDispensary(String url,String jsonPack){
-		//(2)向其它的服务器发送请求		
+	private void sendPrecriptionToDispensary(String url,String jsonPack,long logId){
+		//(1)向其它的服务器发送请求		
 		//String result=HttpClientUtil.doPost(url, parms);
-		String result=HttpClientUtil.doPostJson(url, jsonPack);
+		//String result=HttpClientUtil.doPostJson(url, jsonPack);
 		
-		System.out.println("模拟发送处方------返回结果:"+result);		
+		try {
+			int counter=0;
+			while(counter<3){
+				String result=HttpClientUtil.doPostJson(url, jsonPack);
+				if(!result.equals("")){  //服务端响应   
+					JSONObject jobj=JSON.parseObject(result);
+					int status=jobj.getIntValue("result");
+					int logStatus=0;
+					switch(status){
+					case 1://海典成功接收并加入数据库
+						logStatus=1;
+						break;
+					case 0: //海典成功接收,但在加入数据库时发生错误
+						logStatus=2;
+						break;
+					}
+					//列新日志状态					
+					updateLogStatus(logId,logStatus);
+					break;
+				}
+				else{ //如果请求返回的结果为空时,则表明出现请求时错误(网络错误,URL地址错误等)
+					log.info("请求发送处方时发生网络错误! 1000ms后重新发送请求......");
+					Thread.sleep(1000);
+					counter++;
+					if(counter==3){						
+						updateLogStatus(logId,3);  //列新日志状态
+						log.info("重试三次后仍没有发送成功,更新处方发送日志......");
+					}
+				}
+			}
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//System.out.println("模拟发送处方------返回结果:"+result);		
 	}
 	
 	/**
@@ -203,6 +236,25 @@ public class DBThread implements Runnable {
 		String jsonPack=JSON.toJSON(protocol).toString();  //生成需要发送的数据包		
 		System.out.println("------发送到海典:--------"+jsonPack);
 		return jsonPack;
+	}
+	
+	/**
+	 * @Description: 更新日志状态
+	 * @param
+	 *     @param logId  日志ID
+	 *     @param status 0:初始状态; 1:成功；2：失败；3：连接失败
+	 * @return 
+	 *     void  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年2月1日-下午1:15:18
+	 */
+	private void updateLogStatus(long logId,int status){
+		LogSendPresc logSendPresc=new LogSendPresc();
+		logSendPresc.setId(logId);
+		logSendPresc.setStatus(status);
+		//logSendPresc.setMsg(jobj.getString("msg"));
+		logSendPrescService.updateByPrimaryKeySelective(logSendPresc);	
 	}
 	
 

@@ -18,7 +18,7 @@ public class MyApplicationListener implements ApplicationListener<ApplicationEve
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
-    	System.out.println("启动成功......");
+    	//System.out.println("启动成功......");
         if (event instanceof ContextClosedEvent) {
             XmlWebApplicationContext x = (XmlWebApplicationContext) event.getSource();
             //防止执行两次。root application context 没有parent，他就是老大
