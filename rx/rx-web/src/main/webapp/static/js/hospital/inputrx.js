@@ -1283,7 +1283,13 @@ $(function() {
 	 **************************************************************************/
 	$("#btn-print").on("click", function(event) {
 		// $("#printarea").print(); //功能同下.
-		loadPrintTemplate_print();
+		
+		var prescNo=$("#presc-no").val();
+		if(prescNo!="")
+			loadPrintTemplate_print();
+		else{
+			alert("此处方尚未保存,请先保存后再打印处方.",2000);
+		}
 	});
 
 	// Add keybinding (not recommended for production use)
