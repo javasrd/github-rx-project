@@ -11,188 +11,186 @@
 -->
 <html>
 
-	<head>
-		<meta charset="UTF-8">		
-		<meta http-equiv="Access-Control-Allow-Origin" content="*">
-		<title></title>
-	</head>
-	
-	
-	<!--   引入jquery 根据情况引入相应版本即可。    -->
-	<script type="@{/static/js/json2/json2.js}"></script>
-	<script th:src="@{/static/jquery/1.11.3/jquery-1.11.3.js}"></script>	      	
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<title></title>
+</head>
 
-	<body>		
-		<!-- 用于发起第一次请求：发送医、患数据 -->
-		<div>
-			<a href="javascript:void(0);" class="a_post"  method="post">发起POST请求并打开新窗口</a>
-		</div>
-		
-		<div>
-			<!-- <a href='http://localhost:8080/rx-web/api?patient_id=123&
-							patient_rn=123456789&
-							patient_name=张三&
-							patient_gender=男&
-							patient_old=50&
-							patient_cr_no=123456&
-							doctor_id=12&
-							doctor_name=李四&
-							department_id=15&
-							department_name=内科&
-							diagnosis_result=消化不良,重感冒' class="a_get"  method="get">发起GET请求返回JSON数据包</a> -->
-			<a href='http://localhost:8080/rx-web/api?
-							patient_id=123&
-							patient_rn=123456789&
-							patient_name=张三&
-							patient_gender=男&
-							patient_old=50&
-							patient_cr_no=123456&
-							doctor_id=12&
-							doctor_name=李四&
-							department_id=15&
-							department_name=内科&
-							diagnosis_result=消化不良,重感冒' class="a_get"  method="get">发起GET请求返回JSON数据包</a>
-		</div>
-	</body>
 
-	<script>	
-		/*********************************************			
-			功能描述：打开非医保处方录入窗口
-			
-			注1：第二次发送请求，发送患者ID，并打开窗口
-			注2：在弹窗时，浏览器会阻止弹窗。
-				 可在浏览器中设置允许弹窗的链接。
-		*********************************************/
-		function open_win(patientId)
-		{
-			//url2的实际地址由【非医保Rx】给出。在原有需求文档中，并没有此地址信息，需要加入。
-			//patientId为当前患者的ID，需要根据实际情况替换相应的值。
-			
-			url2="http://localhost:8080/rx-web/openwin?patientId="+patientId;   
-			window.open(url2,"_blank");
-			
-			
-		}
+<!--   引入jquery 根据情况引入相应版本即可。    -->
+<div th:include="/thymeleaf/common/head3::headx('处方录入')"	th:remove="tag"></div>
+<!-- <script th:src="@{/static/jquery/1.11.3/jquery-1.11.3.js}"></script> -->
+<script type="@{/static/js/json2/json2.js}"></script>
+
+<body>
+	<!-- 用于发起第一次请求：发送医、患数据 -->
+	<div>
+		<a href="javascript:void(0);" class="a_post" method="post">发起POST请求并打开新窗口</a>
+	</div>
+
+	<div>
+		<a href='' class="a_get" method="get">发起GET请求返回JSON数据包</a>
+	</div>
+</body>
+
+<script>
+	/*********************************************			
+		功能描述：打开非医保处方录入窗口
 		
+		注1：第二次发送请求，发送患者ID，并打开窗口
+		注2：在弹窗时，浏览器会阻止弹窗。
+			 可在浏览器中设置允许弹窗的链接。
+	 *********************************************/
+	function open_win(patientId) {
+		//url2的实际地址由【非医保Rx】给出。在原有需求文档中，并没有此地址信息，需要加入。
+		//patientId为当前患者的ID，需要根据实际情况替换相应的值。
+
+		url2 = BASE_CONTEXT_PATH+"/openwin?patientId=" + patientId;
+		window.open(url2, "_blank");
+
+	}
+
+	/**
+		设置get请求的  URL,由于参数中有汉字,需要进行url编码处理
+	 */
+	function setGetUrl() {
+		
+		var url = BASE_CONTEXT_PATH+"/api?"
+				+ "patient_id=123&patient_rn=123456789&patient_name=张三&patient_gender=男&patient_old=50&patient_cr_no=123456&doctor_id=12&doctor_name=李四&department_id=15&department_name=内科&diagnosis_result=消化不良,重感冒";
+
+		$(".a_get").attr("href", encodeURI(url));
+	}
+
+	$(function() {
+
+		//设置get链接的url
+		setGetUrl();
+
 		/**************************
 			功能描述：绑定链接的click事件
 				 AJAX方式发送POST请求。
-		**************************/		
+		 **************************/
 		$(".a_post").on("click", function(event) {
-		
+
 			//alert("click");
 			//传递医、患等信息的URL，由【非医保Rx】提供，此处仅为测试URL
-			url1="http://localhost:8080/rx-web/api";
-			
+			url1 = BASE_CONTEXT_PATH+"/api";
+
 			// 传递的参数 此处仅为示例数据，实际数据按协议	
 			// 模拟生成医,患,诊断信息		
-			
-			
+
 			event.preventDefault(); //使a自带的方法失效，即无法调整到href中的URL		
-			
+
 			//采用AJAX方式发送POST请求
 			$.ajax({
-				type: "POST",
-				url: url1,
+				type : "POST",
+				url : url1,
 				//contentType: "application/json", //指定发送到服务器时参数的格式				
-				dataType: "json",  //指定自服务器接收到的数据格式
-				data: {
-					patient_id:"123",
-					patient_rn:"123456789", 
-					patient_name:"张三",
-					patient_gender:"男",
-					patient_old:"50",
-					patient_cr_no:"123456",
-					doctor_id:"12",
-					doctor_name:"李四",
-					department_id:"15",
-					department_name:"内科",
-					diagnosis_result:"消化不良,重感冒"
-					
+				dataType : "json", //指定自服务器接收到的数据格式
+				data : {
+					patient_id : "123",
+					patient_rn : "123456789",
+					patient_name : "张三",
+					patient_gender : "男",
+					patient_old : "50",
+					patient_cr_no : "123456",
+					doctor_id : "12",
+					doctor_name : "李四",
+					department_id : "15",
+					department_name : "内科",
+					diagnosis_result : "消化不良,重感冒"
+
 				}, //传递的参数				
-				
-				success: function(result) {
+
+				success : function(result) {
 					//请求正确之后的操作
 					// console.log(result);
 					//alert(result.patientId);
-					var patientId=result.patientId;
+					var patientId = result.patientId;
 					open_win(patientId);
-				},				
-				error: function(result) {  
+				},
+				error : function(result) {
 					//请求失败之后的操作
 					//显示提示信息					
 					//console.log(result);
 					//open_win();
 				}
 			});
-			
+
 		});
-		
-	/**************************
-		此方法暂时没有使用.
-		功能描述：绑定链接的click事件
-			 AJAX方式发送POST请求。
-	**************************/		
-	$(".a_post_test").on("click", function(event) {
-	
-		//传递医、患等信息的URL，由【非医保Rx】提供，此处仅为测试URL
-		url1="http://localhost:8080/rx-web/api";
-		
-		// 传递的参数 此处仅为示例数据，实际数据按协议	
-		// 模拟生成医,患,诊断信息		
-		
-		// 生成参数对象
-		parms=new Object();
-		parms.version="1.0";
-		parms.token="DHHIS";
-		parms.func="patient_nmi";
-		parms.data={"patient": {
-			"id":"01",
-			"name": "张三",
-			"gender": "男",
-			"old": "75",
-			"cr_no": "123456789"},
-		 "doctor": {
-			"id":"02",
-			"name": "李四"},
-		 "department": {
-			"id":"03",
-			"name": "内科"},
-		 "diagnosis": [
-			{ "id":"001",
-			"disease": "慢性胃炎"},
-			{ "id":"002",
-			"disease": "营养不良"}]};
-		
-		event.preventDefault(); //使a自带的方法失效，即无法调整到href中的URL		
-		
-		//采用AJAX方式发送POST请求
-		$.ajax({
-			type: "POST",
-			url: url1,
-			contentType: "application/json", //指定发送到服务器时参数的格式				
-			dataType: "json",  //指定自服务器接收到的数据格式
-			data: JSON.stringify(parms), //传递的参数,JSON格式。				
-			
-			success: function(result) {
-				//请求正确之后的操作
-				// console.log(result);
-				open_win();
-			},
-			error: function(result) {  
-				//请求失败之后的操作
-				//显示提示信息					
-				//console.log(result);
-				//open_win();
-			}
+
+		/**************************
+			此方法暂时没有使用.
+			功能描述：绑定链接的click事件
+				 AJAX方式发送POST请求。
+		 **************************/
+		$(".a_post_test").on("click", function(event) {
+
+			//传递医、患等信息的URL，由【非医保Rx】提供，此处仅为测试URL
+			url1 = "http://localhost:8080/rx-web/api";
+
+			// 传递的参数 此处仅为示例数据，实际数据按协议	
+			// 模拟生成医,患,诊断信息		
+
+			// 生成参数对象
+			parms = new Object();
+			parms.version = "1.0";
+			parms.token = "DHHIS";
+			parms.func = "patient_nmi";
+			parms.data = {
+				"patient" : {
+					"id" : "01",
+					"name" : "张三",
+					"gender" : "男",
+					"old" : "75",
+					"cr_no" : "123456789"
+				},
+				"doctor" : {
+					"id" : "02",
+					"name" : "李四"
+				},
+				"department" : {
+					"id" : "03",
+					"name" : "内科"
+				},
+				"diagnosis" : [ {
+					"id" : "001",
+					"disease" : "慢性胃炎"
+				}, {
+					"id" : "002",
+					"disease" : "营养不良"
+				} ]
+			};
+
+			event.preventDefault(); //使a自带的方法失效，即无法调整到href中的URL		
+
+			//采用AJAX方式发送POST请求
+			$.ajax({
+				type : "POST",
+				url : url1,
+				contentType : "application/json", //指定发送到服务器时参数的格式				
+				dataType : "json", //指定自服务器接收到的数据格式
+				data : JSON.stringify(parms), //传递的参数,JSON格式。				
+
+				success : function(result) {
+					//请求正确之后的操作
+					// console.log(result);
+					open_win();
+				},
+				error : function(result) {
+					//请求失败之后的操作
+					//显示提示信息					
+					//console.log(result);
+					//open_win();
+				}
+			});
+
 		});
-		
+
 	});
-		
-		
-		
-	</script>
-	
-	
+</script>
+
+
 
 </html>
