@@ -19,12 +19,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.rx.bean.inputrx.PrescMsg;
-import com.rx.bean.inputrx.RxAPI;
-import com.rx.bean.inputrx.RxDisease;
-import com.rx.bean.inputrx.RxDrug;
-import com.rx.bean.inputrx.RxReqSendPrescription;
-import com.rx.bean.inputrx.RxReqSendPrescriptionData;
-import com.rx.common.util.HttpClientUtil;
 import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
@@ -34,6 +28,7 @@ import com.rx.entity.DictTimes;
 import com.rx.entity.Dispensary;
 import com.rx.entity.Doctor;
 import com.rx.entity.Drug;
+import com.rx.entity.Hospital;
 import com.rx.entity.Patient;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
@@ -45,6 +40,7 @@ import com.rx.service.inputrx.IDispensaryService;
 import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.IDrugService;
+import com.rx.service.inputrx.IHospitalService;
 import com.rx.service.inputrx.ILogReceivePatientService;
 import com.rx.service.inputrx.ILogSendPrescService;
 import com.rx.service.inputrx.IPatientService;
@@ -101,6 +97,8 @@ public class RxOpenController {
 	IDispensaryService dispensaryService;  //药房
 	@Autowired
 	ThreadPoolManager tpm;  //线程池
+	@Autowired
+	IHospitalService hospitalService; //医院名称
 	
 	
 	
@@ -288,6 +286,7 @@ public class RxOpenController {
 		}
 		Department department=departmentService.selectByPrimaryKey(department_id);
 		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patient_id, doctor_id);
+		List<Hospital> hospitalList=hospitalService.selectAll();
 		
 		
 		model.addAttribute("prescType", prescType);
@@ -299,6 +298,7 @@ public class RxOpenController {
 		model.addAttribute("department", department);
 		model.addAttribute("diagnosisList", diagnosisList);
 		model.addAttribute("drugList", drugList);
+		model.addAttribute("hospital",hospitalList.get(0));
 		model.addAttribute("sum", sum);
 		
 		

@@ -31,7 +31,7 @@
 <body>
   <div class="print_area_rx">
     <div class="title_top text-right">【 <span th:text="${prescType}">正方</span> 】</div>
-    <h1>中国石油天然气集团公司中心医院处方笺</h1>
+    <h1><span th:text="${hospital.name}">中国石油天然气集团公司中心医院</span>处方笺</h1>
     <div class="title_bottom">
       <div class="num_barcode"><span>处方编号:</span><div id="barcode-pn" class="barcode-pn" style="display: inline; float:left; margin-left:50px; margin-top:-25px; height:50px; width:300px;"></div></div>
       <span class="pull-right">【自费】</span>
