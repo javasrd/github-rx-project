@@ -74,7 +74,7 @@ function loadPrintTemplate() {
 	parmObj.departmentId=$("#department").attr("bind-id");
 	parmObj.type=1;  //1:正方   2:副方
 	parmObj.prescNo=$("#presc-no").val();  //处方号
-	parmObj.prescDrugs=g_prescDrugList;
+	parmObj.prescDrugs=getDrugList();
 	
 	var parms = {jsonPresc:JSON.stringify(parmObj)}; //参数jsonPresc的格式为json	
 	var callbackFunc = loadPrintTemplate_copy;
@@ -96,7 +96,7 @@ function loadPrintTemplate_copy() {
 	parmObj.departmentId=$("#department").attr("bind-id");
 	parmObj.type=2;  //1:正方   2:副方
 	parmObj.prescNo=$("#presc-no").val();  //处方号
-	parmObj.prescDrugs=g_prescDrugList;
+	parmObj.prescDrugs=getDrugList();
 	
 	var parms = {jsonPresc:JSON.stringify(parmObj)}; //参数jsonPresc的格式为json	
 	var callbackFunc = printPreview;
@@ -132,7 +132,7 @@ function loadPrintTemplate_print() {
 	parmObj.departmentId=$("#department").attr("bind-id");
 	parmObj.type=1;  //1:正方   2:副方
 	parmObj.prescNo=$("#presc-no").val();  //处方号
-	parmObj.prescDrugs=g_prescDrugList;
+	parmObj.prescDrugs=getDrugList();
 	
 	var parms = {jsonPresc:JSON.stringify(parmObj)}; //参数jsonPresc的格式为json	
 	var callbackFunc = loadPrintTemplate_print_copy;
@@ -154,7 +154,7 @@ function loadPrintTemplate_print_copy() {
 	parmObj.departmentId=$("#department").attr("bind-id");
 	parmObj.type=2;  //1:正方   2:副方
 	parmObj.prescNo=$("#presc-no").val();  //处方号
-	parmObj.prescDrugs=g_prescDrugList;
+	parmObj.prescDrugs=getDrugList();
 	
 	var parms = {jsonPresc:JSON.stringify(parmObj)}; //参数jsonPresc的格式为json	
 	var callbackFunc = print_prescription;
@@ -278,7 +278,7 @@ function addDrugIntoTable() {
 	 * newDrug.i=val; });
 	 */
 	var newDrug = g_currDrug;
-	g_prescDrugList.push(newDrug); // 加入列表中
+	addDrugToDrugList(newDrug);  // 加入列表中
 
 	// 动态绑定input事件
 	bindEventForDosage("#drug-dosage-" + g_currDrug.id);
@@ -386,9 +386,6 @@ function setFocus(id) {
  */
 function delSelectedDrug(that) {
 	showConfirmWindow(that);
-	/*
-	 * deleteDrug(that); deleteDrugRow(that);
-	 */
 }
 
 // 自g_prescDrugList列表中删除
@@ -693,7 +690,7 @@ function savePrescription() {
 	parmObj.patientId=$("#patient").attr("bind-id");
 	parmObj.doctorId=$("#doctor").attr("bind-id");
 	parmObj.departmentId=$("#department").attr("bind-id");
-	parmObj.prescDrugs=g_prescDrugList;
+	parmObj.prescDrugs=getDrugList();
 	
 	//var parms = g_prescDrugList;
 	// alert("array length:"+parms.length);
@@ -816,7 +813,8 @@ function handler_input_doseunit() {
 	var drugId = $(this).attr("bind-id"); // 取得当前编辑的药品ID
 	var index = searchDrugById(drugId); // 自g_prescDrugList查询,并置doseunit
 	if (index >= 0) {
-		g_prescDrugList[index].doseunit = $(this).val();
+		var prescDrugList=getDrugList();
+		prescDrugList[index].doseunit = $(this).val();
 	}
 
 	// (2)输入是助记码情况
@@ -837,7 +835,8 @@ function handler_input_dosage() {
 	var drugId = $(this).attr("bind-id"); // 取得当前编辑的药品ID
 	var index = searchDrugById(drugId); // 自g_prescDrugList查询,并置dosage
 	if (index >= 0) {
-		g_prescDrugList[index].dosage = $(this).val();
+		var prescDrugList=getDrugList();
+		prescDrugList[index].dosage = $(this).val();
 	}
 }
 
@@ -851,7 +850,8 @@ function handler_input_days() {
 	// 自g_prescDrugList查询,并置days属性
 	var index = searchDrugById(drugId);
 	if (index >= 0) {
-		g_prescDrugList[index].days = $(this).val();
+		var prescDrugList=getDrugList();
+		prescDrugList[index].days = $(this).val();
 	}
 }
 
