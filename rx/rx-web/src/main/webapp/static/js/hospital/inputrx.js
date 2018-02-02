@@ -538,8 +538,17 @@ function searchDrugById(drugId) {
 	return -1;
 }
 
+/**
+ * getter;
+ */
 function getDrugList(){
-	return g_rescDrugList;
+	return g_prescDrugList;
+}
+/**
+ * 获得当前药品列表的长度
+ */
+function getDrugListLength(){
+	return g_prescDrugList.length;
 }
 
 /*******************************************************************************
@@ -1157,6 +1166,12 @@ function handler_blur_doseunit(){
  * @returns
  */
 function handler_click_btn_cleartable(){
+	var len=getDrugListLength();  //获得药品列表的长度.
+	if(len<=0){
+		alert("尚未录入药品,不必清屏!",1000);
+		return false;
+	}
+	
 	//(1)显示确认对话框
 	showConfirmWindow_cleartable();
 }
@@ -1263,7 +1278,17 @@ $(function() {
 	/***************************************************************************
 	 * 绑定事件-保存按钮
 	 **************************************************************************/
-	$("#btn-save-prescription").on("click", function(event) {		
+	$("#btn-save-prescription").on("click", function(event) {
+		//(1)所输入的药品数量判定.
+		var len=getDrugListLength();  //获得药品列表的长度.
+		if(len<=0){
+			alert("尚未录入药品!",1000);
+			return false;
+		}
+		
+		//(2)TODO 其它的根据业务逻辑进行的有效性判定
+		
+		
 		$(this).attr("disabled",true);  //防止重复提交
 		savePrescription(); // 保存处方
 		  
