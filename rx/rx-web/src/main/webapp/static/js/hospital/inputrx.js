@@ -207,6 +207,7 @@ function addDrugIntoTable() {
 	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'
 			+ g_currDrug.id
 			+ '"'
+			+' title="双击删除药品"'
 			+ '>'
 			+ '<td>'
 			+ g_currDrug.wareid
@@ -296,7 +297,29 @@ function addDrugIntoTable() {
 
 	g_currDrug = null; // 加入后置当前药品为空
 
+	displayNumberAndSum();  
+	
 	Common.addStripedStyle();
+}
+
+/**
+ * 显示处方中药品数量及总金额
+ */
+function displayNumberAndSum(){
+	var drugList=getDrugList();
+	$("#presc-drug-number").text(drugList.length);
+	var sum=calcPrescDrugAmount();	
+	$("#presc-drug-sum").text(sum);
+}
+
+
+function calcPrescDrugAmount(){
+	var sum=0;
+	var drugList=getDrugList();
+	for(i=0;i<drugList.length;i++){
+		sum=sum+drugList[i].saleprice*drugList[i].quantity;
+	}
+	return sum;
 }
 
 /**
@@ -424,6 +447,7 @@ function showConfirmWindow(that) {
 				deleteDrugRow(that);
 				M1.dialog3.close();
 				M1.dialog3 = null;
+				displayNumberAndSum();
 			},
 			'取消' : function() {
 				M1.dialog3.close();
