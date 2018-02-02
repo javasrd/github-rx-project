@@ -286,7 +286,7 @@ public class RxOpenController {
 		}
 		Department department=departmentService.selectByPrimaryKey(department_id);
 		List<Diagnosis> diagnosisList=diagnosisService.getDiagnosisByPatientAndDoctor(patient_id, doctor_id);
-		List<Hospital> hospitalList=hospitalService.selectAll();
+		List<Hospital> hospitalList=hospitalService.selectAll();  //读取医院名称配置
 		
 		
 		model.addAttribute("prescType", prescType);

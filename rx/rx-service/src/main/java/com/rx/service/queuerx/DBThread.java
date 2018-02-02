@@ -19,12 +19,14 @@ import com.rx.bean.inputrx.RxReqSendPrescriptionData;
 import com.rx.common.util.HttpClientUtil;
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
+import com.rx.entity.DictCommon;
 import com.rx.entity.Doctor;
 import com.rx.entity.Drug;
 import com.rx.entity.LogSendPresc;
 import com.rx.entity.Patient;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
+import com.rx.service.inputrx.IDictCommonService;
 import com.rx.service.inputrx.IDispensaryService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.IDrugService;
@@ -61,10 +63,13 @@ public class DBThread implements Runnable {
 	@Autowired
 	IDispensaryService dispensaryService;  //药房
 	@Autowired
-	ThreadPoolManager tpm;  //线程池    
+	ThreadPoolManager tpm;  //线程池 
+	@Autowired
+	IDictCommonService dictCommonService;
     
     @Override
     public void run() {
+    	final String RECEIVE_PRESCRIPTION_URL="hdpresc";  //海典接收处方的地址在通用数据字典中的编码.
     	
     	//实际的业务处理.
         /*Systemlog systemlog = new Systemlog();
@@ -74,8 +79,14 @@ public class DBThread implements Runnable {
     	//(1)生成数据包
     	String pack=createPrescPackage(msg.getPresc(),msg.getPrescNo(),msg.getPrescId());
     	
-    	//(2)记录日志(将数据包包记录日志). 0:初始状态;1:成功; 2:失败; 3:网络连接失败		
-		String url="http://localhost:8080/rx-web/prescapi";
+    	//(2)记录日志(将数据包包记录日志). 0:初始状态;1:成功; 2:失败; 3:网络连接失败
+    	//读取海典接授处方的接口地址
+    	List<DictCommon> dictCommonList=dictCommonService.getDictCommonByCode(RECEIVE_PRESCRIPTION_URL);
+    	String url="http://localhost:8080/rx-web/prescapi";  //默认地址
+    	if(dictCommonList.size()>0){
+    		url=dictCommonList.get(0).getName();
+    	}
+		
 		//String url="http://222.222.66.25:8093/nmi";		
 		long logId=logSendPrescService.addLog(url, pack, 0);  //记录日志,将日志的ID号传送给线程处理.
 		

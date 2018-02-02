@@ -1,5 +1,7 @@
 package com.rx.service.impl.inputrx;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.rx.dao.DictCommonMapper;
@@ -25,6 +27,14 @@ public class DictCommonServiceImpl extends AbstractBaseService<DictCommon, Long>
 	public void setDictCommonMapper(DictCommonMapper dictCommonMapper) {
 		this.dictCommonMapper=dictCommonMapper;
 		this.setMapper(dictCommonMapper);
+	}
+
+	@Override
+	public List<DictCommon> getDictCommonByCode(String code) {
+		DictCommon rec=new DictCommon();
+		rec.setCode(code);
+		rec.setDeleted(1);
+		return dictCommonMapper.select(rec);
 	}
 
 }
