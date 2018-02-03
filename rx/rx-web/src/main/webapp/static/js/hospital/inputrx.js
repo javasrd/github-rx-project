@@ -243,8 +243,7 @@ function addDrugIntoTable() {
 			+ '></td>' + '<td class="input_width">' + g_currDrug.wareunit
 			+ '</td>' + '<td class="small_width">' + g_currDrug.saleprice
 			+ '</td>' + '<td class="small_width">' + $("#quantity").val()
-			+ '</td>' + '<td class="small_width">' + $("#quantity").val()
-			* g_currDrug.saleprice + '</td>' + '</tr>';
+			+ '</td>' + '<td class="small_width">' + toDecimal($("#quantity").val()	* g_currDrug.saleprice) + '</td>' + '</tr>';
 	
 	var drugItem_test='<tr>'+
         '<td>此处存放药品名称12313123</td>'+
@@ -310,7 +309,7 @@ function displayNumberAndSum(){
 	var drugList=getDrugList();
 	$("#presc-drug-number").text(drugList.length);
 	var sum=calcPrescDrugAmount();	
-	$("#presc-drug-sum").text(sum);
+	$("#presc-drug-sum").text(toDecimal(sum));
 }
 
 /**
@@ -515,6 +514,44 @@ function clearNumberAndSum(){
 	$("#presc-drug-number").text("0");
 	$("#presc-drug-sum").text("0");
 }
+
+
+/*********************************************
+ * 数字转换通用函数
+ ********************************************/
+//功能：将浮点数四舍五入，取小数点后2位    
+function toDecimal(x) {    
+    var f = parseFloat(x);    
+    if (isNaN(f)) {    
+        return;    
+    }    
+    f = Math.round(x*100)/100;    
+    return f;    
+}    
+
+
+//制保留2位小数，如：2，会在2后面补上00.即2.00    
+function toDecimal2(x) {    
+    var f = parseFloat(x);    
+    if (isNaN(f)) {    
+        return false;    
+    }    
+    var f = Math.round(x*100)/100;    
+    var s = f.toString();    
+    var rs = s.indexOf('.');    
+    if (rs < 0) {    
+        rs = s.length;    
+        s += '.';    
+    }    
+    while (s.length <= rs + 2) {    
+        s += '0';    
+    }    
+    return s;    
+}    
+    
+function fomatFloat(src,pos){       
+     return Math.round(src*Math.pow(10, pos))/Math.pow(10, pos);       
+}    
 
 
 // TODO, 后续采用面象对象的方式开发JS
