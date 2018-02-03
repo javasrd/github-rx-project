@@ -275,7 +275,7 @@ public class RxOpenController {
 			drugMap.put("usermethod",jsonDrug.getString("dosage")+doseUnit+"   "+
 						mode+"    "+
 						times+ "   "+
-						subSumStr);			
+						subSumStr+"元");			
 			drugList.add(drugMap);
 			
 			sum=sum.add(subSum);

@@ -298,7 +298,7 @@ function addDrugIntoTable() {
 
 	displayNumberAndSum();  
 	
-	$("#drugForm tr").attr("class","");
+	$("#drugForm .drug-list tr").attr("class","");
 	Common.addStripedStyle();
 }
 
@@ -449,7 +449,7 @@ function showConfirmWindow(that) {
 				deleteDrug(that);
 				deleteDrugRow(that);
 				displayNumberAndSum();	
-				$("#drugForm tr").attr("class","");
+				$("#drugForm .drug-list tr").attr("class","");
 				Common.addStripedStyle();
 				M1.dialog3.close();
 				M1.dialog3 = null;
@@ -979,6 +979,12 @@ function validAddDrug(){
 	err.errorMsg="";
 	err.valid=true;
 	
+	var len=getDrugListLength();  //获得药品列表的长度.	
+	if(len>=5){	
+		err.valid=false;
+		err.errorMsg=err.errorMsg+"每个处方中药品数不可超过5种!"+ ";";
+	}
+	
 	if(g_currDrug==null){
 		err.valid=false;
 		err.errorMsg=err.errorMsg+"未选择药品"+ ";";		
@@ -1386,7 +1392,7 @@ $(function() {
 			alert("尚未录入药品!",1000);
 			return false;
 		}
-		if(len>5){
+		if(len>=5){
 			alert("每个处方中药品数不可超过5种!");
 			return false;
 		}

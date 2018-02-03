@@ -91,11 +91,12 @@ html{
 body{		
 	height: 100%;
 	overflow: auto;
+	/* background-color: #f0f2f5; */
 }
 
 .hospital{
 	font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";	
-	background-color: #f0f2f5;
+	background-color: #f0f2f5;	
 }
 
 .navbar{

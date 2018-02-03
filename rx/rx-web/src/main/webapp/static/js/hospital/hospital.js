@@ -61,8 +61,8 @@ var Common = {
 	},
 
 	addStripedStyle : function () {
-		$("#drugForm tr").filter(":odd").addClass("odd");
-		$("#drugForm tr").filter(":even").addClass("even");
+		$("#drugForm .drug-list tr").filter(":odd").addClass("odd");
+		$("#drugForm .drug-list tr").filter(":even").addClass("even");
 	},
 
 	//modified by jch 2018/01/25
