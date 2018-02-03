@@ -411,6 +411,11 @@ function setFocus(id) {
  * @returns
  */
 function delSelectedDrug(that) {
+	var prescNo=$("#presc-no").val();
+	if(prescNo!=""){
+		alert("处方已经确定,不可删除!",2000);
+		return false;
+	}
 	showConfirmWindow(that);
 }
 
@@ -799,11 +804,16 @@ function savePrescription() {
 					var prescNo = res.result_msg; // 处方编号
 					// TODO 后续业务处理
 					alert("保存成功,生成处方:"+prescNo, 2000);
+					
+					//置处方号
 					$("#presc-no").val(prescNo);
 					$("#presc-no-display").text(prescNo);
+					
+					//列表中编辑无效
+					disableEditDrug();
 
 				} else {
-					util.message(obj.result_err_msg);
+					alert(obj.result_err_msg,5000);
 				}
 				$("#btn-save-prescription").attr("disabled",false);
 				
@@ -814,6 +824,16 @@ function savePrescription() {
 			$("#btn-save-prescription").attr("disabled",false);
 		}
 	});
+}
+
+/**
+ * 保存后,不可以再进行编辑 剂量,剂量单位,天数
+ * @returns
+ */
+function disableEditDrug(){
+	$(".dosage").attr("disabled",true);
+	$(".dose-unit").attr("disabled",true);
+	$(".days").attr("disabled",true);
 }
 
 var M = new Object();
@@ -979,12 +999,18 @@ function validAddDrug(){
 	err.errorMsg="";
 	err.valid=true;
 	
+	var prescNo=$("#presc-no").val();
+	if(prescNo!=""){
+		err.valid=false;
+		err.errorMsg=err.errorMsg+"处方已经确定,不可再增加药品"+ ";";
+		return err;
+	}
+	
 	var len=getDrugListLength();  //获得药品列表的长度.	
 	if(len>=5){	
 		err.valid=false;
-		err.errorMsg=err.errorMsg+"每个处方中药品数不可超过5种!"+ ";";
-	}
-	
+		err.errorMsg=err.errorMsg+"每个处方中药品数不可超过5种!"+ ";";		
+	}	
 	if(g_currDrug==null){
 		err.valid=false;
 		err.errorMsg=err.errorMsg+"未选择药品"+ ";";		
@@ -1007,6 +1033,17 @@ function validAddDrug(){
 			err.valid=false;
 			err.errorMsg=err.errorMsg+"数量不是正整数"+ ";";
 		}
+		else{
+			var sum=calcPrescDrugAmount();
+			var subSum=0;
+			if(g_currDrug!=null)
+				subSum=g_currDrug.saleprice*$("#quantity").val();
+			if((sum+subSum)>300){
+				err.valid=false;
+				err.errorMsg=err.errorMsg+"每个处方中金额不可以超过300元!"+ ";";
+			}
+		}
+				
 	}	
 	
 	return err;
@@ -1403,12 +1440,10 @@ $(function() {
 		}
 		var prescNo=$("#presc-no").val();
 		if(prescNo!=""){
-			alert("此处方已经生成,不可再修改!");
+			alert("此处方已经生成,不可重复保存!");
 			return;
 		}
-		
-				
-		
+	
 		//(2)TODO 其它的根据业务逻辑进行的有效性判定
 		
 		
