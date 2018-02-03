@@ -1314,6 +1314,10 @@ function getDrugWindowStatus() {
 }
 function setDrugWindowStatus(status) {
 	g_dict_drug_window_status = status;
+	if(status==WINDOW_OPENED){
+		setModeWindowStatus(WINDOW_CLOSED);
+		setTimesWindowStatus(WINDOW_CLOSED);
+	}
 }
 
 function getModeWindowStatus() {
@@ -1321,6 +1325,10 @@ function getModeWindowStatus() {
 }
 function setModeWindowStatus(status) {
 	g_dict_mode_window_status = status;
+	if(status==WINDOW_OPENED){
+		setDrugWindowStatus(WINDOW_CLOSED);
+		setTimesWindowStatus(WINDOW_CLOSED);
+	}
 }
 
 function getTimesWindowStatus() {
@@ -1328,6 +1336,10 @@ function getTimesWindowStatus() {
 }
 function setTimesWindowStatus(status) {
 	g_dict_times_window_status = status;
+	if(status==WINDOW_OPENED){
+		setDrugWindowStatus(WINDOW_CLOSED);
+		setModeWindowStatus(WINDOW_CLOSED);
+	}
 }
 
 function getDoseUnitWindowStatus() {
