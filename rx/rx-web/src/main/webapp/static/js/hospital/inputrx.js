@@ -312,7 +312,10 @@ function displayNumberAndSum(){
 	$("#presc-drug-sum").text(sum);
 }
 
-
+/**
+ * 计算现在处方中药品的总金额
+ * @returns 总金额
+ */
 function calcPrescDrugAmount(){
 	var sum=0;
 	var drugList=getDrugList();
@@ -736,6 +739,7 @@ function savePrescription() {
 					// TODO 后续业务处理
 					alert("保存成功,生成处方:"+prescNo, 2000);
 					$("#presc-no").val(prescNo);
+					$("#presc-no-display").text(prescNo);
 
 				} else {
 					util.message(obj.result_err_msg);
@@ -1309,6 +1313,22 @@ $(function() {
 			alert("尚未录入药品!",1000);
 			return false;
 		}
+		if(len>5){
+			alert("每个处方中药品数不可超过5种!");
+			return false;
+		}
+		var sum=calcPrescDrugAmount();
+		if(sum>300){
+			alert("每个处方的金额不可以超过300元!");
+			return;
+		}
+		var prescNo=$("#presc-no").val();
+		if(prescNo!=""){
+			alert("此处方已经生成,不可再修改!");
+			return;
+		}
+		
+				
 		
 		//(2)TODO 其它的根据业务逻辑进行的有效性判定
 		
