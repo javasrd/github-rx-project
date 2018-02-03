@@ -57,9 +57,10 @@
             print_frame_ref.close();
             
             // Grab contents and apply stylesheet
+            var previewAreaContainer="#print-preview-area";  //位于hospital.html
             var $iframe_head = $('head link[media*=print], head link[media=all]').clone(),
                 /*$iframe_body = $('body > *:not(#print-modal):not(script)').clone();*/
-            	$iframe_body = $('#printarea > *').clone();
+            	$iframe_body = $(previewAreaContainer+' > *').clone();
             $iframe_head.each(function() {
                 $(this).attr('media', 'all');
             });
@@ -75,7 +76,7 @@
                     $('head', print_frame_ref).append($(this).clone().attr('media', 'all')[0].outerHTML);
                 });*/
             	
-            	$('#printarea > *:not(#print-modal):not(script)').clone().each(function() {
+            	$(previewAreaContainer+' > *:not(#print-modal):not(script)').clone().each(function() {
                     $('body', print_frame_ref).append(this.outerHTML);
                 });
             	
@@ -136,10 +137,12 @@
             $('a', print_controls).bind('click', function(e) {
                 e.preventDefault();
                 if ($(this).hasClass('print')) {
+                	//window.print();
                 	//$.print("#printarea");
-                	$(window.frames["print-frame"].document).find("body").print();
-
-                	//window.print(); 
+                	//$(window.frames["print-frame"].document).find("body").print();
+                	$.printPreview.distroyPrintPreview();
+                	$("#btn-print").trigger("click");
+                	 
                 }
                 else { $.printPreview.distroyPrintPreview(); }
             });

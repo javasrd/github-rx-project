@@ -232,10 +232,10 @@ public class RxOpenController {
 		int type=parm.getInteger("type");
 		String prescType="";
 		if(type==1){
-			prescType="正方";			
+			prescType="【正方】";			
 		}
 		else{
-			prescType="副方";
+			prescType="【底方】";
 		}
 		String prescNo=parm.getString("prescNo");
 		

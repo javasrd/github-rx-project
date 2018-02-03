@@ -77,8 +77,8 @@ function loadPrintTemplate() {
 	parmObj.prescDrugs=getDrugList();
 	
 	var parms = {jsonPresc:JSON.stringify(parmObj)}; //参数jsonPresc的格式为json	
-	var callbackFunc = loadPrintTemplate_copy;
-	var containerId = "#printarea1";
+	var callbackFunc = printPreview;
+	var containerId = "#print-preview-area";
 	loadPage(containerId, url, parms, callbackFunc);
 }
 
