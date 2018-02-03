@@ -508,7 +508,7 @@ function clearDrugTable(){
  */
 function clearPrescNo(){
 	$("#presc-no").val("");
-	$("#presc-no-display").text("尚未生成");
+	$("#presc-no-display").text("新处方");
 }
 
 /**
