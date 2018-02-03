@@ -299,6 +299,7 @@ function addDrugIntoTable() {
 
 	displayNumberAndSum();  
 	
+	$("#drugForm tr").attr("class","");
 	Common.addStripedStyle();
 }
 
@@ -448,6 +449,9 @@ function showConfirmWindow(that) {
 			'确定' : function() {
 				deleteDrug(that);
 				deleteDrugRow(that);
+				displayNumberAndSum();	
+				$("#drugForm tr").attr("class","");
+				Common.addStripedStyle();
 				M1.dialog3.close();
 				M1.dialog3 = null;
 				displayNumberAndSum();
@@ -471,8 +475,10 @@ function showConfirmWindow_cleartable(that) {
 		'modal' : true,
 		'buttons' : {
 			'确定' : function() {
-				removeAllDrugList();				
-				clearDrugTable(that);				
+				removeAllDrugList();  //清除药品列表 array				
+				clearDrugTable(that); //清除药品table
+				clearPrescNo();		  //清除处方编号
+				clearNumberAndSum();  //清除处方中药品个数及总金额
 				M1.dialog3.close();
 				M1.dialog3 = null;
 			},
@@ -490,6 +496,24 @@ function showConfirmWindow_cleartable(that) {
  */
 function clearDrugTable(){
 	$("#drug-items").empty();
+}
+
+/**
+ * 清除处方编号
+ * @returns
+ */
+function clearPrescNo(){
+	$("#presc-no").val("");
+	$("#presc-no-display").text("尚未生成");
+}
+
+/**
+ * 清除处方个数及金额
+ * @returns
+ */
+function clearNumberAndSum(){
+	$("#presc-drug-number").text("0");
+	$("#presc-drug-sum").text("0");
 }
 
 
@@ -1194,11 +1218,11 @@ function handler_blur_doseunit(){
  * @returns
  */
 function handler_click_btn_cleartable(){
-	var len=getDrugListLength();  //获得药品列表的长度.
+	/*var len=getDrugListLength();  //获得药品列表的长度.
 	if(len<=0){
 		alert("尚未录入药品,不必清屏!",1000);
 		return false;
-	}
+	}*/
 	
 	//(1)显示确认对话框
 	showConfirmWindow_cleartable();
