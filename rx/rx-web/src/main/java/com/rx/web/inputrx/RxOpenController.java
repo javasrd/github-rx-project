@@ -1,12 +1,14 @@
 package com.rx.web.inputrx;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +48,7 @@ import com.rx.service.inputrx.ILogSendPrescService;
 import com.rx.service.inputrx.IPatientService;
 import com.rx.service.inputrx.IPrescDrugService;
 import com.rx.service.inputrx.IPrescriptionService;
+import com.rx.service.queuerx.DBThread;
 import com.rx.service.queuerx.ThreadPoolManager;
 
 
@@ -62,6 +65,7 @@ public class RxOpenController {
 	final String RESPONSE_THYMELEAF = "thymeleaf/inputrx/";
 	final String RESPONSE_THYMELEAF_BACK = "thymeleaf/back/";
 	final String RESPONSE_JSP = "jsps/";
+	private Logger log = Logger.getLogger(DBThread.class);
 
 	
 	@Autowired
@@ -213,7 +217,8 @@ public class RxOpenController {
 	 */
 	@RequestMapping(value = "/presc/printtemplate")
 	public String loadPrintTemplate(String jsonPresc,Model model) {		
-		System.out.println("参数:"+jsonPresc);
+		//System.out.println("参数:"+jsonPresc);
+		log.info("打印模板所接收参数:"+jsonPresc);
 		
 		long patient_id=0;
 		long doctor_id=0;
@@ -266,11 +271,11 @@ public class RxOpenController {
 						jsonDrug.getString("quantity")+"("+	jsonDrug.getString("wareunit")+")");
 			//用法
 			BigDecimal subSum=jsonDrug.getBigDecimal("quantity").multiply(jsonDrug.getBigDecimal("saleprice"));
+			String subSumStr=format(subSum);
 			drugMap.put("usermethod",jsonDrug.getString("dosage")+doseUnit+"   "+
 						mode+"    "+
 						times+ "   "+
-						jsonDrug.getBigDecimal("quantity").multiply(jsonDrug.getBigDecimal("saleprice"))						
-					);			
+						subSumStr);			
 			drugList.add(drugMap);
 			
 			sum=sum.add(subSum);
@@ -299,7 +304,7 @@ public class RxOpenController {
 		model.addAttribute("diagnosisList", diagnosisList);
 		model.addAttribute("drugList", drugList);
 		model.addAttribute("hospital",hospitalList.get(0));
-		model.addAttribute("sum", sum);
+		model.addAttribute("sum", format(sum));
 		
 		
 		return RESPONSE_THYMELEAF + "printtemplate";
@@ -307,11 +312,26 @@ public class RxOpenController {
 	
 	@RequestMapping(value = "/presc/loadcss")
 	public String loadCss() {
-		System.out.println("load css");
+		//System.out.println("load css");
 		return RESPONSE_THYMELEAF + "loadcss";
 	}
 	
-	//static int presc_no=0;
+	/**
+	 * @Description: 格式化成两位小数
+	 * @param
+	 *     @param value
+	 *     @return   
+	 * @return 
+	 *     String  
+	 * @throws 
+	 * @author Administrator
+	 * @date 2018年2月3日-上午11:27:12
+	 */
+	public  String format(BigDecimal value) {
+		BigDecimal bd=value;
+		bd = bd.setScale(2, RoundingMode.HALF_UP);
+		 return bd.toString();
+	}
 	
 	 
 	
