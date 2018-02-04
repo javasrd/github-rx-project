@@ -8,10 +8,9 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.rx.bean.UserBean;
+import com.rx.common.SessionConstants;
 import com.rx.common.util.DateUtils;
 import com.rx.entity.User;
-import com.rx.common.SessionConstants;
 
 /**
  * Class: SessionTimeoutInterceptor
