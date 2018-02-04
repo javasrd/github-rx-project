@@ -178,39 +178,16 @@ function print_prescription(){
  * 将选择的药品加入列表中
  ******************************************************************************/
 function addDrugIntoTable() {
-	// 需要加入的内容如下所示:
-	/*
-	 * 
-	 * <th>商品码</th> <th>商品名</th> <th>规格</th> <th>用法</th> <th>频次</th>
-	 * <th class="input_width">单次用量</th> <th class="input_width">剂量单位</th>
-	 * <th class="input_width">用药天数</th> <th class="input_width">单位</th>
-	 * <th class="small_width">单价</th> <th class="small_width">数量</th>
-	 * <th class="small_width">金额</th>
-	 * 
-	 * <tr th:remove="all"> <td>此处存放药品名称</td> <td></td> <td></td> <td></td>
-	 * <td></td> <td class="input_width input_td"><input class="form-control
-	 * input-sm"></td> <td class="input_width input_td"><input
-	 * class="form-control input-sm" onfocus="Common.showDropdownUnit(this)"
-	 * onblur="Common.hideDropdownUnit()"></td>
-	 * <td class="input_width input_td"><input class="form-control input-sm"></td>
-	 * <td class="input_width"></td> <td class="small_width"></td>
-	 * <td class="small_width"></td> <td class="small_width"></td> </tr>
-	 * 
-	 * g_currDrug.wareid=$("#wareid-"+drugId).text();
-	 * g_currDrug.warename=$("#warename-"+drugId).text();
-	 * g_currDrug.warespec=$("#warespec-"+drugId).text();
-	 * g_currDrug.saleprice=$("#saleprice-"+drugId).text();
-	 * g_currDrug.wareunit=$("#wareunit-"+drugId).text();
-	 */
 
 	//getInputDoseUnitId(this)
+	
 	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'+ g_currDrug.id+ '"'+' title="双击删除药品"'+ '>'
 			+ '<td class="small_width">'+ g_currDrug.wareid	+ '</td>'
 			+ '<td class="input_width">'+ g_currDrug.warename + '</td>'
 			+ '<td class="small_width">'+ g_currDrug.warespec + '</td>'
 			
 			+ '<td class="small_width "><input class="form-control  dosage" id="drug-dosage-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+   ' value='+$("#single-dosage").val()  +   '></td>'
-			+ '<td class="small_width "><input class="form-control  dose-unit" id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+  ' value='+$("#single-dose-unit").val()  + ' onfocus="getInputDoseUnitId(this)" '  + '></td>'
+			+ '<td class="small_width "><input class="form-control  dose-unit" id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputDoseUnitId(this)" '+ ' value='+$("#single-dose-unit").val()  + '></td>'
 			+ '<td class="input_width "><input class="form-control  times" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugtimes").val()+     '></td>'
 			+ '<td class="input_width "><input class="form-control  mode" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugmode").val()+'></td>'			
 			+ '<td class="small_width "><input class="form-control  days" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+' value='+$("#treatment-days").val()+'></td>'
@@ -220,21 +197,6 @@ function addDrugIntoTable() {
 			+ '<td class="small_width">' + g_currDrug.saleprice	+ '</td>'
 			+ '<td class="input_width">' + toDecimal($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
 			+ '</tr>';
-	
-	var drugItem_test='<tr>'+
-        '<td class="input_width">此处存放药品名称12313123</td>'+
-        '<td class="input_width"></td>'+
-        '<td class="input_width"></td>'+
-        '<td class="input_width"></td>'+
-        '<td class="input_width"></td>'+
-        '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
-        '<td class="input_width input_td"><input class="form-control input-sm" onfocus="Common.showDropdownUnit(this)" onblur="Common.hideDropdownUnit()"></td>'+
-        '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
-        '<td class="input_width"></td>'+
-        '<td class="small_width"></td>'+
-        '<td class="small_width"></td>'+
-        '<td class="small_width"></td>'+
-      '</tr> ';
 
 	$("#drug-items").append(drugItem); // 加入显示列表中.	
 	
