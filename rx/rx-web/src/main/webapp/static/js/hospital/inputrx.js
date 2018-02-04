@@ -204,53 +204,29 @@ function addDrugIntoTable() {
 	 */
 
 	//getInputDoseUnitId(this)
-	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'
-			+ g_currDrug.id
-			+ '"'
-			+' title="双击删除药品"'
-			+ '>'
-			+ '<td>'
-			+ g_currDrug.wareid
-			+ '</td>'
-			+ '<td>'
-			+ g_currDrug.warename
-			+ '</td>'
-			+ '<td>'
-			+ g_currDrug.warespec
-			+ '</td>'
-			+ '<td>'
-			+ $("#drugmode").val()
-			+ '</td>'
-			+ '<td>'
-			+ $("#drugtimes").val()
-			+ '</td>'
-			+ '<td class="input_width input_td"><input class="form-control input-sm dosage" id="drug-dosage-'
-			+ g_currDrug.id
-			+ '"'
-			+ ' bind-id="'
-			+ g_currDrug.id
-			+ '"'
-			+ '></td>'
-			+ '<td class="input_width input_td"><input class="form-control input-sm dose-unit" onfocus="getInputDoseUnitId(this)" id="drug-doseunit-'
-			+ g_currDrug.id
-			+ '"'
-			+ ' bind-id="'
-			+ g_currDrug.id
-			+ '"'
-			+ '></td>'
-			+ '<td class="input_width input_td"><input class="form-control input-sm days" id="drug-days-'
-			+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'
-			+ '></td>' + '<td class="input_width">' + g_currDrug.wareunit
-			+ '</td>' + '<td class="small_width">' + g_currDrug.saleprice
-			+ '</td>' + '<td class="small_width">' + $("#quantity").val()
-			+ '</td>' + '<td class="small_width">' + toDecimal($("#quantity").val()	* g_currDrug.saleprice) + '</td>' + '</tr>';
+	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'+ g_currDrug.id+ '"'+' title="双击删除药品"'+ '>'
+			+ '<td class="small_width">'+ g_currDrug.wareid	+ '</td>'
+			+ '<td class="input_width">'+ g_currDrug.warename + '</td>'
+			+ '<td class="small_width">'+ g_currDrug.warespec + '</td>'
+			
+			+ '<td class="small_width "><input class="form-control  dosage" id="drug-dosage-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+   ' value='+$("#single-dosage").val()  +   '></td>'
+			+ '<td class="small_width "><input class="form-control  dose-unit" id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+  ' value='+$("#single-dose-unit").val()  + ' onfocus="getInputDoseUnitId(this)" '  + '></td>'
+			+ '<td class="input_width "><input class="form-control  times" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugtimes").val()+     '></td>'
+			+ '<td class="input_width "><input class="form-control  mode" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugmode").val()+'></td>'			
+			+ '<td class="small_width "><input class="form-control  days" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+' value='+$("#treatment-days").val()+'></td>'
+			+ '<td class="small_width "><input class="form-control  quantity" id="drug-quantity-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+ 'value='+$("#quantity").val()+'></td>' 
+			
+			+ '<td class="small_width">' + g_currDrug.wareunit+ '</td>' 
+			+ '<td class="small_width">' + g_currDrug.saleprice	+ '</td>'
+			+ '<td class="input_width">' + toDecimal($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
+			+ '</tr>';
 	
 	var drugItem_test='<tr>'+
-        '<td>此处存放药品名称12313123</td>'+
-        '<td></td>'+
-        '<td></td>'+
-        '<td></td>'+
-        '<td></td>'+
+        '<td class="input_width">此处存放药品名称12313123</td>'+
+        '<td class="input_width"></td>'+
+        '<td class="input_width"></td>'+
+        '<td class="input_width"></td>'+
+        '<td class="input_width"></td>'+
         '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
         '<td class="input_width input_td"><input class="form-control input-sm" onfocus="Common.showDropdownUnit(this)" onblur="Common.hideDropdownUnit()"></td>'+
         '<td class="input_width input_td"><input class="form-control input-sm"></td>'+
