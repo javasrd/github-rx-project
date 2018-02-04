@@ -52,4 +52,13 @@ public class StaticConstants {
 	public static String DRUG_MANAGE_PAGE = "back/jsp/drug/drug_manage";//药品信息维护页面
 	public static String DRUG_MANAGE_TABLE_PAGE = "back/jsp/drug/drug_table";//药品信息维护列表页面
 	
+	public static String LOG_SYNC_DRUG_MANAGE_PAGE = "back/jsp/log/log_sync_drug/log_sync_drug";//药品信息同步，日志页面
+	public static String LOG_SYNC_DRUG_MANAGE_TABLE_PAGE = "back/jsp/log/log_sync_drug/log_sync_drug_table";//药品信息同步，日志列表页面
+	
+	public static String LOG_SEND_PRESC_MANAGE_PAGE = "back/jsp/log/log_send_presc/log_send_presc";//发送处方信息，日志页面
+	public static String LOG_SEND_PRESC_MANAGE_TABLE_PAGE = "back/jsp/log/log_send_presc/log_send_presc_table";//发送处方信息，日志列表页面
+	
+	public static String LOG_RECEIVE_PATIENT_MANAGE_PAGE = "back/jsp/log/log_receive_patient/log_receive_patient";//接收患者信息，日志页面
+	public static String LOG_RECEIVE_PATIENT_MANAGE_TABLE_PAGE = "back/jsp/log/log_receive_patient/log_receive_patient_table";//接收患者信息，日志列表页面
+	
 }

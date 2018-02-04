@@ -1,5 +1,6 @@
 package com.rx.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -76,6 +77,16 @@ public class LogSendPresc {
     }
 
     /**
+     * 获取创建日期
+     *
+     * @return createdTime - 创建日期
+     */
+    public String getCreatedTimeStr() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(createdTime);
+    }
+    
+    /**
      * 获取发送状态。1:成功；2：失败；3：连接失败
      *
      * @return status - 发送状态。1:成功；2：失败；3：连接失败
@@ -93,6 +104,30 @@ public class LogSendPresc {
         this.status = status;
     }
 
+    /**
+     * 获取发送状态。1:成功；2：失败；3：连接失败
+     *
+     * @return status - 发送状态。1:成功；2：失败；3：连接失败
+     */
+    public String getStatusStr() {
+    	String statusStr = "";
+    	switch (status) {
+		case 1:
+			statusStr = "成功";
+			break;
+		case 2:
+			statusStr = "失败";
+			break;
+		case 3:
+			statusStr = "连接失败";
+			break;
+		default:
+			statusStr = "未知";
+			break;
+		}
+        return statusStr;
+    }
+    
     /**
      * 获取数据接收方
      *

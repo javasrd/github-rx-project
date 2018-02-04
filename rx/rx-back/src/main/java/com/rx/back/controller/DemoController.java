@@ -40,7 +40,8 @@ public class DemoController {
 		request.getSession().setAttribute(SessionConstants.USER, user);
 		
 		try {
-			String targetPath = "D:\\Tomcat\\apache-tomcat-9.0.0.M13\\webapps\\upload/drug file/20180124/20180125000000.xlsx";
+			//String targetPath = "D:\\Tomcat\\apache-tomcat-9.0.0.M13\\webapps\\upload/drug file/20180124/20180125000000.xlsx";
+			String targetPath = "D:\\Tomcat\\apache-tomcat-9.0.0.M13\\webapps\\upload/drug file/20180129/20180129000000.txt";
 			File file = ZipUtil.zip(targetPath);
 			//File file = new File(targetPath);
 		

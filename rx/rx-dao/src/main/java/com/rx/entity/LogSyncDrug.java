@@ -1,7 +1,13 @@
 package com.rx.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "log_sync_drug")
 public class LogSyncDrug {
@@ -68,6 +74,16 @@ public class LogSyncDrug {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+    
+    /**
+     * 获取创建日期
+     *
+     * @return created_date - 创建日期
+     */
+    public String getCreatedDateStr() {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(createdDate);
+    }
 
     /**
      * 获取同步状态。1:成功；2：文件格式错误；3：连接失败
@@ -77,7 +93,7 @@ public class LogSyncDrug {
     public Integer getStatus() {
         return status;
     }
-
+    
     /**
      * 设置同步状态。1:成功；2：文件格式错误；3：连接失败
      *
@@ -85,6 +101,30 @@ public class LogSyncDrug {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+    
+    /**
+     * 获取同步状态。1:成功；2：文件格式错误；3：连接失败
+     *
+     * @return status - 同步状态。1:成功；2：文件格式错误；3：连接失败
+     */
+    public String getStatusStr() {
+    	String statusStr = "";
+    	switch (status) {
+		case 1:
+			statusStr = "成功";
+			break;
+		case 2:
+			statusStr = "文件格式错误";
+			break;
+		case 3:
+			statusStr = "连接失败";
+			break;
+		default:
+			statusStr = "未知";
+			break;
+		}
+        return statusStr;
     }
 
     /**
