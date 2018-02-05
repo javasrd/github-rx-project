@@ -56,6 +56,10 @@ var Common = {
         that.parent().append(addNode);
 	},
 	
+	setDropdownTalbeWidth:function(width){
+		$(".dropdown-table").width(width);
+	},
+	
 	hideDropdownTable : function () {
 		$(".dropdown-table").remove();
 	},

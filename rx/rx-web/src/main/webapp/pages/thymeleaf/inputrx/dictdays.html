@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>疗程数据字典列表</title>
+<style>
+	.dict-drug-days tr:hover{
+		background-color:#CCFFCC;
+	}
+</style>
+</head>
+<body>
+	<div class="">
+		<div class="">
+			<table class="table dict-drug-days">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>名称</th>
+						<th>助记码</th>						
+					</tr>
+				</thead>
+				<tbody>				 
+					<tr title="双击选择当前记录" th:each="days,iterStat:${daysList}" class="days-item" 
+						th:attr="days-id=${days.id}" >
+												
+						<td th:text="${iterStat.count}"></td>
+						<td th:text="${days.name}" th:attr="id='daysname-'+${days.id}"></td>
+						<td th:text="${days.code}" th:attr="id='dayscode-'+${days.id}"></td>
+												
+					</tr>
+					
+					<tr th:remove="all">
+						<td>1</td>
+						<td>1天</td>
+						<td>yt</td>
+					</tr>
+					<tr th:remove="all">
+						<td>2</td>
+						<td>2天</td>
+						<td>lt</td>
+					</tr>
+															
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<script th:src="@{/static/js/hospital/dictdays.js}" type="text/javascript"></script>
+	
+</body>
+
+
+
+</html>

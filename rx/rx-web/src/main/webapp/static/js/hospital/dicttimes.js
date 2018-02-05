@@ -25,7 +25,7 @@ function process_curr_times(timesId){
 	
 	//当选择一个用药次数后
 	Common.hideDropdownTable();  //关闭选择下拉框
-	$("#quantity").focus();     //"数量"文本框获取焦点
+	$("#drugmode").focus();     //下一个输入框获取焦点
 	setTimesWindowStatus(WINDOW_CLOSED);
 	
 }
@@ -46,7 +46,7 @@ function choiceTheFirstTimes(){
 		if($.trim($("#drugtimes").val())!=""){
 			//当输入一个用药次数后
 			Common.hideDropdownTable();  //关闭选择下拉框
-			$("#quantity").focus();     //"数量"文本框获取焦点
+			$("#drugmode").focus();     //下一个文本框获取焦点
 			setTimesWindowStatus(WINDOW_CLOSED);			
 		}
 		else{

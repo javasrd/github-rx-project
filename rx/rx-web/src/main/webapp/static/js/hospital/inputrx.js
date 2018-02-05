@@ -1,5 +1,3 @@
-
-
 /********************************
  * 将选择的药品加入列表中
  ********************************/
@@ -21,7 +19,7 @@ function addDrugIntoTable() {
 			
 			+ '<td class="small_width">' + g_currDrug.wareunit+ '</td>' 
 			+ '<td class="small_width">' + g_currDrug.saleprice	+ '</td>'
-			+ '<td class="input_width">' + toDecimal($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
+			+ '<td class="input_width">' + toDecimal2($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
 			+ '</tr>';
 
 	$("#drug-items").append(drugItem); // 加入显示列表中.	
@@ -48,36 +46,32 @@ function addDrugIntoTable() {
 
 	// 表格中可编辑字段   动态绑定input,keydown事件
 	//(1)单次用量
-	bindIEEvent("input", "#drug-dosage-" + g_currDrug.id, handler_input_dosage);    //*****
+	bindIEEvent("input", "#drug-dosage-" + g_currDrug.id, handler_input_dosage_table);    
 	bindEvent("keydown", "#drug-dosage-" + g_currDrug.id,handler_keydown_dosage);
 	
 	//(2)剂量单位
-	bindIEEvent("input", "#drug-doseunit-" + g_currDrug.id, handler_input_doseunit);  //*****
-	bindEvent("keydown", "#drug-doseunit-" + g_currDrug.id,	handler_keydown_doseunit);
+	bindIEEvent("input", "#drug-doseunit-" + g_currDrug.id, handler_input_doseunit_table);  
+	bindEvent("keydown", "#drug-doseunit-" + g_currDrug.id,	handler_keydown_doseunit_table);
 	
 	//(3)频次
-	bindIEEvent("input", "#drug-times-" + g_currDrug.id, handler_input_drugtimes_table);
-	bindEvent("keydown", "#drug-times-" + g_currDrug.id, handler_keydown_drugtimes_table);
+	bindIEEvent("input", "#drug-times-" + g_currDrug.id, handler_input_times_table);
+	bindEvent("keydown", "#drug-times-" + g_currDrug.id, handler_keydown_times_table);
 	
 	//(4)用法
-	bindIEEvent("input", "#drug-mode-" + g_currDrug.id, handler_input_drugmode_table);
-	bindEvent("keydown", "#drug-mode-" + g_currDrug.id,	handler_keydown_drugmode_table);
+	bindIEEvent("input", "#drug-mode-" + g_currDrug.id, handler_input_mode_table);
+	bindEvent("keydown", "#drug-mode-" + g_currDrug.id,	handler_keydown_mode_table);
 	
 	//(5)疗程(天数)
-	bindIEEvent("input", "#drug-days-" + g_currDrug.id, handler_input_days);     //******
-	bindEvent("keydown", "#drug-days-" + g_currDrug.id, handler_keydown_days);
+	bindIEEvent("input", "#drug-days-" + g_currDrug.id, handler_input_days_table);     
+	bindEvent("keydown", "#drug-days-" + g_currDrug.id, handler_keydown_days_table);
 	
 	//(6)数量
 	bindIEEvent("input", "#drug-quantity-" + g_currDrug.id, handler_input_quantity_table);
 	bindEvent("keydown", "#drug-quantity-" + g_currDrug.id, handler_keydown_quantity_table);
 	
-	
-	
-	
-	
 
 	clearInputValue(); // 清除输入框
-	setFocus("#drug-dosage-" + g_currDrug.id); //下一个输入框获取焦点
+	setFocus("#abc"); //药品助词码输入框获取焦点
 
 	g_currDrug = null; // 加入后置当前药品为空
 
@@ -94,10 +88,8 @@ function displayNumberAndSum(){
 	var drugList=getDrugList();
 	$("#presc-drug-number").text(drugList.length);
 	var sum=calcPrescDrugAmount();	
-	$("#presc-drug-sum").text(toDecimal(sum));
+	$("#presc-drug-sum").text(toDecimal2(sum));
 }
-
-
 
 /**
  * 清除输入框
@@ -106,11 +98,15 @@ function displayNumberAndSum(){
  */
 function clearInputValue() {
 	clearInputBox_abc();
+	clearInputBox_singledoseunit();  	
 	clearInputBox_drugmode();
 	clearInputBox_drugtimes();
+	clearInputBox_days();  
 
 	$("#warename").val("");
+	$("#single-dosage").val("");
 	$("#quantity").val("");
+	
 }
 
 /**
@@ -123,13 +119,37 @@ function clearInputBox_abc() {
 	$('#abc')
 			.val("HelloWorld")
 			.replaceWith(
-					'<input id="abc" type="text" class="form-control"  value="" />');// 替换input
+					'<input id="abc" type="text" class="form-control" style="width:80px;"  value="" />');// 替换input
 	bindIEEvent("input", "#abc", handler_input_abc);
-	$("abc").attr("disabled", false);
+	$("#abc").attr("disabled", false);
 	bindEvent("keydown", "#abc", handler_keydown_abc);
-	//bindEvent("blur", "#abc", handler_blur_abc);
-	
 }
+
+
+function clearInputBox_singledoseunit() {
+	var id="#single-dose-unit";
+	$(id).attr("disabled", true); // 屏蔽在对输入赋值时触发input event;
+	$(id)
+			.val("HelloWorld")
+			.replaceWith(
+					'<input id="single-dose-unit" type="text" class="form-control" style="width:60px;"  value="" />');// 替换input
+	bindIEEvent("input", id, handler_input_doseunit);
+	$(id).attr("disabled", false);
+	bindEvent("keydown", id, handler_keydown_doseunit);
+}
+
+function clearInputBox_days(){
+	var id="#treatment-days";
+	$(id).attr("disabled", true); // 屏蔽在对输入赋值时触发input event;
+	$(id)
+			.val("HelloWorld")
+			.replaceWith(
+					'<input id="treatment-days" type="text" class="form-control" style="width:60px;"  value="" />');// 替换input
+	bindIEEvent("input", id, handler_input_days);
+	$(id).attr("disabled", false);
+	bindEvent("keydown", id, handler_keydown_days);
+}
+
 
 /**
  * 清除给药方式输入框
@@ -137,15 +157,15 @@ function clearInputBox_abc() {
  * @returns
  */
 function clearInputBox_drugmode() {
-	$("#drugmode").attr("disabled", true); // 屏蔽在对输入赋值时触发input event;
-	$('#drugmode')
+	var id="#drugmode";
+	$(id).attr("disabled", true); // 屏蔽在对输入赋值时触发input event;
+	$(id)
 			.val("HelloWorld")
 			.replaceWith(
-					'<input id="drugmode" type="text" class="form-control"  value="" />');// 替换input
-	bindIEEvent("input", "#drugmode", handler_input_mode);
-	$("drugmode").attr("disabled", false);
-	bindEvent("keydown", "#drugmode", handler_keydown_mode);
-	//bindEvent("blur", "#drugmode", handler_blur_mode);
+					'<input id="drugmode" type="text" class="form-control" style="width:80px;"  value="" />');// 替换input
+	bindIEEvent("input", id, handler_input_mode);
+	$(id).attr("disabled", false);
+	bindEvent("keydown", id, handler_keydown_mode);
 }
 
 /**
@@ -158,11 +178,10 @@ function clearInputBox_drugtimes() {
 	$('#drugtimes')
 			.val("HelloWorld")
 			.replaceWith(
-					'<input id="drugtimes" type="text" class="form-control"  value="" />');// 替换input
+					'<input id="drugtimes" type="text" class="form-control" style="width:100px;"  value="" />');// 替换input
 	bindIEEvent("input", "#drugtimes", handler_input_times);
 	$("drugtimes").attr("disabled", false);
 	bindEvent("keydown", "#drugtimes", handler_keydown_times);
-	//bindEvent("blur", "#drugtimes", handler_blur_times);
 }
 
 /**
@@ -420,16 +439,32 @@ var g_currDrug = null; // 医生选择的当前药品
 $(function() {
 
 	bindIEEvent("input", "#abc", handler_input_abc);
-	bindIEEvent("input", "#drugmode", handler_input_mode);
-	bindIEEvent("input", "#drugtimes", handler_input_times);
-
 	bindEvent("keydown", "#abc", handler_keydown_abc);
-	bindEvent("keydown", "#drugmode", handler_keydown_mode);
+	
+	//bindIEEvent("input", "#single-dosage", handler_input_dosage);
+	bindEvent("keydown", "#single-dosage", handler_keydown_dosage);
+	
+	bindIEEvent("input", "#single-dose-unit", handler_input_doseunit);
+	bindEvent("keydown", "#single-dose-unit", handler_keydown_doseunit);
+	
+	bindIEEvent("input", "#drugtimes", handler_input_times);
 	bindEvent("keydown", "#drugtimes", handler_keydown_times);
+	
+	bindIEEvent("input", "#drugmode", handler_input_mode);
+	bindEvent("keydown", "#drugmode", handler_keydown_mode);
+	
+	bindIEEvent("input", "#treatment-days", handler_input_days);
+	bindEvent("keydown", "#treatment-days", handler_keydown_days);
 
 	bindEvent("keydown", "#quantity", handler_keydown_quantity);
 	
 	bindEvent("click", "#btn-clear-presc-table", handler_click_btn_cleartable);
+	bindEvent("click","#btn-abc",handler_click_btn_abc);
+	bindEvent("click","#btn-single-dose-unit",handler_click_btn_singledoseunit);
+	bindEvent("click","#btn-drugtimes",handler_click_btn_drugtimes);
+	bindEvent("click","#btn-drugmode",handler_click_btn_drugmode);
+	bindEvent("click","#btn-treatment-days",handler_click_btn_treatmentdays);
+	
 	
 	//bindEvent("blur", "#abc", handler_blur_abc);
 	//bindEvent("blur", "#drugmode", handler_blur_mode);
@@ -491,6 +526,8 @@ $(function() {
 			alert("此处方尚未保存,请先保存后再打印处方.",2000);
 		}
 	});
+	
+	$("#abc").focus();  //助词码为默认输入框
 
 	// Add keybinding (not recommended for production use)
 	/*

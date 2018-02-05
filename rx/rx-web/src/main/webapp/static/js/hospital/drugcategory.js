@@ -43,7 +43,7 @@ function process_curr_drug(drugId){
 	
 	//当选择一个药品后	
 	Common.hideDropdownTable();  //关闭选择下拉框
-	$("#drugmode").focus();      //给药方式文本框获取焦点
+	$("#single-dosage").focus();      //单次剂量文本框获取焦点
 	setDrugWindowStatus(WINDOW_CLOSED);
 }
 

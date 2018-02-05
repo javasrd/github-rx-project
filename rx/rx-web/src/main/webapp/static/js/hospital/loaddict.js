@@ -29,6 +29,20 @@ function loadDrugMode(abc) {
 	loadPage(containerId, url, parms, callbackFunc);
 }
 
+
+/*******************************************************************************
+ * 加载用药疗程
+ ******************************************************************************/
+function loadDrugDays(abc) {
+	var url = "/drug/days";
+	var parms = {
+		abc : abc
+	};
+	var callbackFunc = null;
+	var containerId = ".dropdown-table";
+	loadPage(containerId, url, parms, callbackFunc);
+}
+
 /*******************************************************************************
  * 加载给药次数
  ******************************************************************************/
@@ -42,9 +56,9 @@ function loadDrugTimes(abc) {
 	loadPage(containerId, url, parms, callbackFunc);
 }
 
-/*******************************************************************************
- * 加载剂量单位
- ******************************************************************************/
+/***************************************
+ * 加载剂量单位(表格)
+ ***************************************/
 function loadDrugDoseUnit(abc) {
 	var url = "/drug/doseunit";
 	var parms = {
@@ -52,5 +66,18 @@ function loadDrugDoseUnit(abc) {
 	};
 	var callbackFunc = null;
 	var containerId = ".dropdown-unit";
+	loadPage(containerId, url, parms, callbackFunc);
+}
+
+/****************************************
+ * 加载剂量单位(input box)
+ ****************************************/
+function loadDrugDoseUnitInput(abc) {
+	var url = "/drug/doseunitinput";
+	var parms = {
+		abc : abc
+	};
+	var callbackFunc = null;
+	var containerId = ".dropdown-table";
 	loadPage(containerId, url, parms, callbackFunc);
 }

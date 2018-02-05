@@ -24,6 +24,7 @@ import com.rx.bean.inputrx.PrescMsg;
 import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Department;
 import com.rx.entity.Diagnosis;
+import com.rx.entity.DictDays;
 import com.rx.entity.DictDoseUnit;
 import com.rx.entity.DictMode;
 import com.rx.entity.DictTimes;
@@ -34,6 +35,7 @@ import com.rx.entity.Hospital;
 import com.rx.entity.Patient;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
+import com.rx.service.inputrx.IDictDaysService;
 import com.rx.service.inputrx.IDictDoseUnitService;
 import com.rx.service.inputrx.IDictModeService;
 import com.rx.service.inputrx.IDictTimesService;
@@ -103,6 +105,9 @@ public class RxOpenController {
 	ThreadPoolManager tpm;  //线程池
 	@Autowired
 	IHospitalService hospitalService; //医院名称
+	@Autowired
+	IDictDaysService dictDaysService; //疗程字典
+	
 	
 	
 	
@@ -149,7 +154,7 @@ public class RxOpenController {
 	@RequestMapping(value = "/drug/category")
 	public String drugTable(String abc,Model model) {
 		
-		System.out.println("助记码:"+abc);
+		//System.out.println("助记码:"+abc);
 		
 		getDrugTable(abc,model);  //获取药品目录
 		
@@ -159,7 +164,7 @@ public class RxOpenController {
 	@RequestMapping(value = "/drug/mode")
 	public String drugMode(String abc,Model model) {
 		
-		System.out.println("助记码:"+abc);
+		//System.out.println("助记码:"+abc);
 		
 		getDrugMode(abc,model);  //获取药品目录
 		
@@ -174,8 +179,7 @@ public class RxOpenController {
 	
 	@RequestMapping(value = "/drug/times")
 	public String drugTimes(String abc,Model model) {
-		
-		System.out.println("助记码:"+abc);
+		//System.out.println("助记码:"+abc);
 		
 		getDrugTimes(abc,model);  //获取药品目录
 		
@@ -187,6 +191,17 @@ public class RxOpenController {
 		model.addAttribute("timesList", timesList);
 	}
 	
+	@RequestMapping(value = "/drug/days")
+	public String drugDays(String abc,Model model) {
+		//System.out.println("助记码:"+abc);		
+		getDrugDays(abc,model);  //获取药品目录
+		return RESPONSE_THYMELEAF + "dictdays";
+	}
+	
+	private void getDrugDays(String abc,Model model){
+		List<DictDays> tempList=dictDaysService.getDaysByAbc(abc);
+		model.addAttribute("daysList", tempList);
+	}	
 	
 	@RequestMapping(value = "/drug/doseunit")
 	public String drugDoseUnit(String abc,Model model) {
@@ -196,6 +211,16 @@ public class RxOpenController {
 		getDoseUnit(abc,model);  //获取药品目录
 		
 		return RESPONSE_THYMELEAF + "dictdoseunit";
+	}
+	
+	@RequestMapping(value = "/drug/doseunitinput")
+	public String drugDoseUnitInput(String abc,Model model) {
+		
+		System.out.println("助记码:"+abc);
+		
+		getDoseUnit(abc,model);  //获取药品目录
+		
+		return RESPONSE_THYMELEAF + "dictdoseunitinput";
 	}
 	
 	private void getDoseUnit(String abc,Model model){

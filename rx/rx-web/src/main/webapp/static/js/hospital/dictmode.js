@@ -25,7 +25,7 @@ function process_curr_mode(modeId){
 	
 	//当选择一个给药方式后
 	Common.hideDropdownTable();  //关闭选择下拉框		
-	$("#drugtimes").focus();     //"给药次数"文本框获取焦点
+	$("#treatment-days").focus();     //"给药次数"文本框获取焦点
 	setModeWindowStatus(WINDOW_CLOSED);
 }
 
@@ -45,7 +45,7 @@ function choiceTheFirstMode(){
 		if($.trim($("#drugmode").val())!=""){
 			//当输入一个给药方式后
 			Common.hideDropdownTable();  //关闭选择下拉框		
-			$("#drugtimes").focus();     //"给药次数"文本框获取焦点
+			$("#treatment-days").focus();     //"给药次数"文本框获取焦点
 			setModeWindowStatus(WINDOW_CLOSED);			
 		}
 		else{
@@ -56,9 +56,9 @@ function choiceTheFirstMode(){
 }
 
 $(function(){	
-	/***************************************************************************
+	/*************************
 	 * 绑定事件
-	 **************************************************************************/
+	 *************************/
 	//当用户双击某药品条目时,选择此药品
 	$(".mode-item").on("dblclick", handler_dblclick_mode);
 });
