@@ -235,16 +235,11 @@ body{
 	behavior: url("./static/css/hospital/PIE.htc");  
 }
 .diagnosis_msg input{
-	/* border: none; */
-	background-color: #ffffff;	
+	border: none;
+	background-color: #efefef;
 }
-
-/* .diagnosis_msg input.form-control{
-	font-size:14px;	
-} */
-
 .diagnosis_msg input:focus{
-	background-color: #e1ffe1;
+	background-color: #e5e5e5;
 }
 .drug_container .card_container{
 	margin-bottom: 0;
@@ -285,16 +280,16 @@ body{
 	border: none;
 	background-color: transparent;
 	height: 40px;
-	font-size: 14px;
+	font-size: 16px;
 	padding: 10px 8px;
 	outline: none;
 	box-shadow: none;
 }
 table th.input_width,table td.input_width{
-	width: 120px;
+	width: 80px;
 }
 table th.small_width,table td.small_width{
-	width: 80px;
+	width: 100px;
 }
 .table-body .dropdown-unit{
 	background-color: #fff;
