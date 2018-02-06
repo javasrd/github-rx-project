@@ -28,7 +28,7 @@ public interface IDirectionService extends IBaseService<Direction, Long> {
 	 * @author Administrator
 	 * @date 2018年1月16日-下午3:44:10
 	 */
-	public long addDirection(long presc_drug_id,String mode,String times,BigDecimal dosage,String doseunit,int days);
+	public long addDirection(long presc_drug_id,String mode,String times,BigDecimal dosage,String doseunit,String days);
 	
 	
 }
