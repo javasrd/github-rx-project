@@ -403,7 +403,7 @@ public class RxOpenController {
 			
 			String mode=jsonDrug.getString("drugmode"); //给药方式
 			int quantity=jsonDrug.getIntValue("quantity");//数量
-			int days=jsonDrug.getIntValue("days");		  //服药天数	
+			String days=jsonDrug.getString("days");		  //服药天数	
 			String doseUnit=jsonDrug.getString("doseunit"); //服药剂量单位
 			String times=jsonDrug.getString("drugtimes");  //给药次数
 			long patientId=jsonDrug.getLongValue("patientid"); //患者ID
