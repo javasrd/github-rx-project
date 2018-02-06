@@ -5,7 +5,8 @@ function addDrugIntoTable() {
 
 	//getInputDoseUnitId(this)
 	
-	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'+ g_currDrug.id+ '"'+' title="双击删除药品"'+ '>'
+	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'+ g_currDrug.id+ '"'+ ' id=drug-row-'  + g_currDrug.id+  ' title="双击删除药品"'+ '>'
+			+ '<td class="small_width"><input type="checkbox" class="check-drug" '+'id="check-drug-'+g_currDrug.id+'"'+  ' bind-id="'+ g_currDrug.id	+ '"' + '></td>'
 			+ '<td class="small_width">'+ g_currDrug.wareid	+ '</td>'
 			+ '<td class="input_width">'+ g_currDrug.warename + '</td>'
 			+ '<td class="small_width">'+ g_currDrug.warespec + '</td>'
@@ -19,7 +20,7 @@ function addDrugIntoTable() {
 			
 			+ '<td class="small_width">' + g_currDrug.wareunit+ '</td>' 
 			+ '<td class="small_width">' + g_currDrug.saleprice	+ '</td>'
-			+ '<td class="input_width">' + toDecimal2($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
+			+ '<td class="small_width">' + toDecimal2($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
 			+ '</tr>';
 
 	$("#drug-items").append(drugItem); // 加入显示列表中.	
@@ -68,6 +69,8 @@ function addDrugIntoTable() {
 	//(6)数量
 	bindIEEvent("input", "#drug-quantity-" + g_currDrug.id, handler_input_quantity_table);
 	bindEvent("keydown", "#drug-quantity-" + g_currDrug.id, handler_keydown_quantity_table);
+	
+	
 	
 
 	clearInputValue(); // 清除输入框
@@ -264,6 +267,56 @@ function showConfirmWindow(that) {
 	});
 }
 
+
+function showConfirmWindow_delete_selected_row() {
+	// 判断是否已存在，如果已存在则直接显示
+	if (M1.dialog3) {
+		return M1.dialog3.show();
+	}
+	M1.dialog3 = jqueryAlert({
+		'title' : '提示',
+		'content' : '    确认删除所选定的药品?    ',
+		'modal' : true,
+		'buttons' : {
+			'确定' : function() {
+				deleteSelectedDrug();  			
+				displayNumberAndSum();	
+				$("#drugForm .drug-list tr").attr("class","");
+				Common.addStripedStyle();
+				M1.dialog3.close();
+				M1.dialog3 = null;
+				displayNumberAndSum();
+			},
+			'取消' : function() {
+				M1.dialog3.close();
+				M1.dialog3 = null;
+			}
+		}
+	});
+}
+
+function deleteSelectedDrug(){
+	$(".check-drug").each(function(index){
+		var drugId=$(this).attr("bind-id");
+		//alert("drugId:"+drugId);
+		var checkStatus=$(this).is(':checked');
+		if(checkStatus==true){
+			//alert("checked!");
+			$("#drug-row-"+drugId).remove();  //自显示列表中删除
+			// 根据药品ID在列表中查询.
+			var index = searchDrugById(drugId);  //自药品列表数组中删除
+			if (index >= 0) {
+				removeFromDrugList(index);
+			}			
+		}
+	});
+	
+	$("#check-select-all").attr("checked",false);
+	
+}
+
+
+
 function showConfirmWindow_cleartable(that) {
 	// 判断是否已存在，如果已存在则直接显示
 	if (M1.dialog3) {
@@ -415,6 +468,10 @@ function disableEditDrug(){
 	$(".dosage").attr("disabled",true);
 	$(".dose-unit").attr("disabled",true);
 	$(".days").attr("disabled",true);
+	
+	$(".times").attr("disabled",true);
+	$(".mode").attr("disabled",true);
+	$(".quantity").attr("disabled",true);
 }
 
 
@@ -458,12 +515,25 @@ $(function() {
 
 	bindEvent("keydown", "#quantity", handler_keydown_quantity);
 	
+	//界面面板中数字字典按钮
 	bindEvent("click", "#btn-clear-presc-table", handler_click_btn_cleartable);
 	bindEvent("click","#btn-abc",handler_click_btn_abc);
 	bindEvent("click","#btn-single-dose-unit",handler_click_btn_singledoseunit);
 	bindEvent("click","#btn-drugtimes",handler_click_btn_drugtimes);
 	bindEvent("click","#btn-drugmode",handler_click_btn_drugmode);
 	bindEvent("click","#btn-treatment-days",handler_click_btn_treatmentdays);
+	
+	//模板功能面板
+	bindEvent("click","#btn-save-template",handler_click_btn_save_template);
+	bindEvent("click","#btn-edit-template",handler_click_btn_edit_template);
+	bindEvent("click","#btn-use-template",handler_click_btn_use_template);
+	
+	
+	
+	bindEvent("click","#btn-add-drug",handler_click_btn_add_drug);
+	
+	bindEvent("click", "#check-select-all", handler_click_select_all);  //选择所有
+	bindEvent("click", "#btn-delete-row", handler_click_delete_row);  //选择所有
 	
 	
 	//bindEvent("blur", "#abc", handler_blur_abc);

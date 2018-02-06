@@ -392,10 +392,19 @@ function validAddDrug(){
 /**--------------------------
  * input event
  --------------------------*/
+/**
+ * 药品输入框 input event processor
+ * @returns
+ */
 function handler_input_abc() {
-	var abc = $(this).val(); // 助记码
+	var abc = $(this).val(); // 助记码	
+	searchDrugDropdown(abc,"#abc");
+}
+
+function searchDrugDropdown(abc,inputBoxId){	
+	var inputObj=$(inputBoxId);
 	if (getDrugWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
-		Common.showDropdownTable($(this));
+		Common.showDropdownTable(inputObj);
 		setDrugWindowStatus(WINDOW_OPENED);
 	}
 	loadDrugTable(abc);
@@ -408,8 +417,14 @@ function handler_input_abc() {
  */
 function handler_input_mode() {
 	var abc = $(this).val(); // 助记码
+	searchModeDropdown(abc,"#drugmode");
+}
+
+function searchModeDropdown(abc,inputBoxId){
+	var inputObj=$(inputBoxId);
+	
 	if (getModeWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.	
-		Common.showDropdownTable($(this));
+		Common.showDropdownTable(inputObj);
 		Common.setDropdownTalbeWidth(300);
 		setModeWindowStatus(WINDOW_OPENED);
 	}
@@ -423,12 +438,59 @@ function handler_input_mode() {
  */
 function handler_input_times() {
 	var abc = $(this).val(); // 助记码
+	searchTimesDropdown(abc,"#drugtimes")
+}
+
+function searchTimesDropdown(abc,inputBoxId){
+	var inputObj=$(inputBoxId);
 	if (getTimesWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
-		Common.showDropdownTable($(this));
+		Common.showDropdownTable(inputObj);
 		Common.setDropdownTalbeWidth(300);
 		setTimesWindowStatus(WINDOW_OPENED);
 	}
 	loadDrugTimes(abc);
+}
+
+/**
+ * 剂量单位(输入框) input事件处理函数
+ * 
+ * @returns
+ */
+function handler_input_doseunit(){
+	// (1)输入是助记码情况
+	var abc = $(this).val(); // 助记码
+	searchDoseunitDropdown(abc,"#single-dose-unit")
+}
+
+function searchDoseunitDropdown(abc,inputBoxId){
+	var inputObj=$(inputBoxId);
+	if (getDoseUnitInputWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownTable(inputObj);
+		Common.setDropdownTalbeWidth(300);
+		setDoseUnitInputWindowStatus(WINDOW_OPENED);
+	}
+	loadDrugDoseUnitInput(abc);
+}
+
+/**
+ * 疗程(输入框) input事件处理函数
+ * 
+ * @returns
+ */
+function handler_input_days(){
+	// (1)输入是助记码情况
+	var abc = $(this).val(); // 助记码
+	searchDaysDropdown(abc,"#treatment-days")
+}
+
+function searchDaysDropdown(abc,inputBoxId){
+	var inputObj=$(inputBoxId);
+	if (getDaysWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownTable(inputObj);
+		Common.setDropdownTalbeWidth(300);
+		setDaysWindowStatus(WINDOW_OPENED);
+	}
+	loadDrugDays(abc);
 }
 
 /**
@@ -479,38 +541,6 @@ function handler_input_doseunit_table() {
 		setDoseUnitWindowStatus(WINDOW_OPENED);
 	}
 	loadDrugDoseUnit(abc);
-}
-
-/**
- * 剂量单位(输入框) input事件处理函数
- * 
- * @returns
- */
-function handler_input_doseunit(){
-	// (1)输入是助记码情况
-	var abc = $(this).val(); // 助记码
-	if (getDoseUnitInputWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
-		Common.showDropdownTable($(this));
-		Common.setDropdownTalbeWidth(300);
-		setDoseUnitInputWindowStatus(WINDOW_OPENED);
-	}
-	loadDrugDoseUnitInput(abc);
-}
-
-/**
- * 疗程(输入框) input事件处理函数
- * 
- * @returns
- */
-function handler_input_days(){
-	// (1)输入是助记码情况
-	var abc = $(this).val(); // 助记码
-	if (getDaysWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
-		Common.showDropdownTable($(this));
-		Common.setDropdownTalbeWidth(300);
-		setDaysWindowStatus(WINDOW_OPENED);
-	}
-	loadDrugDays(abc);
 }
 
 /**
@@ -569,21 +599,59 @@ function handler_click_btn_cleartable(){
 	showConfirmWindow_cleartable();
 }
 
+
 function handler_click_btn_abc(){
-	$("#abc").trigger("input");
+	searchDrugDropdown("","#abc");
 }
+
 function handler_click_btn_singledoseunit(){
-	$("#single-dose-unit").trigger("input");
+	searchDoseunitDropdown("","#single-dose-unit");
 }
 function handler_click_btn_drugtimes(){
-	$("#drugtimes").trigger("input");
+	searchTimesDropdown("","#drugtimes");
 }
 function handler_click_btn_drugmode(){
-	$("#drugmode").trigger("input");
+	searchModeDropdown("","#drugmode");
 }
 function handler_click_btn_treatmentdays(){
-	$("#treatment-days").trigger("input");
+	searchDaysDropdown("","#treatment-days");
 }
+function handler_click_btn_add_drug(){
+	var e = jQuery.Event("keydown");//模拟一个键盘事件 
+	e.keyCode = 13;//keyCode=13是回车 
+	$("#quantity").trigger(e);
+}
+
+function handler_click_select_all(){
+	var checkStatus=$(this).is(':checked');
+	var drugList=getDrugList();
+	for(var i=0;i<drugList.length;i++){
+		var checkId="check-drug-"+drugList[i].id;
+		$("#"+checkId).attr("checked",checkStatus);
+	}
+}
+
+function handler_click_delete_row(){
+	var prescNo=$("#presc-no").val();
+	if(prescNo!=""){
+		alert("处方已经确定,不可删除!",2000);
+		return false;
+	}
+	showConfirmWindow_delete_selected_row();
+}
+
+function handler_click_btn_save_template(){
+	alert("click btn_save_template!");
+}
+
+function handler_click_btn_edit_template(){
+	alert("click btn_edit_template!");
+}
+
+function handler_click_btn_use_template(){
+	alert("click btn_use_template");
+}
+
 
 
 /**---------------------------------

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     
+    
     <!-- HTTP 1.1 -->  
 	<meta http-equiv="pragma" content="no-cache">  
 	<!-- HTTP 1.0 -->  
@@ -182,9 +183,13 @@
                 
                 <div class="form-group form-group-sm">
                   <label class="control-label">数量:</label>
-                  <input type="text" id="quantity" class="form-control" style="width:60px;">
+                  <input type="number" id="quantity" class="form-control" style="width:60px;">
                 </div>
-                
+                <div class="form-group form-group-sm">
+                  <button class="" style="width:40px;" id="btn-add-drug">
+                  	<span class="glyphicon glyphicon-plus-sign" style="color:blue;" ></span>
+                  </button>
+                </div>
               </div>
             </div>
         </div>
@@ -192,6 +197,7 @@
           <table class="table table-default">
             <thead>
               <tr>
+                <th class="small_width"><label for="check-select-all">全选</label><input id="check-select-all" type="checkbox"></th>
                 <th class="small_width">药品码</th>
                 <th class="input_width">药品名</th>
                 <th class="small_width">规格</th>
@@ -203,7 +209,7 @@
                 <th class="small_width">数量</th>
                 <th class="small_width">单位</th>
                 <th class="small_width">单价</th>                
-                <th class="input_width">金额(￥元)</th>
+                <th class="small_width">金额(￥元)</th>
               </tr>
             </thead>
           </table>
@@ -231,6 +237,7 @@
             <table class="drug-list table table-striped table-bordered table-default">
               <tbody id="drug-items">              
                 <tr th:remove="all">
+                  <td><input type="checkbox"></td>
                   <td>此处存放药品名称12313123</td>
                   <td></td>
                   <td></td>
@@ -251,14 +258,16 @@
       </div>
       <div class="menu_container clearfix">
         <div class="left_btn pull-left" id="toolsbar">
-          <button class="btn btn-success">保存套组</button>
-          <button class="btn btn-success">使用套组</button>
+          <button class="btn btn-success" id="btn-edit-template">编辑模板</button>
+          <button class="btn btn-success" id="btn-save-template">存为模板</button>
+          <button class="btn btn-success" id="btn-use-template">使用模板</button>
                     
-          <!-- <button class="btn btn-success">删除行</button> -->
-                    
-          <button class="btn btn-success" id="btn-clear-presc-table">新处方</button>
+          <button class="btn btn-success" id="btn-delete-row"  style="margin-left:10px;">删除行</button>                    
+          <button class="btn btn-success" id="btn-clear-presc-table" style="margin-right:10px;">新处方</button>
+          
           <button class="btn btn-success" id="btn-print">打印</button>     
-          <button class="btn btn-success" id="btn-preview">预览处方</button>
+          <button class="btn btn-success" id="btn-preview" style="margin-right:10px;">预览处方</button>
+          
           <button class="btn btn-success" id="btn-save-prescription">确定</button>
           
           <!-- 打印预览所绑定的按钮 -->
