@@ -11,7 +11,7 @@
     <result column="times" jdbcType="VARCHAR" property="times" />
     <result column="dosage" jdbcType="DECIMAL" property="dosage" />
     <result column="doseunit" jdbcType="VARCHAR" property="doseunit" />
-    <result column="days" jdbcType="INTEGER" property="days" />
+    <result column="days" jdbcType="VARCHAR" property="days" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--

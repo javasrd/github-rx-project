@@ -37,7 +37,7 @@ public class Direction {
      */
     private String doseunit;
 
-    private Integer days;
+    private String days;
 
     /**
      * 获取自增主键
@@ -150,15 +150,15 @@ public class Direction {
     /**
      * @return days
      */
-    public Integer getDays() {
+    public String getDays() {
         return days;
     }
 
     /**
      * @param days
      */
-    public void setDays(Integer days) {
-        this.days = days;
+    public void setDays(String days) {
+        this.days = days == null ? null : days.trim();
     }
 
     @Override
