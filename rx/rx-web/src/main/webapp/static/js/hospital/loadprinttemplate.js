@@ -9,7 +9,7 @@
  */
 function loadPrintTemplate() {
 	
-	var url = "/presc/printtemplate";
+	/*var url = "/presc/printtemplate";
 	
 	var parmObj=new Object();
 	parmObj.patientId=$("#patient").attr("bind-id");
@@ -22,7 +22,8 @@ function loadPrintTemplate() {
 	var parms = {jsonPresc:JSON.stringify(parmObj)}; //参数jsonPresc的格式为json	
 	var callbackFunc = printPreview;
 	var containerId = "#print-preview-area";
-	loadPage(containerId, url, parms, callbackFunc);
+	loadPage(containerId, url, parms, callbackFunc);*/
+	$("#btn-print-preview").trigger("click");
 }
 
 /**

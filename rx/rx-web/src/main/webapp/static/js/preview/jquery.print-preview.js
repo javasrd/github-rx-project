@@ -32,7 +32,7 @@
             print_controls = $('<div id="print-modal-controls">' + 
                                     '<a href="#" class="print" title="打印"></a>' +
                                     '<a href="#" class="closex" title="关闭打印预览"></a>').hide();
-            var print_frame = $('<iframe id="print-modal-content" scrolling="no" border="0" frameborder="0" name="print-frame" />');
+            var print_frame = $('<iframe id="print-modal-content" scrolling="no" border="0" frameborder="0" name="print-frame" onLoad="iFrameHeight()" />');
 
             // Raise print preview window from the dead, zooooooombies
             print_modal
@@ -40,6 +40,11 @@
                 .append(print_controls)
                 .append(print_frame)
                 .appendTo('body');
+            
+            /*print_modal
+            .hide()
+            .append(print_controls)            
+            .appendTo('body');*/
 
             // The frame lives
             for (var i=0; i < window.frames.length; i++) {
@@ -48,12 +53,20 @@
                     break;
                 }
             }
+            
             print_frame_ref.open();
-            print_frame_ref.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' +
+            /*print_frame_ref.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' +
                 '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' + 
-                '<head><title>' + document.title + '</title></head>' +
+                '<head><title>' + document.title + '</title>'+
+                ' </head>' +
                 '<body></body>' +
-                '</html>');
+                '</html>');*/
+            print_frame_ref.write('<!DOCTYPE html>' +
+                    '<html xml:lang="en" lang="en">' + 
+                    '<head><title>' + document.title + '</title>'+
+                    ' </head>' +
+                    '<body></body>' +
+                    '</html>');
             print_frame_ref.close();
             
             // Grab contents and apply stylesheet
@@ -64,7 +77,7 @@
             $iframe_head.each(function() {
                 $(this).attr('media', 'all');
             });
-            if (!$.browser.msie && !($.browser.version < 7) ) {
+            if (!(IEVersion()==-1) && !(IEVersion() < 7) ) {
                 $('head', print_frame_ref).append($iframe_head);
                 $('body', print_frame_ref).append($iframe_body);
             }
@@ -118,18 +131,18 @@
                     top:         starting_position,
                     height:      '100%',
                     overflowY:   'auto',
-                    zIndex:      10000,
+                    zIndex:      999,
                     display:     'block'
                 }
             
             //added by jch 
             var topx = $.printPreview.sizeTop();
             //var topx=0;
-            print_modal
+           /* print_modal
                 .css(css)
                 .animate({ top:$(window).scrollTop()+topx}, 400, 'linear', function() {
                     print_controls.fadeIn('slow').focus();
-                });
+                });*/
             /*print_modal.css(css);*/
             print_frame.height($('body', print_frame.contents())[0].scrollHeight);
             
@@ -161,30 +174,30 @@
     		$(document).unbind("keydown.printPreview.mask");
     		mask.unbind("click.printPreview.mask");
     		$(window).unbind("resize.printPreview.mask");
-    		//added by jch
-    		//loadCss();
+    		
 	    },
 	    
     	/* -- Mask Functions --*/
 	    loadMask: function() {
+	    	alert("test");
 	        size = $.printPreview.sizeUpMask();
             mask = $('<div id="print-modal-mask" />').appendTo($('body'));
     	    mask.css({				
-    			position:           'absolute', 
-    			top:                0, 
-    			left:               0,
-    			width:              size[0],
-    			height:             size[1],
+    			position:           'fixed', 
+    			top:                '100', 
+    			left:               '100',
+    			width:              '200',
+    			height:             '200',
     			display:            'none',
     			opacity:            0,					 		
-    			zIndex:             9999,
+    			zIndex:             998,
     			backgroundColor:    '#000'
     		});
 	
     		mask.css({display: 'block'}).fadeTo('400', 0.75);
     		
-            $(window).bind("resize..printPreview.mask", function() {
-				$.printPreview.updateMaskSize();
+            $(window).bind("resize.printPreview.mask", function() {
+				//$.printPreview.updateMaskSize();
 			});
 			
 			mask.bind("click.printPreview.mask", function(e)  {
@@ -197,24 +210,32 @@
         },
     
         sizeUpMask: function() {
-            if ($.browser.msie) {
+            if (!(IEVersion()==-1)) {  //IE browser
             	// if there are no scrollbars then use window.height
             	//alert("document height:"+$(document).height());
             	//alert("window height:"+$(window).height());
+            	
             	var d = $(document).height(), w = $(window).height();
+            	/*return [
+            		window.innerWidth || 						// ie7+
+            		document.documentElement.clientWidth || 	// ie6  
+            		document.body.clientWidth, 					// ie6 quirks mode
+            		d - w < 20 ? w : d
+            	];*/
             	return [
             		window.innerWidth || 						// ie7+
             		document.documentElement.clientWidth || 	// ie6  
             		document.body.clientWidth, 					// ie6 quirks mode
             		d - w < 20 ? w : d
             	];
-            } else { return [$(document).width(), $(document).height()]; }
+            } else {            	
+            	return [$(document).width(), $(document).height()]; }
         },
         
         //added by jch
         sizeTop: function() {
         	var d = $(document).height(), w = $(window).height();
-            if ($.browser.msie) {
+            if (!(IEVersion()==-1)) {
             	return d-w;
             } else {return 0; }
         },
@@ -222,6 +243,24 @@
         updateMaskSize: function() {
     		var size = $.printPreview.sizeUpMask();
     		mask.css({width: size[0], height: size[1]});
-        }
+        },
+        
+        getWindowWidth: function () {
+    		var windowWidth = 0;
+    		if (typeof(window.innerWidth) == 'number') {
+    			windowWidth = window.innerWidth;
+    		}
+    		else {
+    			if (document.documentElement && document.documentElement.clientWidth) {
+    				windowWidth = document.documentElement.clientWidth;
+    			}
+    			else {
+    				if (document.body && document.body.clientWidth) {
+    					windowWidth = document.body.clientWidth;
+    				}
+    			}
+    		}
+    		return windowWidth;
+    	}
     }
 })(jQuery);

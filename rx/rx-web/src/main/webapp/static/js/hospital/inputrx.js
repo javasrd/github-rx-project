@@ -223,17 +223,15 @@ var M = new Object();
 function alert(message, closeTime) {
 	// 判断是否已存在，如果已存在则直接显示
 	if (M.dialog1) {
-		return M.dialog1.show();
+		M.dialog1.destroy();
 	}
 	M.dialog1 = jqueryAlert({
 		'content' : message,
-		'closeTime' : closeTime,
-	});
-	M.dialog1=null;
-
+		'closeTime' : closeTime
+	});	
 }
 
-var M1 = new Object();
+//var M1 = new Object();
 /**
  * 双击删除行 确认对话框
  * @param that
@@ -241,10 +239,10 @@ var M1 = new Object();
  */
 function showConfirmWindow(that) {
 	// 判断是否已存在，如果已存在则直接显示
-	if (M1.dialog3) {
-		return M1.dialog3.show();
+	if (M.dialog1) {
+		M.dialog1.destroy();
 	}
-	M1.dialog3 = jqueryAlert({
+	M.dialog1 = jqueryAlert({
 		'title' : '提示',
 		'content' : '    确认删除当前选定的药品?    ',
 		'modal' : true,
@@ -255,13 +253,15 @@ function showConfirmWindow(that) {
 				displayNumberAndSum();	
 				$("#drugForm .drug-list tr").attr("class","");
 				Common.addStripedStyle();
-				M1.dialog3.close();
-				M1.dialog3 = null;
+				M.dialog1.close();
+				M.dialog1.destroy();
+				M.dialog1 = null;
 				displayNumberAndSum();
 			},
 			'取消' : function() {
-				M1.dialog3.close();
-				M1.dialog3 = null;
+				M.dialog1.close();
+				M.dialog1.destroy();
+				M.dialog1 = null;
 			}
 		}
 	});
@@ -270,10 +270,10 @@ function showConfirmWindow(that) {
 
 function showConfirmWindow_delete_selected_row() {
 	// 判断是否已存在，如果已存在则直接显示
-	if (M1.dialog3) {
-		return M1.dialog3.show();
+	if (M.dialog1) {
+		M.dialog1.destroy();
 	}
-	M1.dialog3 = jqueryAlert({
+	M.dialog1 = jqueryAlert({
 		'title' : '提示',
 		'content' : '    确认删除所选定的药品?    ',
 		'modal' : true,
@@ -283,13 +283,15 @@ function showConfirmWindow_delete_selected_row() {
 				displayNumberAndSum();	
 				$("#drugForm .drug-list tr").attr("class","");
 				Common.addStripedStyle();
-				M1.dialog3.close();
-				M1.dialog3 = null;
+				M.dialog1.close();
+				M.dialog1.distroy();
+				M.dialog1 = null;
 				displayNumberAndSum();
 			},
 			'取消' : function() {
-				M1.dialog3.close();
-				M1.dialog3 = null;
+				M.dialog1.close();
+				M.dialog1.distroy();
+				M.dialog1 = null;
 			}
 		}
 	});
@@ -319,10 +321,10 @@ function deleteSelectedDrug(){
 
 function showConfirmWindow_cleartable(that) {
 	// 判断是否已存在，如果已存在则直接显示
-	if (M1.dialog3) {
-		return M1.dialog3.show();
+	if (M.dialog1) {
+		M.dialog1.destroy();
 	}
-	M1.dialog3 = jqueryAlert({
+	M.dialog1 = jqueryAlert({
 		'title' : '提示',
 		'content' : '    确认清除处方药品列表?    ',
 		'modal' : true,
@@ -332,12 +334,14 @@ function showConfirmWindow_cleartable(that) {
 				clearDrugTable(that); //清除药品table
 				clearPrescNo();		  //清除处方编号
 				clearNumberAndSum();  //清除处方中药品个数及总金额
-				M1.dialog3.close();
-				M1.dialog3 = null;
+				M.dialog1.close();
+				M.dialog1.destroy();
+				M.dialog1 = null;
 			},
 			'取消' : function() {
-				M1.dialog3.close();
-				M1.dialog3 = null;
+				M.dialog1.close();
+				M.dialog1.destroy();
+				M.dialog1 = null;
 			}
 		}
 	});

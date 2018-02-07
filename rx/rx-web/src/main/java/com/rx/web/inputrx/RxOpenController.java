@@ -338,8 +338,11 @@ public class RxOpenController {
 	@RequestMapping(value = "/presc/loadcss")
 	public String loadCss() {
 		//System.out.println("load css");
-		return RESPONSE_THYMELEAF + "loadcss";
+		return RESPONSE_THYMELEAF + "savetemplate";
 	}
+	
+	
+	
 	
 	/**
 	 * @Description: 格式化成两位小数

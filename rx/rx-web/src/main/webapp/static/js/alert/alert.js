@@ -219,7 +219,7 @@
 		dialog.close = function(){
 			dialog.toggleAnimate().fadeOut(dialog.time);
 			$modal.fadeOut(dialog.time);
-			option.bodyScroll && $('body').css('overflow','auto');
+			option.bodyScroll && $('body').css('overflow','auto');			
 		};
 
 		option.style == 'pc' && $closeBtn.bind(dialog.event,dialog.close);
@@ -228,7 +228,7 @@
 		dialog.destroy = function(){
 			dialog.toggleAnimate().fadeOut(dialog.time);
 			setTimeout(function(){
-				$container.remove();
+				$container.remove();				
 				$modal.remove();
 				option.bodyScroll && $('body').css('overflow','auto');
 			},dialog.time)
