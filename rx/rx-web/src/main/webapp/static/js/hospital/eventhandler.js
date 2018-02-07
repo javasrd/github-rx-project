@@ -4,6 +4,40 @@
 /**-----------------------------------
  * keydown event
  -----------------------------------*/
+function handler_keydown_hospital(ev){
+	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
+	if (oEvent.keyCode == 27) // Esc键的keyCode是27
+	{
+		if (getDrugWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownTable(); // 关闭选择下拉框			
+			setDrugWindowStatus(WINDOW_CLOSED);
+		}
+		
+		if (getModeWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownTable(); // 关闭选择下拉框
+			setModeWindowStatus(WINDOW_CLOSED);
+		}
+		
+		if (getTimesWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownTable(); // 关闭选择下拉框
+			setTimesWindowStatus(WINDOW_CLOSED);
+		}
+		
+		if (getDoseUnitInputWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownTable(); // 关闭选择下拉框
+			setDoseUnitInputWindowStatus(WINDOW_CLOSED);
+		}
+		
+		if (getDaysWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownTable(); // 关闭选择下拉框
+			setDaysWindowStatus(WINDOW_CLOSED);
+		}
+		
+		return false;
+
+	}
+}
+
 /**
  * 用于处理药品助记码框中ESC按键
  * 
@@ -32,7 +66,6 @@ function handler_keydown_abc(ev) {
 		else{
 			if(g_currDrug==null){
 				alert("未选择药品",500);
-				//setFocus("#abc");
 			}
 				
 		}

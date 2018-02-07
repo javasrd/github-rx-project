@@ -519,6 +519,8 @@ $(function() {
 
 	bindEvent("keydown", "#quantity", handler_keydown_quantity);
 	
+	bindEvent("keydown", ".hospital", handler_keydown_hospital);
+	
 	//界面面板中数字字典按钮
 	bindEvent("click", "#btn-clear-presc-table", handler_click_btn_cleartable);
 	bindEvent("click","#btn-abc",handler_click_btn_abc);
