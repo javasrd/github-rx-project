@@ -4,7 +4,8 @@
 
 function isIE1(selector) {
 	// for ie
-	if (!IEVersion()==-1) {
+	//alert("IE VERSION:"+IEVersion());
+	if (!(IEVersion()==-1)) {
 		/* if (document.all) { */
 		$(selector).each(
 				function() {

@@ -32,7 +32,7 @@
             print_controls = $('<div id="print-modal-controls">' + 
                                     '<a href="#" class="print" title="打印"></a>' +
                                     '<a href="#" class="closex" title="关闭打印预览"></a>').hide();
-            var print_frame = $('<iframe id="print-modal-content" scrolling="no" border="0" frameborder="0" name="print-frame" onLoad="iFrameHeight()" />');
+            var print_frame = $('<iframe id="print-modal-content" scrolling="no" border="0" frameborder="0" name="print-frame"  />');
 
             // Raise print preview window from the dead, zooooooombies
             print_modal
@@ -40,11 +40,6 @@
                 .append(print_controls)
                 .append(print_frame)
                 .appendTo('body');
-            
-            /*print_modal
-            .hide()
-            .append(print_controls)            
-            .appendTo('body');*/
 
             // The frame lives
             for (var i=0; i < window.frames.length; i++) {
@@ -73,11 +68,12 @@
             var previewAreaContainer="#print-preview-area";  //位于hospital.html
             var $iframe_head = $('head link[media*=print], head link[media=all]').clone(),
                 /*$iframe_body = $('body > *:not(#print-modal):not(script)').clone();*/
-            	$iframe_body = $(previewAreaContainer+' > *').clone();
+            	$iframe_body = $(previewAreaContainer+' > *:not(script)').clone();
             $iframe_head.each(function() {
                 $(this).attr('media', 'all');
             });
-            if (!(IEVersion()==-1) && !(IEVersion() < 7) ) {
+            if ((IEVersion()==-1)) {  //非IE浏览器
+            	/*alert("ie7");*/
                 $('head', print_frame_ref).append($iframe_head);
                 $('body', print_frame_ref).append($iframe_body);
             }
@@ -136,13 +132,13 @@
                 }
             
             //added by jch 
-            var topx = $.printPreview.sizeTop();
-            //var topx=0;
-           /* print_modal
+            //var topx = $.printPreview.sizeTop();
+            var topx=0;
+            print_modal
                 .css(css)
                 .animate({ top:$(window).scrollTop()+topx}, 400, 'linear', function() {
                     print_controls.fadeIn('slow').focus();
-                });*/
+                });
             /*print_modal.css(css);*/
             print_frame.height($('body', print_frame.contents())[0].scrollHeight);
             
@@ -153,6 +149,7 @@
                 	//window.print();
                 	//$.print("#printarea");
                 	//$(window.frames["print-frame"].document).find("body").print();
+                	
                 	$.printPreview.distroyPrintPreview();
                 	$("#btn-print").trigger("click");
                 	 
@@ -165,7 +162,8 @@
     	    print_controls.fadeOut(100);
     	    print_modal.animate({ top: $(window).scrollTop() - $(window).height(), opacity: 1}, 400, 'linear', function(){
     	        print_modal.remove();
-    	        $('body').css({overflowY: 'auto', height: 'auto'});
+    	        /*$('body').css({overflowY: 'auto', height: 'auto'});*/
+    	        $('body').css({overflowY: 'auto', height: '100%'});
     	    });
     	    mask.fadeOut('slow', function()  {
     			mask.remove();
@@ -179,25 +177,25 @@
 	    
     	/* -- Mask Functions --*/
 	    loadMask: function() {
-	    	alert("test");
+	    	//alert("test");
 	        size = $.printPreview.sizeUpMask();
             mask = $('<div id="print-modal-mask" />').appendTo($('body'));
     	    mask.css({				
     			position:           'fixed', 
-    			top:                '100', 
-    			left:               '100',
-    			width:              '200',
-    			height:             '200',
-    			display:            'none',
-    			opacity:            0,					 		
-    			zIndex:             998,
-    			backgroundColor:    '#000'
+    			top:                 0, 
+    			left:                0,
+    			width:               size[0],
+    			height:              size[1],
+    			display:             'none',
+    			opacity:             0,					 		
+    			zIndex:              998,
+    			backgroundColor:     '#000'
     		});
 	
     		mask.css({display: 'block'}).fadeTo('400', 0.75);
     		
             $(window).bind("resize.printPreview.mask", function() {
-				//$.printPreview.updateMaskSize();
+				$.printPreview.updateMaskSize();
 			});
 			
 			mask.bind("click.printPreview.mask", function(e)  {
@@ -214,38 +212,32 @@
             	// if there are no scrollbars then use window.height
             	//alert("document height:"+$(document).height());
             	//alert("window height:"+$(window).height());
-            	
             	var d = $(document).height(), w = $(window).height();
-            	/*return [
-            		window.innerWidth || 						// ie7+
-            		document.documentElement.clientWidth || 	// ie6  
-            		document.body.clientWidth, 					// ie6 quirks mode
-            		d - w < 20 ? w : d
-            	];*/
             	return [
             		window.innerWidth || 						// ie7+
             		document.documentElement.clientWidth || 	// ie6  
             		document.body.clientWidth, 					// ie6 quirks mode
             		d - w < 20 ? w : d
             	];
+            	
             } else {            	
             	return [$(document).width(), $(document).height()]; }
         },
         
         //added by jch
-        sizeTop: function() {
+        /*sizeTop: function() {
         	var d = $(document).height(), w = $(window).height();
             if (!(IEVersion()==-1)) {
             	return d-w;
             } else {return 0; }
-        },
+        },*/
     
         updateMaskSize: function() {
     		var size = $.printPreview.sizeUpMask();
     		mask.css({width: size[0], height: size[1]});
         },
         
-        getWindowWidth: function () {
+        /*getWindowWidth: function () {
     		var windowWidth = 0;
     		if (typeof(window.innerWidth) == 'number') {
     			windowWidth = window.innerWidth;
@@ -261,6 +253,6 @@
     			}
     		}
     		return windowWidth;
-    	}
+    	}*/
     }
 })(jQuery);
