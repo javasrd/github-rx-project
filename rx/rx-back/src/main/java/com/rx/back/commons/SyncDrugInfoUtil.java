@@ -14,15 +14,20 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.rx.back.task.SyncDrugInfoTask;
+import com.rx.bean.SyncDrugLogStatus;
 import com.rx.common.util.DateUtils;
+import com.rx.common.util.RequestResultUtil;
 import com.rx.common.util.ZipUtil;
 import com.rx.entity.Drug;
+import com.rx.entity.LogSyncDrug;
 import com.rx.service.excelutil.Common;
 import com.rx.service.excelutil.ReadExcel;
 import com.rx.service.txtutil.ReadWriteTxtUtil;
@@ -32,12 +37,13 @@ public class SyncDrugInfoUtil{
 	private final static Logger log = Logger.getLogger(SyncDrugInfoUtil.class);
 	
 	private final static String url = "http://127.0.0.1/rx-back/api/demo";
+	//private final static String url = "http://222.222.66.25:8093/sync";
 
 	/**
 	 * 处理同步药品数据
 	 * @return
 	 */
-	public static List<Drug> processSyncDrug() {
+	public static Map<String, Object> processSyncDrug() {
 		
 		CloseableHttpResponse response = null;
 		try {
@@ -48,9 +54,17 @@ public class SyncDrugInfoUtil{
 			// 创建Http Post请求
 			HttpPost httpPost = new HttpPost(url);
 			httpPost.setHeader("ContentType", "application/x-www-form-urlencoded");
-			
 			// 执行http请求
 			response = httpClient.execute(httpPost);
+			
+			/*// 创建uri
+			URIBuilder builder = new URIBuilder(url);
+			URI uri = builder.build();
+			// 创建http GET请求
+			HttpGet httpGet = new HttpGet(uri);
+			// 执行http请求
+			response = httpClient.execute(httpGet);*/
+			
 			int statusCode = response.getStatusLine().getStatusCode();
 			System.out.println("HTTP请求返回状态码：" + statusCode);
 			log.info("HTTP请求返回状态码："+statusCode);
@@ -60,7 +74,7 @@ public class SyncDrugInfoUtil{
 				if (httpEntity != null) {
 					String realPath = "";
 					try {
-						System.out.println(httpEntity.getContentType());
+						
 						InputStream is = httpEntity.getContent();
 
 						realPath = getRealPath();
@@ -74,7 +88,7 @@ public class SyncDrugInfoUtil{
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-							return null;
+							return getFailResult(null, SyncDrugLogStatus.FAIL_GET_SAVE_PATH.getIndex(), SyncDrugLogStatus.FAIL_GET_SAVE_PATH.getValue(), null);
 						}
 						
 						int index;
@@ -90,6 +104,7 @@ public class SyncDrugInfoUtil{
 						e.printStackTrace();
 						//TODO
 						log.error("HTTP连接请求结果写入文本文件异常");
+						return getFailResult(null, SyncDrugLogStatus.FAIL_WRITE_FILE.getIndex(), SyncDrugLogStatus.FAIL_WRITE_FILE.getValue(), null);
 					}
 					
 					// parseExcel(realPath);//解析EXCEL文件并保存到数据库
@@ -97,16 +112,22 @@ public class SyncDrugInfoUtil{
 					
 				}else{
 					log.error("HTTP连接返回为空");
+					return getFailResult(null, SyncDrugLogStatus.FAIL_HTTP_RESULT_NULL.getIndex(), SyncDrugLogStatus.FAIL_HTTP_RESULT_NULL.getValue(), null);
 				}
 			}else{////发送请求获取药品信息TXT文本文件异常
 				//TODO 添加日志
-				log.error("HTTP连接异常");
+				log.error("HTTP请求异常");
+				return getFailResult(null, SyncDrugLogStatus.FAIL_HTTP_REQUEST.getIndex(), SyncDrugLogStatus.FAIL_HTTP_REQUEST.getValue(), null);
 			}
-			
+		
+		} catch(HttpHostConnectException e){
+			e.printStackTrace();
+			log.error("HTTP连接超时", e);
+			System.out.println(new Date() + " HTTP连接超时");
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error("HTTP请求异常", e);
-			System.out.println(new Date() + " HTTP请求异常");
+			log.error("HTTP连接异常", e);
+			System.out.println(new Date() + " HTTP连接异常");
 		} finally {
 			try {
 				response.close();
@@ -114,7 +135,8 @@ public class SyncDrugInfoUtil{
 				e.printStackTrace();
 			}
 		}
-		return null;
+		
+		return getFailResult(null, SyncDrugLogStatus.FAIL_HTTP_CONNECTOIN.getIndex(), SyncDrugLogStatus.FAIL_HTTP_CONNECTOIN.getValue(), null);
 	}
 
 	/**
@@ -129,7 +151,8 @@ public class SyncDrugInfoUtil{
 		try {
 			String fileName = "";
 
-			String bufix = ".zip";
+			//String bufix = ".zip";
+			String bufix = ".txt";
 			String random = Integer.toString(new Random().nextInt(89999) + 10000);
 			fileName = DateUtils.getDateRandom() + random + bufix;
 			return fileName;// 当前时间
@@ -149,16 +172,16 @@ public class SyncDrugInfoUtil{
 		// String path =
 		// "/D:/Tomcat/apache-tomcat-9.0.0.M13/webapps/rx-back/WEB-INF/classes/";
 		String path = SyncDrugInfoTask.class.getResource("/").getPath();
-		System.out.println(path);
+		//System.out.println(path);
 		path = path.substring(1);
-		System.out.println(path);
+		//System.out.println(path);
 		path = path.substring(0, path.indexOf("webapps"));
-		System.out.println(path);
+		//System.out.println(path);
 		path = path + "webapps";
-		System.out.println(path);
+		//System.out.println(path);
 		path = path + File.separator + "upload" + File.separator + "drug file download" + File.separator + subFolderName
 				+ File.separator;
-		System.out.println(path);
+		//System.out.println(path);
 		File filePath = new File(path);
 		// 如果文件夹不存在则创建
 		if (!filePath.exists() && !filePath.isDirectory()) {
@@ -208,9 +231,9 @@ public class SyncDrugInfoUtil{
 	 * 
 	 * @param drugFilePath
 	 */
-	private static List<Drug> parseTxt(String drugFilePath) {
+	private static Map<String, Object> parseTxt(String drugFilePath) {
 		
-		try {//解压文件
+		/*try {//解压文件
 			System.out.println("解压前TXT文本文件目录：" + drugFilePath);
 			File file = ZipUtil.unzip(drugFilePath);
 			System.out.println("解压如果TXT文本文件：" + file);
@@ -222,20 +245,20 @@ public class SyncDrugInfoUtil{
 			e.printStackTrace();
 			// TODO: handle exception
 			log.error("解压TXT文本文件异常");
-			return null;
-		}
+			return getFailResult(null, SyncDrugLogStatus.FAIL_ZIP.getIndex(), SyncDrugLogStatus.FAIL_ZIP.getValue());
+		}*/
 		
 		String drugInfoJSON = "";
 		try {//读取文件
 			drugInfoJSON = ReadWriteTxtUtil.readTxt(drugFilePath);
+			return getSuccessResult(drugInfoJSON, SyncDrugLogStatus.SUCCESS.getIndex(), SyncDrugLogStatus.SUCCESS.getValue(), drugFilePath);
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
 			log.error("读取TXT文本文件异常");
-			return null;
 		}
 		
-		try {//解析JSON并保存内容
+		/*try {//解析JSON并保存内容
 			if(StringUtils.isNotBlank(drugInfoJSON)){
 				List<Drug> drugList = JSONArray.parseArray(drugInfoJSON, Drug.class);
 				return drugList;
@@ -247,10 +270,47 @@ public class SyncDrugInfoUtil{
 			e.printStackTrace();
 			// TODO: handle exception
 			log.error("解析JSON并保存内容异常");
-		}
-		return null;
+		}*/
+		return getFailResult(null, SyncDrugLogStatus.FAIL_READ_FILE.getIndex(), SyncDrugLogStatus.FAIL_READ_FILE.getValue(), drugFilePath);
 	}
-
+	
+	/**
+	 * 获取成功结果
+	 * @param data
+	 * @param status
+	 * @param errormsg
+	 * @return
+	 */
+	private static Map<String, Object> getSuccessResult(Object data, int status, String errormsg, String filePath){
+		Map<String, Object> map = RequestResultUtil.getResultSuccess("读取TXT文件成功", data);
+		map.put(RequestResultUtil.RESULT_LOG, getLogJSON(status, errormsg, filePath));
+		return map;
+	}
+	/**
+	 * 获取失败结果
+	 * @param data
+	 * @param status
+	 * @param errormsg
+	 * @return
+	 */
+	private static Map<String, Object> getFailResult(Object data, int status, String errormsg, String filePath){
+		Map<String, Object> map = RequestResultUtil.getResultWarn("读取TXT文件失败", data);
+		map.put(RequestResultUtil.RESULT_LOG, getLogJSON(status, errormsg, filePath));
+		return map;
+	}
+	
+	/**
+	 * 获取日志JSON字符串
+	 * @param status
+	 * @param errormsg
+	 * @param filePath
+	 * @return
+	 */
+	private static String getLogJSON(int status, String errormsg, String filePath){
+		LogSyncDrug log = new LogSyncDrug(null, new Date(), status, errormsg, url, filePath);
+		return JSON.toJSONString(log);
+	}
+	
 	public static void main(String[] args) {
 		String subFolderName = DateUtils.getDate("yyyyMMdd");
 		String path = "/D:/Tomcat/apache-tomcat-9.0.0.M13/webapps/rx-back/WEB-INF/classes/";

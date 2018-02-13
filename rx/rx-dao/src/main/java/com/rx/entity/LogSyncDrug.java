@@ -9,9 +9,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.rx.bean.SyncDrugLogStatus;
+
 @Table(name = "log_sync_drug")
 public class LogSyncDrug {
-    /**
+	
+    public LogSyncDrug() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public LogSyncDrug(Long id, Date createdDate, Integer status, String errormsg, String url, String filePath) {
+		super();
+		this.id = id;
+		this.createdDate = createdDate;
+		this.status = status;
+		this.errormsg = errormsg;
+		this.url = url;
+		this.filePath = filePath;
+	}
+
+	/**
      * 自增ID
      */
     @Id
@@ -38,6 +56,8 @@ public class LogSyncDrug {
      * 数据源地址
      */
     private String url;
+    
+    private String filePath;
 
     /**
      * 获取自增ID
@@ -109,22 +129,7 @@ public class LogSyncDrug {
      * @return status - 同步状态。1:成功；2：文件格式错误；3：连接失败
      */
     public String getStatusStr() {
-    	String statusStr = "";
-    	switch (status) {
-		case 1:
-			statusStr = "成功";
-			break;
-		case 2:
-			statusStr = "文件格式错误";
-			break;
-		case 3:
-			statusStr = "连接失败";
-			break;
-		default:
-			statusStr = "未知";
-			break;
-		}
-        return statusStr;
+    	return SyncDrugLogStatus.getValue(status);
     }
 
     /**
@@ -163,18 +168,18 @@ public class LogSyncDrug {
         this.url = url == null ? null : url.trim();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", createdDate=").append(createdDate);
-        sb.append(", status=").append(status);
-        sb.append(", errormsg=").append(errormsg);
-        sb.append(", url=").append(url);
-        sb.append("]");
-        return sb.toString();
-    }
+    public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	@Override
+	public String toString() {
+		return "LogSyncDrug [id=" + id + ", createdDate=" + createdDate + ", status=" + status + ", errormsg="
+				+ errormsg + ", url=" + url + ", filePath=" + filePath + "]";
+	}
+
 }
