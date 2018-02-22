@@ -674,8 +674,81 @@ function handler_click_delete_row(){
 }
 
 function handler_click_btn_save_template(){
-	alert("click btn_save_template!");
+	//alert("click btn_save_template!");
+	// 判断是否已存在，如果已存在则直接显示
+	if (M.dialog1) {
+		M.dialog1.destroy();
+	}
+	M.dialog1 = jqueryAlert({
+		'title' : '提示',
+		'content' : '<img src="'+BASE_CONTEXT_PATH+'/static/images/warning.png">'+ '    请输入模板名称:<input type="text" name="template-name" id="template-name" value="" >  ',
+		'modal' : true,
+		'buttons' : {
+			'确定' : function() {
+				//先做有效性验证
+				if($.trim($('#template-name').val())==''){
+					alert('模板名称为空!',2000);
+				}
+				else{
+					//TODO 业务处理
+					var templateName=$.trim($('#template-name').val());  //模板名称
+					//异步发送请求
+					saveTemplate(templateName);  //保存模板
+					
+					M.dialog1.close();
+					M.dialog1.destroy();
+					M.dialog1 = null;						
+				}
+			},
+			'取消' : function() {
+				M.dialog1.close();
+				M.dialog1.destroy();
+				M.dialog1 = null;
+			}
+		}
+	});
+	
+	$('#template-name').focus();  //模板名称获取焦点.
 }
+
+function saveTemplate(templateName) {
+	url = BASE_CONTEXT_PATH + "/template/save";
+
+	var parmObj=new Object();
+	parmObj.patientId=$("#patient").attr("bind-id");
+	parmObj.doctorId=$("#doctor").attr("bind-id");
+	parmObj.departmentId=$("#department").attr("bind-id");
+	parmObj.templateName=templateName;  //模板名称
+	parmObj.prescDrugs=getDrugList();
+	
+	//var parms = g_prescDrugList;
+	// alert("array length:"+parms.length);
+	// 采用AJAX方式发送POST请求
+	$.ajax({
+		type : "POST",
+		url : url,
+		contentType : "application/json", // 指定发送到服务器时参数的格式
+		dataType : "json", // 指定自服务器接收到的数据格式
+		data : JSON.stringify(parmObj), // 传递的参数,JSON格式。
+		success : function(res) { // 请求正确之后的操作
+			if (res != null) {
+				// console.log(res);
+				// var obj = $.parseJSON(res);
+				if (res.result_code == "success") {
+					// util.message(obj.result_msg,"","info");
+					var msg = res.result_msg; //保存成功信息
+					alert("保存成功,生成处方:"+msg, 2000,'right');
+				} else {
+					alert(obj.result_err_msg,5000,'error');
+				}
+			}
+		},
+		error : function(result) { // 请求失败之后的操作
+			alert("保存失败,请联系系统管理员!", 5000,'error');
+		}
+	});
+}
+
 
 function handler_click_btn_edit_template(){
 	alert("click btn_edit_template!");

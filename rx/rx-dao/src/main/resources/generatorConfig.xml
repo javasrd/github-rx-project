@@ -459,9 +459,17 @@
 			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table> -->
 		
-		<table tableName="direction" domainObjectName="Direction" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+		<!-- <table tableName="direction" domainObjectName="Direction" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table> -->
+		
+		<table tableName="template" domainObjectName="Template" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
 		</table>
+		<table tableName="template_detail" domainObjectName="TemplateDetail" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		
 		
 	</context>
 </generatorConfiguration>

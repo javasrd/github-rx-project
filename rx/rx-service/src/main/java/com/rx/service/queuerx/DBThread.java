@@ -133,12 +133,12 @@ public class DBThread implements Runnable {
 					break;
 				}
 				else{ //如果请求返回的结果为空时,则表明出现请求时错误(网络错误,URL地址错误等)
-					log.info("请求发送处方时发生网络错误! 1000ms后重新发送请求......");
-					Thread.sleep(1000);
+					log.info("请求发送处方时发生网络错误! 3000ms后重新发送请求......");
+					Thread.sleep(3000);
 					counter++;
 					if(counter==3){
-						log.info("重试三次后仍没有发送成功,更新处方发送日志......");
-						updateLogStatus(logId,3);  //列新日志状态
+						log.info("重试三次后仍没有发送成功,更新处方发送日志为网络中断状态......");
+						updateLogStatus(logId,3);  //修改日志状态
 					}
 				}
 			}

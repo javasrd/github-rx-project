@@ -73,7 +73,8 @@ var Common = {
 	//解决浏览器兼容性问题.
 	showDropdownUnit : function (that) {
 		var top = $(that).offset().top+55;
-		if ($.browser.msie) {
+		if (IEVersion()!=-1) {  //if the browser is ie
+		//if ($.browser.msie) {
 			top = $(that).offset().top+55+yScroll;
 		}
 		var left = $(that).offset().left;

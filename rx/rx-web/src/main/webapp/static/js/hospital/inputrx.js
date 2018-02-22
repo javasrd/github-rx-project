@@ -220,13 +220,31 @@ function deleteDrugRow(that) {
 
 
 var M = new Object();
-function alert(message, closeTime) {
+/**
+ * @param message
+ * @param closeTime
+ * @param type  right error warning
+ * @returns
+ */
+function alert(message, closeTime,type) {
 	// 判断是否已存在，如果已存在则直接显示
 	if (M.dialog1) {
 		M.dialog1.destroy();
 	}
+	//BASE_CONTEXT_PATH+'/static/images/warning.png"
+	
+	var icon=BASE_CONTEXT_PATH+'/static/images/warning.png';
+	if(type=='right')
+		icon=BASE_CONTEXT_PATH+'/static/images/right.png';
+	else if(type=='error')
+		icon=BASE_CONTEXT_PATH+'/static/images/error.png';
+	else
+		icon=BASE_CONTEXT_PATH+'/static/images/warning.png';	
+		
+		
 	M.dialog1 = jqueryAlert({
 		'content' : message,
+		'icon':icon,
 		'closeTime' : closeTime
 	});	
 }
@@ -275,7 +293,7 @@ function showConfirmWindow_delete_selected_row() {
 	}
 	M.dialog1 = jqueryAlert({
 		'title' : '提示',
-		'content' : '    确认删除所选定的药品?    ',
+		'content' : '<img src="'+BASE_CONTEXT_PATH+'/static/images/warning.png">'+ '    确认删除所选定的药品?    ',
 		'modal' : true,
 		'buttons' : {
 			'确定' : function() {
@@ -284,13 +302,13 @@ function showConfirmWindow_delete_selected_row() {
 				$("#drugForm .drug-list tr").attr("class","");
 				Common.addStripedStyle();
 				M.dialog1.close();
-				M.dialog1.distroy();
+				M.dialog1.destroy();
 				M.dialog1 = null;
 				displayNumberAndSum();
 			},
 			'取消' : function() {
 				M.dialog1.close();
-				M.dialog1.distroy();
+				M.dialog1.destroy();
 				M.dialog1 = null;
 			}
 		}
