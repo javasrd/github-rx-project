@@ -660,7 +660,8 @@ function handler_click_select_all(){
 	var drugList=getDrugList();
 	for(var i=0;i<drugList.length;i++){
 		var checkId="check-drug-"+drugList[i].id;
-		$("#"+checkId).attr("checked",checkStatus);
+		//$("#"+checkId).attr("checked",checkStatus);
+		$("#"+checkId).prop("checked",checkStatus);
 	}
 }
 
