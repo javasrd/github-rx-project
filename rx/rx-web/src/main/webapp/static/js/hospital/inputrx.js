@@ -5,14 +5,37 @@ function addDrugIntoTable() {
 
 	//getInputDoseUnitId(this)
 	
+	/*var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'+ g_currDrug.id+ '"'+ ' id=drug-row-'  + g_currDrug.id+  ' title="双击删除药品"'+ '>'
+	+ '<td class="small_width"><input type="checkbox" class="check-drug" '+'id="check-drug-'+g_currDrug.id+'"'+  ' bind-id="'+ g_currDrug.id	+ '"' + '></td>'
+	+ '<td class="small_width">'+ g_currDrug.wareid	+ '</td>'
+	+ '<td class="input_width">'+ g_currDrug.warename + '</td>'
+	+ '<td class="small_width">'+ g_currDrug.warespec + '</td>'
+	
+	+ '<td class="small_width "><input class="form-control  dosage" id="drug-dosage-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+   ' value='+$("#single-dosage").val()  +   '>'+'</td>'
+	+ '<td class="small_width "><input class="form-control  dose-unit" id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputDoseUnitId(this)" '+ ' value='+$("#single-dose-unit").val()  + '>'+
+	
+	'</td>'
+	+ '<td class="input_width "><input class="form-control  times" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugtimes").val()+     '></td>'
+	+ '<td class="input_width "><input class="form-control  mode" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugmode").val()+'></td>'			
+	+ '<td class="small_width "><input class="form-control  days" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+' value='+$("#treatment-days").val()+'></td>'
+	+ '<td class="small_width "><input class="form-control  quantity" id="drug-quantity-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+ 'value='+$("#quantity").val()+'></td>' 
+	
+	+ '<td class="small_width">' + g_currDrug.wareunit+ '</td>' 
+	+ '<td class="small_width">' + g_currDrug.saleprice	+ '</td>'
+	+ '<td class="small_width">' + toDecimal2($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
+	+ '</tr>';*/
+	
 	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'+ g_currDrug.id+ '"'+ ' id=drug-row-'  + g_currDrug.id+  ' title="双击删除药品"'+ '>'
 			+ '<td class="small_width"><input type="checkbox" class="check-drug" '+'id="check-drug-'+g_currDrug.id+'"'+  ' bind-id="'+ g_currDrug.id	+ '"' + '></td>'
 			+ '<td class="small_width">'+ g_currDrug.wareid	+ '</td>'
 			+ '<td class="input_width">'+ g_currDrug.warename + '</td>'
 			+ '<td class="small_width">'+ g_currDrug.warespec + '</td>'
 			
-			+ '<td class="small_width "><input class="form-control  dosage" id="drug-dosage-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+   ' value='+$("#single-dosage").val()  +   '></td>'
-			+ '<td class="small_width "><input class="form-control  dose-unit" id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputDoseUnitId(this)" '+ ' value='+$("#single-dose-unit").val()  + '>'+'</td>'
+			+ '<td class="small_width "><input class="form-control  dosage" id="drug-dosage-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+   ' value='+$("#single-dosage").val()  +   '>'+'</td>'
+			+ '<td class="small_width "><input class="form-control  dose-unit" style="display:inline"  id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputDoseUnitId(this)" '+ ' value='+$("#single-dose-unit").val()  + '>'+
+		      		'<span class="glyphicon glyphicon-list-alt" id="btn-doseunit-'+  g_currDrug.id+ '">' +
+					'</span>' +
+			'</td>'
 			+ '<td class="input_width "><input class="form-control  times" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugtimes").val()+     '></td>'
 			+ '<td class="input_width "><input class="form-control  mode" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugmode").val()+'></td>'			
 			+ '<td class="small_width "><input class="form-control  days" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+' value='+$("#treatment-days").val()+'></td>'
