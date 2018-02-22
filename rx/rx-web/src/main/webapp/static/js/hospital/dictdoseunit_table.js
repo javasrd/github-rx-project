@@ -47,7 +47,7 @@ function setPrescriptionDoseunit(doseunit){
 	
 	//用药天数获取焦点
 	var arr = g_edit_doseunit_id.split("-");
-	$("#drug-days-"+arr[2])[0].focus();
+	$("#drug-times-"+arr[2])[0].focus();
 }
 
 /**

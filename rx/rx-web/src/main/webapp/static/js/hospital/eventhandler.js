@@ -32,6 +32,28 @@ function handler_keydown_hospital(ev){
 			Common.hideDropdownTable(); // 关闭选择下拉框
 			setDaysWindowStatus(WINDOW_CLOSED);
 		}
+		//-----------dropdown in table---------
+		
+		if (getTableModeWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownUnit(); // 关闭选择下拉框
+			setTableModeWindowStatus(WINDOW_CLOSED);
+		}
+		
+		if (getTableTimesWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownUnit(); // 关闭选择下拉框
+			setTableTimesWindowStatus(WINDOW_CLOSED);
+		}
+		
+		if (getDoseUnitWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownUnit(); // 关闭选择下拉框
+			setDoseUnitWindowStatus(WINDOW_CLOSED);
+		}
+		
+		if (getTableDaysWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownUnit(); // 关闭选择下拉框
+			setTableDaysWindowStatus(WINDOW_CLOSED);
+		}
+		
 		
 		return false;
 
@@ -75,7 +97,7 @@ function handler_keydown_abc(ev) {
 }
 
 /**
- * 表格中频次-keydown事件处理程序
+ * 表格:频次-keydown事件处理程序
  * @param ev
  * @returns
  */
@@ -108,9 +130,38 @@ function handler_keydown_times_table(ev){
 	}
 }
 
+/**
+ * 表格: 用法
+ * @param ev
+ * @returns
+ */
 function handler_keydown_mode_table(ev){
-	alert("增加业务逻辑!-drugtmode_table  keydown!");
-	return false;
+	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
+	if (oEvent.keyCode == 27) // Esc键的keyCode是27
+	{
+		//alert("esc:"+getDoseUnitWindowStatus());
+		if (getTableModeWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownUnit(); // 关闭选择下拉框
+			$(this).focus();
+			setTableModeWindowStatus(WINDOW_CLOSED);
+		}
+		return false;
+	}
+	// 用户按下了回车键
+	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
+	if (oEvent.keyCode == 13) {
+		if (getTableModeWindowStatus() == WINDOW_OPENED) {
+			choiceTableTheFirstMode();			
+		} else {
+			var bindid=$(this).attr("bind-id");
+			if($.trim($(this).val())==""){
+				alert("未录入用法!",500);
+				//setFocus("#drugtimes");
+			}
+			//$("#drug-days-"+bindid).focus(); // "天数"文本框获取焦点
+		}
+		return false;
+	}
 }
 
 function handler_keydown_quantity_table(ev){
@@ -348,20 +399,36 @@ function handler_keydown_dosage(event){
 	}
 }
 
-function handler_keydown_days_table(event) {
-	if (event.keyCode == "13") {// keyCode=13是回车键
-		var val=$.trim($(this).val());
-		if (val==""){
-			alert("用药天数为空!",500);
-		}
-		else if(!isUnsignedInteger(val)){
-			alert("用药天数不是正整数!!",500);
-		}
-		else{
-			setFocus("#abc");
+function handler_keydown_days_table(ev) {
+	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
+	if (oEvent.keyCode == 27) // Esc键的keyCode是27
+	{
+		if (getTableDaysWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownUnit(); // 关闭选择下拉框
+			$(this).focus();
+			setTableDaysWindowStatus(WINDOW_CLOSED);
 		}
 		return false;
 	}
+	// 用户按下了回车键
+	// 当列表中不为空,选择第一个.如果为空时,不做任何动作.
+	if (oEvent.keyCode == 13) {
+		if (getTableDaysWindowStatus() == WINDOW_OPENED) {
+			choiceTableTheFirstDays();
+		} else {
+			var bindid=$(this).attr("bind-id");
+			var val=$.trim($(this).val());
+			if (val==""){
+				alert("用药天数为空!",500);
+			}
+			else if(!isUnsignedInteger(val)){
+				alert("用药天数不是正整数!!",500);
+			}		
+			
+		}
+		return false;
+	}
+	
 }
 
 /**
@@ -581,7 +648,26 @@ function handler_input_times_table(){
  * @returns
  */
 function handler_input_mode_table(){
-	alert("增加用法mode INPUT业务逻辑");
+	/*--------------------------
+	用户输入
+		(1)可能是助记码
+		(2)实际的值
+	--------------------------*/
+	// (1)输入是实际值情况
+	var drugId = $(this).attr("bind-id"); // 取得当前编辑的药品ID
+	var index = searchDrugById(drugId); // 自g_prescDrugList查询,并置相应属性
+	if (index >= 0) {
+		var prescDrugList=getDrugList();
+		prescDrugList[index].drugmode = $(this).val();
+	}
+
+	// (2)输入是助记码情况
+	var abc = $(this).val(); // 助记码
+	if (getTableModeWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownUnit($(this));
+		setTableModeWindowStatus(WINDOW_OPENED);
+	}
+	loadTableDrugMode(abc);
 }
 
 function handler_input_quantity_table(){
@@ -648,13 +734,27 @@ function handler_input_dosage(){
  * @returns
  */
 function handler_input_days_table() {
+	/*--------------------------
+	用户输入
+		(1)可能是助记码
+		(2)真正的doseunit
+	--------------------------*/
+	// alert("doseunit");
+	// (1)输入是doseunit情况
 	var drugId = $(this).attr("bind-id"); // 取得当前编辑的药品ID
-	// 自g_prescDrugList查询,并置days属性
-	var index = searchDrugById(drugId);
+	var index = searchDrugById(drugId); // 自g_prescDrugList查询,并置doseunit
 	if (index >= 0) {
 		var prescDrugList=getDrugList();
 		prescDrugList[index].days = $(this).val();
 	}
+
+	// (2)输入是助记码情况
+	var abc = $(this).val(); // 助记码
+	if (getTableDaysWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownUnit($(this));
+		setTableDaysWindowStatus(WINDOW_OPENED);
+	}
+	loadTableDrugDays(abc);
 }
 
 /**-----------------------------------
@@ -839,6 +939,40 @@ function handler_click_btn_times_table(){
 		setTableTimesWindowStatus(WINDOW_OPENED);
 	}
 	loadTableDrugTimes(abc);
+}
+
+/**
+ * 表格:用药方式下拉列表按钮-click handler
+ * @returns
+ */
+function handler_click_btn_mode_table(){
+	var id=$(this).attr('bind-id');
+	var input="drug-mode-"+id;
+	var inputObj=$("#"+input);
+  
+	inputObj.trigger("focus"); //置全局变量	
+	//打开下拉框
+	var abc = ""; //助记码
+	if (getTableModeWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownUnit(inputObj);
+		setTableModeWindowStatus(WINDOW_OPENED);
+	}
+	loadTableDrugMode(abc);
+}
+
+function handler_click_btn_days_table(){
+	var id=$(this).attr('bind-id');
+	var input="drug-days-"+id;
+	var inputObj=$("#"+input);
+  
+	inputObj.trigger("focus"); //置全局变量	
+	//打开下拉框
+	var abc = ""; //助记码
+	if (getTableDaysWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownUnit(inputObj);
+		setTableDaysWindowStatus(WINDOW_OPENED);
+	}
+	loadTableDrugDays(abc);
 }
 
 

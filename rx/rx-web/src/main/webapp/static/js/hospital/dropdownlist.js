@@ -122,7 +122,7 @@ function setTableTimesWindowStatus(status) {
 
 //用法
 function getTableModeWindowStatus() {
-	return g_table_dict_mode_window_status;
+	return g_dict_table_mode_window_status;
 }
 function setTableModeWindowStatus(status) {
 	g_dict_table_mode_window_status = status;

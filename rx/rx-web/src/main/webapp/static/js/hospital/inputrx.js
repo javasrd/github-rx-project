@@ -40,12 +40,12 @@ function addDrugIntoTable() {
 					'<span class="glyphicon glyphicon-list-alt" id="btn-times-'+  g_currDrug.id+ '"'+' bind-id="'+ g_currDrug.id+'"'+ '>' +
 					'</span>' +
 			'</td>'
-			+ '<td class="input_width "><input class="form-control  mode" style="display:inline" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugmode").val()+'>'+
-					'<span class="glyphicon glyphicon-list-alt"  id="btn-mode-'+  g_currDrug.id+ '"'+ '>' +
+			+ '<td class="input_width "><input class="form-control  mode" style="display:inline" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputModeId(this)" '  + ' value='+$("#drugmode").val()+'>'+
+					'<span class="glyphicon glyphicon-list-alt"  id="btn-mode-'+  g_currDrug.id+ '"'+ ' bind-id="'+ g_currDrug.id+'"' +'>' +
 					'</span>' +
 			'</td>'			
-			+ '<td class="small_width "><input class="form-control  days" style="display:inline" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+' value='+$("#treatment-days").val()+'>'+
-					'<span class="glyphicon glyphicon-list-alt"  id="btn-times-'+  g_currDrug.id+ '"' +'>' +
+			+ '<td class="small_width "><input class="form-control  days" style="display:inline" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+  ' onfocus="getInputDaysId(this)" '  + ' value='+$("#treatment-days").val()+'>'+
+					'<span class="glyphicon glyphicon-list-alt"  id="btn-days-'+  g_currDrug.id+ '"' +  ' bind-id="'+ g_currDrug.id+'"' +   '>' +
 					'</span>' +
 			'</td>'
 			+ '<td class="small_width "><input class="form-control  quantity" id="drug-quantity-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+ 'value='+$("#quantity").val()+'></td>' 
@@ -91,24 +91,22 @@ function addDrugIntoTable() {
 	//(3)频次
 	bindIEEvent("input", "#drug-times-" + g_currDrug.id, handler_input_times_table);
 	bindEvent("keydown", "#drug-times-" + g_currDrug.id, handler_keydown_times_table);
-	bindEvent("click", "#btn-times-" + g_currDrug.id,	 handler_click_btn_times_table);   //频次下拉按钮
+	bindEvent("click", "#btn-times-" + g_currDrug.id,	 handler_click_btn_times_table);   //频次下拉框按钮
 	
 	//(4)用法
 	bindIEEvent("input", "#drug-mode-" + g_currDrug.id, handler_input_mode_table);
 	bindEvent("keydown", "#drug-mode-" + g_currDrug.id,	handler_keydown_mode_table);
+	bindEvent("click",   "#btn-mode-"  + g_currDrug.id, handler_click_btn_mode_table);   //mode下拉框按钮
 	
 	
 	//(5)疗程(天数)
 	bindIEEvent("input", "#drug-days-" + g_currDrug.id, handler_input_days_table);     
 	bindEvent("keydown", "#drug-days-" + g_currDrug.id, handler_keydown_days_table);
+	bindEvent("click", 	 "#btn-days-" + g_currDrug.id, handler_click_btn_days_table);  //days下拉框按钮
 	
 	//(6)数量
 	bindIEEvent("input", "#drug-quantity-" + g_currDrug.id, handler_input_quantity_table);
 	bindEvent("keydown", "#drug-quantity-" + g_currDrug.id, handler_keydown_quantity_table);
-	
-	
-	
-	
 	
 
 	clearInputValue(); // 清除输入框
