@@ -553,7 +553,7 @@ $(function() {
 	bindEvent("click","#btn-use-template",handler_click_btn_use_template);
 	
 	
-	
+	//药品增加按钮CLICK事件处理
 	bindEvent("click","#btn-add-drug",handler_click_btn_add_drug);
 	
 	bindEvent("click", "#check-select-all", handler_click_select_all);  //选择所有

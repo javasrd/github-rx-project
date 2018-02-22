@@ -520,7 +520,7 @@ function searchDaysDropdown(abc,inputBoxId){
 	var inputObj=$(inputBoxId);
 	if (getDaysWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
 		Common.showDropdownTable(inputObj);
-		Common.setDropdownTalbeWidth(300);
+		Common.setDropdownTalbeWidth(270);
 		setDaysWindowStatus(WINDOW_OPENED);
 	}
 	loadDrugDays(abc);
@@ -737,7 +737,7 @@ function saveTemplate(templateName) {
 				if (res.result_code == "success") {
 					// util.message(obj.result_msg,"","info");
 					var msg = res.result_msg; //保存成功信息
-					alert("保存成功,生成处方:"+msg, 2000,'right');
+					alert("保存模板成功!"+msg, 2000,'right');
 				} else {
 					alert(obj.result_err_msg,5000,'error');
 				}

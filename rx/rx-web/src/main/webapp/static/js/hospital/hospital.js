@@ -72,10 +72,12 @@ var Common = {
 	//modified by jch 2018/01/25
 	//解决浏览器兼容性问题.
 	showDropdownUnit : function (that) {
-		var top = $(that).offset().top+55;
+		var topOffset=55;
+		var top = $(that).offset().top+topOffset;
 		if (IEVersion()!=-1) {  //if the browser is ie
 		//if ($.browser.msie) {
-			top = $(that).offset().top+55+yScroll;
+			//top = $(that).offset().top+55+yScroll;
+			top = $(that).offset().top+topOffset;
 		}
 		var left = $(that).offset().left;
 		$('.dropdown-unit').css({"top":top,"left":left}).show();
