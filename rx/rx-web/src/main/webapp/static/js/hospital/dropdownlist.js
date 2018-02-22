@@ -2,14 +2,22 @@
 var WINDOW_CLOSED = 0;
 var WINDOW_OPENED = 1;
 
-// 四个下拉窗口打开状态
-var g_dict_drug_window_status = WINDOW_CLOSED;
-var g_dict_mode_window_status = WINDOW_CLOSED;
-var g_dict_times_window_status = WINDOW_CLOSED;
-var g_dict_doseunit_input_window_status=WINDOW_CLOSED; //输入框
+//输入面板:五个下拉窗口打开状态
+var g_dict_drug_window_status = WINDOW_CLOSED;  		//药品
+
+var g_dict_doseunit_input_window_status=WINDOW_CLOSED; 	//剂量单位
+var g_dict_times_window_status = WINDOW_CLOSED; 		//次数
+var g_dict_mode_window_status = WINDOW_CLOSED;  		//用法
 var g_dict_days_window_status=WINDOW_CLOSED; 			//疗程
 
-var g_dict_doseunit_window_status = WINDOW_CLOSED;  //表格内
+//表格内:四个下拉窗口打开状态
+
+var g_dict_doseunit_window_status = WINDOW_CLOSED;  		//剂量单位
+var g_dict_table_times_window_status = WINDOW_CLOSED; 		//次数
+var g_dict_table_mode_window_status = WINDOW_CLOSED;  		//用法
+var g_dict_table_days_window_status=WINDOW_CLOSED; 			//疗程
+
+
 
 //药品
 // getter and setter
@@ -83,6 +91,8 @@ function setDaysWindowStatus(status) {
 	}
 }
 
+//------------------表格中下拉对话框状态------------------
+
 //剂量单位(表格)
 function getDoseUnitWindowStatus() {
 	return g_dict_doseunit_window_status;
@@ -90,4 +100,51 @@ function getDoseUnitWindowStatus() {
 
 function setDoseUnitWindowStatus(status) {
 	g_dict_doseunit_window_status = status;
+	if(status==WINDOW_OPENED){		
+		setTableTimesWindowStatus(WINDOW_CLOSED);
+		setTableModeWindowStatus(WINDOW_CLOSED);
+		setTableDaysWindowStatus(WINDOW_CLOSED);
+	}
 }
+
+//频次
+function getTableTimesWindowStatus() {
+	return g_dict_table_times_window_status;
+}
+function setTableTimesWindowStatus(status) {
+	g_dict_table_times_window_status = status;
+	if(status==WINDOW_OPENED){
+		setTableModeWindowStatus(WINDOW_CLOSED);
+		setDoseUnitWindowStatus(WINDOW_CLOSED);
+		setTableDaysWindowStatus(WINDOW_CLOSED);
+	}
+}
+
+//用法
+function getTableModeWindowStatus() {
+	return g_table_dict_mode_window_status;
+}
+function setTableModeWindowStatus(status) {
+	g_dict_table_mode_window_status = status;
+	if(status==WINDOW_OPENED){		
+		setTableTimesWindowStatus(WINDOW_CLOSED);
+		setDoseUnitWindowStatus(WINDOW_CLOSED);
+		setTableDaysWindowStatus(WINDOW_CLOSED);
+	}
+}
+
+//疗程
+function getTableDaysWindowStatus() {
+	return g_dict_table_days_window_status;
+}
+
+function setTableDaysWindowStatus(status) {
+	g_dict_table_days_window_status = status;
+	if(status==WINDOW_OPENED){
+		setTableModeWindowStatus(WINDOW_CLOSED);
+		setTableTimesWindowStatus(WINDOW_CLOSED);
+		setDoseUnitWindowStatus(WINDOW_CLOSED);
+	}
+}
+
+

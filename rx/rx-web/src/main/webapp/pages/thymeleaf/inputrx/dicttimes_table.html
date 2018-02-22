@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>给药次数-数据字典列表</title>
+<style>
+	.dict-drug-times tr:hover{
+		background-color:#CCFFCC;
+	}
+</style>
+</head>
+<body>
+	<div class="">
+		<div class="">
+			<table class="table dict-drug-times">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>名称</th>
+						<th>助记码</th>						
+					</tr>
+				</thead>
+				<tbody>				 
+					<tr title="双击选择当前记录" th:each="times,iterStat:${timesList}" class="times-item" 
+						th:attr="times-id=${times.id}" >
+												
+						<td th:text="${iterStat.count}"></td>
+						<td th:text="${times.name}" th:attr="id='timesname-'+${times.id}"></td>
+						<td th:text="${times.code}" th:attr="id='timescode-'+${times.id}"></td>
+						
+					</tr>
+					
+					<tr th:remove="all">
+						<td>1</td>
+						<td>一日一次</td>
+						<td>yryc</td>
+					</tr>
+					<tr th:remove="all">
+						<td>2</td>
+						<td>一日三次</td>
+						<td>yrsc</td>
+					</tr>
+															
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<script th:src="@{/static/js/hospital/dicttimes_table.js}" type="text/javascript"></script>
+	
+</body>
+
+
+
+</html>

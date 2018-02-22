@@ -80,8 +80,32 @@ function handler_keydown_abc(ev) {
  * @returns
  */
 function handler_keydown_times_table(ev){
-	alert("增加业务逻辑!-drugtimes_table  keydown!");
-	return false;
+	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
+	if (oEvent.keyCode == 27) // Esc键的keyCode是27
+	{
+		//alert("esc:"+getDoseUnitWindowStatus());
+		if (getTableTimesWindowStatus() == WINDOW_OPENED) {
+			Common.hideDropdownUnit(); // 关闭选择下拉框
+			$(this).focus();
+			setTableTimesWindowStatus(WINDOW_CLOSED);
+		}
+		return false;
+	}
+	// 用户按下了回车键
+	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
+	if (oEvent.keyCode == 13) {
+		if (getTableTimesWindowStatus() == WINDOW_OPENED) {
+			choiceTableTheFirstTimes();			
+		} else {
+			var bindid=$(this).attr("bind-id");
+			if($.trim($(this).val())==""){
+				alert("未录入次数!",500);
+				//setFocus("#drugtimes");
+			}
+			//$("#drug-days-"+bindid).focus(); // "天数"文本框获取焦点
+		}
+		return false;
+	}
 }
 
 function handler_keydown_mode_table(ev){
@@ -502,7 +526,7 @@ function searchDoseunitDropdown(abc,inputBoxId){
 		Common.setDropdownTalbeWidth(300);
 		setDoseUnitInputWindowStatus(WINDOW_OPENED);
 	}
-	loadDrugDoseUnitInput(abc);
+	loadDrugDoseUnit(abc);
 }
 
 /**
@@ -531,7 +555,26 @@ function searchDaysDropdown(abc,inputBoxId){
  * @returns
  */
 function handler_input_times_table(){
-	alert("增加频次INPUT业务逻辑");
+	/*--------------------------
+	用户输入
+		(1)可能是助记码
+		(2)实际的值
+	--------------------------*/
+	// (1)输入是实际值情况
+	var drugId = $(this).attr("bind-id"); // 取得当前编辑的药品ID
+	var index = searchDrugById(drugId); // 自g_prescDrugList查询,并置相应属性
+	if (index >= 0) {
+		var prescDrugList=getDrugList();
+		prescDrugList[index].drugtimes = $(this).val();
+	}
+
+	// (2)输入是助记码情况
+	var abc = $(this).val(); // 助记码
+	if (getTableTimesWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownUnit($(this));
+		setTableTimesWindowStatus(WINDOW_OPENED);
+	}
+	loadTableDrugTimes(abc);
 }
 /**
  * 表格中:药品用法	input事件	处理程序
@@ -573,7 +616,7 @@ function handler_input_doseunit_table() {
 		Common.showDropdownUnit($(this));
 		setDoseUnitWindowStatus(WINDOW_OPENED);
 	}
-	loadDrugDoseUnit(abc);
+	loadTableDrugDoseUnit(abc);
 }
 
 /**
@@ -759,6 +802,44 @@ function handler_click_btn_use_template(){
 	alert("click btn_use_template");
 }
 
+/**
+ * 表格:剂量单位下拉列表按钮-click handler
+ * @returns
+ */
+function handler_click_btn_doseunit_table(){
+	var id=$(this).attr('bind-id');
+	var input="drug-doseunit-"+id;
+	var inputObj=$("#"+input);
+  
+	inputObj.trigger("focus"); //置全局变量	
+	//打开下拉框
+	var abc = ""; // 助记码
+	if (getDoseUnitWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		Common.showDropdownUnit(inputObj);
+		setDoseUnitWindowStatus(WINDOW_OPENED);
+	}
+	loadTableDrugDoseUnit(abc);
+}
+
+/**
+ * 表格:频次下拉列表按钮-click handler
+ * @returns
+ */
+function handler_click_btn_times_table(){
+	var id=$(this).attr('bind-id');
+	var input="drug-times-"+id;
+	var inputObj=$("#"+input);
+  
+	inputObj.trigger("focus"); //置全局变量	
+	//打开下拉框
+	var abc = ""; //助记码
+	if (getTableTimesWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
+		//alert("display");
+		Common.showDropdownUnit(inputObj);
+		setTableTimesWindowStatus(WINDOW_OPENED);
+	}
+	loadTableDrugTimes(abc);
+}
 
 
 /**---------------------------------

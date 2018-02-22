@@ -216,7 +216,7 @@
         </div>
         <div class="table-responsive" >
           <div id="drugForm" class="table-body" onscroll="Common.hideDropdownUnit()" >
-            <div class="dropdown-unit">
+            <div class="dropdown-unit" style="z-index:99;">
               <table>
                 <thead>
                   <tr>
@@ -258,24 +258,24 @@
       </div>
       <div class="menu_container clearfix">
         <div class="left_btn pull-left" id="toolsbar">
-          <button class="btn btn-success" id="btn-edit-template">编辑模板</button>
-          <button class="btn btn-success" id="btn-save-template">存为模板</button>
-          <button class="btn btn-success" id="btn-use-template">使用模板</button>
+          <button type="button" class="btn btn-success" id="btn-edit-template">编辑模板</button>
+          <button type="button" class="btn btn-success" id="btn-save-template">存为模板</button>
+          <button type="button" class="btn btn-success" id="btn-use-template">使用模板</button>
                     
-          <button class="btn btn-success" id="btn-delete-row"  style="margin-left:10px;">删除行</button>                    
-          <button class="btn btn-success" id="btn-clear-presc-table" style="margin-right:10px;">新处方</button>
+          <button type="button" class="btn btn-success" id="btn-delete-row"  style="margin-left:10px;">删除行</button>                    
+          <button type="button" class="btn btn-success" id="btn-clear-presc-table" style="margin-right:10px;">新处方</button>
           
-          <button class="btn btn-success" id="btn-print">打印</button>     
-          <button class="btn btn-success" id="btn-preview" style="margin-right:10px;">预览处方</button>
+          <button type="button" class="btn btn-success" id="btn-print">打印</button>     
+          <button type="button" class="btn btn-success" id="btn-preview" style="margin-right:10px;">预览处方</button>
           
-          <button class="btn btn-success" id="btn-save-prescription">确定</button>
+          <button type="button" class="btn btn-success" id="btn-save-prescription">确定</button>
           
           <!-- 打印预览所绑定的按钮 -->
-          <button class="btn btn-success hide" id="btn-print-preview">打印预览</button>
+          <button type="button" class="btn btn-success hide" id="btn-print-preview">打印预览</button>
         </div>
         <div class="right_btn pull-right">
           <!-- <button class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>确定</button> -->
-          <button class="btn btn-danger" onclick="javascript:window.close();"><span class="glyphicon glyphicon-remove"></span>退出</button>
+          <button type="button" class="btn btn-danger" onclick="javascript:window.close();"><span class="glyphicon glyphicon-remove"></span>退出</button>
         </div>
       </div>
       

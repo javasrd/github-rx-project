@@ -48,12 +48,23 @@ var Common = {
 	showDropdownTable : function (that) {
 		$(".dropdown-table").remove();
 
-		var addNode = '<div class="dropdown-table"><table class="table table-condensed table-hover">'+
+		var addNode = '<div class="dropdown-table" style="z-index:100;"><table class="table table-condensed table-hover">'+
                       '<thead><tr></tr></thead><tbody><tr></tr></tbody></table></div>';
 		
 		/*var addNode = '<div class="dropdown-table"></div>';*/	
 		
         that.parent().append(addNode);
+	},
+	
+	showDropdownTable1 : function (that) {
+		$(".dropdown-table").remove();
+
+		var addNode = '<div class="dropdown-table" style="z-index:100;"><table class="table table-condensed table-hover">'+
+                      '<thead><tr></tr></thead><tbody><tr></tr></tbody></table></div>';
+		
+		/*var addNode = '<div class="dropdown-table"></div>';*/	
+		
+        $("#drugForm").append(addNode);
 	},
 	
 	setDropdownTalbeWidth:function(width){

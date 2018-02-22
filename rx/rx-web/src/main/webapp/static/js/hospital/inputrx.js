@@ -25,7 +25,7 @@ function addDrugIntoTable() {
 	+ '<td class="small_width">' + toDecimal2($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
 	+ '</tr>';*/
 	
-	var drugItem = '<tr ondblclick="delSelectedDrug(this)" bind-id=' + '"'+ g_currDrug.id+ '"'+ ' id=drug-row-'  + g_currDrug.id+  ' title="双击删除药品"'+ '>'
+	var drugItem = '<tr bind-id=' + '"'+ g_currDrug.id+ '"'+ ' id=drug-row-'  + g_currDrug.id+  ' title=""'+ '>'
 			+ '<td class="small_width"><input type="checkbox" class="check-drug" '+'id="check-drug-'+g_currDrug.id+'"'+  ' bind-id="'+ g_currDrug.id	+ '"' + '></td>'
 			+ '<td class="small_width">'+ g_currDrug.wareid	+ '</td>'
 			+ '<td class="input_width">'+ g_currDrug.warename + '</td>'
@@ -33,12 +33,21 @@ function addDrugIntoTable() {
 			
 			+ '<td class="small_width "><input class="form-control  dosage" id="drug-dosage-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+   ' value='+$("#single-dosage").val()  +   '>'+'</td>'
 			+ '<td class="small_width "><input class="form-control  dose-unit" style="display:inline"  id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputDoseUnitId(this)" '+ ' value='+$("#single-dose-unit").val()  + '>'+
-		      		'<span class="glyphicon glyphicon-list-alt" id="btn-doseunit-'+  g_currDrug.id+ '">' +
+		      		'<span class="glyphicon glyphicon-list-alt"  id="btn-doseunit-'+  g_currDrug.id+ '"'+' bind-id="'+ g_currDrug.id+'"'+ '>' +
 					'</span>' +
 			'</td>'
-			+ '<td class="input_width "><input class="form-control  times" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugtimes").val()+     '></td>'
-			+ '<td class="input_width "><input class="form-control  mode" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugmode").val()+'></td>'			
-			+ '<td class="small_width "><input class="form-control  days" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+' value='+$("#treatment-days").val()+'></td>'
+			+ '<td class="input_width "><input class="form-control  times" style="display:inline" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputTimesId(this)" '+ ' value='+$("#drugtimes").val()+     '>'+
+					'<span class="glyphicon glyphicon-list-alt" id="btn-times-'+  g_currDrug.id+ '"'+' bind-id="'+ g_currDrug.id+'"'+ '>' +
+					'</span>' +
+			'</td>'
+			+ '<td class="input_width "><input class="form-control  mode" style="display:inline" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+' value='+$("#drugmode").val()+'>'+
+					'<span class="glyphicon glyphicon-list-alt"  id="btn-mode-'+  g_currDrug.id+ '"'+ '>' +
+					'</span>' +
+			'</td>'			
+			+ '<td class="small_width "><input class="form-control  days" style="display:inline" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+' value='+$("#treatment-days").val()+'>'+
+					'<span class="glyphicon glyphicon-list-alt"  id="btn-times-'+  g_currDrug.id+ '"' +'>' +
+					'</span>' +
+			'</td>'
 			+ '<td class="small_width "><input class="form-control  quantity" id="drug-quantity-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+ 'value='+$("#quantity").val()+'></td>' 
 			
 			+ '<td class="small_width">' + g_currDrug.wareunit+ '</td>' 
@@ -76,14 +85,18 @@ function addDrugIntoTable() {
 	//(2)剂量单位
 	bindIEEvent("input", "#drug-doseunit-" + g_currDrug.id, handler_input_doseunit_table);  
 	bindEvent("keydown", "#drug-doseunit-" + g_currDrug.id,	handler_keydown_doseunit_table);
+	bindEvent("click", "#btn-doseunit-" + g_currDrug.id,	handler_click_btn_doseunit_table);   //剂量单位下拉按钮
+	
 	
 	//(3)频次
 	bindIEEvent("input", "#drug-times-" + g_currDrug.id, handler_input_times_table);
 	bindEvent("keydown", "#drug-times-" + g_currDrug.id, handler_keydown_times_table);
+	bindEvent("click", "#btn-times-" + g_currDrug.id,	 handler_click_btn_times_table);   //频次下拉按钮
 	
 	//(4)用法
 	bindIEEvent("input", "#drug-mode-" + g_currDrug.id, handler_input_mode_table);
 	bindEvent("keydown", "#drug-mode-" + g_currDrug.id,	handler_keydown_mode_table);
+	
 	
 	//(5)疗程(天数)
 	bindIEEvent("input", "#drug-days-" + g_currDrug.id, handler_input_days_table);     
@@ -92,6 +105,8 @@ function addDrugIntoTable() {
 	//(6)数量
 	bindIEEvent("input", "#drug-quantity-" + g_currDrug.id, handler_input_quantity_table);
 	bindEvent("keydown", "#drug-quantity-" + g_currDrug.id, handler_keydown_quantity_table);
+	
+	
 	
 	
 	
@@ -530,14 +545,30 @@ function getInputDoseUnitId(that){
 	g_edit_doseunit_id=$(that).attr("id");	
 }
 
-/*******************************************************************************
+function getInputTimesId(that){
+	g_edit_times_id=$(that).attr("id");	
+}
+
+function getInputModeId(that){
+	g_edit_mode_id=$(that).attr("id");	
+}
+
+function getInputDaysId(that){
+	g_edit_days_id=$(that).attr("id");	
+}
+
+/**************************************************
  * 全局变量
- ******************************************************************************/
+ **************************************************/
 var g_edit_doseunit_id; // 当前正在编辑的"剂量单位" id
+var g_edit_times_id;	// 当前正在编辑的"次数" id
+var g_edit_mode_id;		// 当前正在编辑的"用法" id
+var g_edit_days_id;		// 当前正在编辑的"疗程" id
+
 var g_currDrug = null; // 医生选择的当前药品
-/*******************************************************************************
+/*************************************************
  * 页面加载时自动执行此函数
- ******************************************************************************/
+ *************************************************/
 $(function() {
 
 	bindIEEvent("input", "#abc", handler_input_abc);
@@ -562,8 +593,7 @@ $(function() {
 	
 	bindEvent("keydown", ".hospital", handler_keydown_hospital);
 	
-	//界面面板中数字字典按钮
-	bindEvent("click", "#btn-clear-presc-table", handler_click_btn_cleartable);
+	//界面面板中数字字典按钮	
 	bindEvent("click","#btn-abc",handler_click_btn_abc);
 	bindEvent("click","#btn-single-dose-unit",handler_click_btn_singledoseunit);
 	bindEvent("click","#btn-drugtimes",handler_click_btn_drugtimes);
@@ -575,12 +605,14 @@ $(function() {
 	bindEvent("click","#btn-edit-template",handler_click_btn_edit_template);
 	bindEvent("click","#btn-use-template",handler_click_btn_use_template);
 	
+	//新处方
+	bindEvent("click", "#btn-clear-presc-table", handler_click_btn_cleartable); 
 	
 	//药品增加按钮CLICK事件处理
 	bindEvent("click","#btn-add-drug",handler_click_btn_add_drug);
 	
 	bindEvent("click", "#check-select-all", handler_click_select_all);  //选择所有
-	bindEvent("click", "#btn-delete-row", handler_click_delete_row);  //选择所有
+	bindEvent("click", "#btn-delete-row", handler_click_delete_row);  //删除行
 	
 	
 	//bindEvent("blur", "#abc", handler_blur_abc);

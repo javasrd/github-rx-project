@@ -274,7 +274,11 @@ body{
 	height: 60px;
 }
 
-.table-responsive table.dict-drug-doseunit  td{
+.table-responsive table.dict-drug-doseunit  td,
+.table-responsive table.dict-drug-times  td,
+.table-responsive table.dict-drug-mode  td,
+.table-responsive table.dict-drug-days  td
+{
 	height:30px;
 }
 

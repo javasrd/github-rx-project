@@ -161,21 +161,15 @@ public class RxOpenController {
 		return RESPONSE_THYMELEAF + "drugcategory";
 	}
 	
-	@RequestMapping(value = "/drug/mode")
-	public String drugMode(String abc,Model model) {
+	@RequestMapping(value = "/drug/doseunit")
+	public String drugDoseUnitInput(String abc,Model model) {
 		
-		//System.out.println("助记码:"+abc);
+		System.out.println("助记码-input panel:"+abc);
 		
-		getDrugMode(abc,model);  //获取药品目录
+		getDoseUnit(abc,model);  //获取药品目录
 		
-		return RESPONSE_THYMELEAF + "dictmode";
+		return RESPONSE_THYMELEAF + "dictdoseunit";
 	}
-	
-	private void getDrugMode(String abc,Model model){
-		List<DictMode> modeList=dictModeService.getModeByAbc(abc);
-		model.addAttribute("modeList", modeList);		
-	}
-	
 	
 	@RequestMapping(value = "/drug/times")
 	public String drugTimes(String abc,Model model) {
@@ -191,6 +185,21 @@ public class RxOpenController {
 		model.addAttribute("timesList", timesList);
 	}
 	
+	@RequestMapping(value = "/drug/mode")
+	public String drugMode(String abc,Model model) {
+		
+		//System.out.println("助记码:"+abc);
+		
+		getDrugMode(abc,model);  //获取药品目录
+		
+		return RESPONSE_THYMELEAF + "dictmode";
+	}
+	
+	private void getDrugMode(String abc,Model model){
+		List<DictMode> modeList=dictModeService.getModeByAbc(abc);
+		model.addAttribute("modeList", modeList);		
+	}
+	
 	@RequestMapping(value = "/drug/days")
 	public String drugDays(String abc,Model model) {
 		//System.out.println("助记码:"+abc);		
@@ -203,24 +212,43 @@ public class RxOpenController {
 		model.addAttribute("daysList", tempList);
 	}	
 	
-	@RequestMapping(value = "/drug/doseunit")
+	//--------------------table---------------------------
+	
+	@RequestMapping(value = "/drug/doseunit_table")
 	public String drugDoseUnit(String abc,Model model) {
 		
-		System.out.println("助记码:"+abc);
+		System.out.println("助记码-Table:"+abc);
 		
 		getDoseUnit(abc,model);  //获取药品目录
 		
-		return RESPONSE_THYMELEAF + "dictdoseunit";
+		return RESPONSE_THYMELEAF + "dictdoseunit_table";
 	}
 	
-	@RequestMapping(value = "/drug/doseunitinput")
-	public String drugDoseUnitInput(String abc,Model model) {
+	@RequestMapping(value = "/drug/times_table")
+	public String drugTimes_table(String abc,Model model) {
+		//System.out.println("助记码:"+abc);
 		
-		System.out.println("助记码:"+abc);
+		getDrugTimes(abc,model);  //获取药品目录
 		
-		getDoseUnit(abc,model);  //获取药品目录
+		return RESPONSE_THYMELEAF + "dicttimes_table";
+	}
+	
+	@RequestMapping(value = "/drug/mode_table")
+	public String drugMode_table(String abc,Model model) {
 		
-		return RESPONSE_THYMELEAF + "dictdoseunitinput";
+		//System.out.println("助记码:"+abc);
+		
+		getDrugMode(abc,model);  //获取药品目录
+		
+		return RESPONSE_THYMELEAF + "dictmode_table";
+	}
+	
+	
+	@RequestMapping(value = "/drug/days_table")
+	public String drugDays_table(String abc,Model model) {
+		//System.out.println("助记码:"+abc);		
+		getDrugDays(abc,model);  //获取药品目录
+		return RESPONSE_THYMELEAF + "dictdays_table";
 	}
 	
 	private void getDoseUnit(String abc,Model model){
