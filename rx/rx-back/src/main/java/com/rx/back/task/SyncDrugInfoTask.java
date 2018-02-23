@@ -41,7 +41,7 @@ public class SyncDrugInfoTask {
 	@Resource(name="drugServiceBean")
 	private IDrugService drugService;
 	
-	private final String url = "http://127.0.0.1:8080/rx-back/api/demo";
+	private final String url = "http://127.0.0.1/rx-back/api/demo";
 	
 	public void sync(){
 		//System.out.println("sync drug info ...");

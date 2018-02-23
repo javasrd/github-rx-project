@@ -161,6 +161,7 @@ public class Direction {
         this.days = days == null ? null : days.trim();
     }
 
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

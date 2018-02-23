@@ -10,11 +10,12 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="errormsg" jdbcType="VARCHAR" property="errormsg" />
     <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="file_path" jdbcType="VARCHAR" property="filePath" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->
-    id, created_date, status, errormsg, url
+    id, created_date, status, errormsg, url, file_path
   </sql>
 </mapper>

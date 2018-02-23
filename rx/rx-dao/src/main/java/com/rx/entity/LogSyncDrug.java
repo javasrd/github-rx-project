@@ -34,6 +34,27 @@ public class LogSyncDrug {
     private String url;
 
     /**
+     * 同步文件保存目录
+     */
+    @Column(name = "file_path")
+    private String filePath;
+
+    public LogSyncDrug() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public LogSyncDrug(Long id, Date createdDate, Integer status, String errormsg, String url, String filePath) {
+		super();
+		this.id = id;
+		this.createdDate = createdDate;
+		this.status = status;
+		this.errormsg = errormsg;
+		this.url = url;
+		this.filePath = filePath;
+	}
+
+	/**
      * 获取自增ID
      *
      * @return id - 自增ID
@@ -123,6 +144,24 @@ public class LogSyncDrug {
         this.url = url == null ? null : url.trim();
     }
 
+    /**
+     * 获取同步文件保存目录
+     *
+     * @return file_path - 同步文件保存目录
+     */
+    public String getFilePath() {
+        return filePath;
+    }
+
+    /**
+     * 设置同步文件保存目录
+     *
+     * @param filePath 同步文件保存目录
+     */
+    public void setFilePath(String filePath) {
+        this.filePath = filePath == null ? null : filePath.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -134,6 +173,7 @@ public class LogSyncDrug {
         sb.append(", status=").append(status);
         sb.append(", errormsg=").append(errormsg);
         sb.append(", url=").append(url);
+        sb.append(", filePath=").append(filePath);
         sb.append("]");
         return sb.toString();
     }

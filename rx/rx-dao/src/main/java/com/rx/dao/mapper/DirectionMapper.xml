@@ -12,6 +12,7 @@
     <result column="dosage" jdbcType="DECIMAL" property="dosage" />
     <result column="doseunit" jdbcType="VARCHAR" property="doseunit" />
     <result column="days" jdbcType="VARCHAR" property="days" />
+
   </resultMap>
   <sql id="Base_Column_List">
     <!--

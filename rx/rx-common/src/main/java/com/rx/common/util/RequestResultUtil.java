@@ -14,6 +14,8 @@ public class RequestResultUtil {
 	public static final String RESULT_CODE_SUCCESS = "success";
 	public static final String RESULT_CODE_FAIL = "fail";
 	public static final String RESULT_MSG = "result_msg";
+	public static final String RESULT_DATA = "result_data";
+	public static final String RESULT_LOG = "result_log";
 	public static final String RESULT_ERR_MSG = "result_err_msg";
 	
 	public static final String RESULT_SELECT_SUCCESS = "查询成功";
@@ -36,6 +38,58 @@ public class RequestResultUtil {
 	
 	public RequestResultUtil(){
 		
+	}
+	
+	/**
+	 * 获取成功结果（自定义提示信息）
+	 * @param result_msg
+	 * @return
+	 */
+	public static Map<String, Object> getResultSuccess(String msg){
+		respMap.clear();
+		respMap.put(RESULT_CODE, RESULT_CODE_SUCCESS);
+		respMap.put(RESULT_MSG, msg);
+		respMap.put(RESULT_DATA, "");
+		return respMap;
+	}
+	
+	/**
+	 * 获取成功结果（自定义提示信息）
+	 * @param result_msg
+	 * @return
+	 */
+	public static Map<String, Object> getResultSuccess(String msg, Object data){
+		respMap.clear();
+		respMap.put(RESULT_CODE, RESULT_CODE_SUCCESS);
+		respMap.put(RESULT_MSG, msg);
+		respMap.put(RESULT_DATA, data);
+		return respMap;
+	}
+	
+	/**
+	 * 获取异常结果（自定义提示信息）
+	 * @param result_err_msg
+	 * @return
+	 */
+	public static Map<String, Object> getResultWarn(String err_msg){
+		respMap.clear();
+		respMap.put(RESULT_CODE, RESULT_CODE_FAIL);
+		respMap.put(RESULT_ERR_MSG, err_msg);
+		respMap.put(RESULT_DATA, "");
+		return respMap;
+	}
+	
+	/**
+	 * 获取异常结果（自定义提示信息）
+	 * @param result_err_msg
+	 * @return
+	 */
+	public static Map<String, Object> getResultWarn(String err_msg, Object err_data){
+		respMap.clear();
+		respMap.put(RESULT_CODE, RESULT_CODE_FAIL);
+		respMap.put(RESULT_ERR_MSG, err_msg);
+		respMap.put(RESULT_DATA, err_data);
+		return respMap;
 	}
 	
 	/**

@@ -10,7 +10,6 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.rx.bean.DeletedType;
 import com.rx.dao.MenuMapper;
-import com.rx.entity.Category;
 import com.rx.entity.Menu;
 import com.rx.entity.RolePermission;
 import com.rx.service.back.IMenuService;
@@ -78,7 +77,7 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, Long> implements 
 	@Transactional
 	private int deleteNodes(Long pid){
 		//LmCategory category = lmCategoryMapper.selectByPrimaryKey(id);
-		Example example = new Example(Category.class);
+		Example example = new Example(Menu.class);
 		example.createCriteria().andEqualTo("parentId", pid);
 		List<Menu> menuList = menuMapper.selectByExample(example);
 		int rows = 1;
@@ -91,7 +90,7 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, Long> implements 
 				rows = menuMapper.updateByPrimaryKeySelective(temp);
 				if(rows>0){
 					//删除 角色关系 表
-					Example e = new Example(Category.class);
+					Example e = new Example(RolePermission.class);
 					e.createCriteria().andEqualTo("permissionId", menu.getMenuId());
 					RolePermission perms = new RolePermission();
 					perms.setDeleted(DeletedType.YES);

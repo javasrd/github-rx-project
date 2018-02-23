@@ -27,7 +27,6 @@ import com.rx.entity.Menu;
 import com.rx.entity.Role;
 import com.rx.entity.RolePermission;
 import com.rx.service.back.IMenuService;
-import com.rx.service.back.IPermissionService;
 import com.rx.service.back.IRolePermissionService;
 import com.rx.service.back.IRoleService;
 
@@ -45,8 +44,6 @@ public class RoleController {
 	
 	@Resource(name="roleServiceBean")
 	private IRoleService roleService;
-	@Resource(name="permissionServiceBean")
-	private IPermissionService permissionService;
 	@Resource(name="menuServiceBean")
 	private IMenuService menuService;
 	@Resource(name="rolePermissionServiceBean")

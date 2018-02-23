@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.rx.dao.DictTimesMapper;
 import com.rx.entity.DictTimes;
-import com.rx.entity.User;
 import com.rx.service.back.IDictTimesService;
 import com.rx.service.impl.AbstractBaseService;
 
@@ -29,8 +28,8 @@ public class DictTimesServiceImpl extends AbstractBaseService<DictTimes, Long> i
 
 	@Override
 	public List<DictTimes> getList(Map<String, Object> map) {
-		Example example=new Example(User.class);
-		example.createCriteria().andEqualTo("type", map.get("type").toString());
+		Example example=new Example(DictTimes.class);
+		//example.createCriteria().andEqualTo("type", map.get("type").toString());
 		List<DictTimes> list=dictTimesMapper.selectByExample(example);
 		return list;
 	}

@@ -18,16 +18,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rx.back.commons.StaticConstants;
+import com.rx.back.commons.SyncDrugInfoUtil;
 import com.rx.bean.PageBean;
 import com.rx.bean.UserBean;
 import com.rx.common.util.FileUploadUtil;
 import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Drug;
+import com.rx.entity.LogSyncDrug;
 import com.rx.service.back.IDrugService;
+import com.rx.service.back.ILogSyncDrugService;
 import com.rx.service.excelutil.Common;
 import com.rx.service.excelutil.ReadExcel;
 
@@ -45,6 +49,9 @@ public class DrugController {
 	
 	@Resource(name="drugServiceBean")
 	private IDrugService drugService;
+	
+	@Resource(name = "logSyncDrugServiceBean")
+	private ILogSyncDrugService logSyncDrugService;
 	
 	/**
 	 * 方法功能：查询列表
@@ -99,6 +106,7 @@ public class DrugController {
 	
 	/**
 	 * 上传药品信息EXCEL文件
+	 * 		未用，格式改为TXT文本文件
 	 * @param request
 	 * @param response
 	 */
@@ -139,6 +147,63 @@ public class DrugController {
 			e.printStackTrace();
 		}
 		return RequestResultUtil.getResultUploadWarn();
+	}
+	
+	/**
+	 * 初始化同步药品信息
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/init-sync-drug")
+	@ResponseBody
+	public Map<String, Object> initSyncDrugInfo(HttpServletRequest request, HttpServletResponse response){
+		
+		try {
+			Map<String, Object> resMap = SyncDrugInfoUtil.processSyncDrug();
+			String result_code = resMap.get(RequestResultUtil.RESULT_CODE).toString();
+			if(result_code.equals(RequestResultUtil.RESULT_CODE_SUCCESS)){
+				String drugInfoJSON = resMap.get(RequestResultUtil.RESULT_DATA).toString();
+				String logJSON = resMap.get(RequestResultUtil.RESULT_LOG).toString();
+				List<Drug> drugList = JSONArray.parseArray(drugInfoJSON, Drug.class);
+				if(drugList!=null && drugList.size()>0){
+					int rows = drugService.insertListSelective(drugList);
+					if (rows > 0) {
+						System.out.println("保存数据库成功");
+						
+						LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
+						log.setErrormsg("初始化成功："+log.getErrormsg());
+						logSyncDrugService.insertSelective(log);
+						
+						return RequestResultUtil.getResultSuccess("同步药品信息成功！");
+					} else {
+						System.out.println("保存数据库异常");
+						
+						LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
+						log.setErrormsg("初始化错误：保存到数据库异常");
+						logSyncDrugService.insertSelective(log);
+						
+						return RequestResultUtil.getResultWarn("保存数据库异常，请重新初始化！");
+					}
+				}else{
+					//TODO 解析JSON为空
+					log.error("解析JSON为空");
+					return RequestResultUtil.getResultWarn("同步药品信息为空，请重新初始化！");
+				}
+				
+			}else{
+				String logJSON = resMap.get(RequestResultUtil.RESULT_LOG).toString();
+				LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
+				log.setErrormsg("初始化错误："+log.getErrormsg());
+				logSyncDrugService.insertSelective(log);
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return RequestResultUtil.getResultWarn("同步药品信息失败，请重新初始化！");
 	}
 	
 	/**

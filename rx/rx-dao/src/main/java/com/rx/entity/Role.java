@@ -2,7 +2,6 @@ package com.rx.entity;
 
 import javax.persistence.*;
 
-@Table(name = "role")
 public class Role {
     /**
      * 角色自增ID
@@ -23,6 +22,11 @@ public class Role {
      */
     @Column(name = "role_description")
     private String roleDescription;
+
+    /**
+     * 是否删除（1-未删除，2-删除，默认1）
+     */
+    private Integer deleted;
 
     /**
      * 获取角色自增ID
@@ -78,26 +82,35 @@ public class Role {
         this.roleDescription = roleDescription == null ? null : roleDescription.trim();
     }
 
-    @Column(name = "deleted")
-    private Integer deleted;//是否删除（1-未删除，2-删除，默认1）
-
     /**
-     * @return	是否删除（1-未删除，2-删除，默认1）
+     * 获取是否删除（1-未删除，2-删除，默认1）
+     *
+     * @return deleted - 是否删除（1-未删除，2-删除，默认1）
      */
     public Integer getDeleted() {
-		return deleted;
-	}
+        return deleted;
+    }
 
-	/**
-	 * @param deleted 是否删除（1-未删除，2-删除，默认1）
-	 */
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
-	}
+    /**
+     * 设置是否删除（1-未删除，2-删除，默认1）
+     *
+     * @param deleted 是否删除（1-未删除，2-删除，默认1）
+     */
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
 
-	@Override
-	public String toString() {
-		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", roleDescription=" + roleDescription
-				+ ", deleted=" + deleted + "]";
-	}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", roleId=").append(roleId);
+        sb.append(", roleName=").append(roleName);
+        sb.append(", roleDescription=").append(roleDescription);
+        sb.append(", deleted=").append(deleted);
+        sb.append("]");
+        return sb.toString();
+    }
 }

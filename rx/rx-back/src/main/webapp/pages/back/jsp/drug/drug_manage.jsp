@@ -36,14 +36,17 @@
 															<div class="col-md-2 column">
 																<button type="button" class="btn btn-default btn-primary" id="add-drug-btn" style="height:35px;">添加药品信息</button>
 															</div>
-															<form id="upload-file">
+															<!-- <form id="upload-file">
 																<div class="col-md-3 column">
 																	<input type="file" class="btn btn-default btn-primary" id="drug-file" name="drugFile" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="javascript:fileValid(this);" />
 																</div>
 																<div class="col-md-7 column">
 																	<button type="button" class="btn btn-default btn-primary" id="upload-drug-btn" style="height:35px;">导入药品信息</button>
 																</div>
-															</form>
+															</form> -->
+															<div class="col-md-2 column">
+																<button type="button" class="btn btn-default btn-primary" id="init-sync-drug-btn" style="height:35px;">同步药品信息</button>
+															</div>
 														</div>
 													</div>
 												</div>

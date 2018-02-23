@@ -68,6 +68,11 @@ public class Drug {
     private BigDecimal saleprice;
 
     /**
+     * 当天药品库存
+     */
+    private Integer inventory;
+
+    /**
      * 获取自增主键
      *
      * @return id - 自增主键
@@ -283,6 +288,24 @@ public class Drug {
         this.saleprice = saleprice;
     }
 
+    /**
+     * 获取当天药品库存
+     *
+     * @return inventory - 当天药品库存
+     */
+    public Integer getInventory() {
+        return inventory;
+    }
+
+    /**
+     * 设置当天药品库存
+     *
+     * @param inventory 当天药品库存
+     */
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -301,6 +324,7 @@ public class Drug {
         sb.append(", wareunit=").append(wareunit);
         sb.append(", status=").append(status);
         sb.append(", saleprice=").append(saleprice);
+        sb.append(", inventory=").append(inventory);
         sb.append("]");
         return sb.toString();
     }

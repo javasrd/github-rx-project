@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.rx.dao.DictDoseUnitMapper;
 import com.rx.entity.DictDoseUnit;
-import com.rx.entity.User;
 import com.rx.service.back.IDictDoseUnitService;
 import com.rx.service.impl.AbstractBaseService;
 
@@ -29,8 +28,8 @@ public class DictDoseUnitServiceImpl extends AbstractBaseService<DictDoseUnit, L
 
 	@Override
 	public List<DictDoseUnit> getList(Map<String, Object> map) {
-		Example example=new Example(User.class);
-		example.createCriteria().andEqualTo("type", map.get("type").toString());
+		Example example=new Example(DictDoseUnit.class);
+		//example.createCriteria().andEqualTo("type", map.get("type").toString());
 		List<DictDoseUnit> list=dictDoseUnitMapper.selectByExample(example);
 		return list;
 	}

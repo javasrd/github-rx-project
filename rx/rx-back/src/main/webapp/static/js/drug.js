@@ -134,8 +134,9 @@ function selectDetails(id){
 
 /*
  * 上传药品信息EXCEL文件提交
+ * 		未用，改为TXT文本文件传输
  */
-$("#upload-drug-btn").click(function(){
+/*$("#upload-drug-btn").click(function(){
 	
 	var file = $("#drug-file").val();
 	if(file==null || file==""){
@@ -161,6 +162,25 @@ $("#upload-drug-btn").click(function(){
 				}
 			}
 		},
+	});
+});*/
+
+/**
+ * 初始化同步药品信息
+ */
+$("#init-sync-drug-btn").click(function(){
+	var url = "back/drug/init-sync-drug";
+	$.post(url, function(res){
+		console.log(res);
+		if(res!=null){
+			var obj = $.parseJSON(res);
+			if(obj.result_code=="success"){
+				//操作成功后重新加载当前菜单内容
+				reloadInfoFun();
+			}else{
+				util.message(obj.result_err_msg);
+			}
+		}
 	});
 });
 
@@ -307,10 +327,11 @@ $("#add-drug-btn").click(function(){
 
 /**
  * 验证文件有效性
+ * 		未用
  * @param that
  * @returns
  */
-function fileValid(that){
+/*function fileValid(that){
 	var file = that.files[0];
 	var fileSize = 0;
 	// 大小 字节
@@ -336,7 +357,7 @@ function fileValid(that){
 		}
 		$("#upload-drug-btn").attr("disabled", false);
 	}
-}
+}*/
 
 /*
  * 重置form表单
