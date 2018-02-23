@@ -72,7 +72,7 @@
       <div class="container-fluid">
         <div class="basic_info clearfix">
           <h2>基本信息
-            <img th:src="@{/static/images/avatar.jpg}" alt="avatar">
+            <img th:src="@{/static/images/doctor.jpg}" alt="avatar">
             <span></span>
           </h2>
           <div id="basicForm" class="basic_form">
@@ -84,7 +84,7 @@
                 
               </div>
               <div class="col-xs-6">              	
-                <p class="time pull-right">就诊时间：<span th:text="${#calendars.format(diagnosisDate,'yyyy-MM-dd HH:MM:SS')}">2018-12-26 23:56:58</span></p>
+                <p class="time pull-right">就诊时间：<span th:text="${#calendars.format(diagnosisDate,'yyyy-MM-dd HH:MM:ss')}">2018-12-26 23:56:58</span></p>
               </div>
             </div>
             <div class="basic_bottom">
