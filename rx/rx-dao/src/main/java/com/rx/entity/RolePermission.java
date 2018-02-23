@@ -13,16 +13,21 @@ public class RolePermission {
     private Long rolePermissionId;
 
     /**
-     * 引用角色ID
+     * FK. 引用角色ID( ref role:role_id)
      */
     @Column(name = "role_id")
     private Long roleId;
 
     /**
-     * 引用权限ID
+     * FK,引用权限ID( ref menu:menu_id)
      */
     @Column(name = "permission_id")
     private Long permissionId;
+
+    /**
+     * 是否删除（1-未删除，2-删除，默认1）
+     */
+    private Integer deleted;
 
     /**
      * 获取角色权限关系表自增ID
@@ -43,61 +48,70 @@ public class RolePermission {
     }
 
     /**
-     * 获取引用角色ID
+     * 获取FK. 引用角色ID( ref role:role_id)
      *
-     * @return role_id - 引用角色ID
+     * @return role_id - FK. 引用角色ID( ref role:role_id)
      */
     public Long getRoleId() {
         return roleId;
     }
 
     /**
-     * 设置引用角色ID
+     * 设置FK. 引用角色ID( ref role:role_id)
      *
-     * @param roleId 引用角色ID
+     * @param roleId FK. 引用角色ID( ref role:role_id)
      */
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
     /**
-     * 获取引用权限ID
+     * 获取FK,引用权限ID( ref menu:menu_id)
      *
-     * @return permission_id - 引用权限ID
+     * @return permission_id - FK,引用权限ID( ref menu:menu_id)
      */
     public Long getPermissionId() {
         return permissionId;
     }
 
     /**
-     * 设置引用权限ID
+     * 设置FK,引用权限ID( ref menu:menu_id)
      *
-     * @param permissionId 引用权限ID
+     * @param permissionId FK,引用权限ID( ref menu:menu_id)
      */
     public void setPermissionId(Long permissionId) {
         this.permissionId = permissionId;
     }
 
-    @Column(name = "deleted")
-    private Integer deleted;//是否删除（1-未删除，2-删除，默认1）
-
     /**
-     * @return	是否删除（1-未删除，2-删除，默认1）
+     * 获取是否删除（1-未删除，2-删除，默认1）
+     *
+     * @return deleted - 是否删除（1-未删除，2-删除，默认1）
      */
     public Integer getDeleted() {
-		return deleted;
-	}
+        return deleted;
+    }
 
-	/**
-	 * @param deleted 是否删除（1-未删除，2-删除，默认1）
-	 */
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
-	}
+    /**
+     * 设置是否删除（1-未删除，2-删除，默认1）
+     *
+     * @param deleted 是否删除（1-未删除，2-删除，默认1）
+     */
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
 
-	@Override
-	public String toString() {
-		return "RolePermission [rolePermissionId=" + rolePermissionId + ", roleId=" + roleId + ", permissionId="
-				+ permissionId + ", deleted=" + deleted + "]";
-	}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", rolePermissionId=").append(rolePermissionId);
+        sb.append(", roleId=").append(roleId);
+        sb.append(", permissionId=").append(permissionId);
+        sb.append(", deleted=").append(deleted);
+        sb.append("]");
+        return sb.toString();
+    }
 }

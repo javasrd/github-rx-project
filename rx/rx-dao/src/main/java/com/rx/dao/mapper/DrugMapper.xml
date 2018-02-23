@@ -17,13 +17,14 @@
     <result column="wareunit" jdbcType="VARCHAR" property="wareunit" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="saleprice" jdbcType="DECIMAL" property="saleprice" />
+    <result column="inventory" jdbcType="INTEGER" property="inventory" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->
     id, wareid, barcode, abc, warename, waresimname, warespec, prod_addr, producer, wareunit, 
-    status, saleprice
+    status, saleprice, inventory
   </sql>
   
   <select id="getDrugByAbc" resultMap="BaseResultMap">

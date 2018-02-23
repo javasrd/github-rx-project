@@ -1,5 +1,6 @@
 package com.rx.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -23,6 +24,27 @@ public class PrescDrug {
      */
     @Column(name = "drug_id")
     private Long drugId;
+
+    private Integer quantity;
+
+    private String wareid;
+
+    private String barcode;
+
+    private String warename;
+
+    private String waresimname;
+
+    private String warespec;
+
+    @Column(name = "prod_addr")
+    private String prodAddr;
+
+    private String producer;
+
+    private String wareunit;
+
+    private BigDecimal saleprice;
 
     /**
      * 加入日期
@@ -85,6 +107,146 @@ public class PrescDrug {
     }
 
     /**
+     * @return quantity
+     */
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity
+     */
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    /**
+     * @return wareid
+     */
+    public String getWareid() {
+        return wareid;
+    }
+
+    /**
+     * @param wareid
+     */
+    public void setWareid(String wareid) {
+        this.wareid = wareid == null ? null : wareid.trim();
+    }
+
+    /**
+     * @return barcode
+     */
+    public String getBarcode() {
+        return barcode;
+    }
+
+    /**
+     * @param barcode
+     */
+    public void setBarcode(String barcode) {
+        this.barcode = barcode == null ? null : barcode.trim();
+    }
+
+    /**
+     * @return warename
+     */
+    public String getWarename() {
+        return warename;
+    }
+
+    /**
+     * @param warename
+     */
+    public void setWarename(String warename) {
+        this.warename = warename == null ? null : warename.trim();
+    }
+
+    /**
+     * @return waresimname
+     */
+    public String getWaresimname() {
+        return waresimname;
+    }
+
+    /**
+     * @param waresimname
+     */
+    public void setWaresimname(String waresimname) {
+        this.waresimname = waresimname == null ? null : waresimname.trim();
+    }
+
+    /**
+     * @return warespec
+     */
+    public String getWarespec() {
+        return warespec;
+    }
+
+    /**
+     * @param warespec
+     */
+    public void setWarespec(String warespec) {
+        this.warespec = warespec == null ? null : warespec.trim();
+    }
+
+    /**
+     * @return prod_addr
+     */
+    public String getProdAddr() {
+        return prodAddr;
+    }
+
+    /**
+     * @param prodAddr
+     */
+    public void setProdAddr(String prodAddr) {
+        this.prodAddr = prodAddr == null ? null : prodAddr.trim();
+    }
+
+    /**
+     * @return producer
+     */
+    public String getProducer() {
+        return producer;
+    }
+
+    /**
+     * @param producer
+     */
+    public void setProducer(String producer) {
+        this.producer = producer == null ? null : producer.trim();
+    }
+
+    /**
+     * @return wareunit
+     */
+    public String getWareunit() {
+        return wareunit;
+    }
+
+    /**
+     * @param wareunit
+     */
+    public void setWareunit(String wareunit) {
+        this.wareunit = wareunit == null ? null : wareunit.trim();
+    }
+
+    /**
+     * @return saleprice
+     */
+    public BigDecimal getSaleprice() {
+        return saleprice;
+    }
+
+    /**
+     * @param saleprice
+     */
+    public void setSaleprice(BigDecimal saleprice) {
+        this.saleprice = saleprice;
+    }
+
+    /**
      * 获取加入日期
      *
      * @return created_time - 加入日期
@@ -111,6 +273,16 @@ public class PrescDrug {
         sb.append(", id=").append(id);
         sb.append(", prescId=").append(prescId);
         sb.append(", drugId=").append(drugId);
+        sb.append(", quantity=").append(quantity);
+        sb.append(", wareid=").append(wareid);
+        sb.append(", barcode=").append(barcode);
+        sb.append(", warename=").append(warename);
+        sb.append(", waresimname=").append(waresimname);
+        sb.append(", warespec=").append(warespec);
+        sb.append(", prodAddr=").append(prodAddr);
+        sb.append(", producer=").append(producer);
+        sb.append(", wareunit=").append(wareunit);
+        sb.append(", saleprice=").append(saleprice);
         sb.append(", createdTime=").append(createdTime);
         sb.append("]");
         return sb.toString();

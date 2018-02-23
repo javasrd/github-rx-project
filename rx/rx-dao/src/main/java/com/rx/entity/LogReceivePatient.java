@@ -1,6 +1,5 @@
 package com.rx.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -71,16 +70,6 @@ public class LogReceivePatient {
         this.createdTime = createdTime;
     }
 
-    /**
-     * 获取创建日期
-     *
-     * @return createdTime - 创建日期
-     */
-    public String getCreatedTimeStr() {
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(createdTime);
-    }
-    
     /**
      * 获取数据发送方IP地址
      *

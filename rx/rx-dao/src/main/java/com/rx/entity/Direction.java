@@ -37,6 +37,8 @@ public class Direction {
      */
     private String doseunit;
 
+    private Integer days;
+
     /**
      * 获取自增主键
      *
@@ -145,6 +147,20 @@ public class Direction {
         this.doseunit = doseunit == null ? null : doseunit.trim();
     }
 
+    /**
+     * @return days
+     */
+    public Integer getDays() {
+        return days;
+    }
+
+    /**
+     * @param days
+     */
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -157,6 +173,7 @@ public class Direction {
         sb.append(", times=").append(times);
         sb.append(", dosage=").append(dosage);
         sb.append(", doseunit=").append(doseunit);
+        sb.append(", days=").append(days);
         sb.append("]");
         return sb.toString();
     }

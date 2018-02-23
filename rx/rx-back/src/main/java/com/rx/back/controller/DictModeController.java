@@ -54,7 +54,7 @@ public class DictModeController {
 		
 		PageHelper.startPage(pageBean.getPageNum(), pageBean.getPageSize());
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", 1);//type=1:默认（后台管理用户）type=2:前端访问用户
+		//map.put("type", 1);//type=1:默认（后台管理用户）type=2:前端访问用户
 		List<DictMode> dictModeList = dictModeService.selectAll();//.getList(map);
 		PageInfo<DictMode> pagehelper = new PageInfo<DictMode>(dictModeList);
 		

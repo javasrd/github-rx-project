@@ -2,7 +2,6 @@ package com.rx.entity;
 
 import javax.persistence.*;
 
-@Table(name = "menu")
 public class Menu {
     /**
      * 菜单自增ID
@@ -37,7 +36,7 @@ public class Menu {
     private String menuUrl;
 
     /**
-     * 父id
+     * 父id(菜单为树结构)
      */
     @Column(name = "parent_id")
     private Long parentId;
@@ -47,6 +46,11 @@ public class Menu {
      */
     @Column(name = "sort_num")
     private Integer sortNum;
+
+    /**
+     * 是否删除（1-未删除，2-删除，默认1）
+     */
+    private Integer deleted;
 
     /**
      * 获取菜单自增ID
@@ -139,18 +143,18 @@ public class Menu {
     }
 
     /**
-     * 获取父id
+     * 获取父id(菜单为树结构)
      *
-     * @return parent_id - 父id
+     * @return parent_id - 父id(菜单为树结构)
      */
     public Long getParentId() {
         return parentId;
     }
 
     /**
-     * 设置父id
+     * 设置父id(菜单为树结构)
      *
-     * @param parentId 父id
+     * @param parentId 父id(菜单为树结构)
      */
     public void setParentId(Long parentId) {
         this.parentId = parentId;
@@ -174,27 +178,39 @@ public class Menu {
         this.sortNum = sortNum;
     }
 
-    @Column(name = "deleted")
-    private Integer deleted;//是否删除（1-未删除，2-删除，默认1）
-
     /**
-     * @return	是否删除（1-未删除，2-删除，默认1）
+     * 获取是否删除（1-未删除，2-删除，默认1）
+     *
+     * @return deleted - 是否删除（1-未删除，2-删除，默认1）
      */
     public Integer getDeleted() {
-		return deleted;
-	}
+        return deleted;
+    }
 
-	/**
-	 * @param deleted 是否删除（1-未删除，2-删除，默认1）
-	 */
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
-	}
+    /**
+     * 设置是否删除（1-未删除，2-删除，默认1）
+     *
+     * @param deleted 是否删除（1-未删除，2-删除，默认1）
+     */
+    public void setDeleted(Integer deleted) {
+        this.deleted = deleted;
+    }
 
-	@Override
-	public String toString() {
-		return "Menu [menuId=" + menuId + ", menuName=" + menuName + ", menuIcon=" + menuIcon + ", menuDescription="
-				+ menuDescription + ", menuUrl=" + menuUrl + ", parentId=" + parentId + ", sortNum=" + sortNum
-				+ ", deleted=" + deleted + "]";
-	}
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", menuId=").append(menuId);
+        sb.append(", menuName=").append(menuName);
+        sb.append(", menuIcon=").append(menuIcon);
+        sb.append(", menuDescription=").append(menuDescription);
+        sb.append(", menuUrl=").append(menuUrl);
+        sb.append(", parentId=").append(parentId);
+        sb.append(", sortNum=").append(sortNum);
+        sb.append(", deleted=").append(deleted);
+        sb.append("]");
+        return sb.toString();
+    }
 }

@@ -66,7 +66,7 @@ public class Drug {
      * 售价
      */
     private BigDecimal saleprice;
-    
+
     /**
      * 当天药品库存
      */
@@ -288,20 +288,44 @@ public class Drug {
         this.saleprice = saleprice;
     }
 
+    /**
+     * 获取当天药品库存
+     *
+     * @return inventory - 当天药品库存
+     */
     public Integer getInventory() {
-		return inventory;
-	}
+        return inventory;
+    }
 
-	public void setInventory(Integer inventory) {
-		this.inventory = inventory;
-	}
+    /**
+     * 设置当天药品库存
+     *
+     * @param inventory 当天药品库存
+     */
+    public void setInventory(Integer inventory) {
+        this.inventory = inventory;
+    }
 
-	@Override
-	public String toString() {
-		return "Drug [id=" + id + ", wareid=" + wareid + ", barcode=" + barcode + ", abc=" + abc + ", warename="
-				+ warename + ", waresimname=" + waresimname + ", warespec=" + warespec + ", prodAddr=" + prodAddr
-				+ ", producer=" + producer + ", wareunit=" + wareunit + ", status=" + status + ", saleprice="
-				+ saleprice + ", inventory=" + inventory + "]";
-	}
-
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", wareid=").append(wareid);
+        sb.append(", barcode=").append(barcode);
+        sb.append(", abc=").append(abc);
+        sb.append(", warename=").append(warename);
+        sb.append(", waresimname=").append(waresimname);
+        sb.append(", warespec=").append(warespec);
+        sb.append(", prodAddr=").append(prodAddr);
+        sb.append(", producer=").append(producer);
+        sb.append(", wareunit=").append(wareunit);
+        sb.append(", status=").append(status);
+        sb.append(", saleprice=").append(saleprice);
+        sb.append(", inventory=").append(inventory);
+        sb.append("]");
+        return sb.toString();
+    }
 }
