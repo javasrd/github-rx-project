@@ -116,7 +116,7 @@ public class ReceivePatientController {
 	@ResponseBody		
 	public Object receivePatient(RxPatientParams patient,HttpServletRequest request) {
 		//@RequestBody RxReqProtocol pack
-		System.out.println(patient.getPatient_id());		
+		//System.out.println(patient.getPatient_id());		
 		
 		try{
 			//(1)记录日志		
