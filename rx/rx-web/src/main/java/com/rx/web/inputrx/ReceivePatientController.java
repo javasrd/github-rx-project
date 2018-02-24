@@ -122,7 +122,7 @@ public class ReceivePatientController {
 			//(1)记录日志		
 			String remoteURL=getIpAddr(request);
 			String pack=JSON.toJSONString(patient);
-			System.out.println(pack);
+			//System.out.println(pack);
 			writeLog(remoteURL,pack);			
 					
 			//(2)保存医,患,诊断 数据到DB
