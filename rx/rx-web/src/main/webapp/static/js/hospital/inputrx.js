@@ -48,11 +48,11 @@ function addDrugIntoTable() {
 					'<span class="glyphicon glyphicon-list-alt"  id="btn-days-'+  g_currDrug.id+ '"' +  ' bind-id="'+ g_currDrug.id+'"' +   '>' +
 					'</span>' +
 			'</td>'
-			+ '<td class="small_width "><input class="form-control  quantity" id="drug-quantity-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+ 'value='+$("#quantity").val()+'></td>' 
+			+ '<td class="small_width "><input class="form-control  quantity" id="drug-quantity-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	  +  'value='+$("#quantity").val()+'></td>' 
 			
 			+ '<td class="small_width">' + g_currDrug.wareunit+ '</td>' 
 			+ '<td class="small_width">' + g_currDrug.saleprice	+ '</td>'
-			+ '<td class="small_width">' + toDecimal2($("#quantity").val()*g_currDrug.saleprice) + '</td>' 
+			+ '<td class="small_width">' +'<span id="drug-sum-'  +   g_currDrug.id + '"'   +  '>'+ toDecimal2($("#quantity").val()*g_currDrug.saleprice) +'</span>'+ '</td>' 
 			+ '</tr>';
 
 	$("#drug-items").append(drugItem); // 加入显示列表中.	
@@ -555,13 +555,18 @@ function getInputDaysId(that){
 	g_edit_days_id=$(that).attr("id");	
 }
 
+/*function getInputQuantityId(that){
+	g_edit_quantity_id=$(that).attr("id");
+}*/
+
 /**************************************************
  * 全局变量
  **************************************************/
 var g_edit_doseunit_id; // 当前正在编辑的"剂量单位" id
-var g_edit_times_id;	// 当前正在编辑的"次数" id
+var g_edit_times_id;		// 当前正在编辑的"次数" id
 var g_edit_mode_id;		// 当前正在编辑的"用法" id
 var g_edit_days_id;		// 当前正在编辑的"疗程" id
+//var g_edit_quantity_id; // 当前正在编辑的"数量" id
 
 var g_currDrug = null; // 医生选择的当前药品
 /*************************************************

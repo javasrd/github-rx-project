@@ -54,7 +54,6 @@ function handler_keydown_hospital(ev){
 			setTableDaysWindowStatus(WINDOW_CLOSED);
 		}
 		
-		
 		return false;
 
 	}
@@ -165,8 +164,27 @@ function handler_keydown_mode_table(ev){
 }
 
 function handler_keydown_quantity_table(ev){
-	alert("增加业务逻辑!-quantity_table  keydown!");
-	return false;
+	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)
+	if (oEvent.keyCode == "13") {// keyCode=13是回车键
+		
+		if($.trim($(this).val())==""){
+			alert("数量为空",500);
+		}
+		else{
+			//判定是否为正整数
+			if(!isUnsignedInteger($(this).val())){
+				alert("数量不是正整数",500);
+			}
+			else{
+				var sum=calcPrescDrugAmount();			
+				if(sum>300){
+					alert("每个处方中金额不可以超过300元!",500);
+				}
+			}
+		}
+		return false;	
+	}
+	
 }
 
 /**
@@ -421,9 +439,9 @@ function handler_keydown_days_table(ev) {
 			if (val==""){
 				alert("用药天数为空!",500);
 			}
-			else if(!isUnsignedInteger(val)){
+			/*else if(!isUnsignedInteger(val)){
 				alert("用药天数不是正整数!!",500);
-			}		
+			}*/		
 			
 		}
 		return false;
@@ -701,7 +719,34 @@ function handler_input_mode_table(){
 }
 
 function handler_input_quantity_table(){
-	alert("增加quantity INPUT业务逻辑");
+	var drugId = $(this).attr("bind-id"); 		// 取得当前编辑的药品ID
+	var index = searchDrugById(drugId); 	// 自g_prescDrugList查询,并置dosage
+	if (index >= 0) {
+		var prescDrugList=getDrugList();
+		prescDrugList[index].quantity = $(this).val();
+	}
+	
+	if($.trim($(this).val())==""){
+		alert("数量为空",500);
+	}
+	else{
+		//判定是否为正整数
+		if(!isUnsignedInteger($(this).val())){
+			alert("数量不是正整数",500);
+		}
+		else{
+			var sum=calcPrescDrugAmount();
+			var subsum=prescDrugList[index].quantity*prescDrugList[index].saleprice;
+			//显示药品金额及总金额
+			$("#presc-drug-sum").text(toDecimal2(sum));  //总金额
+			$("#drug-sum-"+drugId).text(toDecimal2(subsum));  //药品金额
+			if(sum>300){
+				alert("每个处方中金额不可以超过300元!",500);
+			}
+		}
+	}
+	
+	
 }
 
 
