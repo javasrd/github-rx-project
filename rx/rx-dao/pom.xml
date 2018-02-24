@@ -71,7 +71,7 @@
 			<resource>
 				<directory>src/main/java</directory>
 				<includes>
-					<include>com/rx/dao/mapper/**/*.xml</include>
+					<include>**/*.xml</include>
 				</includes>
 				<!-- 是否替换资源中的属性 -->
 				<filtering>false</filtering>
