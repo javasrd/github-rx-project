@@ -459,6 +459,7 @@ function handler_keydown_quantity(event) {
  * 	如果验证通过返回true;否则返回false;
  */
 function validAddDrug(){
+	//初始化校验对象
 	var err=new Object;
 	err.errorMsg="";
 	err.valid=true;
@@ -479,14 +480,44 @@ function validAddDrug(){
 		err.valid=false;
 		err.errorMsg=err.errorMsg+"未选择药品"+ ";";		
 	}
-	if($.trim($("#drugmode").val())==""){
+	
+	//剂量
+	var val="";
+	
+	val=$.trim($("#single-dosage").val());
+	if(val==""){
 		err.valid=false;
-		err.errorMsg=err.errorMsg+"未选择用法"+ ";";
+		err.errorMsg=errorMsg+"单次用量为空!"+";";
 	}
+	else if(!isPositiveNumber(val)){
+		err.valid=false;
+		err.errorMsg=errorMsg+"单次用量需为正数!"+";";
+	}
+	
+	//剂量单位
+	val=$.trim($("#single-dose-unit").val());
+	if(val==""){
+		err.valid=false;
+		err.errorMsg=errorMsg+"剂量单位为空!"+";";
+	}
+	//用药次数
 	if($.trim($("#drugtimes").val())==""){
 		err.valid=false;
 		err.errorMsg=err.errorMsg+"未选择频次"+ ";";
 	}
+	//用药方式
+	if($.trim($("#drugmode").val())==""){
+		err.valid=false;
+		err.errorMsg=err.errorMsg+"未选择用法"+ ";";
+	}
+	//疗程(用药天数)
+	val=$.trim($("#treatment-days").val());
+	if(val==""){
+		err.valid=false;
+		err.errorMsg=errorMsg+"疗程为空!"+";";
+	}
+	
+	//数量
 	if($.trim($("#quantity").val())==""){
 		err.valid=false;
 		err.errorMsg=err.errorMsg+"数量为空"+ ";";

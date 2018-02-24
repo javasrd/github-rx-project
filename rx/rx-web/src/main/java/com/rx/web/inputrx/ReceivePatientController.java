@@ -137,12 +137,7 @@ public class ReceivePatientController {
 			RxRespProtocolDH resp=createResponseDH("fale","0",e.getMessage(),patient.getPatient_id());
 			return resp;
 		}
-		
 	}
-	
-	
-	
-	
 	
 	/**
 	 * @Description: 生成响应数据包

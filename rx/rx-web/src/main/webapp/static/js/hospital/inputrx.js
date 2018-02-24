@@ -572,7 +572,6 @@ $(function() {
 	bindIEEvent("input", "#abc", handler_input_abc);
 	bindEvent("keydown", "#abc", handler_keydown_abc);
 	
-	//bindIEEvent("input", "#single-dosage", handler_input_dosage);
 	bindEvent("keydown", "#single-dosage", handler_keydown_dosage);
 	
 	bindIEEvent("input", "#single-dose-unit", handler_input_doseunit);
