@@ -18,6 +18,9 @@ public class StaticConstants {
 	public static String DICT_TIMES_MANAGE_PAGE = "back/jsp/times/times_manage";//用药次数管理页面
 	public static String DICT_TIMES_MANAGE_TABLE_PAGE = "back/jsp/times/times_table";//用药次数管理列表页面
 	
+	public static String DICT_DAYS_MANAGE_PAGE = "back/jsp/days/days_manage";//用药疗程管理页面
+	public static String DICT_DAYS_MANAGE_TABLE_PAGE = "back/jsp/days/days_table";//用药疗程管理列表页面
+	
 	public static String DICT_MODE_MANAGE_PAGE = "back/jsp/mode/mode_manage";//用药方式管理页面
 	public static String DICT_MODE_MANAGE_TABLE_PAGE = "back/jsp/mode/mode_table";//用药方式管理列表页面
 	
