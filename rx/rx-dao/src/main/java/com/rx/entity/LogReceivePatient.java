@@ -1,7 +1,14 @@
 package com.rx.entity;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 @Table(name = "log_receive_patient")
 public class LogReceivePatient {
@@ -69,6 +76,15 @@ public class LogReceivePatient {
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
+    
+    /**
+     * 获取记录创建时间字符串
+     *
+     * @return createdTimeStr - 记录创建时间
+     */
+    public String getCreatedTimeStr() {
+        return DateFormatUtils.format(createdTime, "yyyy-MM-dd HH:mm:ss");
+    }
 
     /**
      * 获取数据发送方IP地址
@@ -123,7 +139,7 @@ public class LogReceivePatient {
     public void setData(String data) {
         this.data = data == null ? null : data.trim();
     }
-
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

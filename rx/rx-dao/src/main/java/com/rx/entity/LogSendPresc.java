@@ -3,6 +3,8 @@ package com.rx.entity;
 import java.util.Date;
 import javax.persistence.*;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+
 @Table(name = "log_send_presc")
 public class LogSendPresc {
     /**
@@ -74,6 +76,15 @@ public class LogSendPresc {
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
+    
+    /**
+     * 获取记录创建时间字符串
+     *
+     * @return createdTimeStr - 记录创建时间
+     */
+    public String getCreatedTimeStr() {
+        return DateFormatUtils.format(createdTime, "yyyy-MM-dd HH:mm:ss");
+    }
 
     /**
      * 获取发送状态。1:成功；2：失败；3：连接失败
@@ -91,6 +102,30 @@ public class LogSendPresc {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+    
+    /**
+     * 获取发送状态。1:成功；2：失败；3：连接失败
+     *
+     * @return status - 发送状态。1:成功；2：失败；3：连接失败
+     */
+    public String getStatusStr() {
+    	String statusStr = "";
+    	switch (status) {
+		case 1:
+			statusStr = "成功";
+			break;
+		case 2:
+			statusStr = "失败";
+			break;
+		case 3:
+			statusStr = "连接失败";
+			break;
+
+		default:
+			break;
+		}
+        return statusStr;
     }
 
     /**
