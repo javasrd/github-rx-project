@@ -73,11 +73,12 @@
                 $(this).attr('media', 'all');
             });
             if ((IEVersion()==-1)) {  //非IE浏览器
-            	/*alert("ie7");*/
+            	//alert("the browser is not ie....");
                 $('head', print_frame_ref).append($iframe_head);
                 $('body', print_frame_ref).append($iframe_body);
             }
             else {
+            	//alert("the browser is ie");
                 /*$('body > *:not(#print-modal):not(script)').clone().each(function() {
                     $('body', print_frame_ref).append(this.outerHTML);
                 });
