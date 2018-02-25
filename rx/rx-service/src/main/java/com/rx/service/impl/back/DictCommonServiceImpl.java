@@ -36,11 +36,22 @@ public class DictCommonServiceImpl extends AbstractBaseService<DictCommon, Long>
 	}
 
 	@Override
+	public String getUrl(String code) {
+		Example example=new Example(DictCommon.class);
+		example.createCriteria().andEqualTo("deleted", DeletedType.NO).andEqualTo("code", code);
+		List<DictCommon> commonList=dictCommonMapper.selectByExample(example);
+		if(commonList!=null && commonList.size()>0 ){
+			return commonList.get(0).getName();
+		}
+		return null;
+	}
+	
+	@Override
 	public int logicDelById(Long id) {
 		DictCommon common = new DictCommon();
 		common.setId(id);
 		common.setDeleted(DeletedType.YES);
 		return dictCommonMapper.updateByPrimaryKeySelective(common);
 	}
-	
+
 }
