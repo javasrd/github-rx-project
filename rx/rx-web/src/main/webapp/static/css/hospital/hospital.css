@@ -88,10 +88,11 @@
 html{
 	height: 100%;
 }
-body{		
+body{
+	font-family:"Microsoft YaHei",Arial,Helvetica,sans-serif,"微软雅黑";	
 	height: 100%;
 	overflow: auto;
-	/* background-color: #f0f2f5; */
+	background-color: #f0f2f5;
 }
 
 .hospital{

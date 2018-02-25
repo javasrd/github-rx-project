@@ -4,7 +4,7 @@
 	var jqueryAlert = function(opts){
 		// 设置默认参数
 		var opt = {
-			'style'        : 'wap', //移动端和PC端
+			'style'        : 'PC', //移动端和PC端
 			'title'        : '',    //标题
 			'icon'         : '',
 			'content'      : '',	//内容
@@ -228,8 +228,14 @@
 		dialog.destroy = function(){
 			dialog.toggleAnimate().fadeOut(dialog.time);
 			setTimeout(function(){
-				$container.remove();				
+				
+				$closeBtn.remove();
+				$buttonBox.remove();
+				$content.remove();
+				$title.remove();
+				$container.remove();
 				$modal.remove();
+				
 				option.bodyScroll && $('body').css('overflow','auto');
 			},dialog.time)
 		};
