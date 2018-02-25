@@ -36,17 +36,19 @@ public class SyncDrugInfoUtil{
 
 	private final static Logger log = Logger.getLogger(SyncDrugInfoUtil.class);
 	
-	private final static String url = "http://127.0.0.1/rx-back/api/demo";
+	private static String url_default = "http://127.0.0.1/rx-back/api/demo";
 	//private final static String url = "http://222.222.66.25:8093/sync";
 
 	/**
 	 * 处理同步药品数据
 	 * @return
 	 */
-	public static Map<String, Object> processSyncDrug() {
+	public static Map<String, Object> processSyncDrug(String url) {
 		
 		CloseableHttpResponse response = null;
 		try {
+		
+			url_default = url;
 			
 			// 创建Httpclient对象
 			CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -307,7 +309,7 @@ public class SyncDrugInfoUtil{
 	 * @return
 	 */
 	private static String getLogJSON(int status, String errormsg, String filePath){
-		LogSyncDrug log = new LogSyncDrug(null, new Date(), status, errormsg, url, filePath);
+		LogSyncDrug log = new LogSyncDrug(null, new Date(), status, errormsg, url_default, filePath);
 		return JSON.toJSONString(log);
 	}
 	
