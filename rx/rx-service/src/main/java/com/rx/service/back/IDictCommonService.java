@@ -16,6 +16,13 @@ public interface IDictCommonService extends IBaseService<DictCommon, Long> {
 	public List<DictCommon> getList(Map<String, Object> map);
 	
 	/**
+	 * 获取接口链接
+	 * @param code
+	 * @return
+	 */
+	public String getUrl(String code);
+	
+	/**
 	 * 逻辑删除
 	 * @param id
 	 * @return

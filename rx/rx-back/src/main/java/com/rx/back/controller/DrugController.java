@@ -26,10 +26,12 @@ import com.rx.back.commons.StaticConstants;
 import com.rx.back.commons.SyncDrugInfoUtil;
 import com.rx.bean.PageBean;
 import com.rx.bean.UserBean;
+import com.rx.common.util.DictCommonCodeUtil;
 import com.rx.common.util.FileUploadUtil;
 import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Drug;
 import com.rx.entity.LogSyncDrug;
+import com.rx.service.back.IDictCommonService;
 import com.rx.service.back.IDrugService;
 import com.rx.service.back.ILogSyncDrugService;
 import com.rx.service.excelutil.Common;
@@ -52,6 +54,9 @@ public class DrugController {
 	
 	@Resource(name = "logSyncDrugServiceBean")
 	private ILogSyncDrugService logSyncDrugService;
+	
+	@Resource(name="dictCommonServiceBean")
+	private IDictCommonService dictCommonService;
 	
 	/**
 	 * 方法功能：查询列表
@@ -158,9 +163,23 @@ public class DrugController {
 	@RequestMapping("/init-sync-drug")
 	@ResponseBody
 	public Map<String, Object> initSyncDrugInfo(HttpServletRequest request, HttpServletResponse response){
+
+		String url = null;
+		try {
+			url = dictCommonService.getUrl(DictCommonCodeUtil.SYNC_DRUG_URL_CODE);
+			if(StringUtils.isBlank(url)){
+				System.out.println("================================ 获取同步药品信息URL失败 ================================");
+				return RequestResultUtil.getResultWarn("获取同步药品信息URL失败，请重新初始化！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("================================ 获取同步药品信息URL异常 ================================");
+			return RequestResultUtil.getResultWarn("获取同步药品信息URL异常，请重新初始化！");
+		}
 		
 		try {
-			Map<String, Object> resMap = SyncDrugInfoUtil.processSyncDrug();
+			
+			Map<String, Object> resMap = SyncDrugInfoUtil.processSyncDrug(url);
 			String result_code = resMap.get(RequestResultUtil.RESULT_CODE).toString();
 			if(result_code.equals(RequestResultUtil.RESULT_CODE_SUCCESS)){
 				String drugInfoJSON = resMap.get(RequestResultUtil.RESULT_DATA).toString();

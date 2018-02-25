@@ -102,6 +102,12 @@
 																<span id="log-sync-drug-errormsg"></span>
 															</div>
 														</div>
+														<div class="form-group">
+															<label class="col-md-2 control-label">同步文件保存路径</label>
+															<div class="col-md-10">
+																<span id="log-sync-drug-file-path"></span>
+															</div>
+														</div>
 													</form>
 												</div>
 											</div>
@@ -135,6 +141,7 @@
 						$("#log-sync-drug-created-date").text(log.createdDateStr);//创建时间
 						$("#log-sync-drug-url").text(log.url);//数据源地址
 						$("#log-sync-drug-status").text(log.statusStr);//同步状态
+						$("#log-sync-drug-file-path").text(log.filePath);//同步文件保存路径
 						$("#log-sync-drug-errormsg").text(log.errormsg==null ? "" : log.errormsg);//错误信息
 						
 						$('#tabs-243687 a[href="#tab-2"]').tab('show');

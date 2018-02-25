@@ -3,6 +3,10 @@ package com.rx.entity;
 import java.util.Date;
 import javax.persistence.*;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+
+import com.rx.bean.SyncDrugLogStatus;
+
 @Table(name = "log_sync_drug")
 public class LogSyncDrug {
     /**
@@ -89,6 +93,15 @@ public class LogSyncDrug {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+    
+    /**
+     * 获取记录创建时间字符串
+     *
+     * @return createdTimeStr - 记录创建时间
+     */
+    public String getCreatedDateStr() {
+        return DateFormatUtils.format(createdDate, "yyyy-MM-dd HH:mm:ss");
+    }
 
     /**
      * 获取同步状态。1:成功；2：文件格式错误；3：连接失败
@@ -106,6 +119,25 @@ public class LogSyncDrug {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+    
+    /**
+     * 获取同步状态。
+     * 
+     	1:成功；
+		2：连接失败；
+		3：请求异常；
+		4：获取保存文件目录错误；
+		5：写入文本文件异常；
+		6：HTTP请求返回为空；
+		7：解压TXT文本文件异常；
+		8：读取TXT文本文件异常；
+		9：文件格式错误；
+     *
+     * @return status
+     */
+    public String getStatusStr() {
+        return SyncDrugLogStatus.getValue(status);
     }
 
     /**

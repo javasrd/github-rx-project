@@ -100,8 +100,10 @@
 
 	<bean id="syncDrugTask" class="com.rx.back.task.SyncDrugInfoTask"></bean> 
 	<!-- <task:scheduled-tasks> 
+		这里表示的是每天（00:00点）执行一次
+		<task:scheduled ref="syncDrugTask" method="everyDayTask" cron="0 0 0 * * ?" />
 		这里表示的是每分钟执行一次
-		<task:scheduled ref="syncDrugTask" method="sync" cron="0 */1 * * * ?" /> 
+		<task:scheduled ref="syncDrugTask" method="everyMinuteTask" cron="0 */1 * * * ?" />
 	</task:scheduled-tasks> -->
  
 	<!-- 自动扫描的包名 -->

@@ -9,7 +9,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="renderer" content="webkit">
-<title>菱美信息电子商务</title>
+<title>中国石油天然气集团中心医院</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 <!--[if lt IE 9]>
