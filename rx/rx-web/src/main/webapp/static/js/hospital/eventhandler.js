@@ -490,7 +490,7 @@ function validAddDrug(){
 	}
 	
 	var len=getDrugListLength();  //获得药品列表的长度.	
-	if(len>=5){	
+	if(len>5){	
 		err.valid=false;
 		err.errorMsg=err.errorMsg+"每个处方中药品数不可超过5种!"+ ";";		
 	}	
