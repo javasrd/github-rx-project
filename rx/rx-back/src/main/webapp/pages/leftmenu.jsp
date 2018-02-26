@@ -7,8 +7,8 @@
 <div class="leftSide">
         <div class="navbar-header">
             <a class="navbar-brand" tittle="菱美电子商务" href="javascript:location.reload();">
-            	<img alt="菱美LOGO" src="static/images/lm.jpg">
-            	<span>电子商务平台</span>
+            	<img alt="hospital" src="static/images/doctor.jpg">
+            	<span>中石中心医院</span>
             </a>
         </div>
         <div class="panel-group" style="">
