@@ -117,7 +117,7 @@
             $.printPreview.loadMask();
 
             // Disable scrolling
-            $('body').css({overflowY: 'hidden', height: '100%'});
+            $('body').css({overflow: 'hidden', height: '100%'});
             $('img', print_frame_ref).load(function() {
                 print_frame.height($('body', print_frame.contents())[0].scrollHeight);
             });
@@ -127,7 +127,7 @@
             var css = {
                     top:         starting_position,
                     height:      '100%',
-                    overflowY:   'auto',
+                    overflow:   'auto',
                     zIndex:      999,
                     display:     'block'
                 }
@@ -163,8 +163,8 @@
     	    print_controls.fadeOut(100);
     	    print_modal.animate({ top: $(window).scrollTop() - $(window).height(), opacity: 1}, 400, 'linear', function(){
     	        print_modal.remove();
-    	        /*$('body').css({overflowY: 'auto', height: 'auto'});*/
-    	        $('body').css({overflowY: 'auto', height: '100%'});
+    	        /*$('body').css({overflow: 'auto', height: 'auto'});*/
+    	        $('body').css({overflow: 'auto', height: '100%'});
     	    });
     	    mask.fadeOut('slow', function()  {
     			mask.remove();

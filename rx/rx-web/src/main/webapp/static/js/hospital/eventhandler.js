@@ -489,7 +489,8 @@ function validAddDrug(){
 		return err;
 	}
 	
-	var len=getDrugListLength();  //获得药品列表的长度.	
+	var len=getDrugListLength();  //获得药品列表的长度.
+	//alert("list length:"+len);
 	if(len>5){	
 		err.valid=false;
 		err.errorMsg=err.errorMsg+"每个处方中药品数不可超过5种!"+ ";";		
@@ -577,9 +578,13 @@ function searchDrugDropdown(abc,inputBoxId){
 	var inputObj=$(inputBoxId);
 	if (getDrugWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
 		Common.showDropdownTable(inputObj);
+		Common.setDropdownTalbeWidth(800);
+		//Common.setDropdownTalbeHeight(800);
+		
 		setDrugWindowStatus(WINDOW_OPENED);
 	}
 	loadDrugTable(abc);
+	
 }
 
 /**

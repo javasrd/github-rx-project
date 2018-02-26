@@ -36,8 +36,8 @@ $(function(){
 
 var Common = {
 	setBasicWidth : function () {
-		var bodyWidth = $("body").width() - 232;
-		$("#basicForm").css("width",bodyWidth);
+		/*var bodyWidth = $("body").width() - 232;
+		$("#basicForm").css("width",bodyWidth);*/
 	},
 
 	setFormHeight : function () {
@@ -48,7 +48,7 @@ var Common = {
 	showDropdownTable : function (that) {
 		$(".dropdown-table").remove();
 
-		var addNode = '<div class="dropdown-table" style="z-index:100;"><table class="table table-condensed table-hover">'+
+		var addNode = '<div class="dropdown-table" id="dropdown-table-1" style="z-index:100;"><table class="table table-condensed table-hover">'+
                       '<thead><tr></tr></thead><tbody><tr></tr></tbody></table></div>';
 		
 		/*var addNode = '<div class="dropdown-table"></div>';*/	
@@ -56,19 +56,11 @@ var Common = {
         that.parent().append(addNode);
 	},
 	
-	showDropdownTable1 : function (that) {
-		$(".dropdown-table").remove();
-
-		var addNode = '<div class="dropdown-table" style="z-index:100;"><table class="table table-condensed table-hover">'+
-                      '<thead><tr></tr></thead><tbody><tr></tr></tbody></table></div>';
-		
-		/*var addNode = '<div class="dropdown-table"></div>';*/	
-		
-        $("#drugForm").append(addNode);
-	},
-	
 	setDropdownTalbeWidth:function(width){
 		$(".dropdown-table").width(width);
+	},
+	setDropdownTalbeHeight:function(height){
+		$(".dropdown-table").height(height);
 	},
 	
 	hideDropdownTable : function () {

@@ -28,24 +28,24 @@ function addDrugIntoTable() {
 	var drugItem = '<tr bind-id=' + '"'+ g_currDrug.id+ '"'+ ' id=drug-row-'  + g_currDrug.id+  ' title=""'+ '>'
 			+ '<td class="small_width"><input type="checkbox" class="check-drug" '+'id="check-drug-'+g_currDrug.id+'"'+  ' bind-id="'+ g_currDrug.id	+ '"' + '></td>'
 			+ '<td class="small_width">'+ g_currDrug.wareid	+ '</td>'
-			+ '<td class="input_width">'+ g_currDrug.warename + '</td>'
-			+ '<td class="small_width">'+ g_currDrug.warespec + '</td>'
+			+ '<td class="input_width" title="'+ g_currDrug.warename + '">'+ g_currDrug.warename + '</td>'
+			+ '<td class="middle_width" title="'+ g_currDrug.warespec + '">'+ g_currDrug.warespec + '</td>'
 			
 			+ '<td class="small_width "><input class="form-control  dosage" id="drug-dosage-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+   ' value='+$("#single-dosage").val()  +   '>'+'</td>'
-			+ '<td class="small_width "><input class="form-control  dose-unit" style="display:inline"  id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputDoseUnitId(this)" '+ ' value='+$("#single-dose-unit").val()  + '>'+
-		      		'<span class="glyphicon glyphicon-list-alt"  id="btn-doseunit-'+  g_currDrug.id+ '"'+' bind-id="'+ g_currDrug.id+'"'+ '>' +
+			+ '<td class="small_width no-overflow"><input class="form-control  dose-unit" style="display:inline"  id="drug-doseunit-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputDoseUnitId(this)" '+ ' value='+$("#single-dose-unit").val()  + '>'+
+		      		'<span class="glyphicon glyphicon-search"  id="btn-doseunit-'+  g_currDrug.id+ '"'+' bind-id="'+ g_currDrug.id+'"'+ '/>' +
+					
+			'</td>'
+			+ '<td class="middle_width no-overflow"><input class="form-control  times" style="display:inline" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputTimesId(this)" '+ ' value='+$("#drugtimes").val()+     '>'+
+					'<span class="glyphicon glyphicon-search" id="btn-times-'+  g_currDrug.id+ '"'+' bind-id="'+ g_currDrug.id+'"'+ '>' +
 					'</span>' +
 			'</td>'
-			+ '<td class="input_width "><input class="form-control  times" style="display:inline" id="drug-times-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputTimesId(this)" '+ ' value='+$("#drugtimes").val()+     '>'+
-					'<span class="glyphicon glyphicon-list-alt" id="btn-times-'+  g_currDrug.id+ '"'+' bind-id="'+ g_currDrug.id+'"'+ '>' +
-					'</span>' +
-			'</td>'
-			+ '<td class="input_width "><input class="form-control  mode" style="display:inline" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputModeId(this)" '  + ' value='+$("#drugmode").val()+'>'+
-					'<span class="glyphicon glyphicon-list-alt"  id="btn-mode-'+  g_currDrug.id+ '"'+ ' bind-id="'+ g_currDrug.id+'"' +'>' +
+			+ '<td class="middle_width no-overflow"><input class="form-control  mode" style="display:inline" id="drug-mode-'+ g_currDrug.id+ '"'+ ' bind-id="'	+ g_currDrug.id	+ '"'+ ' onfocus="getInputModeId(this)" '  + ' value='+$("#drugmode").val()+'>'+
+					'<span class="glyphicon glyphicon-search"  id="btn-mode-'+  g_currDrug.id+ '"'+ ' bind-id="'+ g_currDrug.id+'"' +'>' +
 					'</span>' +
 			'</td>'			
-			+ '<td class="small_width "><input class="form-control  days" style="display:inline" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+  ' onfocus="getInputDaysId(this)" '  + ' value='+$("#treatment-days").val()+'>'+
-					'<span class="glyphicon glyphicon-list-alt"  id="btn-days-'+  g_currDrug.id+ '"' +  ' bind-id="'+ g_currDrug.id+'"' +   '>' +
+			+ '<td class="small_width no-overflow"><input class="form-control  days" style="display:inline" id="drug-days-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	+  ' onfocus="getInputDaysId(this)" '  + ' value='+$("#treatment-days").val()+'>'+
+					'<span class="glyphicon glyphicon-search"  id="btn-days-'+  g_currDrug.id+ '"' +  ' bind-id="'+ g_currDrug.id+'"' +   '>' +
 					'</span>' +
 			'</td>'
 			+ '<td class="small_width "><input class="form-control  quantity" id="drug-quantity-'+ g_currDrug.id + '"' + ' bind-id="' + g_currDrug.id + '"'	  +  'value='+$("#quantity").val()+'></td>' 
@@ -632,7 +632,7 @@ $(function() {
 			alert("尚未录入药品!",1000);
 			return false;
 		}
-		if(len>=5){
+		if(len>5){
 			alert("每个处方中药品数不可超过5种!");
 			return false;
 		}

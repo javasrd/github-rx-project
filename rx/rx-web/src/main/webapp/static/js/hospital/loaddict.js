@@ -14,6 +14,7 @@ function loadDrugTable(abc) {
 
 // 加载成功后的回调函数
 function loadDrugTableSuccess() {
+	
 }
 
 /****************************************
@@ -123,3 +124,5 @@ function loadTableDrugDays(abc) {
 	var containerId = ".dropdown-unit";
 	loadPage(containerId, url, parms, callbackFunc);
 }
+
+

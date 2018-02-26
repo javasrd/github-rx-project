@@ -28,7 +28,7 @@
 <!-- <link rel="stylesheet" th:href="@{/static/css/preview/print.css}" type="text/css" media="print" /> -->
 <link rel="stylesheet"
 	th:href="@{/static/css/preview/print-preview.css}" type="text/css"
-	media="screen">
+	media="all">
 
 <link th:href="@{/static/css/hospital/hospital.css}" rel="stylesheet">
 
@@ -50,16 +50,18 @@
     <![endif]-->
 
 <style>
-.glyphicon-list-alt {
-	color: black;
+.icon-color .glyphicon-search, 
+.icon-color .glyphicon-plus-sign {
+	color: white;
 	font-size: 16px;
 	/* margin:0px 0px 0px 0px;
     	padding:0px 0px 0px 0px; */
-}
+} 
 
 .form-inline button {
 	vertical-align: middle;
 }
+
 </style>
 
 </head>
@@ -67,7 +69,8 @@
 	<div class="hospital">
 		<nav class="navbar navbar-default">
 			<div class="row">
-				<div class="col-xs-6"></div>
+				<div class="col-xs-6 nav-left"></div>
+				<div class="col-xs-6 nav-right"></div>
 			</div>
 			<div class="container-fluid">
 				<div class="basic_info clearfix">
@@ -163,14 +166,15 @@
 						</span>
 					</h3>
 					<div>
-						<div class="form-inline">
+						<form role="form">
+						<div class="form-inline icon-color">
 							<div class="form-group form-group-sm">
 								<label class="control-label">名称:</label> <input type="text"
 									id="abc" class="form-control" style="width: 80px;"> <input
 									type="text" id="warename" class="form-control"
 									style="width: 200px;">
-								<button type="button" id="btn-abc">
-									<span class="glyphicon glyphicon-list-alt"></span>
+								<button type="button" id="btn-abc" class="btn btn-info" style="height:30px;">
+									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</div>
 							<div class="form-group form-group-sm">
@@ -180,30 +184,30 @@
 							<div class="form-group form-group-sm">
 								<label class="control-label">单位:</label> <input type="text"
 									id="single-dose-unit" class="form-control" style="width: 60px;">
-								<button type="button" id="btn-single-dose-unit">
-									<span class="glyphicon glyphicon-list-alt"></span>
+								<button type="button" id="btn-single-dose-unit" class="btn btn-info" style="height:30px;">
+									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</div>
 							<div class="form-group form-group-sm">
 								<label class="control-label">频次:</label> <input type="text"
 									id="drugtimes" class="form-control" style="width: 100px;">
-								<button type="button" id="btn-drugtimes">
-									<span class="glyphicon glyphicon-list-alt"></span>
+								<button type="button" id="btn-drugtimes" class="btn btn-info" style="height:30px;">
+									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</div>
 							<div class="form-group form-group-sm">
 								<label class="control-label">用法:</label> <input type="text"
 									id="drugmode" class="form-control" style="width: 80px;">
-								<button type="button" id="btn-drugmode">
-									<span class="glyphicon glyphicon-list-alt"></span>
+								<button type="button" id="btn-drugmode" class="btn btn-info" style="height:30px;" >
+									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</div>
 
 							<div class="form-group form-group-sm">
 								<label class="control-label">疗程:</label> <input type="text"
 									id="treatment-days" class="form-control" style="width: 60px;">
-								<button type="button" id="btn-treatment-days">
-									<span class="glyphicon glyphicon-list-alt"></span>
+								<button type="button" id="btn-treatment-days" class="btn btn-info" style="height:30px;">
+									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</div>
 
@@ -212,28 +216,27 @@
 									id="quantity" class="form-control" style="width: 60px;">
 							</div>
 							<div class="form-group form-group-sm">
-								<button type="button" class="" style="width: 40px;"
-									id="btn-add-drug">
-									<span class="glyphicon glyphicon-plus-sign"
-										style="color: blue;"></span>
+								<button type="button" style="width: 40px;height:30px;"
+									id="btn-add-drug" class="btn btn-info" >
+									<span class="glyphicon glyphicon-plus-sign"></span>
 								</button>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 				<div class="table-head">
 					<table class="table table-default">
 						<thead>
 							<tr>
-								<th class="small_width"><label for="check-select-all">全选</label><input
-									id="check-select-all" type="checkbox"></th>
+								<th class="small_width"><label for="check-select-all"><input id="check-select-all" type="checkbox">&nbsp;全选</label></th>
 								<th class="small_width">药品码</th>
 								<th class="input_width">药品名</th>
-								<th class="small_width">规格</th>
+								<th class="middle_width">规格</th>
 								<th class="small_width">单次剂量</th>
 								<th class="small_width">剂量单位</th>
-								<th class="input_width">频次</th>
-								<th class="input_width">用法</th>
+								<th class="middle_width">频次</th>
+								<th class="middle_width">用法</th>
 								<th class="small_width">疗程</th>
 								<th class="small_width">数量</th>
 								<th class="small_width">单位</th>
@@ -300,20 +303,20 @@
 						id="btn-save-template">存为模板</button>
 					<button type="button" class="btn btn-success" id="btn-use-template">使用模板</button> -->
 
-					<button type="button" class="btn btn-success" id="btn-delete-row"
+					<button type="button" class="btn btn-info" id="btn-delete-row"
 						style="margin-left: 10px;">删除行</button>
-					<button type="button" class="btn btn-success"
+					<button type="button" class="btn btn-info"
 						id="btn-clear-presc-table" style="margin-right: 10px;">新处方</button>
 
-					<button type="button" class="btn btn-success" id="btn-print">打印</button>
-					<button type="button" class="btn btn-success" id="btn-preview"
+					<button type="button" class="btn btn-info" id="btn-print">打印</button>
+					<button type="button" class="btn btn-info" id="btn-preview"
 						style="margin-right: 10px;">预览处方</button>
 
-					<button type="button" class="btn btn-success"
+					<button type="button" class="btn btn-info"
 						id="btn-save-prescription">确定</button>
 
 					<!-- 打印预览所绑定的按钮 -->
-					<button type="button" class="btn btn-success hide"
+					<button type="button" class="btn btn-info hide"
 						id="btn-print-preview">打印预览</button>
 				</div>
 				<div class="right_btn pull-right">
