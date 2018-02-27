@@ -18,3 +18,5 @@
 <script src="static/js/common/util.js"></script>
 <!-- 公共js，包含上传图片显示预览图、判断图片大小等 -->
 <script src="static/js/common/common.js"></script>
+<!-- 格式化JSON字符串 -->
+<script src="static/js/common/formatJSON.js"></script>

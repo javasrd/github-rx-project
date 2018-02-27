@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>发送患者信息日志</title>
+<title>发送处方信息日志</title>
 <%@ include file="../../../../common/headCss.jsp"%>
 </head>
 <body class="gray-bg">
@@ -14,7 +14,7 @@
 					<div class="tabs-container" id="tabs-243687">
 						<ul class="nav nav-tabs" id="top_tab">
 							<li class="active" onclick="javascript:resetFun();"><a data-toggle="tab" href="#tab-1"
-								aria-expanded="true">发送患者信息日志列表</a></li>
+								aria-expanded="true">发送处方信息日志列表</a></li>
 							<li class="hide" id="edit-log-send-presc-li"><a
 								data-toggle="tab" href="#tab-2" aria-expanded="false">详情</a></li>
 						</ul>
@@ -26,7 +26,7 @@
 											<div class="panel panel-default">
 												<div class="panel-heading">
 													<h3 class="panel-title">
-														发送患者信息日志列表
+														发送处方信息日志列表
 													</h3>
 												</div>
 												<div class="panel-body">
@@ -67,7 +67,7 @@
 											<div class="panel panel-default">
 												<div class="panel-heading">
 													<h3 class="panel-title">
-														发送患者信息日志详情
+														发送处方信息日志详情
 													</h3>
 												</div>
 												<div class="panel-body">
@@ -85,27 +85,27 @@
 															</div>
 														</div>
 														<div class="form-group">
-															<label class="col-md-2 control-label">发送地址</label>
-															<div class="col-md-10">
-																<span id="log-send-presc-url"></span>
-															</div>
-														</div>
-														<div class="form-group">
-															<label class="col-md-2 control-label">发送数据</label>
-															<div class="col-md-10">
-																<span id="log-send-presc-data"></span>
-															</div>
-														</div>
-														<div class="form-group">
 															<label class="col-md-2 control-label">发送状态</label>
 															<div class="col-md-10">
 																<span id="log-send-presc-status"></span>
 															</div>
 														</div>
 														<div class="form-group">
+															<label class="col-md-2 control-label">发送地址</label>
+															<div class="col-md-10">
+																<span id="log-send-presc-url"></span>
+															</div>
+														</div>
+														<!-- <div class="form-group">
 															<label class="col-md-2 control-label">处方ID</label>
 															<div class="col-md-10">
 																<span id="log-send-presc-presc-id"></span>
+															</div>
+														</div> -->
+														<div class="form-group">
+															<label class="col-md-2 control-label">发送数据</label>
+															<div class="col-md-10">
+																<span id="log-send-presc-data"></span>
 															</div>
 														</div>
 													</form>
@@ -139,10 +139,12 @@
 						var log =resp.logSendPresc;
 						$("#log-send-presc-id").text(log.id);//ID
 						$("#log-send-presc-created-time").text(log.createdTimeStr);//创建时间
-						$("#log-send-presc-url").text(log.url);//发送地址
-						$("#log-send-presc-url").text(log.data);//发送数据
 						$("#log-send-presc-status").text(log.statusStr);//发送状态
-						$("#log-send-presc-presc-id").text(log.prescId==null ? "" : log.prescId);//处方ID
+						$("#log-send-presc-url").text(log.url);//发送地址
+						//调用formatJson函数,将json格式进行格式化
+						var resultJson = formatJson(log.data);
+						$("#log-send-presc-data").html('<pre>' + resultJson + '</pre>');//发送数据
+						//$("#log-send-presc-presc-id").text(log.prescId==null ? "" : log.prescId);//处方ID
 						
 						$('#tabs-243687 a[href="#tab-2"]').tab('show');
 						return;
@@ -226,6 +228,7 @@
 		    }
 		    return format;
 		}
+		
 	</script>
 </body>
 </html>

@@ -10,11 +10,10 @@
 			<th><input type="checkbox" name="checkbox" id="checkbox" onclick="javascript:checkAll(this);">
 				<label for="checkbox">ALL</label>
 			</th>
-			<th>日志ID</th>
+			<th>ID</th>
 			<th>创建时间</th>
 			<th>接收地址</th>
-			<th>接收数据</th>
-			<th>患者ID</th>
+			<th style="width:50%">接收数据</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -28,7 +27,6 @@
 				<td>${log.createdTimeStr}</td>
 				<td>${log.url}</td>
 				<td>${log.data}</td>
-				<td>${log.patientId}</td>
 				<td class="center ">
 					<div style="text-align: center;; height: auto;"
 						class="datagrid-cell datagrid-cell-c1-action">
