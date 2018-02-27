@@ -132,7 +132,9 @@ public class SyncDrugInfoUtil{
 			System.out.println(new Date() + " HTTP连接异常");
 		} finally {
 			try {
-				response.close();
+				if(response!=null){
+					response.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
