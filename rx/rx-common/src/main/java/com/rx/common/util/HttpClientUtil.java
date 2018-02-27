@@ -226,11 +226,12 @@ public class HttpClientUtil {
 			e.printStackTrace();
 		} finally {
 			try {
-				response.close();
+				if(response!=null)
+					response.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
 
 		return resultString;

@@ -30,7 +30,7 @@ public class RxPatientParams {
 	private String patientcrno; //病历号
 	private String doctorid;
 	private String doctorname;
-	private String depatmentid;
+	private String departmentid;
 	private String departmentname;
 	private String diagnosisresult;  //诊断结果,如果有多个疾病,采用逗号分隔.
 	
@@ -82,12 +82,7 @@ public class RxPatientParams {
 	public void setDoctorname(String doctorname) {
 		this.doctorname = doctorname;
 	}
-	public String getDepatmentid() {
-		return depatmentid;
-	}
-	public void setDepatmentid(String depatmentid) {
-		this.depatmentid = depatmentid;
-	}
+	
 	public String getDepartmentname() {
 		return departmentname;
 	}
@@ -99,6 +94,12 @@ public class RxPatientParams {
 	}
 	public void setDiagnosisresult(String diagnosisresult) {
 		this.diagnosisresult = diagnosisresult;
+	}
+	public String getDepartmentid() {
+		return departmentid;
+	}
+	public void setDepartmentid(String departmentid) {
+		this.departmentid = departmentid;
 	}
 	
 	
