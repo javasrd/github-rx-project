@@ -57,7 +57,7 @@
 	function setGetUrl() {
 		
 		var url = BASE_CONTEXT_PATH+"/api?"
-				+ "patient_id=123&patient_rn=123456789&patient_name=张三&patient_gender=男&patient_old=50&patient_cr_no=123456&doctor_id=12&doctor_name=李四&department_id=15&department_name=内科&diagnosis_result=消化不良,重感冒";
+				+ "patientid=123&patientrn=123456789&patientname=张三&patientgender=男&patientold=50&patientcrno=123456&doctorid=12&doctorname=李四&departmentid=15&departmentname=内科&diagnosisresult=消化不良,重感冒";
 
 		$(".a_get").attr("href", encodeURI(url));
 	}
@@ -89,17 +89,17 @@
 				//contentType: "application/json", //指定发送到服务器时参数的格式				
 				dataType : "json", //指定自服务器接收到的数据格式
 				data : {
-					patient_id : "123",
-					patient_rn : "123456789",
-					patient_name : "张三",
-					patient_gender : "男",
-					patient_old : "50",
-					patient_cr_no : "123456",
-					doctor_id : "12",
-					doctor_name : "李四",
-					department_id : "15",
-					department_name : "内科",
-					diagnosis_result : "消化不良,重感冒"
+					patientid : "123",
+					patientrn : "123456789",
+					patientname : "张三",
+					patientgender : "男",
+					patientold : "50",
+					patientcrno : "123456",
+					doctorid : "12",
+					doctorname : "李四",
+					departmentid : "15",
+					departmentname : "内科",
+					diagnosisresult : "消化不良,重感冒"
 
 				}, //传递的参数				
 

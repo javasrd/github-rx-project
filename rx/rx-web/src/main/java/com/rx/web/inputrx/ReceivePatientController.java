@@ -128,13 +128,13 @@ public class ReceivePatientController {
 			//(2)保存医,患,诊断 数据到DB
 			processMsg(patient);			
 			
-			//(3)返回响应包		
-			RxRespProtocolDH resp=createResponseDH("true","1","接收成功",patient.getPatient_id());		
+			//(3)返回响应包
+			RxRespProtocolDH resp=createResponseDH("true","1","接收成功",patient.getPatientid());
 			
 			return resp;			
 		}
 		catch (Exception e){
-			RxRespProtocolDH resp=createResponseDH("fale","0",e.getMessage(),patient.getPatient_id());
+			RxRespProtocolDH resp=createResponseDH("fale","0",e.getMessage(),patient.getPatientid());
 			return resp;
 		}
 	}
@@ -251,21 +251,21 @@ public class ReceivePatientController {
 		
 		//(1)保存患者
 		long patientId=patientService.addPatient(
-				patient.getPatient_id(),
-				patient.getPatient_name(),
-				patient.getPatient_gender(),
-				patient.getPatient_old(),
-				patient.getPatient_cr_no(),
-				patient.getPatient_rn());
+				patient.getPatientid(),
+				patient.getPatientname(),
+				patient.getPatientgender(),
+				patient.getPatientold(),
+				patient.getPatientcrno(),
+				patient.getPatientrn());
 		//(2)保存科室
 		long departmentId=departmentService.addDepartment(
-				patient.getDepatment_id(),
-				patient.getDepartment_name());
+				patient.getDepatmentid(),
+				patient.getDepartmentname());
 		
 		//(3)保存医生
 		long doctorId=doctorService.addDoctor(
-				patient.getDoctor_id(),
-				patient.getDoctor_name(),
+				patient.getDoctorid(),
+				patient.getDoctorname(),
 				departmentId);
 		
 		//(4)保存医生-患者关系
@@ -273,7 +273,7 @@ public class ReceivePatientController {
 		
 		//(5)保存诊断信息
 		
-		String[] diseaseArr=StringUtil.split(patient.getDiagnosis_result(), ',');
+		String[] diseaseArr=StringUtil.split(patient.getDiagnosisresult(), ',');
 		for(int i=0;i<diseaseArr.length;i++){
 			String disease=diseaseArr[i];
 			diagnosisService.addDiagnosis("0", doctorId, patientId, disease);

@@ -22,84 +22,85 @@ public class RxPatientParams {
 							diagnosis_result=消化不良,重感冒
 	 */
 	
-	private String patient_id;  //就诊号
-	private String patient_rn;	//登记号
-	private String patient_name;	
-	private String patient_gender; 
-	private String patient_old;
-	private String patient_cr_no; //病历号
-	private String doctor_id;
-	private String doctor_name;
-	private String depatment_id;
-	private String department_name;
-	private String diagnosis_result;  //诊断结果,如果有多个疾病,采用逗号分隔.
+	private String patientid;  //就诊号
+	private String patientrn;	//登记号
+	private String patientname;	
+	private String patientgender; 
+	private String patientold;
+	private String patientcrno; //病历号
+	private String doctorid;
+	private String doctorname;
+	private String depatmentid;
+	private String departmentname;
+	private String diagnosisresult;  //诊断结果,如果有多个疾病,采用逗号分隔.
 	
-	public String getPatient_id() {
-		return patient_id;
+	public String getPatientid() {
+		return patientid;
 	}
-	public void setPatient_id(String patient_id) {
-		this.patient_id = patient_id;
+	public void setPatientid(String patientid) {
+		this.patientid = patientid;
 	}
-	public String getPatient_rn() {
-		return patient_rn;
+	public String getPatientrn() {
+		return patientrn;
 	}
-	public void setPatient_rn(String patient_rn) {
-		this.patient_rn = patient_rn;
+	public void setPatientrn(String patientrn) {
+		this.patientrn = patientrn;
 	}
-	public String getPatient_name() {
-		return patient_name;
+	public String getPatientname() {
+		return patientname;
 	}
-	public void setPatient_name(String patient_name) {
-		this.patient_name = patient_name;
+	public void setPatientname(String patientname) {
+		this.patientname = patientname;
 	}
-	public String getPatient_gender() {
-		return patient_gender;
+	public String getPatientgender() {
+		return patientgender;
 	}
-	public void setPatient_gender(String patient_gender) {
-		this.patient_gender = patient_gender;
+	public void setPatientgender(String patientgender) {
+		this.patientgender = patientgender;
 	}
-	public String getPatient_old() {
-		return patient_old;
+	public String getPatientold() {
+		return patientold;
 	}
-	public void setPatient_old(String patient_old) {
-		this.patient_old = patient_old;
+	public void setPatientold(String patientold) {
+		this.patientold = patientold;
 	}
-	public String getPatient_cr_no() {
-		return patient_cr_no;
+	public String getPatientcrno() {
+		return patientcrno;
 	}
-	public void setPatient_cr_no(String patient_cr_no) {
-		this.patient_cr_no = patient_cr_no;
+	public void setPatientcrno(String patientcrno) {
+		this.patientcrno = patientcrno;
 	}
-	public String getDoctor_id() {
-		return doctor_id;
+	public String getDoctorid() {
+		return doctorid;
 	}
-	public void setDoctor_id(String doctor_id) {
-		this.doctor_id = doctor_id;
+	public void setDoctorid(String doctorid) {
+		this.doctorid = doctorid;
 	}
-	public String getDoctor_name() {
-		return doctor_name;
+	public String getDoctorname() {
+		return doctorname;
 	}
-	public void setDoctor_name(String doctor_name) {
-		this.doctor_name = doctor_name;
+	public void setDoctorname(String doctorname) {
+		this.doctorname = doctorname;
 	}
-	public String getDepatment_id() {
-		return depatment_id;
+	public String getDepatmentid() {
+		return depatmentid;
 	}
-	public void setDepatment_id(String depatment_id) {
-		this.depatment_id = depatment_id;
+	public void setDepatmentid(String depatmentid) {
+		this.depatmentid = depatmentid;
 	}
-	public String getDepartment_name() {
-		return department_name;
+	public String getDepartmentname() {
+		return departmentname;
 	}
-	public void setDepartment_name(String department_name) {
-		this.department_name = department_name;
+	public void setDepartmentname(String departmentname) {
+		this.departmentname = departmentname;
 	}
-	public String getDiagnosis_result() {
-		return diagnosis_result;
+	public String getDiagnosisresult() {
+		return diagnosisresult;
 	}
-	public void setDiagnosis_result(String diagnosis_result) {
-		this.diagnosis_result = diagnosis_result;
+	public void setDiagnosisresult(String diagnosisresult) {
+		this.diagnosisresult = diagnosisresult;
 	}
+	
 	
 	
 }
