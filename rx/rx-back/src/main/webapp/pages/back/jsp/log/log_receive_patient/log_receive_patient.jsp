@@ -96,12 +96,12 @@
 																<span id="log-receive-patient-data"></span>
 															</div>
 														</div>
-														<div class="form-group">
+														<!-- <div class="form-group">
 															<label class="col-md-2 control-label">患者ID</label>
 															<div class="col-md-10">
 																<span id="log-receive-patient-patient-id"></span>
 															</div>
-														</div>
+														</div> -->
 													</form>
 												</div>
 											</div>
@@ -134,8 +134,10 @@
 						$("#log-receive-patient-id").text(log.id);//ID
 						$("#log-receive-patient-created-time").text(log.createdTimeStr);//创建时间
 						$("#log-receive-patient-url").text(log.url);//接收地址
-						$("#log-receive-patient-data").text(log.data);//接收数据
-						$("#log-receive-patient-patient-id").text(log.patientId==null ? "" : log.patientId);//患者ID
+						//调用formatJson函数,将json格式进行格式化
+						var resultJson = formatJson(log.data);
+						$("#log-receive-patient-data").html('<pre>' + resultJson + '</pre>');//接收数据
+						//$("#log-receive-patient-patient-id").text(log.patientId==null ? "" : log.patientId);//患者ID
 						
 						$('#tabs-243687 a[href="#tab-2"]').tab('show');
 						return;

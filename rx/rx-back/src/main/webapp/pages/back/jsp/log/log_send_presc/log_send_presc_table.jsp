@@ -7,15 +7,14 @@
 	style="width: 100%;"center">
 	<thead style="width: 98%; padding-top: 80px;">
 		<tr role="row">
-			<th><input type="checkbox" name="checkbox" id="checkbox" onclick="javascript:checkAll(this);">
+			<th style="width:5%"><input type="checkbox" name="checkbox" id="checkbox" onclick="javascript:checkAll(this);">
 				<label for="checkbox">ALL</label>
 			</th>
-			<th>日志ID</th>
+			<th>ID</th>
 			<th>创建时间</th>
 			<th>发送地址</th>
-			<th>发送数据</th>
-			<th>发送状态</th>
-			<th>处方ID</th>
+			<th style="width:30%">发送数据</th>
+			<th style="width:5%">状态</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -30,7 +29,6 @@
 				<td>${log.url}</td>
 				<td>${log.data}</td>
 				<td>${log.statusStr}</td>
-				<td>${log.prescId}</td>
 				<td class="center">
 					<div style="text-align: center;; height: auto;"
 						class="datagrid-cell datagrid-cell-c1-action">

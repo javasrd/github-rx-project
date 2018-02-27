@@ -10,7 +10,7 @@
 			<th><input type="checkbox" name="checkbox" id="checkbox" onclick="javascript:checkAll(this);">
 				<label for="checkbox">ALL</label>
 			</th>
-			<th>日志ID</th>
+			<th>ID</th>
 			<th>创建时间</th>
 			<th>数据源地址</th>
 			<th>同步状态</th>
