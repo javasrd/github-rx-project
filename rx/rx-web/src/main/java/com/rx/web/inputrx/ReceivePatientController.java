@@ -1,7 +1,13 @@
 package com.rx.web.inputrx;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,14 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.rx.bean.inputrx.RxPatientParams;
 import com.rx.bean.inputrx.RxRespProtocolDH;
+import com.rx.common.BeanUtils;
 import com.rx.service.inputrx.IDepartmentService;
 import com.rx.service.inputrx.IDiagnosisService;
 import com.rx.service.inputrx.IDoctorPatientService;
 import com.rx.service.inputrx.IDoctorService;
 import com.rx.service.inputrx.ILogReceivePatientService;
 import com.rx.service.inputrx.IPatientService;
+import com.rx.service.queuerx.DBThread;
 
-import freemarker.template.utility.StringUtil;
+import freemarker.template.utility.StringUtil;  
 
 /**
  * @ClassName: ReceivePatientController
@@ -30,6 +38,9 @@ import freemarker.template.utility.StringUtil;
 @Controller
 @RequestMapping("/")
 public class ReceivePatientController {
+	private Logger log = Logger.getLogger(ReceivePatientController.class);
+	
+	
 	final String RESPONSE_THYMELEAF = "thymeleaf/inputrx/";
 	final String RESPONSE_THYMELEAF_BACK = "thymeleaf/back/";
 	final String RESPONSE_JSP = "jsps/";
@@ -123,20 +134,61 @@ public class ReceivePatientController {
 			String remoteURL=getIpAddr(request);
 			String pack=JSON.toJSONString(patient);
 			//System.out.println(pack);
-			writeLog(remoteURL,pack);			
-					
-			//(2)保存医,患,诊断 数据到DB
-			processMsg(patient);			
+			writeLog(remoteURL,pack);
 			
-			//(3)返回响应包
-			RxRespProtocolDH resp=createResponseDH("true","1","接收成功",patient.getPatientid());
-			
-			return resp;			
+			//加入数据校验
+			String validResult=patientParmsValidate(patient);
+			if(validResult.equals("")){  //校验证成功
+				//(2)保存医,患,诊断 数据到DB
+				processMsg(patient);		
+				//(3)返回响应包
+				RxRespProtocolDH successResp=createResponseDH("true","1","接收成功",patient.getPatientid());
+				return successResp;
+			}
+			else{  //校难失败
+				RxRespProtocolDH errorResp=createResponseDH("fale","0",validResult,patient.getPatientid());
+				return errorResp;
+			}
+						
 		}
 		catch (Exception e){
-			RxRespProtocolDH resp=createResponseDH("fale","0",e.getMessage(),patient.getPatientid());
+			RxRespProtocolDH resp=createResponseDH("fale","0","患者参数在处理过程中发生错误,请联系系统管理员!",patient.getPatientid());
 			return resp;
 		}
+	}
+	
+	/**
+	 * 对接收到的患者数据进行校验
+	 * @param patient  所接收到的数据患者数据
+	 * @return 
+	 * 		成功:返回空字符串;"";
+	 * 		失败:返回相应错误信息;
+	 */
+	private String patientParmsValidate(RxPatientParams patient){
+		String errorMsg="";
+		//(1)将对象转换为map;
+		HashMap<String,Object>  patientMap=BeanUtils.beanToMap(patient);		
+		//(2)迭代map,对属性进行有效性验证;
+		  
+        Set<Map.Entry<String,Object>> entry = patientMap.entrySet();  
+        Iterator<Map.Entry<String,Object>>  ite = entry.iterator();  
+        while(ite.hasNext())  
+        {  
+            Map.Entry<String,Object> en = ite.next();  
+            String key = en.getKey();  
+            Object value = en.getValue();    
+            log.debug("patient parms:"+key+":"+value);
+            
+            //如果值为null或是参数为空时
+            if(value==null){
+            	errorMsg=errorMsg+"缺少参数:"+key+";";
+            }
+            else if (value.equals("")){
+            	errorMsg=errorMsg+key+":"+"参数值为空 OR 无此参数;";
+            }
+        }  
+		
+		return errorMsg;
 	}
 	
 	/**
@@ -259,7 +311,7 @@ public class ReceivePatientController {
 				patient.getPatientrn());
 		//(2)保存科室
 		long departmentId=departmentService.addDepartment(
-				patient.getDepatmentid(),
+				patient.getDepartmentid(),
 				patient.getDepartmentname());
 		
 		//(3)保存医生

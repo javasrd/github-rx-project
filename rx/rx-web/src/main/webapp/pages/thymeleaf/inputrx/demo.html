@@ -30,7 +30,11 @@
 	</div>
 
 	<div>
-		<a href='' class="a_get" method="get">发起GET请求返回JSON数据包</a>
+		<a href='' id="get-test-1" method="get">发起GET请求返回JSON数据包:测试用例1</a>  </br>
+		<a href='' id="get-test-2" method="get">发起GET请求返回JSON数据包:测试用例2</a>  </br>
+		<a href='' id="get-test-3" method="get">发起GET请求返回JSON数据包:测试用例3</a>  </br>
+		<a href='' id="get-test-4" method="get">发起GET请求返回JSON数据包:测试用例4</a>  </br>
+		
 	</div>
 </body>
 
@@ -56,10 +60,18 @@
 	 */
 	function setGetUrl() {
 		
-		var url = BASE_CONTEXT_PATH+"/api?"
-				+ "patientid=123&patientrn=123456789&patientname=张三&patientgender=男&patientold=50&patientcrno=123456&doctorid=12&doctorname=李四&departmentid=15&departmentname=内科&diagnosisresult=消化不良,重感冒";
+		/* var url = BASE_CONTEXT_PATH+"/api?"
+				+ "patientid=123&patientrn=123456789&patientname=张三&patientgender=男&patientold=50&patientcrno=123456&doctorid=12&doctorname=李四&departmentid=15&departmentname=内科&diagnosisresult=消化不良,重感冒"; */
+		var url1=BASE_CONTEXT_PATH+"/api";  //test case 1
+		var url2=BASE_CONTEXT_PATH+"/api?patientid=123";  //test case 2
+		var url3=BASE_CONTEXT_PATH+"/api?patientrn=123456789&patientname=张三";  //test case 3
+		var url4=BASE_CONTEXT_PATH+"/api?patientid=123&patientrn=123456789&patientname=张三&patientgender=男&patientold=50&patientcrno=123456&doctorid=12&doctorname=李四&departmentid=15&departmentname=内科&diagnosisresult=消化不良,重感冒";  //test case 4
+		
 
-		$(".a_get").attr("href", encodeURI(url));
+		$("#get-test-1").attr("href", encodeURI(url1));
+		$("#get-test-2").attr("href", encodeURI(url2));
+		$("#get-test-3").attr("href", encodeURI(url3));
+		$("#get-test-4").attr("href", encodeURI(url4));
 	}
 
 	$(function() {
@@ -67,10 +79,10 @@
 		//设置get链接的url
 		setGetUrl();
 
-		/**************************
+		/*******************************
 			功能描述：绑定链接的click事件
 				 AJAX方式发送POST请求。
-		 **************************/
+		 ******************************/
 		$(".a_post").on("click", function(event) {
 
 			//alert("click");
