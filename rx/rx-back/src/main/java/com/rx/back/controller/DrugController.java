@@ -23,7 +23,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rx.back.commons.StaticConstants;
-import com.rx.back.commons.SyncDrugInfoUtil;
 import com.rx.bean.PageBean;
 import com.rx.bean.UserBean;
 import com.rx.common.util.DictCommonCodeUtil;
@@ -34,6 +33,7 @@ import com.rx.entity.LogSyncDrug;
 import com.rx.service.back.IDictCommonService;
 import com.rx.service.back.IDrugService;
 import com.rx.service.back.ILogSyncDrugService;
+import com.rx.service.commons.SyncDrugInfoUtil;
 import com.rx.service.excelutil.Common;
 import com.rx.service.excelutil.ReadExcel;
 
@@ -191,7 +191,7 @@ public class DrugController {
 						System.out.println("保存数据库成功");
 						
 						LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
-						log.setErrormsg("初始化成功："+log.getErrormsg());
+						log.setErrormsg("手动初始化药品信息成功："+log.getErrormsg());
 						logSyncDrugService.insertSelective(log);
 						
 						return RequestResultUtil.getResultSuccess("同步药品信息成功！");
@@ -199,7 +199,7 @@ public class DrugController {
 						System.out.println("保存数据库异常");
 						
 						LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
-						log.setErrormsg("初始化错误：保存到数据库异常");
+						log.setErrormsg("手动初始化药品信息错误：保存到数据库异常");
 						logSyncDrugService.insertSelective(log);
 						
 						return RequestResultUtil.getResultWarn("保存数据库异常，请重新初始化！");

@@ -1,4 +1,4 @@
-package com.rx.back.commons;
+package com.rx.service.commons;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,7 +21,6 @@ import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.rx.back.task.SyncDrugInfoTask;
 import com.rx.bean.SyncDrugLogStatus;
 import com.rx.common.util.DateUtils;
 import com.rx.common.util.RequestResultUtil;
@@ -132,7 +131,9 @@ public class SyncDrugInfoUtil{
 			System.out.println(new Date() + " HTTP连接异常");
 		} finally {
 			try {
-				response.close();
+				if(response!=null){
+					response.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -173,7 +174,7 @@ public class SyncDrugInfoUtil{
 		String subFolderName = DateUtils.getDate("yyyyMMdd");
 		// String path =
 		// "/D:/Tomcat/apache-tomcat-9.0.0.M13/webapps/rx-back/WEB-INF/classes/";
-		String path = SyncDrugInfoTask.class.getResource("/").getPath();
+		String path = SyncDrugInfoUtil.class.getResource("/").getPath();
 		//System.out.println(path);
 		path = path.substring(1);
 		//System.out.println(path);
