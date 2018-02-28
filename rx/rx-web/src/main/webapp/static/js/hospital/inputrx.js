@@ -80,7 +80,7 @@ function addDrugIntoTable() {
 	// 表格中可编辑字段   动态绑定input,keydown事件
 	//(1)单次用量
 	bindIEEvent("input", "#drug-dosage-" + g_currDrug.id, handler_input_dosage_table);    
-	bindEvent("keydown", "#drug-dosage-" + g_currDrug.id,handler_keydown_dosage);
+	bindEvent("keydown", "#drug-dosage-" + g_currDrug.id,handler_keydown_dosage_table);
 	
 	//(2)剂量单位
 	bindIEEvent("input", "#drug-doseunit-" + g_currDrug.id, handler_input_doseunit_table);  
@@ -388,6 +388,7 @@ function showConfirmWindow_cleartable(that) {
 				clearDrugTable(that); //清除药品table
 				clearPrescNo();		  //清除处方编号
 				clearNumberAndSum();  //清除处方中药品个数及总金额
+				setFocus("#abc");     //确定新处方后,药品录入助记码获得焦点
 				M.dialog1.close();
 				M.dialog1.destroy();
 				M.dialog1 = null;
@@ -555,9 +556,102 @@ function getInputDaysId(that){
 	g_edit_days_id=$(that).attr("id");	
 }
 
-/*function getInputQuantityId(that){
-	g_edit_quantity_id=$(that).attr("id");
-}*/
+/**
+ * 在保存药品时的有效性验证(对药品列表)
+ * 
+ * @param drug
+ * 		药品对象
+ * @returns
+ *  	返回有效性验证对象
+ *  	var err=new Object;
+			errorMsg string; 错误信息
+			valid  boolean;	如果验证通过返回true;否则返回false;
+ */
+function validDrugInDrugList(drug){
+	
+	//初始化校验对象
+	var err=new Object;
+	err.errorMsg="";
+	err.field="";
+	err.valid=true;
+
+	var val="";
+	//剂量
+	val=$.trim(drug.dosage);
+	if(val==null || val=="" ){
+		err.valid=false;
+		err.field="dosage";
+		err.errorMsg=err.errorMsg+"单次剂量为空!"+";";
+		return err;
+	}
+	else if(!isPositiveNumber(val)){
+		err.valid=false;
+		err.field="dosage";
+		err.errorMsg=err.errorMsg+"单次剂量需为正数!"+";";
+		return err;
+	}
+	
+	//剂量单位
+	val=$.trim(drug.doseunit);
+	if(val==null || val=="" ){
+		err.valid=false;
+		err.field="doseunit";
+		err.errorMsg=err.errorMsg+"剂量单位为空!"+";";
+		return err;
+	}
+	
+	
+	//用药次数
+	val=$.trim(drug.drugtimes);
+	if(val==null || val==""){
+		err.valid=false;
+		err.field="drugtimes";
+		err.errorMsg=err.errorMsg+"未选择频次"+ ";";
+		return err;
+	}
+	
+	//用药方式
+	val=$.trim(drug.drugmode);
+	if(val==null || val==""){
+		err.valid=false;
+		err.field="drugmode";
+		err.errorMsg=err.errorMsg+"未选择用法"+ ";";
+		return err;
+	}
+	
+	//疗程(用药天数)
+	val=$.trim(drug.days);
+	if(val==null || val==""){
+		err.valid=false;
+		err.field="days"
+		err.errorMsg=err.errorMsg+"疗程为空!"+";";
+		return err;
+	}
+	
+	//数量
+	val=$.trim(drug.quantity);
+	if(val==null || val==""){
+		err.valid=false;
+		err.field="quantity";
+		err.errorMsg=err.errorMsg+"数量为空"+ ";";
+		return err;
+	}
+	else{
+		//判定是否为正整数
+		//isPositiveNumber  正数
+		//isUnsignedInteger 正整数
+		if(!isPositiveNumber(val)){
+			err.valid=false;
+			err.field="quantity";
+			err.errorMsg=err.errorMsg+"数量不是正数"+ ";";
+			return err;
+		}		
+	}	
+	
+	return err;
+}
+
+
 
 /**************************************************
  * 全局变量
@@ -569,6 +663,9 @@ var g_edit_days_id;		// 当前正在编辑的"疗程" id
 //var g_edit_quantity_id; // 当前正在编辑的"数量" id
 
 var g_currDrug = null; // 医生选择的当前药品
+
+var DRUG_MAXNUM_PER_PRESCRIPTION=5;  //每处方中最大药品数量
+var DRUG_MAXAMOUNT_PER_PRESCRIPTION=300;  //每处方中最大金额
 /*************************************************
  * 页面加载时自动执行此函数
  *************************************************/
@@ -613,17 +710,20 @@ $(function() {
 	//药品增加按钮CLICK事件处理
 	bindEvent("click","#btn-add-drug",handler_click_btn_add_drug);
 	
+	//处方药品列表操作按钮
 	bindEvent("click", "#check-select-all", handler_click_select_all);  //选择所有
 	bindEvent("click", "#btn-delete-row", handler_click_delete_row);  //删除行
+	
+	//保存处方
+	//bindEvent("click", "##btn-save-prescription", handler_click_save_prescription);  //保存处方
 	
 	
 	//bindEvent("blur", "#abc", handler_blur_abc);
 	//bindEvent("blur", "#drugmode", handler_blur_mode);
 	//bindEvent("blur", "#drugtimes", handler_blur_times);
 
-	//
 	/******************************
-	 * 绑定事件-保存按钮
+	 * 绑定事件-保存处方按钮
 	 ******************************/
 	$("#btn-save-prescription").on("click", function(event) {
 		//(1)所输入的药品数量判定.
@@ -632,23 +732,54 @@ $(function() {
 			alert("尚未录入药品!",1000);
 			return false;
 		}
-		if(len>5){
+		if(len>DRUG_MAXNUM_PER_PRESCRIPTION){
 			alert("每个处方中药品数不可超过5种!");
 			return false;
 		}
 		var sum=calcPrescDrugAmount();
-		if(sum>300){
+		if(sum>DRUG_MAXAMOUNT_PER_PRESCRIPTION){
 			alert("每个处方的金额不可以超过300元!");
 			return;
 		}
-		var prescNo=$("#presc-no").val();
+		var prescNo=$.trim($("#presc-no").val());
 		if(prescNo!=""){
 			alert("此处方已经生成,不可重复保存!");
 			return;
 		}
 	
 		//(2)TODO 其它的根据业务逻辑进行的有效性判定
-		
+		var drugList=getDrugList();
+		for(var i=0;i<drugList.length;i++){
+			var validObj=validDrugInDrugList(drugList[i]);
+			var drugId=drugList[i].id;
+			if(!validObj.valid){  //如果没有通过校验,将没有通过校验的输入框获取焦点
+				alert(validObj.errorMsg,1000);
+				switch(validObj.field)
+				{
+				case "dosage":
+					setFocus("#drug-dosage-"+drugId);
+					break;
+				case "doseunit":
+					setFocus("#drug-doseunit-"+drugId);
+					break;
+				case "drugtimes":
+					setFocus("#drug-times-"+drugId);
+					break;
+				case "drugmode":
+					setFocus("#drug-mode-"+drugId);
+					break;
+				case "days":
+					setFocus("#drug-days-"+drugId);
+					break;
+				case "quantity":
+					setFocus("#drug-quantity-"+drugId);
+					break;
+				default:
+				  
+				}
+				return;
+			}
+		}
 		
 		$(this).attr("disabled",true);  //防止重复提交
 		savePrescription(); // 保存处方
