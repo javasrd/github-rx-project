@@ -107,7 +107,18 @@
 	</task:scheduled-tasks> -->
  
 	<!-- 自动扫描的包名 -->
-	<context:component-scan base-package="com.rx.back.task" />
+	<!-- <context:component-scan base-package="com.rx.back.task" /> -->
+	
+	<bean id="initQuartz" class="com.rx.back.quartz.InitializeQuartz" init-method="initialize"></bean> 
+	
+	<bean id="myJobFactory" class="com.rx.service.quartz.MyJobFactory" />
+	<!-- 把org.springframework.scheduling.quartz.SchedulerFactoryBean的jobFactory设置成我们自己的 -->
+	<bean id="schedulerFactoryBean" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 其他属性省略 -->
+		<property name="jobFactory" ref="myJobFactory"></property>
+	</bean>
+	
+	<context:component-scan base-package="com.rx.service.quartz" />
 	
 	
 </beans>

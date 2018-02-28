@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rx.dao.ScheduleJobMapper" >
+  <resultMap id="BaseResultMap" type="com.rx.entity.ScheduleJob" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="job_id" property="jobId" jdbcType="BIGINT" />
+    <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+    <result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
+    <result column="job_status" property="jobStatus" jdbcType="TINYINT" />
+    <result column="cron_expression_name" property="cronExpressionName" jdbcType="VARCHAR" />
+    <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR" />
+    <result column="job_desc" property="jobDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    job_id, job_name, job_group, job_status, cron_expression_name, cron_expression, job_desc
+  </sql>
+</mapper>
