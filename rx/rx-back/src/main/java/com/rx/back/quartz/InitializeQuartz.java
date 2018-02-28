@@ -40,7 +40,16 @@ public class InitializeQuartz {
 							log.info("启动任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】失败，请手动启动！");
 						}else{
 							String initDateStr = DateFormatUtils.format(initDate, "yyyy-MM-dd HH:mm:ss");
-							log.info("==================== [ "+initDateStr+" ] "+job.getJobGroup()+" 【 "+job.getJobName()+" 】 任务已启动！");
+							log.info("==================== ["+initDateStr+"] "+job.getJobGroup()+" 【 "+job.getJobName()+" 】 任务已启动！");
+						}
+					}else if(job.getJobStatus()!=null && job.getJobStatus()==ScheduleJobStatus.JOB_PAUSE.getIndex().byteValue()){
+						log.info("正在修改已暂停任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】的状态，请等待。。。");
+						job.setJobStatus(ScheduleJobStatus.JOB_DELETE.getIndex().byteValue());
+						int rows = scheduleJobService.updateByPrimaryKeySelective(job);
+						if(rows>0){
+							log.info("==================== 任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】 的状态已修改为已停止，如需启动请在后台手动操作！");
+						}else{
+							log.info("数据库中的任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】 的状态修改失败，请在后台删除此任务重新添加！");
 						}
 					}else{
 						log.info("数据库中的任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】不需要启动！");
