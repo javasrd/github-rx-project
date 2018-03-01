@@ -49,15 +49,13 @@ function setPrescriptionTimes(times){
  * @returns
  */
 function choiceTableTheFirstTimes(){
-	var selector=".times-item";
-	var listx=$(selector);
+	var listx=getRowsByAttr("class",CURR_ROW_CLASS_NAME_TIMES_TABLE);
 	if(listx.size()>0){
-		currNode=$(selector).eq(0);
-		var timesId=currNode.attr("times-id");
+		curr=listx[0];
+		var timesId=$(curr).attr("times-id");
 		process_curr_times(timesId);
 	}
 	else{
-		
 		if($.trim($("#"+g_edit_times_id).val())!=""){
 			//当输入了次数后
 			var times=$.trim($("#"+g_edit_times_id).val());
@@ -76,4 +74,5 @@ $(function(){
 	 ***********************************/
 	//当用户双击某药品条目时,选择此药品
 	$(".times-item").on("dblclick", handler_dblclick_times);
+	addCurrRowClass(CURR_ROW_ATTR_NAME_TIMES_TABLE,1,CURR_ROW_CLASS_NAME_TIMES_TABLE);
 });

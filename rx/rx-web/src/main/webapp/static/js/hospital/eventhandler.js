@@ -83,6 +83,9 @@ function handler_keydown_abc(ev) {
 		if (getDrugWindowStatus() == WINDOW_OPENED) {
 			selectTheNextRow(CURR_ROW_CLASS_NAME_DRUG,CURR_ROW_ATTR_NAME_DRUG,CONTAINER_ID_TABLE);
 		}
+		else{
+			$("#btn-abc").trigger("click");
+		}
 		return false;
 	}
 	
@@ -130,6 +133,26 @@ function handler_keydown_times_table(ev){
 		}
 		return false;
 	}
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getTableTimesWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_TIMES_TABLE,CURR_ROW_ATTR_NAME_TIMES_TABLE,CONTAINER_ID_UNIT);
+		}
+		else{
+			var bindid=$(this).attr("bind-id");
+			$("#btn-times-"+bindid).trigger("click");	
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getTableTimesWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_TIMES_TABLE,CURR_ROW_ATTR_NAME_TIMES_TABLE,CONTAINER_ID_UNIT, 'dict-drug-times');			
+		}
+		return false;
+	}
+	
+	
 	// 用户按下了回车键
 	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
@@ -167,6 +190,27 @@ function handler_keydown_mode_table(ev){
 		}
 		return false;
 	}
+	
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getTableModeWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_MODE_TABLE,CURR_ROW_ATTR_NAME_MODE_TABLE,CONTAINER_ID_UNIT);
+		}
+		else{
+			var bindid=$(this).attr("bind-id");
+			$("#btn-mode-"+bindid).trigger("click");
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getTableModeWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_MODE_TABLE,CURR_ROW_ATTR_NAME_MODE_TABLE,CONTAINER_ID_UNIT, 'dict-drug-mode');			
+		}
+		return false;
+	}
+	
+	
 	// 用户按下了回车键
 	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
@@ -233,6 +277,26 @@ function handler_keydown_mode(ev) {
 		return false;
 
 	}
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getModeWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_MODE,CURR_ROW_ATTR_NAME_MODE,CONTAINER_ID_TABLE);
+		}
+		else{
+			$("#btn-drugmode").trigger("click");
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getModeWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_MODE,CURR_ROW_ATTR_NAME_MODE,CONTAINER_ID_TABLE, 'dict-drug-mode');			
+		}
+		return false;
+	}
+	
+	
+	
 	// 用户按下了回车键
 	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
@@ -276,6 +340,9 @@ function handler_keydown_times(ev) {
 		if (getTimesWindowStatus() == WINDOW_OPENED) {
 			selectTheNextRow(CURR_ROW_CLASS_NAME_TIMES,CURR_ROW_ATTR_NAME_TIMES,CONTAINER_ID_TABLE);
 			//alert("debug");
+		}
+		else{
+			$("#btn-drugtimes").trigger("click");
 		}
 		return false;
 	}
@@ -329,6 +396,24 @@ function handler_keydown_doseunit_table(ev) {
 		}
 		return false;
 	}
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getDoseUnitWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_DOSE_UNIT_TABLE,CURR_ROW_ATTR_NAME_DOSE_UNIT_TABLE,CONTAINER_ID_UNIT);
+		}
+		else{
+			var bindid=$(this).attr("bind-id");
+			$("#btn-doseunit-"+bindid).trigger("click");
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getDoseUnitWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_DOSE_UNIT_TABLE,CURR_ROW_ATTR_NAME_DOSE_UNIT_TABLE,CONTAINER_ID_UNIT, 'dict-drug-doseunit');			
+		}
+		return false;
+	}
 		
 	// 用户按下了回车键
 	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
@@ -372,6 +457,9 @@ function handler_keydown_doseunit(ev){
 	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
 		if (getDoseUnitInputWindowStatus() == WINDOW_OPENED) {
 			selectTheNextRow(CURR_ROW_CLASS_NAME_DOSE_UNIT,CURR_ROW_ATTR_NAME_DOSE_UNIT,CONTAINER_ID_TABLE);
+		}
+		else{
+			$( "#btn-single-dose-unit" ).trigger( "click" );
 		}
 		return false;
 	}
@@ -422,6 +510,26 @@ function handler_keydown_days(ev){
 		}
 		return false;
 	}
+	
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getDaysWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_DAYS,CURR_ROW_ATTR_NAME_DAYS,CONTAINER_ID_TABLE);
+		}
+		else{
+			$("#btn-treatment-days").trigger("click");
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getDaysWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_DAYS,CURR_ROW_ATTR_NAME_DAYS,CONTAINER_ID_TABLE, 'dict-drug-days');			
+		}
+		return false;
+	}
+	
+	
 	// 用户按下了回车键
 	// 当下拉列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
@@ -498,6 +606,26 @@ function handler_keydown_days_table(ev) {
 		}
 		return false;
 	}
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getTableDaysWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_DAYS_TABLE,CURR_ROW_ATTR_NAME_DAYS_TABLE,CONTAINER_ID_UNIT);
+		}
+		else{
+			var bindid=$(this).attr("bind-id");
+			$("#btn-days-"+bindid).trigger("click");
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getTableDaysWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_DAYS_TABLE,CURR_ROW_ATTR_NAME_DAYS_TABLE,CONTAINER_ID_UNIT, 'dict-drug-days');			
+		}
+		return false;
+	}
+	
+	
 	// 用户按下了回车键
 	// 当列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
@@ -923,19 +1051,24 @@ function handler_click_btn_cleartable(){
 
 function handler_click_btn_abc(){
 	searchDrugDropdown("","#abc");
+	setFocus("#abc");
 }
 
 function handler_click_btn_singledoseunit(){
 	searchDoseunitDropdown("","#single-dose-unit");
+	setFocus("#single-dose-unit");
 }
 function handler_click_btn_drugtimes(){
 	searchTimesDropdown("","#drugtimes");
+	setFocus("#drugtimes");
 }
 function handler_click_btn_drugmode(){
 	searchModeDropdown("","#drugmode");
+	setFocus("#drugmode");
 }
 function handler_click_btn_treatmentdays(){
 	searchDaysDropdown("","#treatment-days");
+	setFocus("#treatment-days");
 }
 function handler_click_btn_add_drug(){
 	var e = jQuery.Event("keydown");//模拟一个键盘事件 

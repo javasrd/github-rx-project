@@ -7,6 +7,9 @@
 	.dict-drug-mode tr:hover{
 		background-color:#CCFFCC;
 	}
+	.curr-row-mode-table{
+		background-color:cyan;
+	}
 </style>
 </head>
 <body>
@@ -22,7 +25,7 @@
 				</thead>
 				<tbody>				 
 					<tr th:each="mode,iterStat:${modeList}" class="mode-item" 
-						th:attr="mode-id=${mode.id}" >
+						th:attr="mode-id=${mode.id},index-mode-table=${iterStat.count}" >
 												
 						<td th:text="${iterStat.count}"></td>
 						<td th:text="${mode.name}" th:attr="id='modename-'+${mode.id}"></td>

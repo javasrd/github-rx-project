@@ -29,20 +29,20 @@ var CURR_ROW_ATTR_NAME_DAYS="index-days";
 //-----------------------处方列表--------------------
 
 //剂量单位
-var CURR_ROW_CLASS_NAME_DOSE_UNIT_TABLE="curr-row-dose-unit_table";	
-var CURR_ROW_ATTR_NAME_DOSE_UNIT_TABLE="index-dose-unit_table";
+var CURR_ROW_CLASS_NAME_DOSE_UNIT_TABLE="curr-row-dose-unit-table";	
+var CURR_ROW_ATTR_NAME_DOSE_UNIT_TABLE="index-dose-unit-table";
 
 //times
-var CURR_ROW_CLASS_NAME_TIMES_TABLE="curr-row-times_table";	
-var CURR_ROW_ATTR_NAME_TIMES_TABLE="index-times_table";
+var CURR_ROW_CLASS_NAME_TIMES_TABLE="curr-row-times-table";	
+var CURR_ROW_ATTR_NAME_TIMES_TABLE="index-times-table";
 
 //mode
-var CURR_ROW_CLASS_NAME_MODE_TABLE="curr-row-mode_table";	
-var CURR_ROW_ATTR_NAME_MODE_TABLE="index-mode_table";
+var CURR_ROW_CLASS_NAME_MODE_TABLE="curr-row-mode-table";	
+var CURR_ROW_ATTR_NAME_MODE_TABLE="index-mode-table";
 
 //days
-var CURR_ROW_CLASS_NAME_DAYS_TABLE="curr-row-days_table";	
-var CURR_ROW_ATTR_NAME_DAYS_TABLE="index-days_table";
+var CURR_ROW_CLASS_NAME_DAYS_TABLE="curr-row-days-table";	
+var CURR_ROW_ATTR_NAME_DAYS_TABLE="index-days-table";
 
 
 
