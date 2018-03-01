@@ -15,7 +15,7 @@
 <meta http-equiv="expires" content="0">
 
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<div th:include="/thymeleaf/common/head3::headx('处方录入')" th:remove="tag"></div>
+<div th:include="/thymeleaf/common/head3::headx('海典自费药房处方录入')" th:remove="tag"></div>
 <!-- <title>11</title> -->
 <!-- <script th:src="@{/static/js/jquerybarcode/2.0.3/jquery-barcode.js}" type="text/javascript" ></script> -->
 
@@ -302,6 +302,11 @@
 					<button type="button" class="btn btn-success"
 						id="btn-save-template">存为模板</button>
 					<button type="button" class="btn btn-success" id="btn-use-template">使用模板</button> -->
+					
+					<button type="button" class="btn btn-info" id="btn-search-presc"
+						style="margin-left: 100px;margin-right:0px;">查询处方</button>
+
+	
 
 					<button type="button" class="btn btn-info" id="btn-delete-row"
 						style="margin-left: 10px;">删除行</button>
