@@ -78,11 +78,27 @@ function handler_keydown_abc(ev) {
 		return false;
 
 	}
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getDrugWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_DRUG,CURR_ROW_ATTR_NAME_DRUG,CONTAINER_ID_TABLE);
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getDrugWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_DRUG,CURR_ROW_ATTR_NAME_DRUG,CONTAINER_ID_TABLE, 'drug-category');			
+		}
+		return false;
+	}
+	
+	
 	// 用户按下了回车键
 	// 当药品列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
 		if (getDrugWindowStatus() == WINDOW_OPENED) {
-			choiceTheFirstDrug();			
+			choiceTheCurrRow_drug();  //TODO 修改此代码为 choiceCurrRowDrug();			
 		}
 		else{
 			if(g_currDrug==null){
@@ -92,6 +108,8 @@ function handler_keydown_abc(ev) {
 		}
 		return false;
 	}
+	
+	
 
 }
 
@@ -252,6 +270,26 @@ function handler_keydown_times(ev) {
 		return false
 
 	}
+	
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getTimesWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_TIMES,CURR_ROW_ATTR_NAME_TIMES,CONTAINER_ID_TABLE);
+			//alert("debug");
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getTimesWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_TIMES,CURR_ROW_ATTR_NAME_TIMES,CONTAINER_ID_TABLE, 'dict-drug-times');
+			//alert("debug");
+		}
+		return false;
+	}
+	
+	
+	
 	// 用户按下了回车键
 	// 当MODE下拉列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
@@ -291,6 +329,7 @@ function handler_keydown_doseunit_table(ev) {
 		}
 		return false;
 	}
+		
 	// 用户按下了回车键
 	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {
@@ -329,6 +368,24 @@ function handler_keydown_doseunit(ev){
 		}
 		return false;
 	}
+	
+	if (oEvent.keyCode == DOWN_ARROW_CODE) {  //向下箭头
+		if (getDoseUnitInputWindowStatus() == WINDOW_OPENED) {
+			selectTheNextRow(CURR_ROW_CLASS_NAME_DOSE_UNIT,CURR_ROW_ATTR_NAME_DOSE_UNIT,CONTAINER_ID_TABLE);
+		}
+		return false;
+	}
+	
+	if (oEvent.keyCode == UP_ARROW_CODE) {  //向上箭头
+		if (getDoseUnitInputWindowStatus() == WINDOW_OPENED) {
+			selectThePreviousRow(CURR_ROW_CLASS_NAME_DOSE_UNIT,CURR_ROW_ATTR_NAME_DOSE_UNIT,CONTAINER_ID_TABLE, 'dict-drug-doseunit');			
+		}
+		return false;
+	}
+	
+	
+	
+	
 	// 用户按下了回车键
 	// 当times列表中不为空,选择第一个.如果为空时,不做任何动作.
 	if (oEvent.keyCode == 13) {

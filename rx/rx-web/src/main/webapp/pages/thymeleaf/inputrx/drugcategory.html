@@ -9,6 +9,10 @@
 	background-color:#CCFFCC;
 }
 
+.curr-row-drug{
+	background-color:cyan;
+}
+
 </style>
 </head>
 <body>
@@ -28,7 +32,7 @@
 				<tbody>				 
 					<tr title="双击选择当前记录" th:each="drug,iterStat:${drugCategory}" 
 						class="drug-item" 
-						th:attr="drug-id=${drug.id}" >
+						th:attr="drug-id=${drug.id},index-drug=${iterStat.count}" >
 						
 						<td th:text="${drug.wareid}" 	th:attr="id='wareid-'+${drug.id}"></td>
 						<td th:text="${drug.warename}" 	th:attr="id='warename-'+${drug.id}"></td>

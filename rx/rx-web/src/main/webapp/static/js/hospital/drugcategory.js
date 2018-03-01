@@ -51,18 +51,17 @@ function process_curr_drug(drugId){
  * 选择第一条记录
  * @returns
  */
-function choiceTheFirstDrug(){	
-	var listx=$(".drug-item");	
+function choiceTheCurrRow_drug(){	
+	var listx=getRowsByAttr("class",CURR_ROW_CLASS_NAME_DRUG);	
 	if(listx.size()>0){
-		var first=$(".drug-item").eq(0);
-		var drugId=first.attr("drug-id");
+		var curr=listx[0];
+		var drugId=$(curr).attr("drug-id");
 		process_curr_drug(drugId);
 	}
 	else{
 		alert("未选择药品!");
 	}
 }
-
 
 $(function(){
 	
@@ -71,4 +70,6 @@ $(function(){
 	 **************************************************************************/
 	//当用户双击某药品条目时,选择此药品
 	$(".drug-item").on("dblclick", handler_dblclick_drugcategory);
+	addCurrRowClass(CURR_ROW_ATTR_NAME_DRUG,1,CURR_ROW_CLASS_NAME_DRUG);
+		
 });

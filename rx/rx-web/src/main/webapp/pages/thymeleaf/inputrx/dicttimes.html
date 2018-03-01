@@ -7,6 +7,9 @@
 	.dict-drug-times tr:hover{
 		background-color:#CCFFCC;
 	}
+	.curr-row-times{
+		background-color:cyan;
+	}
 </style>
 </head>
 <body>
@@ -22,7 +25,7 @@
 				</thead>
 				<tbody>				 
 					<tr title="双击选择当前记录" th:each="times,iterStat:${timesList}" class="times-item" 
-						th:attr="times-id=${times.id}" >
+						th:attr="times-id=${times.id},index-times=${iterStat.count}" >
 												
 						<td th:text="${iterStat.count}"></td>
 						<td th:text="${times.name}" th:attr="id='timesname-'+${times.id}"></td>
