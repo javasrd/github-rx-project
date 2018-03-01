@@ -95,20 +95,7 @@
 	<!-- 扫描service -->
 	<context:component-scan base-package="com.rx.service" />
 	
-	<!-- 定时任务 -->
-	<task:annotation-driven /> <!-- 定时器开关-->
-
-	<bean id="syncDrugTask" class="com.rx.back.task.SyncDrugInfoTask"></bean> 
-	<!-- <task:scheduled-tasks> 
-		这里表示的是每天（00:00点）执行一次
-		<task:scheduled ref="syncDrugTask" method="everyDayTask" cron="0 0 0 * * ?" />
-		这里表示的是每分钟执行一次
-		<task:scheduled ref="syncDrugTask" method="everyMinuteTask" cron="0 */1 * * * ?" />
-	</task:scheduled-tasks> -->
- 
-	<!-- 自动扫描的包名 -->
-	<!-- <context:component-scan base-package="com.rx.back.task" /> -->
-	
+	<!-- 初始化Quartz -->
 	<bean id="initQuartz" class="com.rx.back.quartz.InitializeQuartz" init-method="initialize"></bean> 
 	
 	<bean id="myJobFactory" class="com.rx.service.quartz.MyJobFactory" />
