@@ -7,6 +7,9 @@
 	.dict-drug-days tr:hover{
 		background-color:#CCFFCC;
 	}
+	.curr-row-days-table{
+		background-color:cyan;
+	}
 </style>
 </head>
 <body>
@@ -22,7 +25,7 @@
 				</thead>
 				<tbody>				 
 					<tr title="双击选择当前记录" th:each="days,iterStat:${daysList}" class="days-item" 
-						th:attr="days-id=${days.id}" >
+						th:attr="days-id=${days.id},index-days-table=${iterStat.count}" >
 												
 						<td th:text="${iterStat.count}"></td>
 						<td th:text="${days.name}" th:attr="id='daysname-'+${days.id}"></td>

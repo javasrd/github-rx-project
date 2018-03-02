@@ -7,6 +7,10 @@
 	.dict-drug-doseunit tr:hover{
 		background-color:#CCFFCC;
 	}
+	.curr-row-dose-unit-table{
+		background-color:cyan;
+	}
+	
 </style>
 </head>
 <body>
@@ -22,7 +26,7 @@
 				</thead>
 				<tbody>				 
 					<tr title="双击选择当前记录" th:each="doseunit,iterStat:${doseUnitList}" class="doseunit-item" 
-						th:attr="doseunit-id=${doseunit.id}" >
+						th:attr="doseunit-id=${doseunit.id},index-dose-unit-table=${iterStat.count}" >
 												
 						<td th:text="${iterStat.count}"></td>
 						<td th:text="${doseunit.name}" th:attr="id='doseunitname-'+${doseunit.id}"></td>

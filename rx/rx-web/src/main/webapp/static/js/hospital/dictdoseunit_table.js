@@ -55,11 +55,10 @@ function setPrescriptionDoseunit(doseunit){
  * @returns
  */
 function choiceTheFirstDoseUnit(){
-	var selector=".doseunit-item";
-	var listx=$(selector);
+	var listx=getRowsByAttr("class",CURR_ROW_CLASS_NAME_DOSE_UNIT_TABLE);
 	if(listx.size()>0){
-		currNode=$(selector).eq(0);
-		var doseunitId=currNode.attr("doseunit-id");  //列表中元素的ID
+		curr=listx[0];
+		var doseunitId=$(curr).attr("doseunit-id");  //列表中元素的ID
 		process_curr_doseunit(doseunitId);
 	}
 	else{
@@ -83,4 +82,5 @@ $(function(){
 	 ****************************************/
 	//当用户双击某药品条目时,选择此药品
 	$(".doseunit-item").on("dblclick", handler_dblclick_doseunit);
+	addCurrRowClass(CURR_ROW_ATTR_NAME_DOSE_UNIT_TABLE,1,CURR_ROW_CLASS_NAME_DOSE_UNIT_TABLE);
 });

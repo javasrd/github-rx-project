@@ -35,11 +35,10 @@ function process_curr_times(timesId){
  * @returns
  */
 function choiceTheFirstTimes(){
-	var selector=".times-item";
-	var listx=$(selector);
+	var listx=getRowsByAttr("class",CURR_ROW_CLASS_NAME_TIMES);	
 	if(listx.size()>0){
-		currNode=$(selector).eq(0);
-		var timesId=currNode.attr("times-id");
+		curr=listx[0]
+		var timesId=$(curr).attr("times-id");
 		process_curr_times(timesId);
 	}
 	else{
@@ -63,4 +62,7 @@ $(function(){
 	 ***********************************/
 	//当用户双击某药品条目时,选择此药品
 	$(".times-item").on("dblclick", handler_dblclick_times);
+	//alert("loaded");
+	addCurrRowClass(CURR_ROW_ATTR_NAME_TIMES,1,CURR_ROW_CLASS_NAME_TIMES);
 });
+

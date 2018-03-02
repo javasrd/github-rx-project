@@ -34,11 +34,10 @@ function process_curr_mode(modeId){
  * @returns
  */
 function choiceTheFirstMode(){
-	var selector=".mode-item";
-	var listx=$(selector);
+	var listx=getRowsByAttr("class",CURR_ROW_CLASS_NAME_MODE);	
 	if(listx.size()>0){		
-		var currNode=$(selector).eq(0);
-		var modeId=currNode.attr("mode-id");
+		var curr=listx[0];
+		var modeId=$(curr).attr("mode-id");
 		process_curr_mode(modeId);
 	}
 	else{
@@ -61,4 +60,5 @@ $(function(){
 	 *************************/
 	//当用户双击某药品条目时,选择此药品
 	$(".mode-item").on("dblclick", handler_dblclick_mode);
+	addCurrRowClass(CURR_ROW_ATTR_NAME_MODE,1,CURR_ROW_CLASS_NAME_MODE);
 });

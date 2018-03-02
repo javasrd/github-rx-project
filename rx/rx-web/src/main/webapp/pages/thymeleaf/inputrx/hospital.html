@@ -15,7 +15,7 @@
 <meta http-equiv="expires" content="0">
 
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<div th:include="/thymeleaf/common/head3::headx('处方录入')" th:remove="tag"></div>
+<div th:include="/thymeleaf/common/head3::headx('海典自费药房处方录入')" th:remove="tag"></div>
 <!-- <title>11</title> -->
 <!-- <script th:src="@{/static/js/jquerybarcode/2.0.3/jquery-barcode.js}" type="text/javascript" ></script> -->
 
@@ -314,6 +314,9 @@
 
 					<button type="button" class="btn btn-info"
 						id="btn-save-prescription">确定</button>
+						
+					<button type="button" class="btn btn-info"
+						id="btn-search-prescription">查询处方</button>
 
 					<!-- 打印预览所绑定的按钮 -->
 					<button type="button" class="btn btn-info hide"
@@ -393,6 +396,9 @@
 
 	<script type="text/javascript">
 		
+		$("#btn-search-prescription").click(function(){
+			window.open(BASE_CONTEXT_PATH+"/search/presc-item?doctorId=3&patientId=4&pagehelperFun=clickPageBtnRequestFun");
+		});
 	</script>
 
 

@@ -31,11 +31,10 @@ function process_curr_days(daysId){
  * @returns
  */
 function choiceTheFirstDays(){
-	var selector=".days-item";
-	var listx=$(selector);
+	var listx=getRowsByAttr("class",CURR_ROW_CLASS_NAME_DAYS);	
 	if(listx.size()>0){
-		currNode=$(selector).eq(0);
-		var daysId=currNode.attr("days-id");
+		curr=listx[0]
+		var daysId=$(curr).attr("days-id");
 		process_curr_days(daysId);
 	}
 	else{
@@ -59,4 +58,5 @@ $(function(){
 	 ***********************************/
 	//当用户双击某药品条目时,选择此药品
 	$(".days-item").on("dblclick", handler_dblclick_days);
+	addCurrRowClass(CURR_ROW_ATTR_NAME_DAYS,1,CURR_ROW_CLASS_NAME_DAYS);
 });

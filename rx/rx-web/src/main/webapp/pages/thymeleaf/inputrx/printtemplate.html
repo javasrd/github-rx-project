@@ -40,7 +40,7 @@
       <div class="left_info">
         <div class="department_info">
           <p>处方编号<span th:text="${prescNo}">O2018010100001</span></p>
-          <p>登记号<span th:text="${patient.crNo}">1234567890</span></p>
+          <p>登记号<span th:text="${patient.rn}">1234567890</span></p>
           <p>取药科室<span th:text="${dispensary.name}">门诊西药房</span></p>
           <p>科别<span th:text="${department.name}">门诊耳鼻喉科</span></p>
           <p><span th:text="${#calendars.format(diagnosisDate,'yyyy年MM月dd日')}">2018年12月28日</span></p>
