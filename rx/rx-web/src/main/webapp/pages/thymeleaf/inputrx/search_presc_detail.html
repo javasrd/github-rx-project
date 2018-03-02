@@ -41,7 +41,7 @@
 		<h3>处方药品</h3>
 		<p style="padding-left: 50px;">
 			<b>处方编号：</b><span th:text="${presc.rxNo}" style="padding-right: 20px">处方编号</span>
-			<b>处方创建时间：</b><span th:text="${presc.createdTime}" style="padding-right: 20px">处方创建时间</span>
+			<b>处方创建时间：</b><span th:text="${#calendars.format(presc.createdTime,'yyyy-MM-dd HH:MM:ss')}" style="padding-right: 20px">处方创建时间</span>
 			
 		</p>
 	</div>
