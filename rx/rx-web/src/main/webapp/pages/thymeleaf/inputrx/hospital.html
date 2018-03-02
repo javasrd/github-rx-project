@@ -249,7 +249,7 @@
 				<div class="table-responsive">
 					<div id="drugForm" class="table-body"
 						onscroll="Common.hideDropdownUnit()">
-						<div class="dropdown-unit" id="dropdown-unit-1" style="z-index: 99;">
+						<div class="dropdown-unit" style="z-index: 99;">
 							<table>
 								<thead>
 									<tr>
@@ -302,11 +302,6 @@
 					<button type="button" class="btn btn-success"
 						id="btn-save-template">存为模板</button>
 					<button type="button" class="btn btn-success" id="btn-use-template">使用模板</button> -->
-					
-					<button type="button" class="btn btn-info" id="btn-search-presc"
-						style="margin-left: 100px;margin-right:0px;">查询处方</button>
-
-	
 
 					<button type="button" class="btn btn-info" id="btn-delete-row"
 						style="margin-left: 10px;">删除行</button>
@@ -319,6 +314,9 @@
 
 					<button type="button" class="btn btn-info"
 						id="btn-save-prescription">确定</button>
+						
+					<button type="button" class="btn btn-info"
+						id="btn-search-prescription">查询处方</button>
 
 					<!-- 打印预览所绑定的按钮 -->
 					<button type="button" class="btn btn-info hide"
@@ -379,9 +377,6 @@
 	<!-- IE浏览器兼容性 JSON对象 -->
 	<script th:src="@{/static/js/json2/json2.js}" type="text/javascript"></script>
 
-	<script th:src="@{/static/js/hospital/updownarrow.js}"
-		type="text/javascript"></script>
-		
 	<script th:src="@{/static/js/hospital/hospital.js}"
 		type="text/javascript"></script>
 	<script th:src="@{/static/js/hospital/rxcommon.js}"
@@ -401,6 +396,9 @@
 
 	<script type="text/javascript">
 		
+		$("#btn-search-prescription").click(function(){
+			window.open(BASE_CONTEXT_PATH+"/search/presc-item?doctorId=3&patientId=4&pagehelperFun=clickPageBtnRequestFun");
+		});
 	</script>
 
 
