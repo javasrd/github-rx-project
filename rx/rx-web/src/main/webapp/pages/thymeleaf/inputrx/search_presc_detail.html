@@ -14,7 +14,12 @@
 			<span> 
 				<input type="hidden" id="patient-id" th:value="${patient.id}" /><!-- 患者ID -->
 				<b>姓名：</b><span th:text="${patient.name}" style="padding-right: 20px">姓名</span>
-				<b>性别：</b><span th:text="${patient.sex}" style="padding-right: 20px">性别</span>
+				<span th:if="${patient.sex==1}">
+					<b>性别：</b><span th:text="男" style="padding-right: 20px">性别</span>
+				</span>
+				<span th:if="${patient.sex==2}">
+					<b>性别：</b><span th:text="女" style="padding-right: 20px">性别</span>
+				</span>
 				<b>年龄：</b><span th:text="${patient.old}" style="padding-right: 20px">年龄</span>
 				<b>病历号：</b><span id="patient-crno" th:text="${patient.crNo}" style="padding-right: 20px">病历号</span>
 				<b>登记号：</b><span th:text="${patient.rn}" style="padding-right: 20px">登记号</span>
