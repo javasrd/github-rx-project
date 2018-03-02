@@ -3,6 +3,7 @@ package com.rx.service.impl.back;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -18,6 +19,8 @@ import tk.mybatis.mapper.entity.Example;
 @Service("drugServiceBean")
 public class DrugServiceImpl extends AbstractBaseService<Drug, Long> implements IDrugService {
 
+	private final Logger log = Logger.getLogger(getClass());
+	
 	private DrugMapper drugMapper;
 
 	/**
@@ -43,12 +46,12 @@ public class DrugServiceImpl extends AbstractBaseService<Drug, Long> implements 
 	public int insertListSelective(List<Drug> drugList) {
 		int rows = 0;
 		rows = drugMapper.truncateAll();
-		System.out.println("清空药品信息表，删除数据条数："+rows);
+		log.info("清空药品信息表");
 		for(int i=0; i<drugList.size(); i++){
 			Drug temp = drugList.get(i);
 			rows = drugMapper.insertSelective(temp);
 			if(rows<=0){
-				System.out.println("保存内容到数据库异常，异常数据："+temp);
+				log.error("保存内容到数据库异常，异常数据："+temp);
 				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			}
 		}

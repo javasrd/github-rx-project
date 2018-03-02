@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rx.back.commons.StaticConstants;
+import com.rx.back.quartz.ScheduleJobBean;
 import com.rx.bean.PageBean;
 import com.rx.bean.ScheduleJobStatus;
 import com.rx.bean.UserBean;
@@ -45,6 +47,9 @@ public class QuartzController {
 
 	@Resource(name = "scheduleJobServiceBean")
 	private IScheduleJobService scheduleJobService;
+	
+	@Autowired
+	private ScheduleJobBean scheduleJobBean;
 
 	@Resource(name="jobCronExpressionServiceBean")
 	private IJobCronExpressionService jobCronExpressionService;
@@ -126,7 +131,7 @@ public class QuartzController {
 				
 				job.setJobGroup(QuartzJobStaticConstants.QUARTZ_JOB_GROUP_NAME);//默认作业调度任务的分组名称
 
-				Date resDate = scheduleJobService.updateJob(job);
+				Date resDate = scheduleJobBean.updateJob(job);
 				System.out.println("创建或更新任务时间：" + resDate);
 				if (resDate != null) {
 					// 把任务插入数据库
@@ -164,7 +169,7 @@ public class QuartzController {
 
 			if (job!=null) {
 
-				Date resDate = scheduleJobService.updateJob(job);
+				Date resDate = scheduleJobBean.updateJob(job);
 				System.out.println("创建或更新任务时间：" + resDate);
 				if (resDate != null) {
 					// 更新数据库中的任务
@@ -204,7 +209,7 @@ public class QuartzController {
 		if (job != null) {
 			try {
 				//启动任务
-				scheduleJobService.updateJob(job);
+				scheduleJobBean.updateJob(job);
 				//修改任务状态
 				job.setJobStatus((byte)ScheduleJobStatus.JOB_ING.getIndex().intValue());
 				scheduleJobService.updateByPrimaryKeySelective(job);
@@ -232,7 +237,7 @@ public class QuartzController {
 
 		if (job != null) {
 			try {
-				scheduleJobService.pauseJob(job);
+				scheduleJobBean.pauseJob(job);
 				//修改任务状态
 				job.setJobStatus((byte)ScheduleJobStatus.JOB_PAUSE.getIndex().intValue());
 				scheduleJobService.updateByPrimaryKeySelective(job);
@@ -260,7 +265,7 @@ public class QuartzController {
 
 		if (job != null) {
 			try {
-				scheduleJobService.resumeJob(job);
+				scheduleJobBean.resumeJob(job);
 				//修改任务状态
 				job.setJobStatus((byte)ScheduleJobStatus.JOB_ING.getIndex().intValue());
 				scheduleJobService.updateByPrimaryKeySelective(job);
@@ -288,7 +293,7 @@ public class QuartzController {
 
 		if (job != null) {
 			try {
-				boolean flag = scheduleJobService.deleteJob(job);
+				boolean flag = scheduleJobBean.deleteJob(job);
 				if (flag) {
 					//修改任务状态
 					job.setJobStatus((byte)ScheduleJobStatus.JOB_DELETE.getIndex().intValue());
@@ -319,7 +324,7 @@ public class QuartzController {
 
 		if (job != null) {
 			try {
-				boolean flag = scheduleJobService.deleteJob(job);
+				boolean flag = scheduleJobBean.deleteJob(job);
 				if (flag) {
 					int rows = scheduleJobService.deleteByPrimaryKey(id);
 					if (rows > 0) {

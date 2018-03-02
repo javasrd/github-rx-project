@@ -1,4 +1,4 @@
-package com.rx.service.quartz;
+package com.rx.back.quartz;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.factory.annotation.Autowired;

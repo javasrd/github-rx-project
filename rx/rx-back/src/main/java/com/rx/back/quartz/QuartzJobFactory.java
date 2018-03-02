@@ -1,21 +1,15 @@
-package com.rx.service.quartz;
+package com.rx.back.quartz;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
-import org.aspectj.lang.annotation.Before;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -66,7 +60,7 @@ public class QuartzJobFactory implements Job {
 			if(job==null){
 				logger.info("任务对象为空");
 			}else{
-				logger.info("任务成功运行"+DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss") +"　任务分组和名称："+job.getJobGroup()+"【"+job.getJobName()+"】 任务执行时间："+job.getCronExpressionName());
+				logger.info("任务成功运行　任务分组和名称："+job.getJobGroup()+"【"+job.getJobName()+"】 任务执行时间："+job.getCronExpressionName());
 				// 根据name 与 group组成的唯一标识来判别该执行何种操作……
 				if(job.getJobGroup().equalsIgnoreCase(QuartzJobStaticConstants.QUARTZ_JOB_GROUP_NAME) && job.getJobName().equalsIgnoreCase(QuartzJobStaticConstants.QUARTZ_JOB_NAME_EVERY_MINUTE)){
 					//每分钟执行
@@ -89,18 +83,18 @@ public class QuartzJobFactory implements Job {
 	 * 每天（00:00点）定时任务
 	 */
 	private void everyDayTask(){
-		System.out.println("================================ 每天（00：00）定时任务 同步药品信息 开始 ================================");
+		logger.info("================================ 每天（00：00）定时任务 同步药品信息 开始 ================================");
 		
 		this.task();
 		
-		System.out.println("================================ 每天（00：00）定时任务 同步药品信息 结束 ================================");
+		logger.info("================================ 每天（00：00）定时任务 同步药品信息 结束 ================================");
 	}
 	
 	/**
 	 * 每分钟定时任务
 	 */
 	private void everyMinuteTask(){
-		System.out.println("================================ 每分钟定时任务 同步药品信息 开始 ================================");
+		logger.info("================================ 每分钟定时任务 同步药品信息 开始 ================================");
 		
 		Example example = new Example(LogSyncDrug.class);
 		example.setOrderByClause("created_date DESC, id DESC");
@@ -109,12 +103,14 @@ public class QuartzJobFactory implements Job {
 			LogSyncDrug log = logList.get(0);
 			if(log==null || log.getStatus()==null || log.getStatus()!=SyncDrugLogStatus.SUCCESS.getIndex()){
 				this.task();
+			}else{
+				logger.info("未发现同步药品信息失败的日志，不需要再次同步。");
 			}
 		}else{
 			this.task();
 		}
 		
-		System.out.println("================================ 每分钟定时任务 同步药品信息 结束 ================================");
+		logger.info("================================ 每分钟定时任务 同步药品信息 结束 ================================");
 	}
 	
 	/**
@@ -125,17 +121,15 @@ public class QuartzJobFactory implements Job {
 			
 			String url = dictCommonService.getUrl(DictCommonCodeUtil.SYNC_DRUG_URL_CODE);
 			if(StringUtils.isBlank(url)){
-				System.out.println("================================ 获取同步药品信息URL失败 定时任务结束 ================================");
+				logger.info("================================ 获取同步药品信息URL失败 定时任务结束 ================================");
 				return;
 			}
 			
 			Map<String, Object> resMap = SyncDrugInfoUtil.processSyncDrug(url);
 			String result_code = resMap.get(RequestResultUtil.RESULT_CODE).toString();
 			String logJSON = resMap.get(RequestResultUtil.RESULT_LOG).toString();
-			System.out.println("logJSON:"+logJSON);
 			if(result_code.equals(RequestResultUtil.RESULT_CODE_SUCCESS)){
 				String drugInfoJSON = resMap.get(RequestResultUtil.RESULT_DATA).toString();
-				System.out.println("drugInfoJSON:"+drugInfoJSON);
 				while(true){
 					try {//解析JSON并保存内容
 						if(StringUtils.isNotBlank(drugInfoJSON)){
@@ -143,12 +137,12 @@ public class QuartzJobFactory implements Job {
 							if(drugList!=null && drugList.size()>0){
 								int rows = drugService.insertListSelective(drugList);
 								if (rows > 0) {
-									System.out.println("保存数据库成功");
+									logger.info("保存药品信息到数据库成功，同步["+drugList.size()+"]条药品信息。");
 									LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
 									logSyncDrugService.insertSelective(log);
 									break;
 								} else {
-									System.out.println("保存数据库异常，正在重新保存。。。");
+									logger.error("保存数据库异常，正在重新保存。。。");
 									continue;
 								}
 							}else{

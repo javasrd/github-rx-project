@@ -7,17 +7,18 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.rx.bean.ScheduleJobStatus;
 import com.rx.entity.ScheduleJob;
 import com.rx.service.back.IScheduleJobService;
 
-@Component
 public class InitializeQuartz {
 
 	private final Logger log = Logger.getLogger(getClass());
 	
+	@Autowired
+	private ScheduleJobBean scheduleJobBean;
 	@Resource(name = "scheduleJobServiceBean")
 	private IScheduleJobService scheduleJobService;
 	
@@ -35,7 +36,7 @@ public class InitializeQuartz {
 					log.info("数据库中的任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】 的状态："+ScheduleJobStatus.getValue(job.getJobStatus()));
 					if(job.getJobStatus()!=null && job.getJobStatus()==ScheduleJobStatus.JOB_ING.getIndex().byteValue()){
 						log.info("正在启动任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】，请等待...");
-						Date initDate = scheduleJobService.updateJob(job);
+						Date initDate = scheduleJobBean.updateJob(job);
 						if(initDate==null){
 							log.info("启动任务 "+job.getJobGroup()+" 【 "+job.getJobName()+" 】失败，请手动启动！");
 						}else{

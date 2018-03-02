@@ -93,12 +93,4 @@
     <bean id="springStartListener" class="com.rx.service.queuerx.MyApplicationListener"></bean>
 	<bean id="dBThread" class="com.rx.service.queuerx.DBThread"></bean>
 	
-	<!-- 创建myJobFactory和schedulerFactoryBean两个bean，rx-web项目中未用到，但因为service是和rx-back项目共享的，所以需要创建 -->
-	<bean id="myJobFactory" class="com.rx.service.quartz.MyJobFactory" />
-	<!-- 把org.springframework.scheduling.quartz.SchedulerFactoryBean的jobFactory设置成我们自己的 -->
-	<bean id="schedulerFactoryBean" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<!-- 其他属性省略 -->
-		<property name="jobFactory" ref="myJobFactory"></property>
-	</bean>
-	
 </beans>

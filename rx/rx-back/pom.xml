@@ -36,6 +36,11 @@
 			<artifactId>rx-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.rx.dao</groupId>
+			<artifactId>rx-dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>rx-back</finalName>

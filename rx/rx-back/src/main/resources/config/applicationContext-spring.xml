@@ -98,14 +98,14 @@
 	<!-- 初始化Quartz -->
 	<bean id="initQuartz" class="com.rx.back.quartz.InitializeQuartz" init-method="initialize"></bean> 
 	
-	<bean id="myJobFactory" class="com.rx.service.quartz.MyJobFactory" />
+	<bean id="myJobFactory" class="com.rx.back.quartz.MyJobFactory" />
 	<!-- 把org.springframework.scheduling.quartz.SchedulerFactoryBean的jobFactory设置成我们自己的 -->
 	<bean id="schedulerFactoryBean" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<!-- 其他属性省略 -->
 		<property name="jobFactory" ref="myJobFactory"></property>
 	</bean>
 	
-	<context:component-scan base-package="com.rx.service.quartz" />
+	<context:component-scan base-package="com.rx.back.quartz" />
 	
 	
 </beans>
