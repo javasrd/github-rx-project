@@ -1,5 +1,8 @@
 package com.rx.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.rx.entity.Prescription;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -17,4 +20,12 @@ public interface PrescriptionMapper extends Mapper<Prescription> {
 	 * @date 2018年1月29日-下午6:32:58
 	 */
 	public String getMaxPrescriptionNo(String dateCond);
+	
+	/**
+	 * 根据Map中的条件信息查询
+	 * @param condition
+	 * @return
+	 */
+	public List<Map<String, Object>> getPrescInfoByCondition(Map<String, Object> condition);
+	
 }

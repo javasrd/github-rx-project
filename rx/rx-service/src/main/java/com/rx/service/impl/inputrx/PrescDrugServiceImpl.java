@@ -1,6 +1,8 @@
 package com.rx.service.impl.inputrx;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -75,6 +77,11 @@ public class PrescDrugServiceImpl extends AbstractBaseService<PrescDrug, Long> i
 			return rec.getId();
 		else
 			return 0;
+	}
+
+	@Override
+	public List<Map<String, Object>> getByPrescId(Long presc_id) {
+		return prescDrugMapper.getByPrescId(presc_id);
 	}
 
 }

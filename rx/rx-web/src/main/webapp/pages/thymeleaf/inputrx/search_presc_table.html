@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<th:block th:fragment="headx(title)">
+<meta charset="UTF-8">
+<meta name="context-path" th:content="@{/}" />
+<meta  HTTP-EQUIV="nocache"   CONTENT="no-cache">
+<div class="table-head">
+	<table class="table table-default">
+		<thead>
+			<tr>
+				<th sytle="width:110px;"><label for="check-select-all"><input
+						id="check-select-all" type="checkbox">&nbsp;全选</label></th>
+				<th sytle="width:200px;">处方ID</th>
+				<th sytle="width:200px;">处方编码</th>
+				<th sytle="width:200px;">患者姓名</th>
+				<th sytle="width:200px;">处方创建时间</th>
+				<th sytle="width:200px;">操作</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+<div class="table-responsive">
+	<div id="drugForm" class="table-body">
+		<table
+			class="drug-list table table-striped table-bordered table-default">
+			<tbody id="drug-items1">
+				<tr th:each="presc,iterStat:${pagehelper.list}">
+					<td sytle="width:200px;"><input type="checkbox" value="${presc.presc_idid}"></td>
+					<td sytle="width:200px;" th:text="${presc.presc_id}">处方ID</td>
+					<td sytle="width:200px;" th:text="${presc.rx_no}">处方编码</td>
+					<td sytle="width:200px;" th:text="${presc.name}">患者姓名</td>
+					<td sytle="width:200px;" th:text="${#calendars.format(presc.created_time,'yyyy-MM-dd HH:MM:ss')}">处方创建时间</td>
+					<td>
+						<button type="button" class="btn btn-info" th:attr="onclick='javascript:selectPrescDetailFun('+${presc.presc_id}+');'">详情</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!-- 分页部分 -->
+<div th:include="/thymeleaf/common/pagehelper::headx('分页')" th:remove="tag"></div>
+<script>
+
+</script>
+</th:block>

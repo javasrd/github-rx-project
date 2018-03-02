@@ -23,5 +23,35 @@
 		CONCAT('%',#{dateCond},'%' )
   </select>
   
+  <!-- 根据条件查询处方信息 -->
+  <select id="getPrescInfoByCondition" resultType="map" parameterType="map">
+		SELECT
+			pr.id AS presc_id,
+			pr.doctor_id,
+			pa.id AS patient_id,
+			pr.created_time,
+			pr.rx_no,
+			pa.old_id,
+			pa.`name`,
+			pa.sex,
+			pa.old,
+			pa.rn
+		FROM
+			prescription pr
+		LEFT JOIN patient pa ON pr.patient_id = pa.id
+			
+		<where>
+			doctor_id = #{doctorId}
+			<if test="keyword!=null and keyword!=''">
+	            and (pr.rx_no LIKE CONCAT("%",#{keyword},"%") or pa.`name` LIKE CONCAT("%",#{keyword},"%"))
+	        </if>
+	        <if test="startTime!=null and startTime!=''">
+	            and pr.created_time &gt;= #{startTime}
+	        </if>
+	        <if test="endTime!=null and endTime!=''">
+	            and pr.created_time &lt; #{endTime}
+	        </if>
+		</where>	
+  </select>
   
 </mapper>

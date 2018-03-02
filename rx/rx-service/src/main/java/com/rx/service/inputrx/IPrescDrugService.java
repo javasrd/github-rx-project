@@ -1,5 +1,8 @@
 package com.rx.service.inputrx;
 
+import java.util.List;
+import java.util.Map;
+
 import com.rx.entity.Drug;
 import com.rx.entity.PrescDrug;
 import com.rx.service.IBaseService;
@@ -41,5 +44,12 @@ public interface IPrescDrugService extends IBaseService<PrescDrug, Long> {
 	 * @date 2018年1月23日-上午5:45:25
 	 */
 	public long addPrescDrug(long presc_id,Drug drug,int quantity);
+	
+	/**
+	 * 根据处方ID查询处方药品
+	 * @param presc_id
+	 * @return
+	 */
+	public List<Map<String, Object>> getByPrescId(Long presc_id);
 		
 }

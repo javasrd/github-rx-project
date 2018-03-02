@@ -2,6 +2,9 @@ package com.rx.service.impl.inputrx;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -82,6 +85,16 @@ public class PrescriptionServiceImpl extends AbstractBaseService<Prescription, L
 		}
 		
 		return prescNo;		
+	}
+
+	@Override
+	public List<Map<String, Object>> getPrescInfoByCondition(Long doctorId, String keyword, String startTime, String endTime) {
+		Map<String, Object> condition = new HashMap<String, Object>();
+		condition.put("doctorId", doctorId);
+		condition.put("keyword", keyword);
+		condition.put("startTime", startTime);
+		condition.put("endTime", endTime);
+		return prescriptionMapper.getPrescInfoByCondition(condition);
 	}
 
 }

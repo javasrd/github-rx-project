@@ -27,4 +27,17 @@
     id, presc_id, drug_id, quantity, wareid, barcode, warename, waresimname, warespec, 
     prod_addr, producer, wareunit, saleprice, created_time
   </sql>
+  
+  <!-- 根据处方ID查询处方药品信息和处方相关信息 -->
+  <select id="getByPrescId" resultType="map">
+		SELECT 
+			pd.*, d.`mode` AS drugmode, d.times AS drugtimes, d.dosage, d.doseunit, d.days 
+		FROM 
+			presc_drug pd LEFT JOIN direction d 
+		ON 
+			pd.id=d.presc_drug_id 
+		WHERE 
+			pd.presc_id=#{prescId}
+  </select>
+  
 </mapper>

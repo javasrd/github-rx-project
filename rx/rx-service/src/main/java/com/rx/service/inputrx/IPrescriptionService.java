@@ -1,5 +1,8 @@
 package com.rx.service.inputrx;
 
+import java.util.List;
+import java.util.Map;
+
 import com.rx.entity.Prescription;
 import com.rx.service.IBaseService;
 
@@ -38,4 +41,15 @@ public interface IPrescriptionService extends IBaseService<Prescription, Long> {
 	 * @date 2018年1月29日-下午6:08:53
 	 */
 	public String createPrescriptionNo();
+	
+	/**
+	 * 根据条件信息查询
+	 * @param doctorId
+	 * @param keyword（处方编码和患者姓名）
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
+	public List<Map<String, Object>> getPrescInfoByCondition(Long doctorId, String keyword, String startTime, String endTime);
+	
 }
