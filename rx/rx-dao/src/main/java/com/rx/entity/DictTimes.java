@@ -17,9 +17,14 @@ public class DictTimes {
     private String code;
 
     /**
-     * 给药次数名称
+     * 给药次数名称:1次/日，2次/日或qd: 1次/日，bid: 2次/日等
      */
     private String name;
+
+    /**
+     * 数值:2/1（2次/天），用药次数/天数
+     */
+    private String value;
 
     /**
      * 获取自增ID
@@ -58,21 +63,39 @@ public class DictTimes {
     }
 
     /**
-     * 获取给药次数名称
+     * 获取给药次数名称:1次/日，2次/日或qd: 1次/日，bid: 2次/日等
      *
-     * @return name - 给药次数名称
+     * @return name - 给药次数名称:1次/日，2次/日或qd: 1次/日，bid: 2次/日等
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 设置给药次数名称
+     * 设置给药次数名称:1次/日，2次/日或qd: 1次/日，bid: 2次/日等
      *
-     * @param name 给药次数名称
+     * @param name 给药次数名称:1次/日，2次/日或qd: 1次/日，bid: 2次/日等
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    /**
+     * 获取数值:2/1（2次/天），用药次数/天数
+     *
+     * @return value - 数值:2/1（2次/天），用药次数/天数
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * 设置数值:2/1（2次/天），用药次数/天数
+     *
+     * @param value 数值:2/1（2次/天），用药次数/天数
+     */
+    public void setValue(String value) {
+        this.value = value == null ? null : value.trim();
     }
 
     @Override
@@ -84,6 +107,7 @@ public class DictTimes {
         sb.append(", id=").append(id);
         sb.append(", code=").append(code);
         sb.append(", name=").append(name);
+        sb.append(", value=").append(value);
         sb.append("]");
         return sb.toString();
     }

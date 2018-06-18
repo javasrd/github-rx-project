@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rx.dao.rxKnowledgeBaseRawMapper" >
+  <resultMap id="BaseResultMap" type="com.rx.entity.rxKnowledgeBaseRaw" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="acb" property="acb" jdbcType="VARCHAR" />
+    <result column="warename" property="warename" jdbcType="VARCHAR" />
+    <result column="waresimname" property="waresimname" jdbcType="VARCHAR" />
+    <result column="warespec" property="warespec" jdbcType="VARCHAR" />
+    <result column="prod_addr" property="prodAddr" jdbcType="VARCHAR" />
+    <result column="producer" property="producer" jdbcType="VARCHAR" />
+    <result column="wareuint" property="wareuint" jdbcType="VARCHAR" />
+    <result column="dosage" property="dosage" jdbcType="DECIMAL" />
+    <result column="doseunit" property="doseunit" jdbcType="VARCHAR" />
+    <result column="times" property="times" jdbcType="VARCHAR" />
+    <result column="mode" property="mode" jdbcType="VARCHAR" />
+    <result column="days" property="days" jdbcType="INTEGER" />
+    <result column="saleminspec" property="saleminspec" jdbcType="VARCHAR" />
+    <result column="saleminunit" property="saleminunit" jdbcType="VARCHAR" />
+    <result column="saleminprice" property="saleminprice" jdbcType="DECIMAL" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="old" property="old" jdbcType="INTEGER" />
+    <result column="diseae" property="diseae" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, acb, warename, waresimname, warespec, prod_addr, producer, wareuint, dosage, 
+    doseunit, times, mode, days, saleminspec, saleminunit, saleminprice, count, sex, 
+    old, diseae
+  </sql>
+</mapper>

@@ -73,6 +73,41 @@ public class Drug {
     private Integer inventory;
 
     /**
+     * 剂量
+     */
+    private String jl;
+
+    /**
+     * 疗程
+     */
+    private String lc;
+
+    /**
+     * 频次
+     */
+    private String pc;
+
+    /**
+     * 用法用量
+     */
+    private String yfyl;
+
+    /**
+     * 选项(最小剂量单位药品的单价)
+     */
+    private BigDecimal xuanx;
+
+    /**
+     * 最小可出售包装规格
+     */
+    private String saleminspec;
+
+    /**
+     * 最小可出售包装剂量单位
+     */
+    private String saleminunit;
+
+    /**
      * 获取自增主键
      *
      * @return id - 自增主键
@@ -306,6 +341,132 @@ public class Drug {
         this.inventory = inventory;
     }
 
+    /**
+     * 获取剂量
+     *
+     * @return jl - 剂量
+     */
+    public String getJl() {
+        return jl;
+    }
+
+    /**
+     * 设置剂量
+     *
+     * @param jl 剂量
+     */
+    public void setJl(String jl) {
+        this.jl = jl == null ? null : jl.trim();
+    }
+
+    /**
+     * 获取疗程
+     *
+     * @return lc - 疗程
+     */
+    public String getLc() {
+        return lc;
+    }
+
+    /**
+     * 设置疗程
+     *
+     * @param lc 疗程
+     */
+    public void setLc(String lc) {
+        this.lc = lc == null ? null : lc.trim();
+    }
+
+    /**
+     * 获取频次
+     *
+     * @return pc - 频次
+     */
+    public String getPc() {
+        return pc;
+    }
+
+    /**
+     * 设置频次
+     *
+     * @param pc 频次
+     */
+    public void setPc(String pc) {
+        this.pc = pc == null ? null : pc.trim();
+    }
+
+    /**
+     * 获取用法用量
+     *
+     * @return yfyl - 用法用量
+     */
+    public String getYfyl() {
+        return yfyl;
+    }
+
+    /**
+     * 设置用法用量
+     *
+     * @param yfyl 用法用量
+     */
+    public void setYfyl(String yfyl) {
+        this.yfyl = yfyl == null ? null : yfyl.trim();
+    }
+
+    /**
+     * 获取选项(最小剂量单位药品的单价)
+     *
+     * @return xuanx - 选项(最小剂量单位药品的单价)
+     */
+    public BigDecimal getXuanx() {
+        return xuanx;
+    }
+
+    /**
+     * 设置选项(最小剂量单位药品的单价)
+     *
+     * @param xuanx 选项(最小剂量单位药品的单价)
+     */
+    public void setXuanx(BigDecimal xuanx) {
+        this.xuanx = xuanx;
+    }
+
+    /**
+     * 获取最小可出售包装规格
+     *
+     * @return saleminspec - 最小可出售包装规格
+     */
+    public String getSaleminspec() {
+        return saleminspec;
+    }
+
+    /**
+     * 设置最小可出售包装规格
+     *
+     * @param saleminspec 最小可出售包装规格
+     */
+    public void setSaleminspec(String saleminspec) {
+        this.saleminspec = saleminspec == null ? null : saleminspec.trim();
+    }
+
+    /**
+     * 获取最小可出售包装剂量单位
+     *
+     * @return saleminunit - 最小可出售包装剂量单位
+     */
+    public String getSaleminunit() {
+        return saleminunit;
+    }
+
+    /**
+     * 设置最小可出售包装剂量单位
+     *
+     * @param saleminunit 最小可出售包装剂量单位
+     */
+    public void setSaleminunit(String saleminunit) {
+        this.saleminunit = saleminunit == null ? null : saleminunit.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -325,6 +486,13 @@ public class Drug {
         sb.append(", status=").append(status);
         sb.append(", saleprice=").append(saleprice);
         sb.append(", inventory=").append(inventory);
+        sb.append(", jl=").append(jl);
+        sb.append(", lc=").append(lc);
+        sb.append(", pc=").append(pc);
+        sb.append(", yfyl=").append(yfyl);
+        sb.append(", xuanx=").append(xuanx);
+        sb.append(", saleminspec=").append(saleminspec);
+        sb.append(", saleminunit=").append(saleminunit);
         sb.append("]");
         return sb.toString();
     }

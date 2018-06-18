@@ -2,6 +2,7 @@ package com.rx.back.quartz;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -21,6 +22,8 @@ import com.rx.entity.ScheduleJob;
 @Component
 public class ScheduleJobBean {
 
+	private final Logger logger = Logger.getLogger(getClass());
+	
 	@Autowired
 	private SchedulerFactoryBean schedulerFactoryBean;
 	
@@ -29,30 +32,32 @@ public class ScheduleJobBean {
 		
 		try {
 			Scheduler scheduler = schedulerFactoryBean.getScheduler();
+			if(job!=null){
+				// 获取触发器标识
+				TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
+				// 获取触发器trigger
+				CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+				
+				// Trigger不存在，那么创建任务
+				// 创建任务
+				JobDetail jobDetail = JobBuilder.newJob(QuartzJobFactory.class)
+						.withIdentity(job.getJobName(), job.getJobGroup()).build();
+
+				jobDetail.getJobDataMap().put("scheduleJob", job);
+
+				// 表达式调度构建器
+				CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+
+				// 按新的cronExpression表达式构建一个新的trigger
+				trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())
+						.withSchedule(scheduleBuilder).build();
+
+				return scheduler.scheduleJob(jobDetail, trigger);
+			}
 			
-			// 获取触发器标识
-			TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
-			// 获取触发器trigger
-			CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-			
-			// Trigger不存在，那么创建任务
-			// 创建任务
-			JobDetail jobDetail = JobBuilder.newJob(QuartzJobFactory.class)
-					.withIdentity(job.getJobName(), job.getJobGroup()).build();
-
-			jobDetail.getJobDataMap().put("scheduleJob", job);
-
-			// 表达式调度构建器
-			CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
-
-			// 按新的cronExpression表达式构建一个新的trigger
-			trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())
-					.withSchedule(scheduleBuilder).build();
-
-			return scheduler.scheduleJob(jobDetail, trigger);
 			
 		} catch (SchedulerException e) {
-			e.printStackTrace();
+			logger.info("创建任务异常", e);
 		}
 		
 		return null;

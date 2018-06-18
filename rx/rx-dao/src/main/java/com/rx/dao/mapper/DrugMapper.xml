@@ -18,13 +18,20 @@
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="saleprice" jdbcType="DECIMAL" property="saleprice" />
     <result column="inventory" jdbcType="INTEGER" property="inventory" />
+    <result column="jl" jdbcType="VARCHAR" property="jl" />
+    <result column="lc" jdbcType="VARCHAR" property="lc" />
+    <result column="pc" jdbcType="VARCHAR" property="pc" />
+    <result column="yfyl" jdbcType="VARCHAR" property="yfyl" />
+    <result column="xuanx" jdbcType="DECIMAL" property="xuanx" />
+    <result column="saleminspec" jdbcType="VARCHAR" property="saleminspec" />
+    <result column="saleminunit" jdbcType="VARCHAR" property="saleminunit" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbggenerated
     -->
     id, wareid, barcode, abc, warename, waresimname, warespec, prod_addr, producer, wareunit, 
-     status, saleprice, inventory
+    status, saleprice, inventory, jl, lc, pc, yfyl, xuanx, saleminspec, saleminunit
   </sql>
   
   <select id="getDrugByAbc" resultType="map">

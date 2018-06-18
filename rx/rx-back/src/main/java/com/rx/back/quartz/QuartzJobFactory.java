@@ -99,7 +99,8 @@ public class QuartzJobFactory implements Job {
 		Example example = new Example(LogSyncDrug.class);
 		example.setOrderByClause("created_date DESC, id DESC");
 		List<LogSyncDrug> logList = logSyncDrugService.selectByExample(example);
-		if(logList!=null && logList.size()>0){
+		//if(logList!=null && logList.size()>0){
+		if(logList!=null && !logList.isEmpty()){
 			LogSyncDrug log = logList.get(0);
 			if(log==null || log.getStatus()==null || log.getStatus()!=SyncDrugLogStatus.SUCCESS.getIndex()){
 				this.task();
