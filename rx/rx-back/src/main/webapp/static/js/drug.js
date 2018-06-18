@@ -310,6 +310,7 @@ function checkOne(){
     	$("#drug-table thead input[type='checkbox']").prop('checked', false);
     }
 }
+
 /*
  * 点击列表中All复选框时，列表全选或反选
  */
