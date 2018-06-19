@@ -202,8 +202,8 @@ function fillFieldByDefault(drugIndex,choicedDrug) {
 			// 如果计算出相应的数值,如果有小数部分则向上取整.
 			quantity = Math.ceil(quantity);
 
-			setInputBoxVal("#quantity", quantity); // 自动计算数量成功
 			setFlagArr(flagArr,"#quantity");
+			setInputBoxVal("#quantity", quantity); // 自动计算数量成功			
 
 		} else {
 			setFlagArr(flagArr,"#quantity");
