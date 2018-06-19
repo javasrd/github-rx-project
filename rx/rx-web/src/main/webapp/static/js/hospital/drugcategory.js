@@ -105,6 +105,8 @@ function searchByDrugId(drugId) {
  */
 function fillFieldByDefault(drugIndex) {
 	var drug = ret_drugCategory[drugIndex]; // 医生所选择的药品
+	var flagArr=new Array();  //是否已经填充的标志. 其中的对象有两个属性.其中的对象为未填充的输入框的ID
+	var flag=null;
 
 	// 一共有5个字段.
 	// 单次剂量采用如 0.1mg的方式录入.需要进行析取
@@ -116,8 +118,8 @@ function fillFieldByDefault(drugIndex) {
 	var dosageArr = regExtractDosage.exec(drug.jl);
 	if (dosageArr != null && dosageArr.length > 0) {
 		setInputBoxVal("#single-dosage", dosageArr[0]);// 单次剂量
-	} else {
-		$("#single-dosage").focus();
+	} else {		
+		setFlagArr(flagArr,"#single-dosage");
 	}
 
 	// 析取剂量单位
@@ -125,7 +127,7 @@ function fillFieldByDefault(drugIndex) {
 	if (doseUnit != "" && doseUnit != null) {
 		setInputBoxVal("#single-dose-unit", doseUnit); // 单次剂量单位
 	} else {
-		$("#single-dose-unit").focus();
+		setFlagArr(flagArr,"#single-dose-unit");		
 	}
 
 	// 频次(用药次数)
@@ -134,12 +136,15 @@ function fillFieldByDefault(drugIndex) {
 	if (drugTimesArr != null && drugTimesArr.length > 0) {
 		setInputBoxVal("#drugtimes", drug.pc); // 频次
 	} else {
-		$("#drugtimes").focus();
+		setFlagArr(flagArr,"#drugtimes");
 	}
 
 	// 给药方式默认值,不影响数量的自动计算.
 	if (drug.yfyl != null && drug.yfyl != "") {
 		setInputBoxVal("#drugmode", drug.yfyl); // 给药方式
+	}
+	else{
+		setFlagArr(flagArr,"#drugmode");
 	}
 
 	// 疗程
@@ -149,15 +154,16 @@ function fillFieldByDefault(drugIndex) {
 	if (treatmentDaysArr != null && treatmentDaysArr.length > 0) {
 		setInputBoxVal("#treatment-days", drug.lc); // 疗程
 	}
+	else{
+		setFlagArr(flagArr,"#treatment-days");
+	}
 
 	// 最小包装规格,试着解析saleminspec
 	// 将所有的非数字,非*,非. 字符全部替换成"" 而后计算表达式的值
 	var regMinSpec = /[^0-9^\*^\.]/g;
 	// alert(drug.saleminspec);
 	var minSpec = (drug.saleminspec).replace(regMinSpec, "");
-
 	// alert(minSpec);
-
 	var minSpecVal = -1;
 	if (minSpec != null && minSpec != "") {
 		// alert(minSpecArr[0]);
@@ -165,15 +171,15 @@ function fillFieldByDefault(drugIndex) {
 			minSpecVal = eval(minSpec); // 在这里运行代码
 		} catch (err) {
 			// 在这里处理错误
-			$("#treatment-days").focus();
+			setFlagArr(flagArr,"#quantity");
+
 		}
 	} else {
-		$("#treatment-days").focus();
+		setFlagArr(flagArr,"#quantity");
 	}
 
 	// 尝试自动计算数量.
 	var quantity = -1;
-
 	if (dosageArr != null && drugTimesArr != null && treatmentDaysArr){
 		if (dosageArr.length >= 0 && drugTimesArr.length > 0
 				&& treatmentDaysArr.length > 0 && minSpecVal > 0) {
@@ -184,14 +190,32 @@ function fillFieldByDefault(drugIndex) {
 			quantity = Math.ceil(quantity);
 
 			setInputBoxVal("#quantity", quantity); // 自动计算数量成功
-			// $("#btn-add-drug").focus();
-			$("#quantity").focus();
+			setFlagArr(flagArr,"#quantity");
+
 		} else {
-			$("#quantity").focus();
+			setFlagArr(flagArr,"#quantity");
 		}
+	}
+	
+	//将光标定位到第一个未自动填充的输入框
+	if(flagArr.length>0){
+		$(flagArr[0].inputId).focus();
 	}
 
 }
+
+/**
+ * 向标记数组中增加未填充的输入框ID
+ * @param flagArr  标记数组
+ * @param inputId  输入id  包括 "#" 号
+ * @returns
+ */
+function setFlagArr(flagArr,inputId){
+	var flag=new Object;
+	flag.inputId=inputId;
+	flagArr.push(flag);
+} 
+
 
 /**
  * 设置输入框的值
