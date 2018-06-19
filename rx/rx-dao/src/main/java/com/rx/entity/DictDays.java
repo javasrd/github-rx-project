@@ -20,6 +20,11 @@ public class DictDays {
      * 给药次数名称
      */
     private String name;
+    
+    /**
+     * 给药次数值
+     */
+    private String value;
 
     /**
      * 获取自增ID
@@ -75,16 +80,27 @@ public class DictDays {
         this.name = name == null ? null : name.trim();
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", code=").append(code);
-        sb.append(", name=").append(name);
-        sb.append("]");
-        return sb.toString();
-    }
+    /**
+     * 获取给药疗程值
+     * 
+     * @return
+     */
+    public String getValue() {
+		return value;
+	}
+
+	/**
+	 * 设置给药疗程值
+	 * 
+	 * @param value
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return "DictDays [id=" + id + ", code=" + code + ", name=" + name + ", value=" + value + "]";
+	}
+
 }
