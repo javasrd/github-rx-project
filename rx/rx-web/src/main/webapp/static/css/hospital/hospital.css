@@ -231,7 +231,7 @@ body{
 	left: 45px;
 	top: 38px;
 	width: 500px;
-	max-height: 300px;
+	/* max-height: 300px; */   /* masked by jch 2018/06/18 */
 	overflow: auto;
 	border: 1px solid #ccc;
 	box-shadow: 0 0 4px 1px grey;

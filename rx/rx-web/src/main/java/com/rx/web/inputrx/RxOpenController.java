@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.rx.bean.inputrx.PrescMsg;
 import com.rx.common.util.RequestResultUtil;
 import com.rx.entity.Department;
@@ -140,9 +142,11 @@ public class RxOpenController {
 	}
 	
 	/**
-	 * @Description: TODO
+	 * @Description: 用户输入药品码,查询相应的药目列表
 	 * @param
-	 *     @param abc
+	 *     @param abc 助词码
+	 *     @param pageNum 页号
+	 *     @param pageSize 页大小
 	 *     @param model
 	 *     @return   
 	 * @return 
@@ -152,14 +156,31 @@ public class RxOpenController {
 	 * @date 2018年1月18日-下午3:58:51
 	 */
 	@RequestMapping(value = "/drug/category")
-	public String drugTable(String abc,Model model) {
+	public String drugTable(String abc,Integer pageNum, Integer pageSize,Model model) {
 		
 		//System.out.println("助记码:"+abc);
 		
-		getDrugTable(abc,model);  //获取药品目录
+		//默认的页大小及页号
+		int DEFAULT_PAGE_SIZE=8;  //默认页大小
+		int DEFAULT_PAGE_NUM=1;	  //默认页号
+		
+		
+		if(pageNum==null || pageNum==0)
+		{
+			pageNum=DEFAULT_PAGE_NUM;
+			pageSize=DEFAULT_PAGE_SIZE;
+		}
+		
+		getDrugTable(abc,pageNum,pageSize,model);  //获取药品目录
+		
 		
 		return RESPONSE_THYMELEAF + "drugcategory";
 	}
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/drug/doseunit")
 	public String drugDoseUnitInput(String abc,Model model) {
@@ -479,8 +500,17 @@ public class RxOpenController {
 	 * @author Administrator
 	 * @date 2018年1月18日-下午3:53:41
 	 */
-	private void getDrugTable(String abc,Model model){		
-		List<Map<String,Object>> drugList=drugService.getDrugByAbc(abc);
+	private void getDrugTable(String abc,Integer pageNum, Integer pageSize,Model model){
+		
+		
+		//采用分布的方式查询药品目录.
+		PageHelper.startPage(pageNum, pageSize); // PageHelper 分页开始
+		List<Map<String,Object>> drugList=drugService.getDrugByAbc(abc);  //查询
+		// (使用了拦截器或是AOP进行查询的再次处理)
+		PageInfo<Map<String,Object>> pageInfo = new PageInfo<Map<String,Object>>(drugList); //分页结束
+		
+		model.addAttribute("abc",abc);
+		model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("drugCategory", drugList);
 	}
 	

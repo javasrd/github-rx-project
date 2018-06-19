@@ -777,12 +777,15 @@ function searchDrugDropdown(abc,inputBoxId){
 	var inputObj=$(inputBoxId);
 	if (getDrugWindowStatus() == WINDOW_CLOSED) { // 如果是首次调用时.
 		Common.showDropdownTable(inputObj);
-		Common.setDropdownTalbeWidth(800);
-		//Common.setDropdownTalbeHeight(800);
+		Common.setDropdownTalbeWidth(800);  //设置下拉框的宽度
+		//Common.setDropdownTalbeHeight(500);  //设置下拉框的高度
 		
 		setDrugWindowStatus(WINDOW_OPENED);
 	}
-	loadDrugTable(abc);
+	//每次查询时均采用默认的页号(第一页)及默认页大小进行查询
+	var pageNum=0;
+	var pageSize=0;
+	loadDrugTable(abc,pageNum,pageSize);
 	
 }
 

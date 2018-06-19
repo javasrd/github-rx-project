@@ -58,14 +58,14 @@ function addDrugIntoTable() {
 	$("#drug-items").append(drugItem); // 加入显示列表中.	
 	
 	// 收集用药书指导及数量 加入到全局列表中	
-	g_currDrug.dosage = $("#single-dosage").val(); // 单次剂量
-	g_currDrug.doseunit = $("#single-dose-unit").val(); // 剂量单位
-	g_currDrug.drugtimes = $("#drugtimes").val(); 	// 频次
-	g_currDrug.drugmode = $("#drugmode").val(); 	// 给药方式(用法)
-	g_currDrug.days = $("#treatment-days").val(); //疗程
-	g_currDrug.quantity = $("#quantity").val(); 	//数量	
+	g_currDrug.dosage = $("#single-dosage").val(); 		  // 单次剂量
+	g_currDrug.doseunit = $("#single-dose-unit").val();   // 剂量单位
+	g_currDrug.drugtimes = $("#drugtimes").val(); 		  // 频次
+	g_currDrug.drugmode = $("#drugmode").val(); 		  // 给药方式(用法)
+	g_currDrug.days = $("#treatment-days").val(); 		  // 疗程
+	g_currDrug.quantity = $("#quantity").val(); 		  // 数量	
 	g_currDrug.patientid = $("#patient").attr("bind-id"); // 患者ID
-	g_currDrug.doctorid = $("#doctor").attr("bind-id"); // 医生ID
+	g_currDrug.doctorid = $("#doctor").attr("bind-id");   // 医生ID
 
 	// 将药品加入到药品列表
 	/*
@@ -665,7 +665,7 @@ var g_edit_days_id;		// 当前正在编辑的"疗程" id
 var g_currDrug = null; // 医生选择的当前药品
 
 var DRUG_MAXNUM_PER_PRESCRIPTION=5;  //每处方中最大药品数量
-var DRUG_MAXAMOUNT_PER_PRESCRIPTION=300;  //每处方中最大金额
+var DRUG_MAXAMOUNT_PER_PRESCRIPTION=9999;  //每处方中最大金额
 /*************************************************
  * 页面加载时自动执行此函数
  *************************************************/

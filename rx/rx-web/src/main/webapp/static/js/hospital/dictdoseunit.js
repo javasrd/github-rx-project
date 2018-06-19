@@ -20,7 +20,7 @@ function process_curr_doseunit(doseUnitId){
 	//var doseUnitId=$(this).attr("doseunit-id");
 	
 	//（1）设置剂量单位文本框,关闭下拉窗口
-	var doseunit=$("#doseunitname-"+doseUnitId).text(); //自doseunit列表选择
+	var doseunit=$("#doseunitname-"+doseUnitId).text(); //自doseunit列表选择(页面中列表)
 	$("#single-dose-unit").attr("disabled",true);
 	$("#single-dose-unit").val(doseunit);	
 	$("#single-dose-unit").attr("disabled",false);

@@ -1,10 +1,18 @@
 /********************************************
- * 加载药品列表
+ * 函数功能:
+ * 	在指定的容器中加载药品列表
+ * 参数说明:
+ * 	abc:助词码
+ * 	pageNum:页号
+ * 	pageSize:页大小
+ * 
  ********************************************/
-function loadDrugTable(abc) {
+function loadDrugTable(abc,pageNum,pageSize) {
 	var url = "/drug/category";
 	var parms = {
-		abc : abc
+		abc 	:	abc,
+		pageNum	:	pageNum,
+		pageSize:	pageSize
 	};
 	var callbackFunc = loadDrugTableSuccess;
 	var containerId = ".dropdown-table";
