@@ -45,17 +45,23 @@ public class DrugServiceImpl extends AbstractBaseService<Drug, Long> implements 
 	@Transactional
 	public int insertListSelective(List<Drug> drugList) {
 		int rows = 0;
-		rows = drugMapper.truncateAll();
-		log.info("清空药品信息表");
-		for(int i=0; i<drugList.size(); i++){
-			Drug temp = drugList.get(i);
-			rows = drugMapper.insertSelective(temp);
-			if(rows<=0){
-				log.error("保存内容到数据库异常，异常数据："+temp);
-				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		try {
+			rows = drugMapper.truncateAll();
+			log.info("清空药品信息表");
+			for(int i=0; i<drugList.size(); i++){
+				Drug temp = drugList.get(i);
+				rows = drugMapper.insertSelective(temp);
+				if(rows<=0){
+					log.error("保存内容到数据库异常，异常数据："+temp);
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}
 			}
+			return rows;
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
-		return rows;
+		return 0;
 	}
 	
 }
