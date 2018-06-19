@@ -25,7 +25,18 @@
 		WHERE			
 			m.code LIKE CONCAT('%',#{abc},'%')
 		
-	</select>
+  </select>
+  
+  <select id="getDaysByDaysName" resultType="map">  	
+		SELECT 
+			* 
+		FROM 
+			dict_days as m		 
+		WHERE			
+			m.name LIKE CONCAT('%',#{name},'%')
+		
+  </select>
+  
   
   
 </mapper>

@@ -1,6 +1,7 @@
 package com.rx.service.inputrx;
 
 import java.util.List;
+import java.util.Map;
 
 import com.rx.entity.DictDoseUnit;
 import com.rx.service.IBaseService;
@@ -14,4 +15,5 @@ import com.rx.service.IBaseService;
  */
 public interface IDictDoseUnitService extends IBaseService<DictDoseUnit, Long> {
 	public List<DictDoseUnit> getDoseUnitByAbc(String abc);
+	public List<Map<String,Object>> getDoseUnitByDaysName(String name);
 }

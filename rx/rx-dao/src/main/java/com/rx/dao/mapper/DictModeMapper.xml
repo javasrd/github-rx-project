@@ -26,5 +26,14 @@
 		
 	</select>
   
+  <select id="getModeByModeName" resultType="map">  	
+		SELECT 
+			* 
+		FROM 
+			dict_mode as m		 
+		WHERE			
+			m.name LIKE CONCAT('%',#{name},'%')
+		
+	</select>
   
 </mapper>

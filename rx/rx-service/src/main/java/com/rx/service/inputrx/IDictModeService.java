@@ -1,6 +1,7 @@
 package com.rx.service.inputrx;
 
 import java.util.List;
+import java.util.Map;
 
 import com.rx.entity.DictMode;
 import com.rx.service.IBaseService;
@@ -16,4 +17,5 @@ import com.rx.service.IBaseService;
 public interface IDictModeService extends IBaseService<DictMode, Long> {
 	
 	public List<DictMode> getModeByAbc(String abc);
+	public List<Map<String,Object>> getModeByModeName(String name);
 }

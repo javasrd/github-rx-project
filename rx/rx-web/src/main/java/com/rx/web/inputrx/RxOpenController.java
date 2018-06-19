@@ -467,6 +467,10 @@ public class RxOpenController {
 			long prescDrugId=prescDrugService.addPrescDrug(prescId, drug,quantity);
 			//(3)保存处方指导
 			directionService.addDirection(prescDrugId, mode, times, dosage, doseUnit,days);
+			
+			//(4)更新数据字典
+			updateDict(mode, times, doseUnit,days);
+			
 		}
 		
 		//如果生成处方,则发送到海典ERP中.
@@ -486,6 +490,46 @@ public class RxOpenController {
 		return result;
 	}
 	
+	/**
+	 * 根据处方更新数据字典 
+	 * @param mode
+	 * @param times
+	 * @param doseUnit
+	 * @param days
+	 */
+	private void updateDict(String mode,String times,String doseUnit,String days){
+		//疗程
+		List<Map<String,Object>> daysList=dictDaysService.getDaysByDaysName(days);
+		if(daysList.size()==0){
+			DictDays daysObj=new DictDays();
+			daysObj.setName(days);
+			dictDaysService.insertSelective(daysObj);
+		}
+		
+		//频次
+		List<Map<String,Object>> timesList=dictTimesService.getTimesByTimesName(times);
+		if(timesList.size()==0){
+			DictTimes timesObj=new DictTimes();
+			timesObj.setName(times);
+			dictTimesService.insertSelective(timesObj);
+		}
+		
+		//用法
+		List<Map<String,Object>> modeList=dictModeService.getModeByModeName(mode);
+		if(modeList.size()==0){
+			DictMode modeObj=new DictMode();
+			modeObj.setName(mode);
+			dictModeService.insertSelective(modeObj);
+		}
+		
+		//剂量单位
+		List<Map<String,Object>> doseUnitList=dictDoseUnitService.getDoseUnitByDaysName(doseUnit);
+		if(doseUnitList.size()==0){
+			DictDoseUnit doseUnitObj=new DictDoseUnit();
+			doseUnitObj.setName(doseUnit);
+			dictDoseUnitService.insertSelective(doseUnitObj);
+		}
+	}
 	
 	
 	

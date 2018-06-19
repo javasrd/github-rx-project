@@ -1,6 +1,7 @@
 package com.rx.service.inputrx;
 
 import java.util.List;
+import java.util.Map;
 
 import com.rx.entity.DictDays;
 import com.rx.service.IBaseService;
@@ -26,4 +27,13 @@ public interface IDictDaysService extends IBaseService<DictDays, Long> {
 	 * @date 2018年2月5日-下午11:53:14
 	 */
 	public List<DictDays> getDaysByAbc(String abc);
+	
+	
+	/**
+	 * 根据疗程名称查询
+	 * @param name
+	 * @return
+	 */
+	public List<Map<String,Object>> getDaysByDaysName(String name);
+	
 }

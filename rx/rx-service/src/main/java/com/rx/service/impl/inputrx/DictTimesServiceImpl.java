@@ -1,6 +1,7 @@
 package com.rx.service.impl.inputrx;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,12 @@ public class DictTimesServiceImpl extends AbstractBaseService<DictTimes, Long> i
 	@Override
 	public List<DictTimes> getTimesByAbc(String abc) {
 		return dictTimesMapper.getTimesByAbc(abc);
+	}
+
+	@Override
+	public List<Map<String, Object>> getTimesByTimesName(String name) {
+		return dictTimesMapper.getTimesByTimesName(name);
+		
 	}
 
 }

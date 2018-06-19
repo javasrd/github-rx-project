@@ -26,4 +26,13 @@
   </select>
   
   
+  <select id="getDoseUnitByDaysName" resultType="map">  	
+		SELECT 
+			* 
+		FROM 
+			dict_dose_unit dn		 
+		WHERE			
+			dn.name LIKE CONCAT('%',#{name},'%')
+  </select>
+  
 </mapper>

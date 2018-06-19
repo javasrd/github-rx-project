@@ -1,6 +1,7 @@
 package com.rx.service.inputrx;
 
 import java.util.List;
+import java.util.Map;
 
 import com.rx.entity.DictTimes;
 import com.rx.service.IBaseService;
@@ -14,4 +15,5 @@ import com.rx.service.IBaseService;
  */
 public interface IDictTimesService extends IBaseService<DictTimes, Long> {
 	public List<DictTimes> getTimesByAbc(String abc);
+	public List<Map<String,Object>> getTimesByTimesName(String name);
 }
