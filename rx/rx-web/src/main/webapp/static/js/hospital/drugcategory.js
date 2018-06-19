@@ -65,19 +65,13 @@ function process_curr_drug(drugId){
 	if(drug.saleminunit!=null && drug.saleminunit!=""){
 		g_currDrug.wareunit=drug.saleminunit;
 	}
-	
-	
-	
-	
-	
+		
 	
 	//默认值也保存在相应的记录中.
 	//g_currDrug.
 	
 	//设置药品名称文本框	 
-	$("#warename").val($("#warename-"+drugId).text());
-	
-	
+	$("#warename").val($("#warename-"+drugId).text());	
 	
 	//当选择一个药品后	
 	Common.hideDropdownTable();  //关闭选择下拉框
@@ -152,7 +146,7 @@ function fillFieldByDefault(drugIndex){
 	var regExtractDrugTimes=/(-?\d+)(\.\d+)?/;
 	var drugTimesArr=regExtractDrugTimes.exec(drug.pc);
 	if(drugTimesArr.length>0){
-		setInputBoxVal("#drugtimes",drugTimesArr[0]);  			//频次
+		setInputBoxVal("#drugtimes",drug.pc);  			//频次
 	}
 	else{
 		$("#drugtimes").focus();
@@ -164,14 +158,16 @@ function fillFieldByDefault(drugIndex){
 	
 	
 	//疗程
-	//析取疗程
+	//析取疗程  将疗程中的数字析取出来.
 	var regExtractTreatmentDays=/(-?\d+)(\.\d+)?/;
 	var treatmentDaysArr=regExtractTreatmentDays.exec(drug.lc);
-	setInputBoxVal("#treatment-days",drug.lc);		//疗程
+	if(treatmentDaysArr.length>0){
+		setInputBoxVal("#treatment-days",drug.lc);		//疗程
+	}	
 	
 	
 	//最小包装规格,试着解析saleminspec
-	//将所有的非数字,非*,非. 字符全部替换成""
+	//将所有的非数字,非*,非. 字符全部替换成"" 而后计算表达式的值
 	var regMinSpec=/[^0-9^\*^\.]/g;
 	//alert(drug.saleminspec);
 	var minSpec=(drug.saleminspec).replace(regMinSpec,"");
