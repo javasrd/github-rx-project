@@ -227,6 +227,9 @@ function setFlagArr(flagArr,inputId){
 	var flag=new Object;
 	flag.inputId=inputId;
 	flagArr.push(flag);
+	
+	setInputBoxVal(inputId,"");  //如果没有自动填充,清除上次的痕迹.
+	
 } 
 
 
