@@ -588,12 +588,40 @@ function handler_keydown_dosage(event){
 			alert("单次用量需为正数!",500);
 		}			
 		else{
-			$("#single-dose-unit").focus();
+			autoCalcQuantity(val);  //自动计算
+			$("#single-dose-unit").focus();			
 		}
 		
 		return false;
 	}
 }
+
+/**
+ * 自动计算数量,如果可以计算的话.
+ * @returns
+ */
+function autoCalcQuantity(dosage_value){
+	console.log("debug");
+	if (g_currDrug!=null){
+		g_currDrug.dosage_value=dosage_value;
+		
+		if(g_currDrug.dosage_value>0 && g_currDrug.drugtimes_value>0 && g_currDrug.days_value>0 && g_currDrug.minspec_value>0){
+			console.log("dosage_value:"+g_currDrug.dosage_value);
+			console.log("drugtimes_value:"+g_currDrug.drugtimes_value);
+			console.log("days_value:"+g_currDrug.days_value);			
+			console.log("minspec_value:"+g_currDrug.minspec_value);
+			
+			var quantity=Math.ceil(g_currDrug.dosage_value*g_currDrug.drugtimes_value*g_currDrug.days_value/g_currDrug.minspec_value);
+			setInputBoxVal("#quantity", quantity); // 自动计算数量成功
+			$("#quantity").focus();
+			console.log("quantity:"+quantity);
+			
+		}
+	}
+}
+
+
+
 
 function handler_keydown_days_table(ev) {
 	var oEvent = ev || event;// 获取事件对象(IE和其他浏览器不一样，这里要处理一下浏览器的兼容性event是IE；ev是chrome等)

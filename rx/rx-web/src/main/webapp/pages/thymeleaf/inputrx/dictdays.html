@@ -49,6 +49,13 @@
 		</div>
 	</div>
 	
+	<!-- 返回查询条件  -->
+	<script th:inline="javascript">  
+		/*<![CDATA[*/
+			var ret_daysList=[[${daysList}]];  //返回的疗程列表
+		/*]]>*/  
+	</script>
+	
 	<script th:src="@{/static/js/hospital/dictdays.js}" type="text/javascript"></script>
 	
 </body>

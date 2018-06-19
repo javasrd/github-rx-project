@@ -35,7 +35,7 @@ function process_curr_drug(drugId) {
 	g_currDrug = new Object();
 
 	// 在返回的药品列表中查询医生所选择的那种药品.
-	var choiceDrugIndex = searchByDrugId(drugId);
+	var choiceDrugIndex = searchByDrugId(drugId);	
 	var drug = ret_drugCategory[choiceDrugIndex];
 
 	/*
@@ -50,6 +50,11 @@ function process_curr_drug(drugId) {
 	g_currDrug.wareid = drug.wareid; // 商品ID,海典方自定义的ID
 	g_currDrug.warename = drug.warename; // 药品名称
 	g_currDrug.warespec = drug.warespec; // 药品规格
+	
+	//保存默认值到当前药品中
+	g_currDrug.jl=drug.jl;  //剂量  
+	g_currDrug.lc=drug.lc;	//疗程
+	g_currDrug.pc=drug.pc;	//批次	
 
 	// 将售价修改为最小包装售价,单位改为最小包装单位(有可能与原来的售价及包装单位相同)
 	// (1)采用原来的售价及单位做为默认值
@@ -76,7 +81,7 @@ function process_curr_drug(drugId) {
 
 	// added by jch 2018/06/18
 	// 尝试自动填充默认值,并自动计算数量.
-	fillFieldByDefault(choiceDrugIndex);
+	fillFieldByDefault(choiceDrugIndex,g_currDrug);
 }
 
 /**
@@ -103,7 +108,7 @@ function searchByDrugId(drugId) {
  *            使用医生所选择的药品自动填充字段.
  * @returns
  */
-function fillFieldByDefault(drugIndex) {
+function fillFieldByDefault(drugIndex,choicedDrug) {
 	var drug = ret_drugCategory[drugIndex]; // 医生所选择的药品
 	var flagArr=new Array();  //是否已经填充的标志. 其中的对象有两个属性.其中的对象为未填充的输入框的ID
 	var flag=null;
@@ -113,19 +118,21 @@ function fillFieldByDefault(drugIndex) {
 	// 单次剂量只析取数字部分,单次剂量单位只析取非数字部分.
 	// 采用正则表达式进行析取.
 
-	// 剂量
+	// 析取剂量
 	var regExtractDosage = /(-?\d+)(\.\d+)?/;
 	var dosageArr = regExtractDosage.exec(drug.jl);
 	if (dosageArr != null && dosageArr.length > 0) {
 		setInputBoxVal("#single-dosage", dosageArr[0]);// 单次剂量
+		choicedDrug.dosage_value=dosageArr[0];
 	} else {		
 		setFlagArr(flagArr,"#single-dosage");
+		choicedDrug.dosage_value=0;
 	}
 
 	// 析取剂量单位
 	var doseUnit = (drug.jl).replace(regExtractDosage, "");
 	if (doseUnit != "" && doseUnit != null) {
-		setInputBoxVal("#single-dose-unit", doseUnit); // 单次剂量单位
+		setInputBoxVal("#single-dose-unit", doseUnit); // 单次剂量单位		
 	} else {
 		setFlagArr(flagArr,"#single-dose-unit");		
 	}
@@ -134,9 +141,11 @@ function fillFieldByDefault(drugIndex) {
 	var regExtractDrugTimes = /(-?\d+)(\.\d+)?/;
 	var drugTimesArr = regExtractDrugTimes.exec(drug.pc);
 	if (drugTimesArr != null && drugTimesArr.length > 0) {
-		setInputBoxVal("#drugtimes", drug.pc); // 频次
+		setInputBoxVal("#drugtimes", drug.pc); //频次
+		choicedDrug.drugtimes_value=drugTimesArr[0];    //保存频次
 	} else {
 		setFlagArr(flagArr,"#drugtimes");
+		choicedDrug.drugtimes_value=0;    //保存频次
 	}
 
 	// 给药方式默认值,不影响数量的自动计算.
@@ -153,9 +162,11 @@ function fillFieldByDefault(drugIndex) {
 	var treatmentDaysArr = regExtractTreatmentDays.exec(drug.lc);
 	if (treatmentDaysArr != null && treatmentDaysArr.length > 0) {
 		setInputBoxVal("#treatment-days", drug.lc); // 疗程
+		choicedDrug.days_value=treatmentDaysArr[0];    //保存疗程天数
 	}
 	else{
 		setFlagArr(flagArr,"#treatment-days");
+		choicedDrug.days_value=0;    //保存疗程天数
 	}
 
 	// 最小包装规格,试着解析saleminspec
@@ -169,13 +180,15 @@ function fillFieldByDefault(drugIndex) {
 		// alert(minSpecArr[0]);
 		try {
 			minSpecVal = eval(minSpec); // 在这里运行代码
+			choicedDrug.minspec_value=minSpecVal;
 		} catch (err) {
 			// 在这里处理错误
 			setFlagArr(flagArr,"#quantity");
-
+			choicedDrug.minspec_value=0;	
 		}
 	} else {
 		setFlagArr(flagArr,"#quantity");
+		choicedDrug.minSpecVal=0;
 	}
 
 	// 尝试自动计算数量.

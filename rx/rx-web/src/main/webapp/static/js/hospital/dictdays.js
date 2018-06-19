@@ -19,12 +19,81 @@ function process_curr_days(daysId){
 	$("#treatment-days").val($("#daysname-"+daysId).text());
 	$("#treatment-days").attr("disabled",false);
 	
+	autoCalcQuantity(daysId);  //自动计算数量
+	
 	//当选择一个用药次数后
 	Common.hideDropdownTable();  //关闭选择下拉框
 	$("#quantity").focus();     //下一个输入框获取焦点
-	setDaysWindowStatus(WINDOW_CLOSED);
-	
+	setDaysWindowStatus(WINDOW_CLOSED);	
 }
+
+/**
+ * 功能: 在返回的疗程列表按ID进行查询 
+ * 
+ * @param id
+ *          疗程ID
+ * @returns 如果找到则返回相应的索引.否则返回-1
+ */
+function searchDaysById(id) {
+	for (var i = 0; i < ret_daysList.length; i++) {
+		var days = ret_daysList[i];
+		if (id == days.id)
+			return i;
+	}
+	return -1;
+}
+
+
+/**
+ * 自动计算数量,如果可以计算的话.
+ * @returns
+ */
+function autoCalcQuantity(daysId){
+	console.log("debug");
+	if (g_currDrug!=null){
+		var idx=searchDaysById(daysId);
+		var days=ret_daysList[idx];
+		var days_value=days.value;
+		
+		//置当前药品的疗程
+		if (days_value!=null && days_value>0){
+			g_currDrug.days_value=days_value;
+		}
+		else{
+			g_currDrug.day_values=0;
+		}
+		
+		if(g_currDrug.dosage_value>0 && g_currDrug.drugtimes_value>0 && g_currDrug.days_value>0 && g_currDrug.minspec_value>0){
+			console.log("dosage_value:"+g_currDrug.dosage_value);
+			console.log("drugtimes_value:"+g_currDrug.drugtimes_value);
+			console.log("days_value:"+g_currDrug.days_value);			
+			console.log("minspec_value:"+g_currDrug.minspec_value);
+			
+			var quantity=Math.ceil(g_currDrug.dosage_value*g_currDrug.drugtimes_value*g_currDrug.days_value/g_currDrug.minspec_value);
+			setInputBoxVal("#quantity", quantity); // 自动计算数量成功
+			$("#quantity").focus();
+			console.log("quantity:"+quantity);
+			
+		}
+	}
+}
+
+/**
+ * 设置输入框的值
+ * 
+ * @param inputId
+ *            文本输入框ID
+ * @param val
+ *            值
+ * @returns
+ */
+function setInputBoxVal(inputId, val) {
+	$(inputId).attr("disabled", true);
+	$(inputId).val(val);
+	$(inputId).attr("disabled", false);
+}
+
+
 
 /**
  * 选择第一条记录
