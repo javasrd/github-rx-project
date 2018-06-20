@@ -131,7 +131,7 @@ public class QuartzJobFactory implements Job {
 			String logJSON = resMap.get(RequestResultUtil.RESULT_LOG).toString();
 			if(result_code.equals(RequestResultUtil.RESULT_CODE_SUCCESS)){
 				String drugInfoJSON = resMap.get(RequestResultUtil.RESULT_DATA).toString();
-				while(true){
+				//while(true){
 					try {//解析JSON并保存内容
 						if(StringUtils.isNotBlank(drugInfoJSON)){
 							List<Drug> drugList = JSONArray.parseArray(drugInfoJSON, Drug.class);
@@ -141,10 +141,11 @@ public class QuartzJobFactory implements Job {
 									logger.info("保存药品信息到数据库成功，同步["+drugList.size()+"]条药品信息。");
 									LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
 									logSyncDrugService.insertSelective(log);
-									break;
+									//break;
 								} else {
-									logger.error("保存数据库异常，正在重新保存。。。");
-									continue;
+									logger.error("保存数据库异常，等待重新保存。。。");
+									//Thread.sleep(5*1000);
+									//continue;
 								}
 							}else{
 								//TODO 解析JSON为空
@@ -158,10 +159,10 @@ public class QuartzJobFactory implements Job {
 						e.printStackTrace();
 						// TODO: handle exception
 						logger.error("解析JSON并保存内容异常");
-						continue;
+						//continue;
 					}
-					break;
-				}
+					//break;
+				//}
 				
 			}else{
 				
