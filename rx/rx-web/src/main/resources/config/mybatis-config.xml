@@ -4,6 +4,7 @@
 	<settings>
 		<setting name="cacheEnabled" value="true" />
 		<setting name="callSettersOnNulls" value="true" /> 
+		<setting name="logImpl" value="STDOUT_LOGGING" />
 	</settings>
 	<plugins>
 	    <!-- com.github.pagehelper为PageHelper类所在包名 mybatis分页插件配置 -->
