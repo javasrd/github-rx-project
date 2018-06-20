@@ -165,13 +165,16 @@ public class RxOpenController {
 		int DEFAULT_PAGE_NUM=1;	  //默认页号
 		
 		
-		if(pageNum==null || pageNum==0)
+		if(pageNum==null || pageNum==null || pageNum==0)
 		{
 			pageNum=DEFAULT_PAGE_NUM;
 			pageSize=DEFAULT_PAGE_SIZE;
 		}
 		
+		long startTime = System.currentTimeMillis();
 		getDrugTable(abc,pageNum,pageSize,model);  //获取药品目录
+		long endTime = System.currentTimeMillis();
+		System.out.println("运行时间:" + (endTime - startTime) + "ms");
 		
 		
 		return RESPONSE_THYMELEAF + "drugcategory";
@@ -548,13 +551,13 @@ public class RxOpenController {
 		
 		
 		//采用分布的方式查询药品目录.
-		PageHelper.startPage(pageNum, pageSize); // PageHelper 分页开始
+		//PageHelper.startPage(pageNum, pageSize); // PageHelper 分页开始
 		List<Map<String,Object>> drugList=drugService.getDrugByAbc(abc);  //查询
 		// (使用了拦截器或是AOP进行查询的再次处理)
-		PageInfo<Map<String,Object>> pageInfo = new PageInfo<Map<String,Object>>(drugList); //分页结束
+		//PageInfo<Map<String,Object>> pageInfo = new PageInfo<Map<String,Object>>(drugList); //分页结束
 		
 		model.addAttribute("abc",abc);
-		model.addAttribute("pageInfo",pageInfo);
+		//model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("drugCategory", drugList);
 	}
 	

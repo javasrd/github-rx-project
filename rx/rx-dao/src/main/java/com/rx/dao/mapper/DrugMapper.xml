@@ -42,7 +42,8 @@
 			drug as d		 
 		WHERE 
 			d.status=1 AND
-			d.abc LIKE CONCAT('',#{abc},'%')
+			LOCATE(#{abc}, `abc`)>0 limit 10
+			<!-- d.abc LIKE CONCAT('',#{abc},'%') limit 10 -->
 		
   </select>
   <!-- 
