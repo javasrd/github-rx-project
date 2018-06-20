@@ -158,7 +158,7 @@ public class RxOpenController {
 	@RequestMapping(value = "/drug/category")
 	public String drugTable(String abc,Integer pageNum, Integer pageSize,Model model) {
 		
-		//System.out.println("助记码:"+abc);
+		System.out.println("助记码:"+abc);
 		
 		//默认的页大小及页号
 		int DEFAULT_PAGE_SIZE=8;  //默认页大小

@@ -42,7 +42,7 @@
 			drug as d		 
 		WHERE 
 			d.status=1 AND
-			d.abc LIKE CONCAT('%',#{abc},'%')
+			d.abc LIKE CONCAT('',#{abc},'%')
 		
   </select>
   <!-- 
