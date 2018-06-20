@@ -546,13 +546,13 @@ public class RxOpenController {
 		
 		
 		//采用分布的方式查询药品目录.
-		//PageHelper.startPage(pageNum, pageSize); // PageHelper 分页开始
+		PageHelper.startPage(pageNum, pageSize); // PageHelper 分页开始
 		List<Map<String,Object>> drugList=drugService.getDrugByAbc(abc);  //查询
 		// (使用了拦截器或是AOP进行查询的再次处理)
-		//PageInfo<Map<String,Object>> pageInfo = new PageInfo<Map<String,Object>>(drugList); //分页结束
+		PageInfo<Map<String,Object>> pageInfo = new PageInfo<Map<String,Object>>(drugList); //分页结束
 		
 		model.addAttribute("abc",abc);
-		//model.addAttribute("pageInfo",pageInfo);
+		model.addAttribute("pageInfo",pageInfo);
 		model.addAttribute("drugCategory", drugList);
 	}
 	

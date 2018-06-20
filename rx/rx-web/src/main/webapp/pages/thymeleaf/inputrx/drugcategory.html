@@ -65,7 +65,7 @@
 		<!-- 加入分隔线 -->	
 		<hr style="height:1px;border:none;border-top:1px solid lightgray;">		
 		<!-- 加入 分页 -->
-		<!-- <div th:include="/thymeleaf/common/pager::pager" class="pagerx" style="float: right; margin-right: 100px;"></div> -->
+		<div th:include="/thymeleaf/common/pager::pager" class="pagerx" style="float: right; margin-right: 100px;"></div>
 	</div>
 	
 	<!-- 返回查询条件  -->
@@ -76,11 +76,11 @@
 		/*]]>*/  
 	</script>
 	
-	<!-- <form>
+	<form>
 		保存页号与页大小
 		<input type="hidden" name="pageNum_drug" id="pageNum_drug" th:value="${pageInfo.pageNum}"> 
 		<input type="hidden" name="pageSize_drug" id="pageSize_drug" th:value="${pageInfo.pageSize}">
-	</form> -->
+	</form>
 	
 	<script th:src="@{/static/js/hospital/drugcategory.js}" type="text/javascript"></script>
 	
