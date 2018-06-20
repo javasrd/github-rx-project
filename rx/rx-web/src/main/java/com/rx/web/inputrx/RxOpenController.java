@@ -171,19 +171,14 @@ public class RxOpenController {
 			pageSize=DEFAULT_PAGE_SIZE;
 		}
 		
-		long startTime = System.currentTimeMillis();
+		//long startTime = System.currentTimeMillis();
 		getDrugTable(abc,pageNum,pageSize,model);  //获取药品目录
-		long endTime = System.currentTimeMillis();
-		System.out.println("运行时间:" + (endTime - startTime) + "ms");
+		//long endTime = System.currentTimeMillis();
+		//System.out.println("运行时间:" + (endTime - startTime) + "ms");
 		
 		
 		return RESPONSE_THYMELEAF + "drugcategory";
 	}
-	
-	
-	
-	
-	
 	
 	@RequestMapping(value = "/drug/doseunit")
 	public String drugDoseUnitInput(String abc,Model model) {
