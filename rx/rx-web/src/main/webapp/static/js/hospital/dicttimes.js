@@ -23,7 +23,7 @@ function process_curr_times(timesId){
 	$("#drugtimes").val($("#timesname-"+timesId).text());
 	$("#drugtimes").attr("disabled",false);
 	
-	autoCalcQuantity(timesId);  //自动计算数量
+	autoCalcQuantity_times(timesId);  //自动计算数量
 	
 	//当选择一个用药次数后
 	Common.hideDropdownTable();  //关闭选择下拉框
@@ -78,7 +78,7 @@ function searchTimesById(id) {
  * 自动计算数量,如果可以计算的话.
  * @returns
  */
-function autoCalcQuantity(timesId){
+function autoCalcQuantity_times(timesId){
 	console.log("debug");
 	if (g_currDrug!=null){
 		var idx=searchTimesById(timesId);

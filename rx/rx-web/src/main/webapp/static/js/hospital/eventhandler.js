@@ -588,7 +588,7 @@ function handler_keydown_dosage(event){
 			alert("单次用量需为正数!",500);
 		}			
 		else{
-			autoCalcQuantity(val);  //自动计算
+			autoCalcQuantity_dosage(val);  //自动计算
 			$("#single-dose-unit").focus();			
 		}
 		
@@ -600,7 +600,7 @@ function handler_keydown_dosage(event){
  * 自动计算数量,如果可以计算的话.
  * @returns
  */
-function autoCalcQuantity(dosage_value){
+function autoCalcQuantity_dosage(dosage_value){
 	console.log("debug");
 	if (g_currDrug!=null){
 		g_currDrug.dosage_value=dosage_value;

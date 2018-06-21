@@ -19,7 +19,7 @@ function process_curr_days(daysId){
 	$("#treatment-days").val($("#daysname-"+daysId).text());
 	$("#treatment-days").attr("disabled",false);
 	
-	autoCalcQuantity(daysId);  //自动计算数量
+	autoCalcQuantity_days(daysId);  //自动计算数量
 	
 	//当选择一个用药次数后
 	Common.hideDropdownTable();  //关闭选择下拉框
@@ -48,7 +48,7 @@ function searchDaysById(id) {
  * 自动计算数量,如果可以计算的话.
  * @returns
  */
-function autoCalcQuantity(daysId){
+function autoCalcQuantity_days(daysId){
 	console.log("debug");
 	if (g_currDrug!=null){
 		var idx=searchDaysById(daysId);
