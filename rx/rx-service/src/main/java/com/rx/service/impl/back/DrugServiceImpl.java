@@ -44,21 +44,26 @@ public class DrugServiceImpl extends AbstractBaseService<Drug, Long> implements 
 	@Override
 	@Transactional
 	public int insertListSelective(List<Drug> drugList) {
-		int rows = 0;
+		int deleteSize = 0;
 		try {
-			rows = drugMapper.truncateAll();
-			log.info("清空药品信息表");
+			deleteSize = drugMapper.deleteAll();
+			if(deleteSize>0){
+				//drugMapper.truncateAll();
+			}
+			int rows = 0;
+			log.info("清空药品信息表，删除数据："+deleteSize+"条");
 			for(int i=0; i<drugList.size(); i++){
 				Drug temp = drugList.get(i);
 				rows = drugMapper.insertSelective(temp);
 				if(rows<=0){
-					log.error("保存内容到数据库异常，异常数据："+temp);
+					log.error("保存内容到数据库异常，异常数据："+temp+"；事务回滚，恢复已删除的"+deleteSize+"条数据。");
 					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 				}
 			}
 			return rows;
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.error("保存内容到数据库异常，事务回滚，恢复已删除的"+deleteSize+"条数据。");
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		return 0;

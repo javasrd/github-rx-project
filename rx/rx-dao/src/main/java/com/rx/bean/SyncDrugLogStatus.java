@@ -47,7 +47,23 @@ public enum SyncDrugLogStatus {
 	/**
 	 * 9：文件格式错误；
 	 */
-	FAIL_FILE_FORMAT(9, "文件格式错误");
+	FAIL_FILE_FORMAT(9, "文件格式错误"),
+	/**
+	 * 10：解析药品JSON数据错误或保存数据到数据库错误；
+	 */
+	FAIL_PARSE_OR_SAVE(10, "解析药品JSON数据错误或保存数据到数据库错误"),
+	/**
+	 * 11：药品JSON数据为空；
+	 */
+	FAIL_JSON_NULL(11, "药品JSON数据为空"),
+	/**
+	 * 12：解析后药品数据集合为空；
+	 */
+	FAIL_LIST_NULL(12, "解析后药品数据集合为空"),
+	/**
+	 * 13：保存数据库异常，等待重新保存。。。；
+	 */
+	FAIL_SAVE_TO_DB(13, "保存数据库异常，等待重新保存。。。");
 	
 	private Integer index;
 	private String value;

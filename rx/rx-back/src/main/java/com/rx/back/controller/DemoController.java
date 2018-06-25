@@ -16,9 +16,11 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.rx.back.commons.SessionConstants;
 import com.rx.bean.UserBean;
 import com.rx.common.util.ZipUtil;
+import com.rx.entity.User;
 
 @Controller
 public class DemoController {

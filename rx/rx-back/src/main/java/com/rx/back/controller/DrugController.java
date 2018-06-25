@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rx.back.commons.StaticConstants;
+import com.rx.back.quartz.JobStatusVariable;
 import com.rx.bean.PageBean;
 import com.rx.bean.UserBean;
 import com.rx.common.util.DictCommonCodeUtil;
@@ -178,7 +179,7 @@ public class DrugController {
 		}
 		
 		try {
-			
+			JobStatusVariable.LOCK = true;
 			Map<String, Object> resMap = SyncDrugInfoUtil.processSyncDrug(url);
 			String result_code = resMap.get(RequestResultUtil.RESULT_CODE).toString();
 			if(result_code.equals(RequestResultUtil.RESULT_CODE_SUCCESS)){
@@ -193,7 +194,7 @@ public class DrugController {
 						LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
 						log.setErrormsg("手动初始化药品信息成功："+log.getErrormsg());
 						logSyncDrugService.insertSelective(log);
-						
+						JobStatusVariable.LOCK = false;
 						return RequestResultUtil.getResultSuccess("同步药品信息成功！");
 					} else {
 						System.out.println("保存数据库异常");
@@ -201,12 +202,14 @@ public class DrugController {
 						LogSyncDrug log = JSON.parseObject(logJSON, LogSyncDrug.class);
 						log.setErrormsg("手动初始化药品信息错误：保存到数据库异常");
 						logSyncDrugService.insertSelective(log);
-						
+						JobStatusVariable.LOCK = false;
 						return RequestResultUtil.getResultWarn("保存数据库异常，请重新初始化！");
 					}
+					
 				}else{
 					//TODO 解析JSON为空
 					log.error("解析JSON为空");
+					JobStatusVariable.LOCK = false;
 					return RequestResultUtil.getResultWarn("同步药品信息为空，请重新初始化！");
 				}
 				
@@ -222,6 +225,7 @@ public class DrugController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		JobStatusVariable.LOCK = false;
 		return RequestResultUtil.getResultWarn("同步药品信息失败，请重新初始化！");
 	}
 	
