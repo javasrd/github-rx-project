@@ -66,6 +66,17 @@ function bootstrapValidateFun(){
                     },*/
 	            }   
 	        },
+	        value: {
+	            validators: {
+	                notEmpty: {
+	                    message: "用药疗程值不能为空"
+	                },
+	                stringLength: {
+                        max: 5,
+                        message: '长度不能超过5个字符'
+                    },
+	            }
+	        },
 	    }
 	}).on('success.form.bv',function(e){
 	    e.preventDefault();
@@ -90,6 +101,7 @@ function selectDetails(id){
 				$("#days-id").val(days.id);//ID
 				$("#days-code").val(days.code);//编码
 				$("#days-name").val(days.name);//名称
+				$("#days-value").val(days.value);//值
 				
 				$('#tabs-243687 a[href="#tab-2"]').tab('show');
 				return;

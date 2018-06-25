@@ -76,6 +76,13 @@
 															</div>
 														</div>
 														<div class="form-group">
+															<label class="col-md-2 control-label">用药次数值</label>
+															<div class="col-md-10">
+																<input type="text" id="times-value" name="value"
+																	class="form-control" placeholder="用药次数值" />
+															</div>
+														</div>
+														<div class="form-group">
 															<label class="col-sm-2 control-label">&nbsp;</label>
 															<div class="col-sm-10">
 																<button type="button" class="btn btn-primary"

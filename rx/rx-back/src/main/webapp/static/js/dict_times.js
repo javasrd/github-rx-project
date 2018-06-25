@@ -66,6 +66,17 @@ function bootstrapValidateFun(){
                     },*/
 	            }   
 	        },
+	        value: {
+	            validators: {
+	                notEmpty: {
+	                    message: "用药次数值不能为空"
+	                },
+	                stringLength: {
+                        max: 5,
+                        message: '长度不能超过5个字符'
+                    },
+	            }
+	        },
 	    }
 	}).on('success.form.bv',function(e){
 	    e.preventDefault();
@@ -90,6 +101,7 @@ function selectDetails(id){
 				$("#times-id").val(times.id);//ID
 				$("#times-code").val(times.code);//编码
 				$("#times-name").val(times.name);//名称
+				$("#times-value").val(times.value);//值
 				
 				$('#tabs-243687 a[href="#tab-2"]').tab('show');
 				return;
