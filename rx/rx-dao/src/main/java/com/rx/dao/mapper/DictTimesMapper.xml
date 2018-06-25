@@ -34,7 +34,7 @@
 		FROM 
 			 dict_times as t		 
 		WHERE			
-			t.code LIKE CONCAT('%',#{name},'%')
+			t.name LIKE CONCAT('%',#{name},'%')
 		
 	</select>
   
