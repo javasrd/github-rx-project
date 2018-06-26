@@ -1,9 +1,9 @@
 
 /**
- * 用药次数 双击事件处理.
+ * 用药次数 单击事件处理.
  * @returns
  */
-function handler_dblclick_times(){	
+function handler_click_times(){	
 	//获取用户双击当前项id
 	var id=$(this).attr("times-id");	
 	process_curr_times(id);		
@@ -73,6 +73,6 @@ $(function(){
 	 * 绑定事件
 	 ***********************************/
 	//当用户双击某药品条目时,选择此药品
-	$(".times-item").on("dblclick", handler_dblclick_times);
+	$(".times-item").on("click", handler_click_times);
 	addCurrRowClass(CURR_ROW_ATTR_NAME_TIMES_TABLE,1,CURR_ROW_CLASS_NAME_TIMES_TABLE);
 });

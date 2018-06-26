@@ -3,10 +3,10 @@
 	全局变量
 ***************************************************************************/
 /**
- * 用药方式 双击事件处理.
+ * 用药方式 单击事件处理.
  * @returns
  */
-function handler_dblclick_mode(){	
+function handler_click_mode(){	
 	//获取用户双击当前项id
 	var id=$(this).attr("mode-id");	
 	process_curr_mode(id);		
@@ -59,6 +59,6 @@ $(function(){
 	 * 绑定事件
 	 *************************/
 	//当用户双击某药品条目时,选择此药品
-	$(".mode-item").on("dblclick", handler_dblclick_mode);
+	$(".mode-item").on("click", handler_click_mode);
 	addCurrRowClass(CURR_ROW_ATTR_NAME_MODE,1,CURR_ROW_CLASS_NAME_MODE);
 });

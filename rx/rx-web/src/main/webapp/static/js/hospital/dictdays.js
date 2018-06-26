@@ -1,8 +1,8 @@
 /**
- * 双击事件处理.
+ * 单击事件处理.
  * @returns
  */
-function handler_dblclick_days(){	
+function handler_click_days(){	
 	//获取用户双击当前项id
 	var id=$(this).attr("days-id");	
 	process_curr_days(id);		
@@ -126,6 +126,6 @@ $(function(){
 	 * 绑定事件
 	 ***********************************/
 	//当用户双击某药品条目时,选择此药品
-	$(".days-item").on("dblclick", handler_dblclick_days);
+	$(".days-item").on("click", handler_click_days);
 	addCurrRowClass(CURR_ROW_ATTR_NAME_DAYS,1,CURR_ROW_CLASS_NAME_DAYS);
 });

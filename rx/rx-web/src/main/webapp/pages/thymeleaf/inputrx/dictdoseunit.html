@@ -26,7 +26,7 @@
 					</tr>
 				</thead>
 				<tbody>				 
-					<tr title="双击选择当前记录" th:each="doseunit,iterStat:${doseUnitList}" class="doseunit-item" 
+					<tr title="单击选择当前记录" th:each="doseunit,iterStat:${doseUnitList}" class="doseunit-item" 
 						th:attr="doseunit-id=${doseunit.id},index-dose-unit=${iterStat.count}" >
 												
 						<td th:text="${iterStat.count}"></td>

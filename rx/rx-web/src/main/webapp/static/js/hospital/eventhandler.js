@@ -245,7 +245,7 @@ function handler_keydown_quantity_table(ev){
 			}
 			else{
 				var sum=calcPrescDrugAmount();			
-				if(sum>300){
+				if(sum>DRUG_MAXAMOUNT_PER_PRESCRIPTION){
 					alert("每个处方中金额不可以超过300元!",500);
 				}
 				else{
@@ -778,7 +778,7 @@ function validAddDrug(){
 			var subSum=0;
 			if(g_currDrug!=null)
 				subSum=g_currDrug.saleprice*$("#quantity").val();
-			if((sum+subSum)>300){
+			if((sum+subSum)>DRUG_MAXAMOUNT_PER_PRESCRIPTION){
 				err.valid=false;
 				err.errorMsg=err.errorMsg+"每个处方中金额不可以超过300元!"+ ";";
 			}
@@ -975,7 +975,7 @@ function handler_input_quantity_table(){
 			//显示药品金额及总金额
 			$("#presc-drug-sum").text(toDecimal2(sum));  //总金额
 			$("#drug-sum-"+drugId).text(toDecimal2(subsum));  //药品金额
-			if(sum>300){
+			if(sum>DRUG_MAXAMOUNT_PER_PRESCRIPTION){
 				alert("每个处方中金额不可以超过300元!",500);
 			}
 		}

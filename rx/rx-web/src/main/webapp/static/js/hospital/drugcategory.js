@@ -3,11 +3,11 @@
  ********************************************/
 
 /**
- * 药品目录双击事件处理.
+ * 药品目录单击事件处理. 选择某个药品
  * 
  * @returns
  */
-function handler_dblclick_drugcategory() {
+function handler_click_drugcategory() {
 	// 用于根据ID查询当前药品的属性值.
 	var drugId = $(this).attr("drug-id");
 	process_curr_drug(drugId);
@@ -287,7 +287,7 @@ $(function() {
 	 * 绑定事件
 	 **************************************************************************/
 	// 当用户双击某药品条目时,选择此药品
-	$(".drug-item").on("dblclick", handler_dblclick_drugcategory);
+	$(".drug-item").on("click", handler_click_drugcategory);
 	addCurrRowClass(CURR_ROW_ATTR_NAME_DRUG, 1, CURR_ROW_CLASS_NAME_DRUG);
 
 	// -------------分页（页码导航）--------------------------------

@@ -2,10 +2,10 @@
 	全局变量
 ***************************************/
 /**
- * 单次剂量单位列表 双击事件处理.
+ * 单次剂量单位列表 单击事件处理.
  * @returns
  */
-function handler_dblclick_doseunit(){	
+function handler_click_doseunit(){	
 	//获取用户双击当前项id
 	var id=$(this).attr("doseunit-id");	
 	process_curr_doseunit(id);		
@@ -81,6 +81,6 @@ $(function(){
 	 * 绑定事件
 	 ****************************************/
 	//当用户双击某药品条目时,选择此药品
-	$(".doseunit-item").on("dblclick", handler_dblclick_doseunit);
+	$(".doseunit-item").on("click", handler_click_doseunit);
 	addCurrRowClass(CURR_ROW_ATTR_NAME_DOSE_UNIT_TABLE,1,CURR_ROW_CLASS_NAME_DOSE_UNIT_TABLE);
 });

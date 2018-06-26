@@ -24,7 +24,7 @@
 					</tr>
 				</thead>
 				<tbody>				 
-					<tr title="双击选择当前记录" th:each="days,iterStat:${daysList}" class="days-item" 
+					<tr title="单击选择当前记录" th:each="days,iterStat:${daysList}" class="days-item" 
 						th:attr="days-id=${days.id},index-days=${iterStat.count}" >
 												
 						<td th:text="${iterStat.count}"></td>
