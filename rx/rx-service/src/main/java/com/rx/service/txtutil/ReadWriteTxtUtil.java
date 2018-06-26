@@ -31,11 +31,12 @@ public class ReadWriteTxtUtil {
 	        //StringBuffer sb = new StringBuffer();
 	        String result = "";
 	        String line = "";  
+	        int i = 0;
 	        while (StringUtils.isNotBlank((line = br.readLine()))) {  
 	            //line += br.readLine(); // 一次读入一行数据  
 	        	//sb.append(line);
 	        	result+=line;
-	        	log.info("行内容："+line);
+	        	log.info("正在读取第 "+i+" 行，请等待。。。");
 	        }
 	        br.close();
 	        isr.close();

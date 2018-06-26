@@ -157,6 +157,55 @@
 															</div>
 														</div>
 														<div class="form-group">
+															<label class="col-md-2 control-label">剂量</label>
+															<div class="col-md-10">
+																<input type="text" id="jl" name="jl"
+																	class="form-control" placeholder="剂量" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-2 control-label">疗程</label>
+															<div class="col-md-10">
+																<input type="text" id="lc" name="lc"
+																	class="form-control" placeholder="疗程" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-2 control-label">频次</label>
+															<div class="col-md-10">
+																<input type="text" id="pc" name="pc"
+																	class="form-control" placeholder="频次" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-2 control-label">用法</label>
+															<div class="col-md-10">
+																<input type="text" id="yfyl" name="yfyl"
+																	class="form-control" placeholder="用法" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-2 control-label">最小可出售包装单价</label>
+															<div class="col-md-10">
+																<input type="text" id="xuanx" name="xuanx"
+																	class="form-control" placeholder="最小可出售包装单价" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-2 control-label">最小可出售包装规格</label>
+															<div class="col-md-10">
+																<input type="text" id="saleminspec" name="saleminspec"
+																	class="form-control" placeholder="最小可出售包装规格" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-md-2 control-label">最小可出售包装剂量单位</label>
+															<div class="col-md-10">
+																<input type="text" id="saleminunit" name="saleminunit"
+																	class="form-control" placeholder="最小可出售包装剂量单位" />
+															</div>
+														</div>
+														<div class="form-group">
 															<label class="col-sm-2 control-label">&nbsp;</label>
 															<div class="col-sm-10">
 																<button type="button" class="btn btn-primary"

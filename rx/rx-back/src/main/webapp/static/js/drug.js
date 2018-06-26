@@ -122,6 +122,13 @@ function selectDetails(id){
 				//$("#status").val(drug.status);//在售状态
 				$("#drug-status input:radio[name='status'][value='"+drug.status+"']").prop("checked",true);
 				$("#saleprice").val(drug.saleprice);//售价
+				$("#jl").val(drug.jl);//剂量
+				$("#lc").val(drug.lc);//疗程
+				$("#pc").val(drug.pc);//频次
+				$("#yfyl").val(drug.yfyl);//用法
+				$("#xuanx").val(drug.xuanx);//最小可出售包装单价
+				$("#saleminspec").val(drug.saleminspec);//最小可出售包装规格
+				$("#saleminunit").val(drug.saleminunit);//最小可出售包装剂量单位
 				
 				$('#tabs-243687 a[href="#tab-2"]').tab('show');
 				return;
