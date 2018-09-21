@@ -36,6 +36,7 @@ public class ReadWriteTxtUtil {
 	            //line += br.readLine(); // 一次读入一行数据  
 	        	//sb.append(line);
 	        	result+=line;
+	        	i++;
 	        	log.info("正在读取第 "+i+" 行，请等待。。。");
 	        }
 	        br.close();
